@@ -1,0 +1,13 @@
+/Users/walter/Projects/Project_4/Project_4/bin/Debug/netcoreapp3.1/Project_4.deps.json
+/Users/walter/Projects/Project_4/Project_4/bin/Debug/netcoreapp3.1/Project_4.runtimeconfig.json
+/Users/walter/Projects/Project_4/Project_4/bin/Debug/netcoreapp3.1/Project_4.runtimeconfig.dev.json
+/Users/walter/Projects/Project_4/Project_4/bin/Debug/netcoreapp3.1/Project_4.dll
+/Users/walter/Projects/Project_4/Project_4/bin/Debug/netcoreapp3.1/Project_4.pdb
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.csproj.AssemblyReference.cache
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.GeneratedMSBuildEditorConfig.editorconfig
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.AssemblyInfoInputs.cache
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.AssemblyInfo.cs
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.csproj.CoreCompileInputs.cache
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.dll
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.pdb
+/Users/walter/Projects/Project_4/Project_4/obj/Debug/netcoreapp3.1/Project_4.genruntimeconfig.cache
