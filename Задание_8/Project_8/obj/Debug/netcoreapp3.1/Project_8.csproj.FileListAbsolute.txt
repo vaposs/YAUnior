@@ -1,0 +1,13 @@
+/Users/walter/Projects/Project_8/Project_8/bin/Debug/netcoreapp3.1/Project_8.deps.json
+/Users/walter/Projects/Project_8/Project_8/bin/Debug/netcoreapp3.1/Project_8.runtimeconfig.json
+/Users/walter/Projects/Project_8/Project_8/bin/Debug/netcoreapp3.1/Project_8.runtimeconfig.dev.json
+/Users/walter/Projects/Project_8/Project_8/bin/Debug/netcoreapp3.1/Project_8.dll
+/Users/walter/Projects/Project_8/Project_8/bin/Debug/netcoreapp3.1/Project_8.pdb
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.csproj.AssemblyReference.cache
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.GeneratedMSBuildEditorConfig.editorconfig
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.AssemblyInfoInputs.cache
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.AssemblyInfo.cs
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.csproj.CoreCompileInputs.cache
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.dll
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.pdb
+/Users/walter/Projects/Project_8/Project_8/obj/Debug/netcoreapp3.1/Project_8.genruntimeconfig.cache
