@@ -1,0 +1,13 @@
+/Users/walter/Projects/Project_6/Project_6/bin/Debug/netcoreapp3.1/Project_6.deps.json
+/Users/walter/Projects/Project_6/Project_6/bin/Debug/netcoreapp3.1/Project_6.runtimeconfig.json
+/Users/walter/Projects/Project_6/Project_6/bin/Debug/netcoreapp3.1/Project_6.runtimeconfig.dev.json
+/Users/walter/Projects/Project_6/Project_6/bin/Debug/netcoreapp3.1/Project_6.dll
+/Users/walter/Projects/Project_6/Project_6/bin/Debug/netcoreapp3.1/Project_6.pdb
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.csproj.AssemblyReference.cache
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.GeneratedMSBuildEditorConfig.editorconfig
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.AssemblyInfoInputs.cache
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.AssemblyInfo.cs
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.csproj.CoreCompileInputs.cache
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.dll
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.pdb
+/Users/walter/Projects/Project_6/Project_6/obj/Debug/netcoreapp3.1/Project_6.genruntimeconfig.cache
