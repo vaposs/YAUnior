@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_6
 {
@@ -7,13 +7,14 @@ namespace Project_6
         static void Main()
         {
             int picture = 52;
-            int line;
+            int linesPictute;
             int extraPictures;
+            int pictureInLine = 3;
 
-            line = picture / 3;
-            extraPictures = picture % 3;
+            linesPictute = picture / pictureInLine;
+            extraPictures = picture % pictureInLine;
 
-            Console.WriteLine("заполненые рядов - "+ line );
+            Console.WriteLine("заполненые рядов - " + linesPictute);
             Console.WriteLine("Лишние карты - " + extraPictures);
         }
     }
