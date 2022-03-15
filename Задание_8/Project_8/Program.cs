@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_8
 {
@@ -6,26 +6,28 @@ namespace Project_8
     {
         static void Main()
         {
+            int minutesToReceive = 10;
+            int minutesPerHour = 60;
             long people;
-            long hour;
-            long minutу;
+            long hoursInLine;
+            long minutsInLine;
 
             Console.WriteLine("Сколько человек перед вами в очереди: ");
             people = Convert.ToInt32(Console.ReadLine());
-            hour = (people * 10) / 60;
-            minutу = (people * 10) % 60;
+            hoursInLine = (people * minutesToReceive) / minutesPerHour;
+            minutsInLine = (people * minutesToReceive) % minutesPerHour;
 
-            if(hour == 0)
+            if (hoursInLine == 0)
             {
-                Console.WriteLine("Вы должны стоять в очереди " + minutу + " минут");
+                Console.WriteLine("Вы должны стоять в очереди " + minutsInLine + " минут");
             }
-            else if(hour == 1)
+            else if (hoursInLine == 1)
             {
-                Console.WriteLine("Вы должны стоять в очереди " + hour + " час, и " + minutу + " минут");
+                Console.WriteLine("Вы должны стоять в очереди " + hoursInLine + " час, и " + minutsInLine + " минут");
             }
-            else if (hour > 1)
+            else if (hoursInLine > 1)
             {
-                Console.WriteLine("Вы должны стоять в очереди " + hour + " часа, и " + minutу + " минут");
+                Console.WriteLine("Вы должны стоять в очереди " + hoursInLine + " часа, и " + minutsInLine + " минут");
             }
         }
     }
