@@ -12,8 +12,8 @@ namespace Projeсt_2
             uint positiveNumber = 723654;
             float fractionalNumber = 0.1f;
             double oneMoreFractionalNumber = 0.001;
-            bool stateGo = true;
-            bool stateWait = false;
+            bool heroStands = true;
+            bool heroWaits = false;
             char symbol = 'a';
             string line = "I to be coder!";
             object anObjectInt = 5;
