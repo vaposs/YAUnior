@@ -6,29 +6,11 @@ namespace Project_8
     {
         static void Main()
         {
-            int minutesToReceive = 10;
-            int minutesPerHour = 60;
-            long people;
-            long hoursInLine;
-            long minutsInLine;
-
-            Console.WriteLine("Сколько человек перед вами в очереди: ");
-            people = Convert.ToInt32(Console.ReadLine());
-            hoursInLine = (people * minutesToReceive) / minutesPerHour;
-            minutsInLine = (people * minutesToReceive) % minutesPerHour;
-
-            if (hoursInLine == 0)
-            {
-                Console.WriteLine("Вы должны стоять в очереди " + minutsInLine + " минут");
-            }
-            else if (hoursInLine == 1)
-            {
-                Console.WriteLine("Вы должны стоять в очереди " + hoursInLine + " час, и " + minutsInLine + " минут");
-            }
-            else if (hoursInLine > 1)
-            {
-                Console.WriteLine("Вы должны стоять в очереди " + hoursInLine + " часа, и " + minutsInLine + " минут");
-            }
+            iConsole.Write($"Вы заходите в поликлинику, сколько человек перед вами в очереди? -  ");
+            int peopleCount = Convert.ToInt32(Console.ReadLine());
+            int minuts = (peopleCount * 10) % 60;
+            int hour = (peopleCount * 10) / 60;
+            Console.WriteLine($"Вам ждать в очереди {hour} часов и {minuts} минут");
         }
     }
 }
