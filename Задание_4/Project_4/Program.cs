@@ -16,9 +16,6 @@ namespace Project_4
             string plaseOfWork = Console.ReadLine();
 
             Console.WriteLine($"Вас зовут "+ name + ", вам - "+ age + "год и вы " + zodiacSing + ". Вы работаете на " + plaseOfWork + ".");
-
-
-
         }
     }
 }
