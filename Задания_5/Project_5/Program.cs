@@ -11,11 +11,9 @@ namespace Project_5
             string temporaryМariable;
 
             Console.WriteLine(name + " " + surname);
-
             temporaryМariable = name;
             name = surname;
             surname = temporaryМariable;
-
             Console.WriteLine(name + " " + surname);
         }
     }
