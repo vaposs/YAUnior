@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Projeсt_2
 {
@@ -6,33 +6,16 @@ namespace Projeсt_2
     {
         static void Main(string[] args)
         {
-            var unknownType = 2356;
-            int integerNumber = -347842;
-            long veryBigNumber = 1234567891234567890;
-            uint positiveNumber = 723654;
-            float fractionalNumber = 0.1f;
-            double oneMoreFractionalNumber = 0.001;
-            bool heroStands = true;
-            bool heroWaits = false;
-            char symbol = 'a';
+            byte myAge = 32;
+            int money = 100;
+            long starsInSpase = 1234567891234567890;
+            uint thisYear = 2022;
+            float fiveDividedByTwo = 2,5f;
+            double piSymbol = 3,1415;
+            bool isBlock = true;
+            bool canWalk = false;
+            char firstLetter = 'a';
             string line = "I to be coder!";
-            object anObjectInt = 5;
-            object anObjectFloat = 0.3f;
-            object anObjectString = "строчка";
-
-            Console.WriteLine(unknownType);
-            Console.WriteLine(integerNumber);
-            Console.WriteLine(veryBigNumber);
-            Console.WriteLine(positiveNumber);
-            Console.WriteLine(fractionalNumber);
-            Console.WriteLine(oneMoreFractionalNumber);
-            Console.WriteLine(stateTrue);
-            Console.WriteLine(stateFalse);
-            Console.WriteLine(symbol);
-            Console.WriteLine(line);
-            Console.WriteLine(anObjectInt);
-            Console.WriteLine(anObjectFloat);
-            Console.WriteLine(anObjectString);
         }
     }
 }
