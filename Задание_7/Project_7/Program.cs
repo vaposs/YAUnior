@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_7
 {
@@ -6,27 +6,17 @@ namespace Project_7
     {
         static void Main(string[] args)
         {
-            int gold;
-            int crystal;
-            int crystalPrise;
+            int cristalCost = 1;
+            bool enoughtMoney;
 
-
-            Console.WriteLine("Введите количество золота - ");
-            gold = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Укажите цену кристала - ");
-            crystalPrise = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("сколько кристалов вы хотите купить?");
-            crystal = Convert.ToInt32(Console.ReadLine());
-
-            if ((gold < crystalPrise) || (gold < (crystal*crystalPrise)))
-            {
-                Console.WriteLine("Не достаточно золота для покупки кристалов");
-            }
-            else
-            {
-                gold = gold - (crystal * crystalPrise);
-                Console.WriteLine("У вас: " + crystal + " кристалов, и " + gold + " золота.");
-            }
+            Console.Write("добрый день, сколько у вас золота? - ");
+            int money = Convert.ToInt32(Console.ReadLine());
+            Console.Write($"сегодня кристалы стоят по {cristalCost}, сколько желаете купить? - ");
+            int cristalCount = Convert.ToInt32(Console.ReadLine());
+            enoughtMoney = money >= cristalCost * cristalCount;
+            cristalCount *= Convert.ToInt32(enoughtMoney);
+            money -= cristalCost * cristalCount;
+            Console.WriteLine($"куплено {cristalCount} кристалов, осталось {money} золота");
         }
     }
 }
