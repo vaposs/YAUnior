@@ -6,8 +6,6 @@ namespace Project_11
     {
         public static void Main(string[] args)
         {
-            bool isActive = true;
-            int numberOfIterations = 0;
             int conditionDigit = 7;
             int divisionRemainder = 5;
             int maxDigit = 100;
@@ -17,21 +15,14 @@ namespace Project_11
             Console.WriteLine("Продолжить . . .");
             Console.ReadLine();
 
-            while(isActive)
+            for (int numberOfIterations = 0; maxDigit > numberOfIterations; numberOfIterations ++)
             {
-                numberOfIterations++;
-                if ((numberOfIterations%conditionDigit == divisionRemainder)&&(numberOfIterations < maxDigit))
+                if((numberOfIterations % conditionDigit == divisionRemainder) && (numberOfIterations < maxDigit))
                 {
-                    Console.WriteLine($" Число - {numberOfIterations} ");
-                }
-                if(numberOfIterations > 100)
-                {
-                    Console.WriteLine("Вывод чисел закончен.");
-                    isActive = false;
+                    Console.WriteLine($" Число - {numberOfIterations}");
                 }
             }
-
-
+            Console.WriteLine("Вывод окончен.");
         }
     }
 }
