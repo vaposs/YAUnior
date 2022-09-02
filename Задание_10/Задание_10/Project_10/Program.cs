@@ -20,7 +20,6 @@ namespace Project_10
                     Console.WriteLine("Вы вышли из цикла.");
                 }
             }
-            
         }
     }
 }
