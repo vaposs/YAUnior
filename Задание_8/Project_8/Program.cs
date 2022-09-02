@@ -14,6 +14,7 @@ namespace pr1
             int totalMinutesInQueue = peopleCount * minutesToReceive;
             int minuts = totalMinutesInQueue % minutesInAnHour;
             int hour = totalMinutesInQueue / minutesInAnHour;
+            
             Console.WriteLine($"Вам ждать в очереди {hour} часов и {minuts} минут");
         }
     }
