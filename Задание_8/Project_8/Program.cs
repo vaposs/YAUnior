@@ -1,15 +1,17 @@
 using System;
 
-namespace Project_8
+namespace pr1
 {
-    class Program
+    class MainClass
     {
-        static void Main()
+        public static void Main(string[] args)
         {
-            iConsole.Write($"Вы заходите в поликлинику, сколько человек перед вами в очереди? -  ");
+            int minutesToReceive = 10;
+            int minutesInAnHour = 60;
+            Console.Write($"Вы заходите в поликлинику, сколько человек перед вами в очереди? -  ");
             int peopleCount = Convert.ToInt32(Console.ReadLine());
-            int minuts = (peopleCount * 10) % 60;
-            int hour = (peopleCount * 10) / 60;
+            int minuts = (peopleCount * minutesToReceive) % minutesInAnHour;
+            int hour = (peopleCount * minutesToReceive) / minutesInAnHour;
             Console.WriteLine($"Вам ждать в очереди {hour} часов и {minuts} минут");
         }
     }
