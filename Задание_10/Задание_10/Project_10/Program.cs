@@ -6,16 +6,17 @@ namespace Project_10
     {
         public static void Main(string[] args)
         {
-            bool cycleActive = true;
+            bool isActive = true;
+            string stopCicle = "exit";
 
-            while(cycleActive)
+            while(isActive)
             {
                 Console.Write("Введите любое значение для повтора цикла или 'exit' для выхода. - ");
                 string textMessege = Console.ReadLine();
 
-                if(textMessege == "exit")
+                if(textMessege == stopCicle)
                 {
-                    cycleActive = false;
+                    isActive = false;
                     Console.WriteLine("Вы вышли из цикла.");
                 }
             }
