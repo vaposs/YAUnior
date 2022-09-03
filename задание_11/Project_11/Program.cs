@@ -15,12 +15,9 @@ namespace Project_11
             Console.WriteLine("Продолжить . . .");
             Console.ReadLine();
 
-            for (int numberOfIterations = 0; maxDigit > numberOfIterations; numberOfIterations ++)
+            for (int numberOfIterations = 5; maxDigit > numberOfIterations; numberOfIterations += conditionDigit)
             {
-                if((numberOfIterations % conditionDigit == divisionRemainder) && (numberOfIterations < maxDigit))
-                {
-                    Console.WriteLine($" Число - {numberOfIterations}");
-                }
+                Console.WriteLine($" Число - {numberOfIterations}");
             }
             Console.WriteLine("Вывод окончен.");
         }
