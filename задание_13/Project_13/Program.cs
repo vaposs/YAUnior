@@ -11,10 +11,12 @@ namespace Project_13
             Random random = new Random();
             int maxNumber = random.Next(minRandom,maxRandom);
             int summNumbers = 0;
+            int multepleThree = 3;
+            int multepleFive = 5;
 
-            for(int i = 1; i <= maxNumber; i++)
+            for (int i = 1; i <= maxNumber; i++)
             {
-                if((i%3 == 0)||(i%5 == 0))
+                if((i%multepleThree == 0)||(i%multepleFive == 0))
                 {
                     summNumbers += i;
                 }
