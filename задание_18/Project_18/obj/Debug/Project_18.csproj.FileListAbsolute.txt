@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/bin/Debug/Project_18.exe
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/bin/Debug/Project_18.pdb
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/obj/Debug/Project_18.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/obj/Debug/Project_18.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/obj/Debug/Project_18.exe
+/Users/walter/GitHub/YAUnior/задание_18/Project_18/obj/Debug/Project_18.pdb

@@ -1,0 +1,2 @@
+/Users/walter/GitHub/YAUnior/задание_12/Project_12/obj/Debug/Project_12.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/задание_12/Project_12/obj/Debug/Project_12.csproj.CoreCompileInputs.cache
