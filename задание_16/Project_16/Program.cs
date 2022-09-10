@@ -18,7 +18,6 @@ namespace задание_16
             Console.Write($"{frameSymbol} {name} {frameSymbol}");
             Console.WriteLine("");
             FrameSymvol(charToLine, frameSymbol);
-
         }
 
         public static void FrameSymvol(int charToLine, char frameSymbol)
