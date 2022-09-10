@@ -11,79 +11,111 @@ namespace Project_14
             double eurMoney = 100;
             double usdInRub = 60.37;
             double eurInRub = 60.22;
-            bool isSeel = true;
-            
-            while(isSeel)
+            string buy = "buy";
+            string sell = "sell";
+            string currencyUSD = "usd";
+            string currencyEUR = "eur";
+            bool isSell = true;
+            bool isNotCorrect = true;
+            bool oneMoreSell = true;
+            char YesSell = 'Y';
+            char yesSell = 'y';
+            char NotSell = 'N';
+            char notSell = 'n';
+
+            while (isSell)
             {
                 Console.WriteLine($"игрок имеет: рублей - {rubMoney}, доларов - {usdMoney}, евро - {eurMoney}");
                 Console.WriteLine($"текущий курс долара - {usdInRub}, евро - {eurInRub}.");
                 Console.Write("вам купить или продать?(buy/seel) - ");
                 string buyOrSeel = Console.ReadLine();
 
-                while (!((buyOrSeel == "buy") || (buyOrSeel == "seel")))
+                while (isNotCorrect)
                 {
-                    Console.Write("неверный ввод, вам купить или продать?(buy/seel) - ");
-                    buyOrSeel = Console.ReadLine();
+                    if ((buyOrSeel == buy) || (buyOrSeel == sell))
+                    {
+                        isNotCorrect = false;
+                    }
+                    else
+                    {
+                        Console.Write("неверный ввод, вам купить или продать?(buy/sell) - ");
+                        buyOrSeel = Console.ReadLine();
+                    }
                 }
 
+                isNotCorrect = true;
                 Console.Write("какую валюту?(usd/eur) - ");
                 string buySeelCurrency = Console.ReadLine();
 
-                while (!((buySeelCurrency == "usd") || (buySeelCurrency == "eur")))
+                while (isNotCorrect)
                 {
-                    Console.Write("неверный ввод, выберите валюту(usd/eur) - ");
-                    buySeelCurrency = Console.ReadLine();
+                    if ((buySeelCurrency == currencyUSD) || (buySeelCurrency == currencyEUR))
+                    {
+                        isNotCorrect = false;
+                    }
+                    else
+                    {
+                        Console.Write("неверный ввод, выберите валюту(usd/eur) - ");
+                        buySeelCurrency = Console.ReadLine();
+                    }
                 }
 
+                isNotCorrect = true;
                 Console.Write("сколько? - ");
 
-                while(true)
+                while(isNotCorrect)
                 {
                     float haveMany = Convert.ToSingle(Console.ReadLine());
-
-                    if( (buyOrSeel == "buy") && (buySeelCurrency == "usd") && (rubMoney > usdInRub * haveMany))
+                    if( (buyOrSeel == buy) && (buySeelCurrency == currencyUSD) && (rubMoney > usdInRub * haveMany))
                     {
                         rubMoney -= usdInRub * haveMany;
                         usdMoney += haveMany;
-                        break;
+                        isNotCorrect = false;
                     }
-                    else if((buyOrSeel == "seel")&&(buySeelCurrency == "usd") && (haveMany <= usdMoney))
+                    else if((buyOrSeel == sell)&&(buySeelCurrency == currencyUSD) && (haveMany <= usdMoney))
                     {
                         rubMoney += usdInRub * haveMany;
                         usdMoney -= haveMany;
-                        break;
+                        isNotCorrect = false;
                     }
-                    else if ((buyOrSeel == "buy") && (buySeelCurrency == "eur") && (rubMoney > eurInRub * haveMany))
+                    else if ((buyOrSeel == buy) && (buySeelCurrency == currencyEUR) && (rubMoney > eurInRub * haveMany))
                     {
                         rubMoney -= eurInRub * haveMany;
                         eurMoney += haveMany;
-                        break;
+                        isNotCorrect = false;
                     }
-                    else if ((buyOrSeel == "seel") && (buySeelCurrency == "eur") && (haveMany <= eurMoney))
+                    else if ((buyOrSeel == sell) && (buySeelCurrency == currencyEUR) && (haveMany <= eurMoney))
                     {
                         rubMoney += eurInRub * haveMany;
                         eurMoney -= haveMany;
-                        break;
+                        isNotCorrect = false;
                     }
-                    Console.Write("не достаточно денег, сколько? - ");
+                    else
+                    {
+                        Console.Write("не достаточно денег, сколько? - ");
+                    }
                 }
 
                 Console.WriteLine($"игрок имеет: рублей - {rubMoney}, доларов - {usdMoney}, евро - {eurMoney}");
                 Console.Write("начать заново?(Y/N) - ");
+                oneMoreSell = true;
 
-                while (true)
+                while (oneMoreSell)
                 {
-                    string exit = Console.ReadLine();
-                    if (exit == "N" || exit == "n")
+                    char exit = Convert.ToChar(Console.ReadLine());
+                    if (exit == NotSell || exit == notSell)
                     {
-                        isSeel = false;
-                        break;
+                        isSell = false;
+                        oneMoreSell = false;
                     }
-                    if (exit == "y" || exit == "Y")
+                    else if (exit == yesSell || exit == YesSell)
                     {
-                        break;
+                        oneMoreSell = false;
                     }
-                    Console.Write("не верный ввод, начать заново(Y/N) - ");
+                    else
+                    {
+                        Console.Write("не верный ввод, начать заново(Y/N) - ");
+                    }
                 }
                 Console.Clear();
             }
