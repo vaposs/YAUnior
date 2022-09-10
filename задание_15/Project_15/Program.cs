@@ -29,7 +29,7 @@ namespace Project_15
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
 
-                switch (command)
+                switch (command) 
                 {
                     case "setName":
                         Console.Clear();

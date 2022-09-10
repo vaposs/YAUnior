@@ -13,14 +13,16 @@ namespace задание_16
             char frameSymbol = Convert.ToChar(Console.ReadLine());
 
             int charToLine = constantChar + name.Length;
-
-            for (int i = 0; i < charToLine; i++)
-            {
-                Console.Write(frameSymbol);
-            }
+            FrameSymvol(charToLine,frameSymbol);
             Console.WriteLine("");
             Console.Write($"{frameSymbol} {name} {frameSymbol}");
             Console.WriteLine("");
+            FrameSymvol(charToLine, frameSymbol);
+
+        }
+
+        public static void FrameSymvol(int charToLine, char frameSymbol)
+        {
             for (int i = 0; i < charToLine; i++)
             {
                 Console.Write(frameSymbol);
