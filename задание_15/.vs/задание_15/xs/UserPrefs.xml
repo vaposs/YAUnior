@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{3126F27A-3541-4AC1-8DBC-7A777E142CBC}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Project_15/Program.cs">
     <Files>
-      <File FileName="Project_15/Program.cs" Line="71" Column="29" />
+      <File FileName="Project_15/Program.cs" Line="28" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,9 +19,7 @@
   <MonoDevelop.Ide.ItemProperties.Project__15 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/walter/GitHub/YAUnior/задание_15/Project_15/Program.cs" relfile="Project_15/Program.cs" line="71" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

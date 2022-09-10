@@ -11,10 +11,12 @@ namespace Project_14
             double eurMoney = 100;
             double usdInRub = 60.37;
             double eurInRub = 60.22;
+            double usdInEur = 0.99;
             string buy = "buy";
             string sell = "sell";
             string currencyUSD = "usd";
             string currencyEUR = "eur";
+            string currencyRUB = "rub";
             bool isSell = true;
             bool isNotCorrect = true;
             bool oneMoreSell = true;
@@ -44,18 +46,18 @@ namespace Project_14
                 }
 
                 isNotCorrect = true;
-                Console.Write("какую валюту?(usd/eur) - ");
+                Console.Write("какую валюту?(usd/eur/rub) - ");
                 string buySeelCurrency = Console.ReadLine();
 
                 while (isNotCorrect)
                 {
-                    if ((buySeelCurrency == currencyUSD) || (buySeelCurrency == currencyEUR))
+                    if ((buySeelCurrency == currencyUSD) || (buySeelCurrency == currencyEUR) || (buySeelCurrency == currencyRUB))
                     {
                         isNotCorrect = false;
                     }
                     else
                     {
-                        Console.Write("неверный ввод, выберите валюту(usd/eur) - ");
+                        Console.Write("неверный ввод, выберите валюту(usd/eur/rub) - ");
                         buySeelCurrency = Console.ReadLine();
                     }
                 }
@@ -90,6 +92,11 @@ namespace Project_14
                         eurMoney -= haveMany;
                         isNotCorrect = false;
                     }
+                    else if((buyOrSeel == buy) && ( buySeelCurrency == currencyRUB) && ( ))
+                    {
+
+                    }
+                    else if (() && () && ())
                     else
                     {
                         Console.Write("не достаточно денег, сколько? - ");

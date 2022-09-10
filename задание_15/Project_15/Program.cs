@@ -9,7 +9,6 @@ namespace Project_15
             string name = "";
             string surname = "";
             int age = 0;
-            int ageCountChar;
             string password = "";
             string command;
             bool toOut = true;
@@ -17,7 +16,7 @@ namespace Project_15
 
             while(toOut)
             {
-                Console.WriteLine("Список доступных команд:");
+                Console.WriteLine("\nСписок доступных команд:");
                 Console.WriteLine("1. setName           - ввести/поменять имя.");
                 Console.WriteLine("2. setSurname        - ввети/поменять фамилию.");
                 Console.WriteLine("3. setAge            - ввести/поменять возраст.");
@@ -60,61 +59,58 @@ namespace Project_15
                         Console.ResetColor();
                         break;
                     case "writeAll":
-                        if(age<10)
-                        {
-                            ageCountChar = 1;
-                        }
-                        else if(age > 9 || age < 99)
-                        {
-                            ageCountChar = 2;
-                        }
-                        else
-                        {
-                            ageCountChar = 3;
-                        }
-                        int coutChar = countNumberConstanta + ageCountChar + name.Length + surname.Length + password.Length;
+                        string stringAge = Convert.ToString(age);
+                        int coutChar = countNumberConstanta + stringAge.Length + name.Length + surname.Length + password.Length;
+
                         for (int i = 0; i < coutChar; i++)
                         {
                             Console.Write("-");
                         }
-                        Console.WriteLine("");
-                        Console.WriteLine($"| {name} | {surname} | {age} | {password} |");
+
+                        Console.WriteLine($"\n| {name} | {surname} | {age} | {password} |");
+
                         for (int i = 0; i < coutChar; i++)
                         {
                             Console.Write("-");
                         }
-                        Console.WriteLine("");
+
                         break;
                     case "Exit":
                         toOut = false;
                         break;
                     default:
+                        Console.Clear();
                         Console.WriteLine("Не верный ввод, попробуйсте снова.");
                         break;
                 }
-
             }
         }
         public static void Color()
         {
-            while (true)
+            bool thisColor = true;
+
+            while (thisColor)
             {
+                string blue = "blue";
+                string cyan = "cyan";
+                string green = "green";
                 Console.WriteLine("выберите цвет(blue/cyan/green) - ");
                 string color = Console.ReadLine();
-                if(color == "blue")
+
+                if(color == blue)
                 {
                     Console.BackgroundColor = ConsoleColor.Blue;
-                    break;
+                    thisColor = false;
                 }
-                else if (color == "cyan")
+                else if (color == cyan)
                 {
                     Console.BackgroundColor = ConsoleColor.Cyan;
-                    break;
+                    thisColor = false;
                 }
-                else if (color == "green")
+                else if (color == green)
                 {
                     Console.BackgroundColor = ConsoleColor.Green;
-                    break;
+                    thisColor = false;
                 }
                 else
                 {
