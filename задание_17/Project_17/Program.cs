@@ -9,7 +9,6 @@ namespace Project_17
             int attempts = 3;
             bool isWin = true;
             const string secretPassword = "триодиншестьчетыре";
-
             Console.WriteLine("пароль для дуступа к сетретному сообщению - триодиншестьчетыре");
             Console.WriteLine("продолжитьлжить ... ");
             Console.ReadKey();
@@ -23,7 +22,6 @@ namespace Project_17
                 {
                     Console.WriteLine("пароль верный");
                     isWin = false;
-                    break;
                 }
                 --attempts;
                 if(attempts > 0)
