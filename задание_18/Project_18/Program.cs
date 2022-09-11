@@ -15,17 +15,17 @@ namespace Project_18
             for(int i = 100; i <= 999; i ++)
             {
                 int count = i;
-                while(true)
+                bool isNext = true;
+
+                while(isNext)
                 {   
                     if(count == 0)
                     {
-                        Console.WriteLine(i);
                         countNumber++;
-                        break;
                     }
                     else if(count < 0)
                     {
-                        break;
+                        isNext = false;
                     }
                     count -= randNumber;
                 }
