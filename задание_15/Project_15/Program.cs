@@ -21,7 +21,7 @@ namespace Project_15
                 Console.WriteLine("2. setSurname        - ввети/поменять фамилию.");
                 Console.WriteLine("3. setAge            - ввести/поменять возраст.");
                 Console.WriteLine("4. setPassword       - ввести/поменять пароль.");
-                Console.WriteLine("5. changeColor   - установить цвет фона консоли.");
+                Console.WriteLine("5. changeColor       - установить цвет фона консоли.");
                 Console.WriteLine("6. resetColor        - сбросить цвета на стандартные.");
                 Console.WriteLine("7. writeAll          - вывести всю информацию.");
                 Console.WriteLine("8. Exit              - выход.");
