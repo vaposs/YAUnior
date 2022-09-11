@@ -12,9 +12,17 @@ namespace Project_15
             string password = "";
             string command;
             bool toOut = true;
-            int countNumberConstanta = 13;
+            const int countNumber = 13;
+            const string MENUBAR_1 = "setName";
+            const string MENUBAR_2 = "setSurname";
+            const string MENUBAR_3 = "setAge";
+            const string MENUBAR_4 = "setPassword";
+            const string MENUBAR_5 = "changeColor";
+            const string MENUBAR_6 = "resetColor";
+            const string MENUBAR_7 = "writeAll";
+            const string MENUBAR_8 = "Exit";
 
-            while(toOut)
+            while (toOut)
             {
                 Console.WriteLine("\nСписок доступных команд:");
                 Console.WriteLine("1. setName           - ввести/поменять имя.");
@@ -31,36 +39,36 @@ namespace Project_15
 
                 switch (command) 
                 {
-                    case "setName":
+                    case MENUBAR_1:
                         Console.Clear();
                         Console.Write("введите имя - ");
                         name = Console.ReadLine();
                         break;
-                    case "setSurname":
+                    case MENUBAR_2:
                         Console.Clear();
                         Console.Write("введите фамилию - ");
                         surname = Console.ReadLine();
                         break;
-                    case "setAge":
+                    case MENUBAR_3:
                         Console.Clear();
                         Console.Write("введите возраст - ");
                         age = Convert.ToInt32(Console.ReadLine());
                         break;
-                    case "setPassword":
+                    case MENUBAR_4:
                         Console.Clear();
                         Console.Write("введите пароль - ");
                         password = Console.ReadLine();
                         break;
-                    case "changeColor":
+                    case MENUBAR_5:
                         Console.Clear();
                         Color();
                         break;
-                    case "resetColor":
+                    case MENUBAR_6:
                         Console.ResetColor();
                         break;
-                    case "writeAll":
+                    case MENUBAR_7:
                         string stringAge = Convert.ToString(age);
-                        int coutChar = countNumberConstanta + stringAge.Length + name.Length + surname.Length + password.Length;
+                        int coutChar = countNumber + stringAge.Length + name.Length + surname.Length + password.Length;
 
                         for (int i = 0; i < coutChar; i++)
                         {
@@ -75,7 +83,7 @@ namespace Project_15
                         }
 
                         break;
-                    case "Exit":
+                    case MENUBAR_8:
                         toOut = false;
                         break;
                     default:
