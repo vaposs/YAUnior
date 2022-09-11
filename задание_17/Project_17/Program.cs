@@ -29,7 +29,6 @@ namespace Project_17
                     Console.Write("пароль не верный, попробуйсте снова - ");
                 }
             }
-
             if(isWin)
             {
                 Console.WriteLine("вы проиграли");
