@@ -7,7 +7,7 @@ namespace Project_17
         public static void Main(string[] args)
         {
             int attempts = 3;
-            bool isWin = true;
+            bool youLose = true;
             const string secretPassword = "триодиншестьчетыре";
             Console.WriteLine("пароль для дуступа к сетретному сообщению - триодиншестьчетыре");
             Console.WriteLine("продолжитьлжить ... ");
@@ -18,21 +18,25 @@ namespace Project_17
             while(attempts > 0)
             {
                 string password = Console.ReadLine();
+
                 if (password == secretPassword)
                 {
                     Console.WriteLine("пароль верный");
-                    isWin = false;
+                    youLose = false;
                 }
                 --attempts;
+
                 if(attempts > 0)
                 {
                     Console.Write("пароль не верный, попробуйсте снова - ");
                 }
             }
-            if(isWin)
+
+            if(youLose == true)
             {
                 Console.WriteLine("вы проиграли");
             }
+
             Console.WriteLine("нажмите любую кнопку для выхода");
             Console.ReadLine();
         }
