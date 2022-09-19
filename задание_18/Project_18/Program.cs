@@ -10,9 +10,11 @@ namespace Project_18
             int maxNumber = 28;
             Random number = new Random();
             int countNumber = 0;
+            int minThreeDigit = 100;
+            int maxThreeDiget = 999;
             int randNumber = number.Next(minNumber, maxNumber);
 
-            for(int i = 100; i <= 999; i ++)
+            for(int i = minThreeDigit; i <= maxThreeDiget; i ++)
             {
                 int count = i;
                 bool isNext = true;
