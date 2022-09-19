@@ -7,16 +7,20 @@ namespace Project_19
         public static void Main(string[] args)
         {
             Random randon = new Random();
-            int randomNumber = randon.Next(1,999999999);
-            int degreeNumber = 0;
+            int minNumber = 1;
+            int maxNumber = 999999999;
+            int randomNumber = randon.Next(minNumber,maxNumber);
+            int degreeNumber = 1;
             int degreeCount = 1;
             int square = 2;
+            bool isBig = true;
 
-            while(true)
+            while(isBig)
             {
-                if(degreeCount > randomNumber)
+                
+                if (degreeCount > randomNumber)
                 {
-                    break;
+                    isBig = false;
                 }
                 else
                 {
