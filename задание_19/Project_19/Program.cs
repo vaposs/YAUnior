@@ -12,23 +12,24 @@ namespace Project_19
             int randomNumber = randon.Next(minNumber,maxNumber);
             int degreeNumber = 1;
             int degreeCount = 1;
-            int square = 2;
+            int squareNumber = 2;
             bool isBig = true;
 
             while(isBig)
-            {
-                
+            {   
                 if (degreeCount > randomNumber)
                 {
                     isBig = false;
                 }
                 else
                 {
-                    degreeCount = degreeCount * square;
+                    degreeCount = degreeCount * squareNumber;
                 }
+
                 degreeNumber++;
             }
-            Console.WriteLine($"2 в степени {degreeNumber} больше числа {randomNumber}");
+
+            Console.WriteLine($"{squareNumber} в степени {degreeNumber} больше числа {randomNumber}");
         }
     }
 }
