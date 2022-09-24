@@ -10,26 +10,17 @@ namespace Project_18
             int maxNumber = 28;
             Random number = new Random();
             int countNumber = 0;
-            int minThreeDigit = 100;
-            int maxThreeDiget = 999;
+            int minDigit = 0;
+            int lowerBound = 99;
+            int maxDiget = 999;
+
             int randNumber = number.Next(minNumber, maxNumber);
 
-            for(int i = minThreeDigit; i <= maxThreeDiget; i ++)
+            for (int i = minDigit; i <= maxDiget; i = i + randNumber)
             {
-                int count = i;
-                bool isNext = true;
-
-                while(isNext)
-                {   
-                    if(count == 0)
-                    {
-                        countNumber++;
-                    }
-                    else if(count < 0)
-                    {
-                        isNext = false;
-                    }
-                    count -= randNumber;
+                if(i > lowerBound)
+                {
+                    countNumber++;
                 }
             }
             Console.WriteLine($"{countNumber} - столько трехзначных натуральных чисел кратно числу - {randNumber}");
