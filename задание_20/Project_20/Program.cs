@@ -6,17 +6,35 @@ namespace Project_20
     {
         public static void Main(string[] args)
         {
-            while(true)
+            Console.Write("введите строку для проверки - ");
+            string stringValidation = Console.ReadLine();
+            Array str = new Array[stringValidation.Length];
+            int openingBracket = 0;
+            int closingBracket = 0;
+
+            for (int i = 0; i < stringValidation.Length; i ++)
             {
-                Console.Write("введите строку для проверки - ");
-                string stringValidation = Console.ReadLine();
-
-                Array str = new Array[stringValidation.Length];
-
-                for (int i = 0; i < stringValidation.Length; i ++)
+                if(stringValidation[i] == '(')
                 {
-                    str[i] = stringValidation[0];
-                }                
+                    openingBracket++;
+                }
+                else if (stringValidation[i] == ')')
+                {
+                    closingBracket++;
+                }
+            }
+
+            if(openingBracket == closingBracket)
+            {
+                Console.WriteLine($"коректное скобочное выражение, глубина вложений {openingBracket}");
+            }
+            else if(openingBracket > closingBracket)
+            {
+                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
+            }
+            else
+            {
+                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
             }
         }
     }

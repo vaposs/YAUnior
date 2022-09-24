@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/bin/Debug/Project_20.exe
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/bin/Debug/Project_20.pdb
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/obj/Debug/Project_20.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/obj/Debug/Project_20.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/obj/Debug/Project_20.exe
+/Users/walter/GitHub/YAUnior/задание_20/Project_20/obj/Debug/Project_20.pdb
