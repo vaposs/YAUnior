@@ -8,42 +8,42 @@ namespace Project_20
         {
             Console.Write("введите строку для проверки - ");
             string stringValidation = Console.ReadLine();
-            Array str = new Array[stringValidation.Length];
-            int openingBracket = 0;
-            int closingBracket = 0;
+            Array line = new Array[stringValidation.Length];
+            int bracket = 0;
+            int bracketMax = 0;
             bool isNormal = true;
+            char openBracketChar = '(';
+            char clouseBracketChar = ')';
 
-            for (int i = 0; i < stringValidation.Length; i ++)
+            for (int i = 0; i < stringValidation.Length; i++)
             {
-                if(stringValidation[i] == '(')
+                if(stringValidation[i]== openBracketChar)
                 {
-                    openingBracket++;
+                    bracket++;
+
+                    if(bracketMax < bracket)
+                    {
+                        bracketMax = bracket;
+                    }
                 }
-                else if (stringValidation[i] == ')')
+                else if(stringValidation[i] == clouseBracketChar)
                 {
-                    closingBracket++;
+                    bracket--;
                 }
-                if(closingBracket > openingBracket)
+                if(bracket < 0)
                 {
                     isNormal = false;
                 }
             }
 
-            if ((openingBracket == closingBracket) && (isNormal == true))
+            if ((bracket == 0) && (isNormal == true))
             {
-                Console.WriteLine($"коректное скобочное выражение, глубина вложений {openingBracket}");
-            }
-            else if ((openingBracket == closingBracket) && (isNormal == false))
-            {
-                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
-            }
-            else if (openingBracket > closingBracket)
-            {
-                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
+                Console.WriteLine($"коректное скобочное выражение, глубина вложений {bracketMax}");
             }
             else
             {
-               Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");                }
+                Console.WriteLine($"не коректное скобо выражение");
             }
+        }
     }
 }
