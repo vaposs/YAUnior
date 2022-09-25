@@ -14,15 +14,16 @@ namespace Project_18
             int lowerBound = 99;
             int maxDiget = 999;
 
-            int randNumber = number.Next(minNumber, maxNumber);
+            int randomNumber = number.Next(minNumber, maxNumber);
 
-            for (int i = minDigit; i <= maxDiget; i = i + randNumber)
+            for (int i = minDigit; i <= maxDiget; i = i + randomNumber)
             {
                 if(i > lowerBound)
                 {
                     countNumber++;
                 }
             }
+
             Console.WriteLine($"{countNumber} - столько трехзначных натуральных чисел кратно числу - {randNumber}");
             Console.ReadLine();
         }
