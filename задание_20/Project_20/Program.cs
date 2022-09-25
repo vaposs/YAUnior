@@ -11,6 +11,7 @@ namespace Project_20
             Array str = new Array[stringValidation.Length];
             int openingBracket = 0;
             int closingBracket = 0;
+            bool isNormal = true;
 
             for (int i = 0; i < stringValidation.Length; i ++)
             {
@@ -22,20 +23,27 @@ namespace Project_20
                 {
                     closingBracket++;
                 }
+                if(closingBracket > openingBracket)
+                {
+                    isNormal = false;
+                }
             }
 
-            if(openingBracket == closingBracket)
+            if ((openingBracket == closingBracket) && (isNormal == true))
             {
                 Console.WriteLine($"коректное скобочное выражение, глубина вложений {openingBracket}");
             }
-            else if(openingBracket > closingBracket)
+            else if ((openingBracket == closingBracket) && (isNormal == false))
+            {
+                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
+            }
+            else if (openingBracket > closingBracket)
             {
                 Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
             }
             else
             {
-                Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");
+               Console.WriteLine($"не коректное скобочное выражение, открывающихся - {openingBracket}, закрывающихся - {closingBracket}");                }
             }
-        }
     }
 }
