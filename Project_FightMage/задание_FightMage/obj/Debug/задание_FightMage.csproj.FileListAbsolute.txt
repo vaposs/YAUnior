@@ -1,0 +1,6 @@
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/bin/Debug/задание_FightMage.exe
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/bin/Debug/задание_FightMage.pdb
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/obj/Debug/задание_FightMage.csproj.AssemblyReference.cache
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/obj/Debug/задание_FightMage.csproj.CoreCompileInputs.cache
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/obj/Debug/задание_FightMage.exe
+/Users/walter/Projects/Priject_FightMage/задание_FightMage/obj/Debug/задание_FightMage.pdb

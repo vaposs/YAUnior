@@ -1,0 +1,20 @@
+﻿<Properties StartupConfiguration="{4D1BE6B9-FD5F-4002-BFEF-BB228962F0C7}|Default">
+  <MonoDevelop.Ide.ItemProperties.задание__FightMage PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="задание_FightMage/Program.cs">
+    <Files>
+      <File FileName="задание_FightMage/Program.cs" Line="146" Column="1" />
+      <File FileName="../всеобучениеЯюниор/Pr/Program.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
