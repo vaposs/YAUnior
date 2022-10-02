@@ -9,21 +9,21 @@ namespace задание_FightMage
     {
         public static void Main(string[] args)
         {
-            const string fireBall = "fire ball";
-            const int fireBallDamage = 25;
-            const int fireBallMp = 10;
-            const string megaFireBall = "mega fire ball";
-            const int megaFireBallDamage = 50;
-            const int megaFireBallMp = 25;
-            const string magicArmor = "magic armor";
+            const string FireBall = "fire ball";
+            int fireBallDamage = 25;
+            int fireBallMp = 10;
+            const string MegaFireBall = "mega fire ball";
+            int megaFireBallDamage = 50;
+            int megaFireBallMp = 25;
+            const string MegicArmor = "magic armor";
             const string enemyOnFire = "enemy on fire";
-            const int enemyOnFireDamage = 20;
-            const string manaRestoration = "mana restoration";
-            const string restorationLife = "restoration of life";
-            const int heroHpMax = 100;
-            const int heroMpMax = 100;
-            const int bossHpMax = 250;
-            const int potion = 50;
+            int enemyOnFireDamage = 20;
+            const string ManaRestoration = "mana restoration";
+            const string RsestorationLife = "restoration of life";
+            int heroHpMax = 100;
+            int heroMpMax = 100;
+            int bossHpMax = 250;
+            int potion = 50;
             int heroArmor = 0;
             int fireAtRound = 0;
             int fireAtRoundMax = 3;
@@ -42,6 +42,9 @@ namespace задание_FightMage
             int heroHP = 100;
             int heroMP = 100;
             int bossHP = 250;
+            int bossRegen = 0;
+            int bossDamage = 1;
+            int bossCritDamage = 2;
 
             Console.WriteLine("Вы входите в большой тронный зал и сразу за вами в створке ворот опускается железная решетка");
             Console.WriteLine("Со стороны трона вы слышите негромкий звут, который очень похож на скрип костей. Вы натолкнулись на Короля\n");
@@ -154,16 +157,18 @@ namespace задание_FightMage
                             isCorrectSpell = false;
                             break;
                         default:
+
                             if (bossHP < 0 || heroHP < 0)
                             {
                                 isCorrectSpell = false;
                                 isNextRound = false;
                             }
+
                             Console.WriteLine("\nневерный ввод заклинания\n");
                             break;
                     }
                 }
-                    if (bossMove == 0)
+                    if (bossMove == bossRegen)
                     {
                         bossHP = bossHP + potion;
 
@@ -172,11 +177,11 @@ namespace задание_FightMage
                             bossHP = bossHpMax;
                         }
                     }
-                    else if (bossMove == 1)
+                    else if (bossMove == bossDamage)
                     {
                         hitPerRound = bossHit;
                     }
-                    else if (bossMove == 2)
+                    else if (bossMove == bossCritDamage)
                     {
                         hitPerRound = bossHit * bossHitCrit;
                     }
@@ -193,7 +198,7 @@ namespace задание_FightMage
                         heroArmor--;
                     }
 
-                    if (bossMove == 0)
+                    if (bossMove == bossRegen)
                     {
                         Console.WriteLine($"\nигрок использует заклинание {spell}, босс поглощает темную сущность и востанавливает жизненую силу");
                     }
@@ -209,6 +214,7 @@ namespace задание_FightMage
                     isNextRound = false;
                 }
             }
+
             if(bossHP < 0 && heroHP < 0)
             {
                 Console.WriteLine("древний хвам не выдержал вашей бытвы и обрушился погребеня и вас и врага под грудой камней");
