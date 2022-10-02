@@ -1,6 +1,0 @@
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/bin/Debug/Project_9.exe
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/bin/Debug/Project_9.pdb
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/obj/Debug/Project_9.csproj.AssemblyReference.cache
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/obj/Debug/Project_9.csproj.CoreCompileInputs.cache
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/obj/Debug/Project_9.exe
-/Users/walter/GitHub/YAUnior/задание_9/Project_9/Project_9/obj/Debug/Project_9.pdb
