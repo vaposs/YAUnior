@@ -9,11 +9,10 @@ namespace Project_1
             int arrayLine = 2;
             int arrayColumn = 5;
             int randomMax = 10;
-            int initialУlement = 0;
+            int initialElement = 0;
             int nextElement = 1;
             int summ = 0;
-            int a = 0;
-
+            int initialString = 0;
             int[,] array = new int[arrayLine,arrayColumn];
             int[] arrayResult = new int[arrayColumn];
             Random numner = new Random();
@@ -30,9 +29,9 @@ namespace Project_1
 
             for (int i = 0; i < array.GetLength(1); i++)
             {
-                summ += array[a, i];
-                array[a, i] = array[initialУlement, i] * array[initialУlement + nextElement, i];
-                Console.Write(array[a, i] + " ");
+                summ += array[initialString, i];
+                array[initialString, i] = array[initialElement, i] * array[initialElement + nextElement, i];
+                Console.Write(array[initialString, i] + " ");
             }
             Console.WriteLine($"\nсума первой строки - {summ}");
         }
