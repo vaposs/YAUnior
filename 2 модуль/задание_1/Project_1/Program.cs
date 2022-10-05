@@ -9,12 +9,10 @@ namespace Project_1
             int arrayLine = 2;
             int arrayColumn = 5;
             int randomMax = 10;
-            int initialElement = 0;
-            int nextElement = 1;
             int summ = 0;
-            int initialString = 0;
+            int initialString = 1;
+            int work = 1;
             int[,] array = new int[arrayLine,arrayColumn];
-            int[] arrayResult = new int[arrayColumn];
             Random numner = new Random();
 
             for(int i = 0; i < array.GetLength(0); i++)
@@ -23,17 +21,23 @@ namespace Project_1
                 {
                     array[i,j] = numner.Next(randomMax);
                     Console.Write(array[i,j]+ " ");
+
+                    if(j == 0)
+                    {
+                        work *= array[i,j];
+                    }
                 }
+
                 Console.Write("\n");
             }
 
             for (int i = 0; i < array.GetLength(1); i++)
             {
                 summ += array[initialString, i];
-                array[initialString, i] = array[initialElement, i] * array[initialElement + nextElement, i];
-                Console.Write(array[initialString, i] + " ");
             }
-            Console.WriteLine($"\nсума первой строки - {summ}");
+
+            Console.WriteLine($"\nпроизведения первого столбца - {work}");
+            Console.WriteLine($"сума второй строки - {summ}");
         }
     }
 }
