@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/bin/Debug/Project_2.exe
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/bin/Debug/Project_2.pdb
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/obj/Debug/Project_2.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/obj/Debug/Project_2.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/obj/Debug/Project_2.exe
+/Users/walter/GitHub/YAUnior/2 модуль/задание_2/Project_2/obj/Debug/Project_2.pdb
