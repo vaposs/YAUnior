@@ -11,26 +11,30 @@ namespace Project_1
             int randomMax = 10;
             int initialУlement = 0;
             int nextElement = 1;
+            int summ = 0;
+            int a = 0;
 
-            int[,] masiv = new int[arrayLine,arrayColumn];
+            int[,] array = new int[arrayLine,arrayColumn];
             int[] arrayResult = new int[arrayColumn];
             Random numner = new Random();
 
-            for(int i = 0; i < masiv.GetLength(0); i++)
+            for(int i = 0; i < array.GetLength(0); i++)
             {
-                for(int j = 0; j < masiv.GetLength(1); j++)
+                for(int j = 0; j < array.GetLength(1); j++)
                 {
-                    masiv[i,j] = numner.Next(randomMax);
-                    Console.Write(masiv[i,j]+ " ");
+                    array[i,j] = numner.Next(randomMax);
+                    Console.Write(array[i,j]+ " ");
                 }
                 Console.Write("\n");
             }
 
-            for(int j = 0; j < arrayResult.Length; j++)
+            for (int i = 0; i < array.GetLength(1); i++)
             {
-                arrayResult[j] = masiv[initialУlement, j] + masiv[initialУlement + nextElement, j];
-                Console.Write(arrayResult[j] + " ");
+                summ += array[a, i];
+                array[a, i] = array[initialУlement, i] * array[initialУlement + nextElement, i];
+                Console.Write(array[a, i] + " ");
             }
+            Console.WriteLine($"\nсума первой строки - {summ}");
         }
     }
 }
