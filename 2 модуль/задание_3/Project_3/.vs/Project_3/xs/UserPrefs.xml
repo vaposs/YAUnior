@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{6F27A835-3930-4E8C-8CFC-8BAC5C0C14DD}|Default">
-  <MonoDevelop.Ide.ItemProperties.Project__3 FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Project__3 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="9" Column="1" />
+      <File FileName="Program.cs" Line="39" Column="13" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
