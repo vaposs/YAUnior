@@ -9,7 +9,7 @@ namespace Project_1
             int arrayLine = 2;
             int arrayColumn = 5;
             int randomMax = 10;
-            int summ = 0;
+            int sum = 0;
             int derivatives = 1;
             int initialColumn = 0;
             int initialString = 1;
@@ -29,7 +29,7 @@ namespace Project_1
 
             for (int i = 0; i < array.GetLength(1); i++)
             {
-                summ += array[initialString, i];
+                sum += array[initialString, i];
             }
 
             for(int i = 0; i < array.GetLength(0); i++)
@@ -38,7 +38,7 @@ namespace Project_1
             }
 
             Console.WriteLine($"\nпроизведения первого столбца - {derivatives}");
-            Console.WriteLine($"сума второй строки - {summ}");
+            Console.WriteLine($"сума второй строки - {sum}");
         }
     }
 }
