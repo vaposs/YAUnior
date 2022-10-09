@@ -1,0 +1,4 @@
+/Users/walter/GitHub/YAUnior/2 модуль/задание_4/Project_4/bin/Release/Project_4.exe
+/Users/walter/GitHub/YAUnior/2 модуль/задание_4/Project_4/obj/Release/Project_4.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/2 модуль/задание_4/Project_4/obj/Release/Project_4.exe
+/Users/walter/GitHub/YAUnior/2 модуль/задание_4/Project_4/obj/Release/Project_4.csproj.AssemblyReference.cache
