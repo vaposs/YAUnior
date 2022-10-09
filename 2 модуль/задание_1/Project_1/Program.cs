@@ -10,8 +10,8 @@ namespace Project_1
             int arrayColumn = 5;
             int randomMax = 10;
             int summ = 0;
-            int sumDerivatives = 1;
-            int requiredColumn = 0;
+            int derivatives = 1;
+            int initialColumn = 0;
             int initialString = 1;
             int[,] array = new int[arrayLine,arrayColumn];
             Random number = new Random();
@@ -34,10 +34,10 @@ namespace Project_1
 
             for(int i = 0; i < array.GetLength(0); i++)
             {
-                sumDerivatives *= array[i,requiredColumn];
+                derivatives *= array[i,initialColumn];
             }
 
-            Console.WriteLine($"\nпроизведения первого столбца - {sumDerivatives}");
+            Console.WriteLine($"\nпроизведения первого столбца - {derivatives}");
             Console.WriteLine($"сума второй строки - {summ}");
         }
     }

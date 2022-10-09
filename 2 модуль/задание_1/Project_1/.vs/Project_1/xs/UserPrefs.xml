@@ -1,9 +1,18 @@
 ﻿<Properties StartupConfiguration="{2B45050C-3CD8-4192-AF90-4DFDDAE20F03}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="14" Column="35" />
+      <File FileName="Program.cs" Line="14" Column="34" />
     </Files>
     <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Project_1" expanded="True">
+            <Node name="Project_1" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
       </Pad>
