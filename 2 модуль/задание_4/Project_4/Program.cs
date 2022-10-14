@@ -8,19 +8,17 @@ namespace Project_4
         {
             string enteredData;
             int arraySize = 1;
-            int arraySizeNext = 1;
-            int sumInt = 0;
             string exit = "exit";
             string sumString = "sum";
+            int sumInt = 0;
             int[] beginArray = new int[arraySize];
             bool isNext = true;
 
-
             while (isNext)
             {
-                Console.Write("введите число или команду(sum/exit) - ");
+                Console.Write($"введите число или команду({sumString}/{exit}) - ");
                 enteredData = Console.ReadLine();
-
+                
                 if (enteredData == exit)
                 {
                     isNext = false;
@@ -37,7 +35,7 @@ namespace Project_4
                 else
                 {
                     beginArray[arraySize - 1] = Convert.ToInt32(enteredData);
-                    int[] nextArray = new int[beginArray.Length + arraySizeNext];
+                    int[] nextArray = new int[beginArray.Length + 1];
 
                     for(int i = 0; i < beginArray.Length; i ++)
                     {
@@ -47,9 +45,9 @@ namespace Project_4
                     arraySize++;
                     beginArray = nextArray;
 
-                    for(int i = 0; i < beginArray.Length; i ++)
+                    foreach (int number in beginArray)
                     {
-                        Console.Write(beginArray[i] + ",");
+                        Console.Write(number + ",");
                     }
                 }
             }
