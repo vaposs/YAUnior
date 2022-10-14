@@ -8,7 +8,7 @@ namespace Project_5
         {
             int arraySize = 50;
             int randomMax = 10;
-            int reps = 1;
+            int repetition = 1;
             int numberReps = 0;
             int maxReps = 1;
             int referencePoint = 1;
@@ -27,17 +27,17 @@ namespace Project_5
             {
                 if(array[i] == array[i - referencePoint])
                 {
-                    reps++;
+                    repetition++;
 
-                    if (reps > maxReps)
+                    if (repetition > maxReps)
                     {
-                        maxReps = reps;
+                        maxReps = repetition;
                         numberReps = array[i];
                     }
                 }
                 else
                 {
-                    reps = referencePoint;
+                    repetition = referencePoint;
                 }
             }
 

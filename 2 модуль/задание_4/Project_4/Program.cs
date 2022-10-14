@@ -45,10 +45,11 @@ namespace Project_4
                     arraySize++;
                     beginArray = nextArray;
 
-                    foreach (int number in beginArray)
+                    /*foreach (int number in beginArray)
                     {
                         Console.Write(number + ",");
                     }
+                    */
                 }
             }
         }
