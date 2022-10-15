@@ -26,13 +26,14 @@ namespace Project_4
                     {
                         sum += array[i];
                     }
+
                     Console.WriteLine($"сумма чисел масива равна {sum}");
                 }
                 else if(enteredData == commandExit)
                 {
                     isWork = false;
                 }
-                else if (Convert.ToInt32(enteredData) > int.MinValue && Convert.ToInt32(enteredData) < int.MaxValue)
+                else if (Convert.ToInt32(enteredData) !=0)
                 {
                     int[] newArray = new int[array.Length + 1];
                     {
