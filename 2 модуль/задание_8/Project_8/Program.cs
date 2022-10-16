@@ -6,8 +6,9 @@ namespace Project_8
     {
         public static void Main(string[] args)
         {
-            int[] array = new int[10];
-            int beginNamber;
+            int sizeArray = 10;
+            int[] array = new int[sizeArray];
+            int beginNumber;
             int shift = 1;
 
             Console.Write("первоначальный масив ");
@@ -23,20 +24,14 @@ namespace Project_8
 
             while (shift > 0)
             {
-                beginNamber = array[0];
+                beginNumber = array[0];
 
-                for (int i = 0; i < array.Length; i ++)
+                for (int i = 0; i < array.Length - 1; i ++)
                 {
-                    if(i == array.Length - 1)
-                    {
-                        array[i] = beginNamber;
-                    }
-                    else
-                    {
-                        array[i] = array[i + 1];
-                    }
+                    array[i] = array[i + 1];
                 }
 
+                array[array.Length - 1] = beginNumber;
                 shift--;
             }
             for (int i = 0; i < array.Length; i++)
