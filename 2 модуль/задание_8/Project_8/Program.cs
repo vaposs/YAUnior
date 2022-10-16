@@ -6,12 +6,12 @@ namespace Project_8
     {
         public static void Main(string[] args)
         {
-            int sizeArray = 10;
+            int sizeArray = 4;
             int[] array = new int[sizeArray];
             int beginNumber;
             int shift = 1;
 
-            Console.Write("первоначальный масив ");
+            Console.Write("\nпервоначальный масив ");
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -22,21 +22,22 @@ namespace Project_8
             Console.Write("\nна сколько елементов сдвинуть? - ");
             shift = Convert.ToInt32(Console.ReadLine());
 
-            while (shift > 0)
+            for (int i = 0; i < shift % sizeArray; i++)
             {
                 beginNumber = array[0];
 
-                for (int i = 0; i < array.Length - 1; i ++)
+                for (int j = 0; j < array.Length - 1; j++)
                 {
-                    array[i] = array[i + 1];
+                    array[j] = array[j + 1];
                 }
-
                 array[array.Length - 1] = beginNumber;
-                shift--;
             }
+
+            Console.Write("результат - ");
+
             for (int i = 0; i < array.Length; i++)
             {
-                Console.Write(array[i] + ",");
+                    Console.Write(array[i] + ",");
             }
         }
     }
