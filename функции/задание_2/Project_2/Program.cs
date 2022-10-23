@@ -6,45 +6,49 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            while (true)
+            bool isWork = true;
+            int life = 10;
+
+            while (isWork)
             {
                 Console.Write("\nвведите количество урона - ");
                 int damage = Convert.ToInt32(Console.ReadLine());
                 Console.Write("введите количество хила - ");
                 int heal = Convert.ToInt32(Console.ReadLine());
-                HealBar(damage, heal);
+                life = HealBar(damage, heal, life);
+                if(life <= 0)
+                {
+                    isWork = false;
+                    Console.WriteLine("\nGame Over");
+                }
             }
         }
 
-        static void HealBar(int damage, int heal)
+        static int HealBar(int damage, int heal, int life)
         {
-            int life = 10;
             int arraySize = 12;
             char[] healtBar = new char[arraySize];
             life = life - damage + heal;
-
-            for (int i = 0; i < healtBar.Length; i++)
+            if(life > 10)
             {
-                if (i == 0)
+                life = 10;
+            }
+
+            Console.Write("[");
+
+            for (int i = 1; i < healtBar.Length - 1; i++)
+            {
+                if (i <= life)
                 {
-                    Console.Write("[");
-                }
-                else if (i == healtBar.Length - 1)
-                {
-                    Console.Write("]");
+                    Console.Write("#");
                 }
                 else
                 {
-                    if (i <= life)
-                    {
-                        Console.Write("#");
-                    }
-                    else
-                    {
-                        Console.Write("_");
-                    }
+                    Console.Write("_");
                 }
             }
+            Console.Write("]");
+            return life;
         }
     }
 }
