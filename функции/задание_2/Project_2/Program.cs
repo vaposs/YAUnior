@@ -15,7 +15,7 @@ namespace Project_2
                 int damage = Convert.ToInt32(Console.ReadLine());
                 Console.Write("введите количество хила - ");
                 int heal = Convert.ToInt32(Console.ReadLine());
-                life = HealBar(damage, heal, life);
+                life = LifeLineOutput(damage, heal, life);
                 if(life <= 0)
                 {
                     isWork = false;
@@ -24,7 +24,7 @@ namespace Project_2
             }
         }
 
-        static int HealBar(int damage, int heal, int life)
+        static int LifeLineOutput(int damage, int heal, int life)
         {
             int arraySize = 12;
             char[] healtBar = new char[arraySize];
