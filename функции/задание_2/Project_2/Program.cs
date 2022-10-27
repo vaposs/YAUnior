@@ -8,14 +8,26 @@ namespace Project_2
         {
             bool isWork = true;
             int life = 10;
-
+            int maxLife = 10;
+            int damage;
+            int heal;
+         
             while (isWork)
             {
                 Console.Write("\nвведите количество урона - ");
-                int damage = Convert.ToInt32(Console.ReadLine());
+                damage = Convert.ToInt32(Console.ReadLine());
                 Console.Write("введите количество хила - ");
-                int heal = Convert.ToInt32(Console.ReadLine());
-                life = LifeLineOutput(damage, heal, life);
+                heal = Convert.ToInt32(Console.ReadLine());
+
+                life = life - damage + heal;
+
+                if (life > maxLife)
+                {
+                    life = maxLife;
+                }
+
+                PrintLifeLine(life);
+
                 if(life <= 0)
                 {
                     isWork = false;
@@ -24,16 +36,10 @@ namespace Project_2
             }
         }
 
-        static int LifeLineOutput(int damage, int heal, int life)
+        static void PrintLifeLine(int life)
         {
             int arraySize = 12;
             char[] healtBar = new char[arraySize];
-            life = life - damage + heal;
-            if(life > 10)
-            {
-                life = 10;
-            }
-
             Console.Write("[");
 
             for (int i = 1; i < healtBar.Length - 1; i++)
@@ -48,7 +54,6 @@ namespace Project_2
                 }
             }
             Console.Write("]");
-            return life;
         }
     }
 }
