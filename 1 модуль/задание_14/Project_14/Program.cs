@@ -10,8 +10,9 @@ namespace Project_14
             double usdMoney = 100;
             double eurMoney = 100;
             double usdInRub = 60.37;
-            double eurInRub = 60.22;
             double usdInEur = 0.99;
+            double eurInRub = 60.22;
+       //     double eurInUsd = 
             string buy = "buy";
             string sell = "sell";
             string currencyUSD = "usd";
