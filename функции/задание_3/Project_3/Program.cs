@@ -6,27 +6,25 @@ namespace Project_3
     {
         public static void Main(string[] args)
         {
-            ConversionNumber();   
+            GetNumber();   
         }
 
-        static void ConversionNumber()
+        static void GetNumber()
         {
            string line;
-           bool conversionSucceeded = true;
-           bool success;
+           bool isConversionSucceeded = true;
+           bool isSuccess;
            int number;
 
-           while (conversionSucceeded)
+           while (isConversionSucceeded)
            {
                 Console.Write("введите целое число - ");
                 line = Console.ReadLine();
-
-
-                success = int.TryParse(line, out number);
-                if (success)
+                iSsuccess = int.TryParse(line, out number);
+                if (isSuccess)
                 {
                     Console.WriteLine($"строка {line} успешно конвертирован в число - {number} ");
-                    conversionSucceeded = false;
+                    isConversionSucceeded = false;
                 }
                 else
                 {
