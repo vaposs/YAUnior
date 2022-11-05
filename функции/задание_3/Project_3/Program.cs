@@ -20,7 +20,7 @@ namespace Project_3
            {
                 Console.Write("введите целое число - ");
                 line = Console.ReadLine();
-                iSsuccess = int.TryParse(line, out number);
+                isSuccess = int.TryParse(line, out number);
                 if (isSuccess)
                 {
                     Console.WriteLine($"строка {line} успешно конвертирован в число - {number} ");
