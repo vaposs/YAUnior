@@ -21,7 +21,6 @@ namespace Project_4
             Console.Write("Введите размер поля - ");
             size = GetNumber();
             fild = new char[size, size];
-
             GetRandomNumber(size);
 
             while (OverGame)
@@ -40,8 +39,8 @@ namespace Project_4
                     }
                     isEnableCoin = true;
                 }
-                PrintArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY);
 
+                PrintArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY);
                 Console.WriteLine($"счет - {score}");
                 move--;
                 Console.Write($"Осталсь ходов - {move}");
@@ -76,6 +75,7 @@ namespace Project_4
                     default:
                         break;
                 }
+
                 if(positionCoinX == heroPositionX && positionCoinY == heroPositionY)
                 {
                     score++;
