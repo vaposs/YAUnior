@@ -40,12 +40,15 @@ namespace Project_4
                     isEnableCoin = true;
                 }
 
-                PrintArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY);
+                FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY);
+                PrintArray(fild);
                 Console.WriteLine($"счет - {score}");
                 move--;
                 Console.Write($"Осталсь ходов - {move}");
-                ConsoleKeyInfo charKey = Console.ReadKey();
 
+
+
+                ConsoleKeyInfo charKey = Console.ReadKey();
                 switch (charKey.Key)
                 {
                     case ConsoleKey.UpArrow:
@@ -87,7 +90,7 @@ namespace Project_4
         }
 
 
-        static void PrintArray(char[,] fild,uint size, uint positionCoinX, uint positionCoinY, int heroPositionX, int heroPositionY)
+        static void FillArray(char[,] fild,uint size, uint positionCoinX, uint positionCoinY, int heroPositionX, int heroPositionY)
         {
             for (int i = 0; i < fild.GetLength(0); i++)
             {
@@ -113,6 +116,16 @@ namespace Project_4
                     {
                         fild[i, j] = ' ';
                     }
+                }
+            }
+        }
+
+        static void PrintArray(char[,] fild)
+        {
+            for (int i = 0; i < fild.GetLength(0); i++)
+            {
+                for (int j = 0; j < fild.GetLength(1); j++)
+                {
                     Console.Write(fild[i, j]);
                 }
                 Console.WriteLine("");

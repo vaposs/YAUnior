@@ -10,14 +10,13 @@ namespace Project_5
             
             Console.Write("Введите размер масива - ");
             size = GetNumber();
-            int[] temporaryArray = new int[size];
-            int[] mixingArray;
+            int[] array = new int[size];
 
-            FillLine(temporaryArray);
-            PrintArray(temporaryArray);
-            mixingArray = Shuffle(temporaryArray);
+            FillLine(array);
+            PrintArray(array);
+            Shuffle(array);
             Console.WriteLine();
-            PrintArray(mixingArray);
+            PrintArray(array);
         }
 
         static uint GetNumber()
@@ -44,13 +43,12 @@ namespace Project_5
             return number;
         }
 
-        static int[] FillLine(int[] array)
+        static void FillLine(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = i;
             }
-            return array;
         }
 
         static void PrintArray(int[] array)
@@ -61,22 +59,21 @@ namespace Project_5
             }
         }
 
-        static int[] Shuffle(int[] array)
+        static void Shuffle(int[] array)
         {
             int temporaryNumber;
             int temporaryNumber2;
             int maxRandom = array.Length;
             int minRandom = 1;
-            Random rand = new Random();
+            Random randomNumber = new Random();
 
             for (int i = 0; i < array.Length; i ++)
             {
                 temporaryNumber = array[i];
-                temporaryNumber2 = rand.Next(minRandom, maxRandom);
+                temporaryNumber2 = randomNumber.Next(minRandom, maxRandom);
                 array[i]= array[temporaryNumber2];
                 array[temporaryNumber2] = temporaryNumber;
             }
-            return array;
         }
     }
 }
