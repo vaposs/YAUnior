@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 
 namespace Project_1
 {
@@ -11,7 +10,7 @@ namespace Project_1
             int line = 1;
             int number = 1;
 
-            string[,] fullDossier = new string[line,column];
+            string[,] fullDossier = new string[line, column];
             const string addDossier = "add";
             const string printDossier = "print";
             const string deleteDossier = "delete";
@@ -19,6 +18,8 @@ namespace Project_1
             const string exitProgram = "exit";
             string command;
             bool isWork = true;
+
+            FillFirstLine(fullDossier);
 
             while (isWork)
             {
@@ -29,99 +30,89 @@ namespace Project_1
                 switch (command.ToLower())
                 {
                     case addDossier:
-                        Console.Write("введите ФИО и должность через пробел - ");
-                        string newDossier = Console.ReadLine();
-                        string[] word = newDossier.Split(' ');
-                        string[,] tempArray = new string[(fullDossier.GetLength(0) + 1), fullDossier.GetLength(1)];
-
-
+                        AddDossier(fullDossier);
                         break;
-
-
-
-
-
-                        /*
-
-                        
-                        
-
-                        for (int i = 0; i < fullDossier.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < fullDossier.GetLength(1); j++)
-                            {
-                                tempArray[i, j] = fullDossier[i, j];
-                            }
-                        }
-                        fullDossier = tempArray;
-
-                        for (int i = 0; i < fullDossier.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < fullDossier.GetLength(1); j++)
-                            {
-                                fullDossier[fullDossier.GetLength(0) - 1, j] = word[j];
-                            }
-                        }
-                        break;
-
-                        */
-
                     case printDossier:
-                        for (int i = 0; i < fullDossier.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < fullDossier.GetLength(1); j++)
-                            {
-                                if(j == 0)
-                                {
-                                    fullDossier[i, j] = Convert.ToString(number);
-                                    number++;
-
-                                }
-                                else if(i == 0 && j == 1)
-                                {
-                                    Console.Write(" ФИО - ");
-                                }
-                                else if(i == 0 && j == 2)
-                                {
-                                    Console.Write("ДОЛЖНОСТЬ");
-                                }
-                                else if(j == fullDossier.GetLength(1) - 1)
-                                {
-                                    Console.Write(fullDossier[i, j]);
-                                }
-                                else
-                                {
-                                    Console.Write(fullDossier[i, j] + " - ");
-                                }
-                            }
-                            Console.Write("\n");
-                        }
+                        PrintDossier(fullDossier, number);
                         break;
-                    case deleteDossier://удалить выбрано досье
+                    case deleteDossier:
+                        DeleteDossier();
                         break;
                     case seachDossier:
-                        Console.Write("Укажите ФИО искаемого досье - ");
-                        string findDossier = Console.ReadLine();
-                        string[] dossier = findDossier.Split(' ');
-
-                        for (int i = 0; i < fullDossier.GetLength(0); i++)
-                        {
-                            if(fullDossier[i,0] == dossier[i])
-                            {
-
-                            }
-                        }
-
+                        SeachDossier(fullDossier);
                         break;
                     case exitProgram:
                         isWork = false;
                         break;
                 }
-
-                Console.ReadKey();
                 Console.Clear();
             }
-            Console.WriteLine("Hello World!");
+        }
+
+        static void AddDossier(string[,] fullDossier)
+        {
+            Console.Write("введите ФИО и должность через пробел - ");
+            string newDossier = Console.ReadLine();
+            string[] word = newDossier.Split(' ');
+            string[,] tempArray = new string[(fullDossier.GetLength(0) + 1), fullDossier.GetLength(1)];
+
+            for (int i = 0; i < fullDossier.GetLength(0); i++)
+            {
+                for (int j = 0; j < fullDossier.GetLength(1); j++)
+                {
+                    tempArray[i, j] = fullDossier[i, j];
+                }
+            }
+            fullDossier = tempArray;
+
+            for (int i = 0; i < fullDossier.GetLength(0); i++)
+            {
+                for (int j = 0; j < fullDossier.GetLength(1); j++)
+                {
+
+
+                    fullDossier[fullDossier.GetLength(0), j] = word[j];
+                }
+            }
+        }
+
+        static void PrintDossier(string[,] fullDossier, int number)
+        {
+            for (int i = 0; i < fullDossier.GetLength(0); i++)
+            {
+                for (int j = 0; j < fullDossier.GetLength(1); j++)
+                {
+                    Console.Write(fullDossier[i,j]);
+                }
+                Console.Write("\n");
+            }
+        }
+
+        static void DeleteDossier()
+        {
+
+        }
+
+        static void SeachDossier(string[,] fullDossier)
+        {
+            Console.Write("Укажите ФИО искаемого досье - ");
+            string findDossier = Console.ReadLine();
+            string[] dossier = findDossier.Split(' ');
+
+            for (int i = 0; i < fullDossier.GetLength(0); i++)
+            {
+                if (fullDossier[i, 0] == dossier[i])
+                {
+
+                }
+            }
+        }
+
+        static void FillFirstLine(string[,] fullDossier)
+        {
+            fullDossier[0, 0] = " №_";
+            fullDossier[0, 1] = "_фамилия/имя/отчество_";
+            fullDossier[0, 2] = "_ДОЛЖНОСТЬ";
         }
     }
 }

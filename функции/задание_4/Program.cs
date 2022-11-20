@@ -30,7 +30,6 @@ namespace Project_4
             Console.Write("Введите размер поля - ");
             size = GetNumber();
             fild = new char[size, size];
-            GetRandomNumber(size);
 
             while (OverGame)
             {
@@ -51,7 +50,8 @@ namespace Project_4
 
                 FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY, coinIcon, blockIcon, heroIcon, emptyBlock);
                 PrintArray(fild);
-                PrintScoreAndMove(score, ref move);
+                PrintScore(score);
+                PrintMove(ref move);
                 Move(fild, ref heroPositionX, ref heroPositionY, blockIcon);
 
                 if (positionCoinX == heroPositionX && positionCoinY == heroPositionY)
@@ -60,40 +60,40 @@ namespace Project_4
                     move = move + coinPrice;
                     isEnableCoin = false;
                 }
-                OverGame = EndGame(move, OverGame, score);
+                OverGame = GameOver(move, OverGame, score);
             }
         }
 
         static void Move(char[,] fild, ref int heroPositionX, ref int heroPositionY, char blockIcon)
         {
-            const ConsoleKey moveUp = ConsoleKey.UpArrow;
-            const ConsoleKey moveDown = ConsoleKey.DownArrow;
-            const ConsoleKey moveRight = ConsoleKey.RightArrow;
-            const ConsoleKey moveLeft = ConsoleKey.LeftArrow;
+            const ConsoleKey MoveUp = ConsoleKey.UpArrow;
+            const ConsoleKey MoveDown = ConsoleKey.DownArrow;
+            const ConsoleKey MoveRight = ConsoleKey.RightArrow;
+            const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
 
             ConsoleKeyInfo charKey = Console.ReadKey();
 
             switch (charKey.Key)
             {
-                case moveUp:
+                case MoveUp:
                     if (fild[heroPositionX - 1, heroPositionY] != blockIcon)
                     {
                         heroPositionX--;
                     }
                     break;
-                case moveDown:
+                case MoveDown:
                     if (fild[heroPositionX + 1, heroPositionY] != blockIcon)
                     {
                         heroPositionX++;
                     }
                     break;
-                case moveLeft:
+                case MoveLeft:
                     if (fild[heroPositionX, heroPositionY - 1] != blockIcon)
                     {
                         heroPositionY--;
                     }
                     break;
-                case moveRight:
+                case MoveRight:
                     if (fild[heroPositionX, heroPositionY + 1] != blockIcon)
                     {
                         heroPositionY++;
@@ -183,7 +183,7 @@ namespace Project_4
             return number;
         }
 
-        static bool EndGame(int move, bool OverGame, int score)
+        static bool GameOver(int move, bool OverGame, int score)
         {
             if (move <= 1)
             {
@@ -194,9 +194,13 @@ namespace Project_4
             return OverGame;
         }
 
-        static void PrintScoreAndMove(int score, ref int move)
+        static void PrintScore(int score)
         {
             Console.WriteLine($"счет - {score}");
+        }
+
+        static void PrintMove(ref int move)
+        {
             move--;
             Console.Write($"Осталсь ходов - {move}");
         }

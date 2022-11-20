@@ -8,3 +8,5 @@
 /Users/walter/GitHub/YAUnior/функции/задание_4/obj/Debug/Project_4.csproj.CoreCompileInputs.cache
 /Users/walter/GitHub/YAUnior/функции/задание_4/obj/Debug/Project_4.exe
 /Users/walter/GitHub/YAUnior/функции/задание_4/obj/Debug/Project_4.pdb
+/Users/walter/GitHub/YAUnior/функции/задание_4/bin/Debug/Project_4.exe
+/Users/walter/GitHub/YAUnior/функции/задание_4/bin/Debug/Project_4.pdb
