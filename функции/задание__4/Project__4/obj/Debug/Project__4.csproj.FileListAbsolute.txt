@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/bin/Debug/Project__4.exe
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/bin/Debug/Project__4.pdb
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/obj/Debug/Project__4.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/obj/Debug/Project__4.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/obj/Debug/Project__4.exe
+/Users/walter/GitHub/YAUnior/функции/задание__4/Project__4/obj/Debug/Project__4.pdb
