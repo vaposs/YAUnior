@@ -6,6 +6,11 @@ namespace Project_4
     {
         public static void Main(string[] args)
         {
+            Start();
+        }
+
+        static void Start()
+        {
             int move = 10;
             int coinPrice = 5;
             int score = 0;
@@ -17,6 +22,10 @@ namespace Project_4
             bool isEnableCoin = false;
             bool OverGame = true;
             uint size = 1;
+            char blockIcon = '#';
+            char heroIcon = '@';
+            char coinIcon = '0';
+            char emptyBlock = ' ';
 
             Console.Write("Введите размер поля - ");
             size = GetNumber();
@@ -32,7 +41,7 @@ namespace Project_4
                     positionCoinX = GetRandomNumber(size);
                     positionCoinY = GetRandomNumber(size);
 
-                    if(heroPositionX == positionCoinX && heroPositionY == positionCoinY)
+                    if (heroPositionX == positionCoinX && heroPositionY == positionCoinY)
                     {
                         positionCoinX = GetRandomNumber(size);
                         positionCoinY = GetRandomNumber(size);
@@ -40,46 +49,12 @@ namespace Project_4
                     isEnableCoin = true;
                 }
 
-                FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY);
+                FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY, coinIcon, blockIcon, heroIcon, emptyBlock);
                 PrintArray(fild);
-                Console.WriteLine($"счет - {score}");
-                move--;
-                Console.Write($"Осталсь ходов - {move}");
+                PrintScoreAndMove(score, ref move);
+                Move(fild, ref heroPositionX, ref heroPositionY, blockIcon);
 
-
-
-                ConsoleKeyInfo charKey = Console.ReadKey();
-                switch (charKey.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        if(fild[heroPositionX - 1,heroPositionY] != '#')
-                        {
-                            heroPositionX--;
-                        }
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (fild[heroPositionX + 1, heroPositionY] != '#')
-                        {
-                            heroPositionX++;
-                        }
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        if (fild[heroPositionX, heroPositionY - 1] != '#')
-                        {
-                            heroPositionY--;
-                        }
-                        break;
-                    case ConsoleKey.RightArrow:
-                        if (fild[heroPositionX, heroPositionY + 1] != '#')
-                        {
-                            heroPositionY++;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                if(positionCoinX == heroPositionX && positionCoinY == heroPositionY)
+                if (positionCoinX == heroPositionX && positionCoinY == heroPositionY)
                 {
                     score++;
                     move = move + coinPrice;
@@ -89,8 +64,47 @@ namespace Project_4
             }
         }
 
+        static void Move(char[,] fild, ref int heroPositionX, ref int heroPositionY, char blockIcon)
+        {
+            const ConsoleKey moveUp = ConsoleKey.UpArrow;
+            const ConsoleKey moveDown = ConsoleKey.DownArrow;
+            const ConsoleKey moveRight = ConsoleKey.RightArrow;
+            const ConsoleKey moveLeft = ConsoleKey.LeftArrow;
 
-        static void FillArray(char[,] fild,uint size, uint positionCoinX, uint positionCoinY, int heroPositionX, int heroPositionY)
+            ConsoleKeyInfo charKey = Console.ReadKey();
+
+            switch (charKey.Key)
+            {
+                case moveUp:
+                    if (fild[heroPositionX - 1, heroPositionY] != blockIcon)
+                    {
+                        heroPositionX--;
+                    }
+                    break;
+                case moveDown:
+                    if (fild[heroPositionX + 1, heroPositionY] != blockIcon)
+                    {
+                        heroPositionX++;
+                    }
+                    break;
+                case moveLeft:
+                    if (fild[heroPositionX, heroPositionY - 1] != blockIcon)
+                    {
+                        heroPositionY--;
+                    }
+                    break;
+                case moveRight:
+                    if (fild[heroPositionX, heroPositionY + 1] != blockIcon)
+                    {
+                        heroPositionY++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static void FillArray(char[,] fild, uint size, uint positionCoinX, uint positionCoinY, int heroPositionX, int heroPositionY, char coinIcon, char blockIcon, char heroIcon, char emptyBlock)
         {
             for (int i = 0; i < fild.GetLength(0); i++)
             {
@@ -98,23 +112,23 @@ namespace Project_4
                 {
                     if (positionCoinX == i && positionCoinY == j)
                     {
-                        fild[i, j] = '0';
+                        fild[i, j] = coinIcon;
                     }
                     else if (i == 0 || j == 0)
                     {
-                        fild[i, j] = '#';
+                        fild[i, j] = blockIcon;
                     }
                     else if (i == (size - 1) || j == (size - 1))
                     {
-                        fild[i, j] = '#';
+                        fild[i, j] = blockIcon;
                     }
                     else if (i == heroPositionX && j == heroPositionY)
                     {
-                        fild[i, j] = '@';
+                        fild[i, j] = heroIcon;
                     }
                     else
                     {
-                        fild[i, j] = ' ';
+                        fild[i, j] = emptyBlock;
                     }
                 }
             }
@@ -164,7 +178,8 @@ namespace Project_4
             int minRandomInt = Convert.ToInt32(minRandom);
             int maxRandomInt = Convert.ToInt32(maxRandom);
             Random randomNumber = new Random();
-            number =Convert.ToUInt32(randomNumber.Next(minRandomInt, maxRandomInt));
+
+            number = Convert.ToUInt32(randomNumber.Next(minRandomInt, maxRandomInt));
             return number;
         }
 
@@ -177,6 +192,13 @@ namespace Project_4
                 Console.WriteLine($"Игра закончена, ваш счет - {score}");
             }
             return OverGame;
+        }
+
+        static void PrintScoreAndMove(int score, ref int move)
+        {
+            Console.WriteLine($"счет - {score}");
+            move--;
+            Console.Write($"Осталсь ходов - {move}");
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿<Properties StartupConfiguration="{D5A8DF65-7A56-416C-BB21-2AC12C2AE7E7}|Default">
   <MonoDevelop.Ide.ItemProperties.Project__4 PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../функции/задание_4/Program.cs">
+    <Files>
+      <File FileName="../../../функции/задание_4/Program.cs" Line="76" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
