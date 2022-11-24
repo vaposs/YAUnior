@@ -11,7 +11,7 @@ namespace Project_4
 
         static void Start()
         {
-            int move = 10;
+            int movesLeft;
             int coinPrice = 5;
             int score = 0;
             char[,] fild;
@@ -29,6 +29,7 @@ namespace Project_4
 
             Console.Write("Введите размер поля - ");
             size = GetNumber();
+            movesLeft = Convert.ToInt32(size + size);
             fild = new char[size, size];
 
             while (OverGame)
@@ -51,16 +52,16 @@ namespace Project_4
                 FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY, coinIcon, blockIcon, heroIcon, emptyBlock);
                 PrintArray(fild);
                 PrintScore(score);
-                PrintMove(ref move);
+                PrintMove(ref movesLeft);
                 Move(fild, ref heroPositionX, ref heroPositionY, blockIcon);
 
                 if (positionCoinX == heroPositionX && positionCoinY == heroPositionY)
                 {
                     score++;
-                    move = move + coinPrice;
+                    movesLeft = movesLeft + coinPrice;
                     isEnableCoin = false;
                 }
-                OverGame = GameOver(move, OverGame, score);
+                OverGame = GameOver(movesLeft, OverGame, score);
             }
         }
 
@@ -76,28 +77,16 @@ namespace Project_4
             switch (charKey.Key)
             {
                 case MoveUp:
-                    if (fild[heroPositionX - 1, heroPositionY] != blockIcon)
-                    {
-                        heroPositionX--;
-                    }
+                    MoveUP(fild,ref heroPositionX, heroPositionY, blockIcon);
                     break;
                 case MoveDown:
-                    if (fild[heroPositionX + 1, heroPositionY] != blockIcon)
-                    {
-                        heroPositionX++;
-                    }
+                    MoveDOWN(fild, ref heroPositionX, heroPositionY, blockIcon);
                     break;
                 case MoveLeft:
-                    if (fild[heroPositionX, heroPositionY - 1] != blockIcon)
-                    {
-                        heroPositionY--;
-                    }
+                    MoveLEFT(fild, heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 case MoveRight:
-                    if (fild[heroPositionX, heroPositionY + 1] != blockIcon)
-                    {
-                        heroPositionY++;
-                    }
+                    MoveRIGHT(fild, heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 default:
                     break;
@@ -199,10 +188,47 @@ namespace Project_4
             Console.WriteLine($"счет - {score}");
         }
 
-        static void PrintMove(ref int move)
+        static void PrintMove(ref int movesLeft)
         {
-            move--;
-            Console.Write($"Осталсь ходов - {move}");
+            movesLeft--;
+            Console.Write($"Осталсь ходов - {movesLeft}");
+        }
+
+        static int MoveUP(char[,] fild,ref int heroPositionX, int heroPositionY, char blockIcon)
+        {
+            if (fild[heroPositionX - 1, heroPositionY] != blockIcon)
+            {
+                heroPositionX--;
+            }
+            return heroPositionX;
+        }
+
+        static int MoveDOWN(char[,] fild, ref int heroPositionX, int heroPositionY, char blockIcon)
+        {
+            if (fild[heroPositionX + 1, heroPositionY] != blockIcon)
+            {
+                return heroPositionX++;
+            }
+            return heroPositionX;
+        }
+
+        static int MoveLEFT(char[,] fild, int heroPositionX, ref int heroPositionY, char blockIcon)
+        {
+            if (fild[heroPositionX, heroPositionY - 1] != blockIcon)
+            {
+                return heroPositionY--;
+            }
+            return heroPositionY;
+        }
+
+
+        static int MoveRIGHT(char[,] fild, int heroPositionX, ref int heroPositionY, char blockIcon)
+        {
+            if (fild[heroPositionX, heroPositionY + 1] != blockIcon)
+            {
+                return heroPositionY++;
+            }
+            return heroPositionY;
         }
     }
 }

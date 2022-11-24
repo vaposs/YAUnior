@@ -30,7 +30,7 @@ namespace Project_1
                 switch (command.ToLower())
                 {
                     case addDossier:
-                        AddDossier(fullDossier);
+                        AddDossier(ref fullDossier);
                         break;
                     case printDossier:
                         PrintDossier(fullDossier, number);
@@ -49,9 +49,9 @@ namespace Project_1
             }
         }
 
-        static void AddDossier(string[,] fullDossier)
+        static void AddDossier(ref string[,] fullDossier)
         {
-            Console.Write("введите ФИО и должность через пробел - ");
+            Console.Write("введите Имя и Должность через пробел - ");
             string newDossier = Console.ReadLine();
             string[] word = newDossier.Split(' ');
             string[,] tempArray = new string[(fullDossier.GetLength(0) + 1), fullDossier.GetLength(1)];
@@ -69,9 +69,14 @@ namespace Project_1
             {
                 for (int j = 0; j < fullDossier.GetLength(1); j++)
                 {
-
-
-                    fullDossier[fullDossier.GetLength(0), j] = word[j];
+                    if(i != 0 && j == 0)
+                    {
+                        fullDossier[i, j] =  Convert.ToString(i);
+                    }
+                    else if(j != 0)
+                    {
+                        fullDossier[fullDossier.GetLength(0)- 1, j] = word[j - 1];
+                    }
                 }
             }
         }
@@ -83,9 +88,11 @@ namespace Project_1
                 for (int j = 0; j < fullDossier.GetLength(1); j++)
                 {
                     Console.Write(fullDossier[i,j]);
+                    Console.Write("      ");
                 }
                 Console.Write("\n");
             }
+            Console.ReadKey();
         }
 
         static void DeleteDossier()
@@ -95,24 +102,35 @@ namespace Project_1
 
         static void SeachDossier(string[,] fullDossier)
         {
-            Console.Write("Укажите ФИО искаемого досье - ");
+            Console.Write("Укажите имя искаемого досье - ");
             string findDossier = Console.ReadLine();
-            string[] dossier = findDossier.Split(' ');
 
             for (int i = 0; i < fullDossier.GetLength(0); i++)
             {
-                if (fullDossier[i, 0] == dossier[i])
+                if (fullDossier[i, 1] == findDossier)
                 {
-
+                    for (int j = 0; j < fullDossier.GetLength(1); j++)
+                    {
+                        Console.Write(fullDossier[i,j] + "    ");
+                    }
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("досье с такой фамилией нету.");
+                    Console.ReadKey();
                 }
             }
         }
 
         static void FillFirstLine(string[,] fullDossier)
         {
-            fullDossier[0, 0] = " №_";
-            fullDossier[0, 1] = "_фамилия/имя/отчество_";
-            fullDossier[0, 2] = "_ДОЛЖНОСТЬ";
+            fullDossier[0, 0] = "№";
+            fullDossier[0, 1] = "   ИМЯ";
+            fullDossier[0, 2] = "   ДОЛЖНОСТЬ";
         }
     }
 }
+/*
+3) удалить досье (Массивы уменьшаются на один элемент. Нужны дополнительные проверки, чтобы не возникало ошибок)
+*/
