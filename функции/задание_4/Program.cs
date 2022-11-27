@@ -15,8 +15,8 @@ namespace Project_4
             int coinPrice = 5;
             int score = 0;
             char[,] fild;
-            int heroPositionX = 1;
-            int heroPositionY = 1;
+            int heroPositionX = 4;
+            int heroPositionY = 4;
             uint positionCoinX = 1;
             uint positionCoinY = 1;
             bool isEnableCoin = false;
@@ -36,18 +36,7 @@ namespace Project_4
             {
                 Console.Clear();
 
-                if (isEnableCoin == false)
-                {
-                    positionCoinX = GetRandomNumber(size);
-                    positionCoinY = GetRandomNumber(size);
-
-                    if (heroPositionX == positionCoinX && heroPositionY == positionCoinY)
-                    {
-                        positionCoinX = GetRandomNumber(size);
-                        positionCoinY = GetRandomNumber(size);
-                    }
-                    isEnableCoin = true;
-                }
+                isEnableCoin =  GetNextCoin(isEnableCoin, ref positionCoinX, ref positionCoinY, heroPositionX, heroPositionY, size);
 
                 FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY, coinIcon, blockIcon, heroIcon, emptyBlock);
                 PrintArray(fild);
@@ -77,19 +66,39 @@ namespace Project_4
             switch (charKey.Key)
             {
                 case MoveUp:
-                    MoveUP(fild,ref heroPositionX, heroPositionY, blockIcon);
+                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey ,fild,ref heroPositionX,ref heroPositionY, blockIcon);
                     break;
                 case MoveDown:
-                    MoveDOWN(fild, ref heroPositionX, heroPositionY, blockIcon);
+                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 case MoveLeft:
-                    MoveLEFT(fild, heroPositionX, ref heroPositionY, blockIcon);
+                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 case MoveRight:
-                    MoveRIGHT(fild, heroPositionX, ref heroPositionY, blockIcon);
+                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 default:
                     break;
+            }
+        }
+
+        static void GetMoves(ConsoleKey MoveUp, ConsoleKey MoveDown, ConsoleKey MoveLeft, ConsoleKey MoveRight, ConsoleKeyInfo charKey , char[,] fild,ref int heroPositionX,ref  int heroPositionY, char blockIcon)
+        {
+            if ((fild[heroPositionX - 1, heroPositionY] != blockIcon)&&(MoveUp == charKey.Key))
+            {
+                heroPositionX--;
+            }
+            else if ((fild[heroPositionX + 1, heroPositionY] != blockIcon)&&(MoveDown == charKey.Key))
+            {
+                 heroPositionX++;
+            }
+            else if ((fild[heroPositionX, heroPositionY - 1] != blockIcon)&&(MoveLeft == charKey.Key))
+            {
+                  heroPositionY--;
+            }
+            else if ((fild[heroPositionX, heroPositionY + 1] != blockIcon)&&( MoveRight == charKey.Key))
+            {
+                  heroPositionY++;
             }
         }
 
@@ -194,41 +203,21 @@ namespace Project_4
             Console.Write($"Осталсь ходов - {movesLeft}");
         }
 
-        static int MoveUP(char[,] fild,ref int heroPositionX, int heroPositionY, char blockIcon)
+        static bool GetNextCoin(bool isEnableCoin, ref uint positionCoinX, ref uint positionCoinY, int heroPositionX, int heroPositionY, uint size)
         {
-            if (fild[heroPositionX - 1, heroPositionY] != blockIcon)
+            if (isEnableCoin == false)
             {
-                heroPositionX--;
-            }
-            return heroPositionX;
-        }
+                positionCoinX = GetRandomNumber(size);
+                positionCoinY = GetRandomNumber(size);
 
-        static int MoveDOWN(char[,] fild, ref int heroPositionX, int heroPositionY, char blockIcon)
-        {
-            if (fild[heroPositionX + 1, heroPositionY] != blockIcon)
-            {
-                return heroPositionX++;
+                if (heroPositionX == positionCoinX && heroPositionY == positionCoinY)
+                {
+                    positionCoinX = GetRandomNumber(size);
+                    positionCoinY = GetRandomNumber(size);
+                }
+                isEnableCoin = true;
             }
-            return heroPositionX;
-        }
-
-        static int MoveLEFT(char[,] fild, int heroPositionX, ref int heroPositionY, char blockIcon)
-        {
-            if (fild[heroPositionX, heroPositionY - 1] != blockIcon)
-            {
-                return heroPositionY--;
-            }
-            return heroPositionY;
-        }
-
-
-        static int MoveRIGHT(char[,] fild, int heroPositionX, ref int heroPositionY, char blockIcon)
-        {
-            if (fild[heroPositionX, heroPositionY + 1] != blockIcon)
-            {
-                return heroPositionY++;
-            }
-            return heroPositionY;
+            return isEnableCoin;
         }
     }
 }
