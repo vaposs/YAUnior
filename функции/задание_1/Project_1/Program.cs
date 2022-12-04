@@ -36,7 +36,7 @@ namespace Project_1
                         PrintDossier(fullDossier, number);
                         break;
                     case deleteDossier:
-                        DeleteDossier();
+                        DeleteDossier(ref fullDossier);
                         break;
                     case seachDossier:
                         SeachDossier(fullDossier);
@@ -75,6 +75,9 @@ namespace Project_1
                     }
                     else if(j != 0)
                     {
+
+
+
                         fullDossier[fullDossier.GetLength(0)- 1, j] = word[j - 1];
                     }
                 }
@@ -95,13 +98,58 @@ namespace Project_1
             Console.ReadKey();
         }
 
-        static void DeleteDossier()
+        static void DeleteDossier(ref string[,] fullDossier)
         {
+            int deleteDossier;
+            bool nextDosser = true;
 
+            if (fullDossier.GetLength(0) <= 1)
+            {
+                Console.Write("в списке нету досье");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.Write("Укажите номер строки для удаления - ");
+                deleteDossier = Convert.ToInt32(Console.ReadLine());
+
+                if (deleteDossier > fullDossier.GetLength(0) || deleteDossier < 1)
+                {
+                    Console.Write("Такого досье нету.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    string[,] tempArray = new string[fullDossier.GetLength(0) - 1, fullDossier.GetLength(1)];
+
+                    for (int i = 0; i < fullDossier.GetLength(0); i++)
+                    {
+                        if(i == deleteDossier && nextDosser == true)
+                        {
+                            i++;
+                            nextDosser = false;
+                        }
+                        for (int j = 0; j < fullDossier.GetLength(1); j++)
+                        {
+                            if (nextDosser == false)
+                            {
+                                tempArray[i - 1, j] = fullDossier[i, j];
+                            }
+                            else
+                            {
+                                tempArray[i, j] = fullDossier[i, j];
+                            }
+                        }
+                    }
+                    fullDossier = tempArray;
+                }
+            }
         }
 
         static void SeachDossier(string[,] fullDossier)
         {
+            bool founfDossier = false;
+
             Console.Write("Укажите имя искаемого досье - ");
             string findDossier = Console.ReadLine();
 
@@ -112,14 +160,17 @@ namespace Project_1
                     for (int j = 0; j < fullDossier.GetLength(1); j++)
                     {
                         Console.Write(fullDossier[i,j] + "    ");
+                        
                     }
+                    founfDossier = true;
                     Console.ReadKey();
                 }
-                else
-                {
-                    Console.WriteLine("досье с такой фамилией нету.");
-                    Console.ReadKey();
-                }
+            }
+
+            if (founfDossier == false)
+            {
+                Console.WriteLine("досье с такой фамилией нету.");
+                Console.ReadKey();
             }
         }
 
@@ -131,6 +182,3 @@ namespace Project_1
         }
     }
 }
-/*
-3) удалить досье (Массивы уменьшаются на один элемент. Нужны дополнительные проверки, чтобы не возникало ошибок)
-*/

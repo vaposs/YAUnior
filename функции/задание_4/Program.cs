@@ -20,7 +20,7 @@ namespace Project_4
             uint positionCoinX = 1;
             uint positionCoinY = 1;
             bool isEnableCoin = false;
-            bool OverGame = true;
+            bool isFinish = true;
             uint size = 1;
             char blockIcon = '#';
             char heroIcon = '@';
@@ -32,7 +32,7 @@ namespace Project_4
             movesLeft = Convert.ToInt32(size + size);
             fild = new char[size, size];
 
-            while (OverGame)
+            while (isFinish)
             {
                 Console.Clear();
 
@@ -50,7 +50,7 @@ namespace Project_4
                     movesLeft = movesLeft + coinPrice;
                     isEnableCoin = false;
                 }
-                OverGame = GameOver(movesLeft, OverGame, score);
+                isFinish = GameOver(movesLeft, isFinish, score);
             }
         }
 
@@ -61,20 +61,26 @@ namespace Project_4
             const ConsoleKey MoveRight = ConsoleKey.RightArrow;
             const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
 
+            int nextPositionX;
+            int nextPositionY;
             ConsoleKeyInfo charKey = Console.ReadKey();
 
             switch (charKey.Key)
             {
                 case MoveUp:
+                    nextPositionX = heroPositionX - 1;
                     GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey ,fild,ref heroPositionX,ref heroPositionY, blockIcon);
                     break;
                 case MoveDown:
+                    nextPositionX = heroPositionX + 1;
                     GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 case MoveLeft:
+                    nextPositionY = heroPositionY - 1;
                     GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 case MoveRight:
+                    nextPositionY = heroPositionY + 1;
                     GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
                     break;
                 default:
@@ -82,23 +88,11 @@ namespace Project_4
             }
         }
 
-        static void GetMoves(ConsoleKey MoveUp, ConsoleKey MoveDown, ConsoleKey MoveLeft, ConsoleKey MoveRight, ConsoleKeyInfo charKey , char[,] fild,ref int heroPositionX,ref  int heroPositionY, char blockIcon)
+        static void GetMoves(char[,] fild, int heroPositionX, int heroPositionY, char blokcIcon, ConsoleKey MoveUp, ConsoleKey MoveDown)
         {
-            if ((fild[heroPositionX - 1, heroPositionY] != blockIcon)&&(MoveUp == charKey.Key))
+            if()
             {
-                heroPositionX--;
-            }
-            else if ((fild[heroPositionX + 1, heroPositionY] != blockIcon)&&(MoveDown == charKey.Key))
-            {
-                 heroPositionX++;
-            }
-            else if ((fild[heroPositionX, heroPositionY - 1] != blockIcon)&&(MoveLeft == charKey.Key))
-            {
-                  heroPositionY--;
-            }
-            else if ((fild[heroPositionX, heroPositionY + 1] != blockIcon)&&( MoveRight == charKey.Key))
-            {
-                  heroPositionY++;
+
             }
         }
 
