@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
+using System.Collections.Specialized;
 
 namespace Project_1
 {
@@ -7,11 +8,11 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string addDossier = "add";
-            const string printDossier = "print";
-            const string deleteDossier = "delete";
-            const string seachDossier = "seach";
-            const string exitProgram = "exit";
+            const string AddDossier = "add";
+            const string PrintDossier = "print";
+            const string DeleteDossier = "delete";
+            const string SeachDossier = "seach";
+            const string ExitProgram = "exit";
             int sizeArray = 1;
             string[] name = new string[sizeArray];
             string[] profession = new string[sizeArray];
@@ -20,25 +21,25 @@ namespace Project_1
 
             while (isWork)
             {
-                Console.WriteLine($"Введите команду \n1.{addDossier}\n2.{printDossier}\n3.{deleteDossier}\n4.{seachDossier}\n5.{exitProgram}");
+                Console.WriteLine($"Введите команду \n1.{AddDossier}\n2.{PrintDossier}\n3.{DeleteDossier}\n4.{SeachDossier}\n5.{ExitProgram}");
                 Console.Write("\nВведите команду - ");
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
-                    case addDossier:
-                        AddDossier(ref name,ref profession);
+                    case AddDossier:
+                        AddDossierFunction(ref name,ref profession);
                         break;
-                    case printDossier:
-                        PrintDossier(ref name, ref profession);
+                    case PrintDossier:
+                        PrintDossierFunction(name, profession);
                         break;
-                    case deleteDossier:
-                        DeleteDossier(ref name, ref profession);
+                    case DeleteDossier:
+                        DeleteDossierFunction(ref name, ref profession);
                         break;
-                    case seachDossier:
-                        SeachDossier(ref name, ref profession);
+                    case SeachDossier:
+                        SeachDossierFunction(name, profession);
                         break;
-                    case exitProgram:
+                    case ExitProgram:
                         isWork = false;
                         break;
                 }
@@ -46,50 +47,25 @@ namespace Project_1
             }
         }
 
-        static void AddDossier(ref string[] name,ref string[] profession)
+        static void AddDossierFunction(ref string[] name,ref string[] profession)
         {
-            int sizeTempArray = 1;
-            string tempString;
-            string[] tempLine = new string[sizeTempArray];
-            string[] tempName = new string[name.Length + 1];
-            string[] tempProfession = new string[profession.Length + 1];
-            int fio = 0;
-            int profa = 1;
-            bool fineLine = true;
-
-            while (fineLine)
+            Console.Write("Введите ФИО: ");
+            ArrayAdd(ref name);
+            Console.Write("Введите професию: ");
+            ArrayAdd(ref profession);
+            for (int i = 0; i < name.Length - 1; i++)
             {
-                Console.Write("Введите фио и должность через дефис (-): ");
-                tempString = Console.ReadLine();
-
-                tempLine = tempString.Split('-');
-                if (tempLine.Length <= 1)
-                {
-                    Console.Write("повторите ввод строки в формате 'ФИО - ПРОФЕСИЯ'\n");
-                }
-                else
-                {
-                    name[name.Length - 1] = tempLine[fio];
-                    profession[profession.Length - 1] = tempLine[profa];
-                    fineLine = false;
-                }
+                Console.WriteLine(name[i]);
             }
-            for (int i = 0; i < name.Length; i++)
-            {
-                tempName[i] = name[i];
-                tempProfession[i] = profession[i];
-            }
-            name = tempName;
-            profession = tempProfession;
         }
 
-        static void PrintDossier(ref string[] name, ref string[] profession)   
+        static void PrintDossierFunction(string[] name, string[] profession)   
         {
             PrintFirstLine();
 
-            for (int i = 0; i < name.Length - 1; i ++)
+            for (int i = 1; i < name.Length; i ++)
             {
-                Console.Write($"{i + 1}.");
+                Console.Write($"{i}.");
                 Console.Write(name[i]);
                 Console.Write(" - ");
                 Console.Write(profession[i]);
@@ -98,7 +74,7 @@ namespace Project_1
             Console.ReadLine();
         }
 
-        static void DeleteDossier(ref string[] name, ref string[] profession)
+        static void DeleteDossierFunction(ref string[] name, ref string[] profession)
         {
             string deleteDossierString;
             int deleteDossierInt = 0;
@@ -159,12 +135,11 @@ namespace Project_1
             Console.ReadKey();
         }
 
-        static void SeachDossier(ref string[] name, ref string[] profession)
+        static void SeachDossierFunction(string[] name, string[] profession)
         {
-            int fioSize = 3;
+            int fioSize = 5;
             string seachDossier;
             string tempLine;
-            bool notDossier = false;
             string[] seachLine = new string[fioSize];
             
             if (name.Length == 1)
@@ -184,7 +159,7 @@ namespace Project_1
                     if (seachDossier == seachLine[0])
                     {
                         PrintFirstLine();
-                        Console.Write($"{i + 1}.");
+                        Console.Write($"{i}.");
                         Console.Write(name[i]);
                         Console.Write(" - ");
                         Console.Write(profession[i] + "\n");
@@ -199,6 +174,21 @@ namespace Project_1
             Console.Write("№");
             Console.Write("    ФИО    ");
             Console.Write("   професия   \n");
+        }
+
+        static void ArrayAdd(ref string[] array)
+        {
+            string[] tempArray = new string[array.Length + 1];
+
+            string tempLine = Console.ReadLine();
+
+            for (int i = 0; i < array.Length; i ++)
+            {
+                Console.WriteLine(tempArray[i]);
+                tempArray[i] = array[i];
+            }
+            array = tempArray;
+            array[array.Length - 1] = tempLine;
         }
     }
 }
