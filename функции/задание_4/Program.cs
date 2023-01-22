@@ -50,7 +50,7 @@ namespace Project_4
                     movesLeft = movesLeft + coinPrice;
                     isEnableCoin = false;
                 }
-                isFinish = GameOver(movesLeft, isFinish, score);
+                isFinish = GameIsOver(movesLeft, isFinish, score);
             }
         }
 
@@ -61,38 +61,51 @@ namespace Project_4
             const ConsoleKey MoveRight = ConsoleKey.RightArrow;
             const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
 
-            int nextPositionX;
-            int nextPositionY;
             ConsoleKeyInfo charKey = Console.ReadKey();
 
             switch (charKey.Key)
             {
                 case MoveUp:
-                    nextPositionX = heroPositionX - 1;
-                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey ,fild,ref heroPositionX,ref heroPositionY, blockIcon);
+                    heroPositionX--;
+
+                    if(fild[heroPositionX,heroPositionY] == blockIcon)
+                    {
+                        heroPositionX = heroPositionX + 1;
+                    }
                     break;
                 case MoveDown:
-                    nextPositionX = heroPositionX + 1;
-                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
+                    heroPositionX++;
+
+                    if (fild[heroPositionX, heroPositionY] == blockIcon)
+                    {
+                        heroPositionX = heroPositionX - 1;
+                    }
                     break;
                 case MoveLeft:
-                    nextPositionY = heroPositionY - 1;
-                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
+                    heroPositionY--;
+
+                    if (fild[heroPositionX, heroPositionY] == blockIcon)
+                    {
+                        heroPositionY = heroPositionY + 1;
+                    }
                     break;
                 case MoveRight:
-                    nextPositionY = heroPositionY + 1;
-                    GetMoves(MoveUp, MoveDown, MoveLeft, MoveRight, charKey, fild, ref heroPositionX, ref heroPositionY, blockIcon);
+                    heroPositionY++;
+
+                    if (fild[heroPositionX, heroPositionY] == blockIcon)
+                    {
+                        heroPositionY = heroPositionY - 1;
+                    }
                     break;
                 default:
                     break;
             }
         }
-
-        static void GetMoves(char[,] fild, int heroPositionX, int heroPositionY, char blokcIcon, ConsoleKey MoveUp, ConsoleKey MoveDown)
+        static void CheckMove(char[,] fild, ref int heroPositionX, ref int heroPositionY, char blockIcon)
         {
-            if()
+            if (fild[heroPositionX, heroPositionY] == '#')
             {
-
+                heroPositionX = heroPositionX - 1;
             }
         }
 
@@ -175,7 +188,7 @@ namespace Project_4
             return number;
         }
 
-        static bool GameOver(int move, bool OverGame, int score)
+        static bool GameIsOver(int move, bool OverGame, int score)
         {
             if (move <= 1)
             {

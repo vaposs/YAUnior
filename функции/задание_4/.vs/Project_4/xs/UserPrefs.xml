@@ -2,11 +2,13 @@
   <MonoDevelop.Ide.ItemProperties.Project__4 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="86" Column="25" />
+      <File FileName="Program.cs" Line="11" Column="11" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>11</Value>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
