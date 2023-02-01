@@ -9,42 +9,42 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string next = "next";
-            const string print = "print";
-            const string exit = "exit";
+            const string Next = "next";
+            const string Print = "print";
+            const string Exit = "exit";
 
             string command;
-            bool exitProgram = true;
+            bool isExitProgram = true;
             Dictionary<string, string> glossary = new Dictionary<string, string>();
 
-            while (exitProgram)
+            while (isExitProgram)
             {
                 Console.WriteLine("выбирите действие:");
-                Console.WriteLine($"1.{next}");
-                Console.WriteLine($"2.{print}");
-                Console.WriteLine($"3.{exit}");
+                Console.WriteLine($"1.{Next}");
+                Console.WriteLine($"2.{Print}");
+                Console.WriteLine($"3.{Exit}");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
                 Console.Clear();
 
                 switch (command.ToLower())
                     {
-                    case next:
-                        Next(ref glossary);
+                    case Next:
+                        NextElement(glossary);
                         break;
 
-                    case print:
-                        Print(glossary);
+                    case Print:
+                        PrintDictionary(glossary);
                         break;
 
-                    case exit:
-                        exitProgram = false;
+                    case Exit:
+                        isExitProgram = false;
                         break;
                 }
             }
         }
 
-        static void Next(ref Dictionary<string, string> glossary)
+        static void NextElement(Dictionary<string, string> glossary)
         {
             string temporaryVariable;
 
@@ -62,7 +62,7 @@ namespace Project_1
             }
         }
 
-        static void Print( Dictionary<string,string> glossary)
+        static void PrintDictionary( Dictionary<string,string> glossary)
         {
             foreach (var item in glossary)
             {
