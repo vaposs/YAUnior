@@ -8,37 +8,50 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string AddDossierConst = "add";
-            const string PrintDossierConst = "print";
-            const string DeleteDossierConst = "delete";
-            const string SeachDossierConst = "seach";
-            const string ExitProgramConst = "exit";
+            const string AddDossierCommand = "add";
+            const string PrintDossierCommand = "print";
+            const string DeleteDossierCommand = "delete";
+            const string SeachDossierCommand = "seach";
+            const string ExitProgramCommand = "exit";
+
             string[] name = new string[0];
             string[] profession = new string[0];
-            string command;
             bool isWork = true;
 
             while (isWork)
             {
-                Console.WriteLine($"Введите команду \n1.{AddDossierConst}\n2.{PrintDossierConst}\n3.{DeleteDossierConst}\n4.{SeachDossierConst}\n5.{ExitProgramConst}");
+                Console.WriteLine($"Введите команду \n");
+                Console.WriteLine($"1.{AddDossierCommand}");
+                Console.WriteLine($"2.{PrintDossierCommand}");
+                Console.WriteLine($"3.{DeleteDossierCommand}");
+                Console.WriteLine($"4.{SeachDossierCommand}");
+                Console.WriteLine($"5.{ExitProgramCommand}");
+
                 Console.Write("\nВведите команду - ");
+
+                string command;
+
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
-                    case AddDossierConst:
+                    case AddDossierCommand:
                         AddDossier(ref name,ref profession);
                         break;
-                    case PrintDossierConst:
+
+                    case PrintDossierCommand:
                         PrintDossier(name, profession);
                         break;
-                    case DeleteDossierConst:
+
+                    case DeleteDossierCommand:
                         DeleteDossier(ref name, ref profession);
                         break;
-                    case SeachDossierConst:
+
+                    case SeachDossierCommand:
                         SeachDossier(name, profession);
                         break;
-                    case ExitProgramConst:
+
+                    case ExitProgramCommand:
                         isWork = false;
                         break;
                 }
@@ -48,9 +61,9 @@ namespace Project_1
         static void AddDossier(ref string[] name,ref string[] profession)
         {
             Console.Write("Введите ФИО: ");
-            AddElementArray(ref name);
+            AddElementinArray(ref name);
             Console.Write("Введите професию: ");
-            AddElementArray(ref profession);
+            AddElementinArray(ref profession);
         }
 
         static void PrintDossier(string[] name, string[] profession)   
@@ -156,7 +169,7 @@ namespace Project_1
             Console.Write("   професия   \n");
         }
 
-        static void AddElementArray(ref string[] array)
+        static void AddElementinArray(ref string[] array)
         {
             string[] tempArray = new string[array.Length + 1];
             string tempLine = Console.ReadLine();
@@ -174,7 +187,7 @@ namespace Project_1
         static void MinusElementArray(ref string[] array, int numberDeleteElement)
         {
             string[] tempArray = new string[array.Length - 1];
-            numberDeleteElement = numberDeleteElement - 1;
+            numberDeleteElement--;
 
             for (int i = 0; i < numberDeleteElement; i++)
             {
