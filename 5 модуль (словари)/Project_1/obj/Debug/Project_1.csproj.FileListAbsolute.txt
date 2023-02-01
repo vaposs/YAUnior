@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/bin/Debug/Project_1.exe
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/bin/Debug/Project_1.pdb
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/obj/Debug/Project_1.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/obj/Debug/Project_1.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/obj/Debug/Project_1.exe
+/Users/walter/GitHub/YAUnior/5 модуль (словари)/Project_1/obj/Debug/Project_1.pdb
