@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
-    <ProjectGuid>{AB33D2E8-07A9-47FC-8D78-8BBF30C8366F}</ProjectGuid>
+    <ProjectGuid>{DFFF8520-6491-44E8-AF8E-987EB77BA926}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Projekt_1</RootNamespace>
-    <AssemblyName>Projekt_1</AssemblyName>
+    <RootNamespace>Project_2</RootNamespace>
+    <AssemblyName>Project_2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">

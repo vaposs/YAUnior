@@ -1,6 +1,0 @@
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/bin/Debug/Projekt_1.exe
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/bin/Debug/Projekt_1.pdb
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/obj/Debug/Projekt_1.csproj.AssemblyReference.cache
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/obj/Debug/Projekt_1.csproj.CoreCompileInputs.cache
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/obj/Debug/Projekt_1.exe
-/Users/walter/GitHub/YAUnior/4 модуль(Колекции)/Project_1/Projekt_1/obj/Debug/Projekt_1.pdb
