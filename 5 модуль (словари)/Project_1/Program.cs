@@ -30,7 +30,7 @@ namespace Project_1
                 switch (command.ToLower())
                     {
                     case Next:
-                        NextElement(glossary);
+                        NextWord(glossary);
                         break;
 
                     case Print:
@@ -44,7 +44,7 @@ namespace Project_1
             }
         }
 
-        static void NextElement(Dictionary<string, string> glossary)
+        static void NextWord(Dictionary<string, string> glossary)
         {
             string temporaryVariable;
 
