@@ -6,6 +6,8 @@ namespace Project_1
 {
     class MainClass
     {
+        //1) if (deleteDossierInt > name.Length) - нужна еще проверка, чтобы отрицательное число пользователь не ввел.
+
         public static void Main(string[] args)
         {
             const string AddDossierCommand = "add";
@@ -61,9 +63,9 @@ namespace Project_1
         static void AddDossier(ref string[] name,ref string[] profession)
         {
             Console.Write("Введите ФИО: ");
-            AddElementinArray(ref name);
+            AddElement(ref name);
             Console.Write("Введите професию: ");
-            AddElementinArray(ref profession);
+            AddElement(ref profession);
         }
 
         static void PrintDossier(string[] name, string[] profession)   
@@ -101,11 +103,10 @@ namespace Project_1
                     Console.WriteLine("Введите номер досье для удаления: ");
                     deleteDossierString = Console.ReadLine();
                     isSuccess = int.TryParse(deleteDossierString, out number);
+                    deleteDossierInt = Convert.ToInt32(deleteDossierString);
 
-                    if (isSuccess)
+                    if (isSuccess && deleteDossierInt > 0)
                     {
-                        deleteDossierInt = Convert.ToInt32(deleteDossierString);
-
                         if (deleteDossierInt > name.Length)
                         {
                             Console.WriteLine("номер больше чем количество досье");
@@ -121,8 +122,8 @@ namespace Project_1
                     }
                 }
 
-                MinusElementArray(ref name, deleteDossierInt);
-                MinusElementArray(ref profession, deleteDossierInt);
+                DeleteElement(ref name, deleteDossierInt);
+                DeleteElement(ref profession, deleteDossierInt);
                 Console.WriteLine("Досье удалено.");
             }
         }
@@ -133,6 +134,7 @@ namespace Project_1
             string seachDossier;
             string tempLine;
             string[] seachLine = new string[fioSize];
+            char lineDivider = ' ';
             
             if (name.Length == 0)
             {
@@ -146,7 +148,7 @@ namespace Project_1
                 for (int i = 0; i < name.Length; i ++)
                 {
                     tempLine = name[i];
-                    seachLine = tempLine.Split(' ');
+                    seachLine = tempLine.Split(lineDivider);
 
                     if (seachDossier == seachLine[0])
                     {
@@ -169,7 +171,7 @@ namespace Project_1
             Console.Write("   професия   \n");
         }
 
-        static void AddElementinArray(ref string[] array)
+        static void AddElement(ref string[] array)
         {
             string[] tempArray = new string[array.Length + 1];
             string tempLine = Console.ReadLine();
@@ -184,7 +186,7 @@ namespace Project_1
             array[array.Length - 1] = tempLine;
         }
 
-        static void MinusElementArray(ref string[] array, int numberDeleteElement)
+        static void DeleteElement(ref string[] array, int numberDeleteElement)
         {
             string[] tempArray = new string[array.Length - 1];
             numberDeleteElement--;
