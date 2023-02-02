@@ -9,18 +9,18 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string Next = "next";
+            const string Add = "add";
             const string Print = "print";
             const string Exit = "exit";
 
             string command;
-            bool isExitProgram = true;
+            bool isExitProgram = false;
             Dictionary<string, string> glossary = new Dictionary<string, string>();
 
-            while (isExitProgram)
+            while (!isExitProgram)
             {
-                Console.WriteLine("выбирите действие:");
-                Console.WriteLine($"1.{Next}");
+                Console.WriteLine("\nвыбирите действие:");
+                Console.WriteLine($"1.{Add}");
                 Console.WriteLine($"2.{Print}");
                 Console.WriteLine($"3.{Exit}");
                 Console.Write("Введите команду - ");
@@ -28,9 +28,9 @@ namespace Project_1
                 Console.Clear();
 
                 switch (command.ToLower())
-                    {
-                    case Next:
-                        NextWord(glossary);
+                {
+                    case Add:
+                        AddWord(glossary);
                         break;
 
                     case Print:
@@ -38,28 +38,50 @@ namespace Project_1
                         break;
 
                     case Exit:
-                        isExitProgram = false;
+                        isExitProgram = true;
                         break;
                 }
             }
         }
 
-        static void NextWord(Dictionary<string, string> glossary)
+        static string TakeWord()
         {
-            string temporaryVariable;
+            string templWord;
 
             Console.Write("Введите слово - ");
-            temporaryVariable = Console.ReadLine();
+            templWord = Console.ReadLine();
 
-            if (glossary.ContainsKey(temporaryVariable))
+            return templWord;
+        }
+
+        static void AddWord(Dictionary<string, string> glossary)
+        {
+            string word = TakeWord();
+            bool repeat = FindWord(glossary, word);
+
+            if (repeat)
             {
-                Console.WriteLine($"слово {temporaryVariable} означает {glossary.Values}");
+                Console.Write("\nПовтор, такое слово уже есть.");
             }
             else
             {
-                Console.Write("введите значения слова - ");
-                glossary.Add(temporaryVariable, Console.ReadLine());
+                Console.Write("Введите значение слова - ");
+                glossary.Add(word, Console.ReadLine());
             }
+        }
+
+        static bool FindWord(Dictionary<string,string> glossary, string word)
+        {
+            bool repeat = false;
+
+            foreach (var item in glossary)
+            {
+                if (item.Key == word)
+                {
+                    repeat = true;
+                }
+            }
+            return repeat;
         }
 
         static void PrintDictionary( Dictionary<string,string> glossary)
@@ -72,3 +94,19 @@ namespace Project_1
         }
     }
 }
+
+/*string temporaryVariable;
+  
+Console.Write("Введите слово - ");
+temporaryVariable = Console.ReadLine();
+
+if (glossary.ContainsKey(temporaryVariable))
+{
+    Console.WriteLine($"слово {temporaryVariable} означает {glossary[temporaryVariable]}");
+}
+else
+{
+    Console.Write("введите значения слова - ");
+    glossary.Add(temporaryVariable, Console.ReadLine());
+}
+*/
