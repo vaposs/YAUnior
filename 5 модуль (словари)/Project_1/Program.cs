@@ -11,6 +11,7 @@ namespace Project_1
         {
             const string Add = "add";
             const string Print = "print";
+            const string PrintWord = "printWord";
             const string Exit = "exit";
 
             string command;
@@ -21,8 +22,9 @@ namespace Project_1
             {
                 Console.WriteLine("\nвыбирите действие:");
                 Console.WriteLine($"1.{Add}");
-                Console.WriteLine($"2.{Print}");
-                Console.WriteLine($"3.{Exit}");
+                Console.WriteLine($"2.{PrintWord}");
+                Console.WriteLine($"3.{Print}");
+                Console.WriteLine($"4.{Exit}");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
                 Console.Clear();
@@ -31,6 +33,10 @@ namespace Project_1
                 {
                     case Add:
                         AddWord(glossary);
+                        break;
+
+                    case PrintWord:
+                        PrintOne();
                         break;
 
                     case Print:
@@ -92,21 +98,10 @@ namespace Project_1
             }
             Console.Write("\n");
         }
+
+        static void PrintOne()
+        {
+
+        }
     }
 }
-
-/*string temporaryVariable;
-  
-Console.Write("Введите слово - ");
-temporaryVariable = Console.ReadLine();
-
-if (glossary.ContainsKey(temporaryVariable))
-{
-    Console.WriteLine($"слово {temporaryVariable} означает {glossary[temporaryVariable]}");
-}
-else
-{
-    Console.Write("введите значения слова - ");
-    glossary.Add(temporaryVariable, Console.ReadLine());
-}
-*/

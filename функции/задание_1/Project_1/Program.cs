@@ -6,8 +6,6 @@ namespace Project_1
 {
     class MainClass
     {
-        //1) if (deleteDossierInt > name.Length) - нужна еще проверка, чтобы отрицательное число пользователь не ввел.
-
         public static void Main(string[] args)
         {
             const string AddDossierCommand = "add";
