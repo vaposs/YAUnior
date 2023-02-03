@@ -13,7 +13,7 @@ namespace Project_2
 
             int maxChecks = GetNumber();
             CreateQueue(checks, maxChecks);
-            Print(checks);
+            Print(checks, maxChecks);
         }
 
         static void CreateQueue(Queue<int> checks, int maxChecks)
@@ -70,16 +70,24 @@ namespace Project_2
             return number;
         }
 
-        static void Print(Queue<int> checks)
+        static int Servise(Queue<int> checks)
+        {
+            return checks.Dequeue();
+        }
+
+        static void Print(Queue<int> checks, int maxCheck)
         {
             int summ;
             int endSumm = 0;
 
-            foreach (var check in checks)
+            for (int i = 0; i < maxCheck; i++)
             {
-                summ = Summ(check);
+                int tempCheck;
+
+                tempCheck = Servise(checks);
+                summ = Summ(tempCheck);
                 endSumm = endSumm + summ;
-                PrintSumm(endSumm);
+                PrintSumm(endSumm, summ);
                 Console.ReadKey();
                 Console.Clear();
             }
@@ -94,9 +102,10 @@ namespace Project_2
             return summ;
         }
 
-        static void PrintSumm(int summ)
+        static void PrintSumm(int endSumm, int summ)
         {
-            Console.WriteLine($"Сумма денег в кассе - {summ}");
+            Console.WriteLine($"Размер чека - {summ}");
+            Console.WriteLine($"Сумма денег в кассе - {endSumm}");
         }
     }
 }
