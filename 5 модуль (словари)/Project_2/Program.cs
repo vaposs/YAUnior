@@ -56,6 +56,7 @@ namespace Project_2
 
                 if(number < 0)
                 {
+                    isConversionSucceeded = true;
                     Console.WriteLine($"Число {number} меньше нуля. введите другие число.");
                 }
             }
@@ -64,47 +65,32 @@ namespace Project_2
 
         static int GetRandomNumber(int minNumb, int maxNumb)
         {
-            Random rand = new Random();
-            int number = rand.Next(minNumb,maxNumb);
+            Random random = new Random();
+            int number = random.Next(minNumb,maxNumb);
 
             return number;
         }
 
-        static int Servise(Queue<int> checks)
-        {
-            return checks.Dequeue();
-        }
-
         static void Print(Queue<int> checks, int maxCheck)
         {
-            int summ;
             int endSumm = 0;
 
             for (int i = 0; i < maxCheck; i++)
             {
                 int tempCheck;
 
-                tempCheck = Servise(checks);
-                summ = Summ(tempCheck);
-                endSumm = endSumm + summ;
-                PrintSumm(endSumm, summ);
+                tempCheck = checks.Dequeue();
+                endSumm = endSumm + tempCheck;
+                PrintSumm(endSumm, tempCheck);
                 Console.ReadKey();
                 Console.Clear();
             }
             Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
         }
 
-        static int Summ(int numb)
+        static void PrintSumm(int endSumm, int tempCheck)
         {
-            int summ = 0;
-
-            summ =+ numb;
-            return summ;
-        }
-
-        static void PrintSumm(int endSumm, int summ)
-        {
-            Console.WriteLine($"Размер чека - {summ}");
+            Console.WriteLine($"Размер чека - {tempCheck}");
             Console.WriteLine($"Сумма денег в кассе - {endSumm}");
         }
     }
