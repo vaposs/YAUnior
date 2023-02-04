@@ -10,8 +10,8 @@ namespace Project_1
         public static void Main(string[] args)
         {
             const string Add = "add";
-            const string Print = "print";
-            const string PrintWord = "printWord";
+            const string PrintAll = "printall";
+            const string PrintWord = "printone";
             const string Exit = "exit";
 
             string command;
@@ -23,12 +23,11 @@ namespace Project_1
                 Console.WriteLine("\nвыбирите действие:");
                 Console.WriteLine($"1.{Add}");
                 Console.WriteLine($"2.{PrintWord}");
-                Console.WriteLine($"3.{Print}");
+                Console.WriteLine($"3.{PrintAll}");
                 Console.WriteLine($"4.{Exit}");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
-                Console.Clear();
-
+                
                 switch (command.ToLower())
                 {
                     case Add:
@@ -36,10 +35,10 @@ namespace Project_1
                         break;
 
                     case PrintWord:
-                        PrintOne();
+                        PrintOneWord(glossary);
                         break;
 
-                    case Print:
+                    case PrintAll:
                         PrintDictionary(glossary);
                         break;
 
@@ -90,7 +89,7 @@ namespace Project_1
             return repeat;
         }
 
-        static void PrintDictionary( Dictionary<string,string> glossary)
+        static void PrintDictionary(Dictionary<string,string> glossary)
         {
             foreach (var item in glossary)
             {
@@ -99,9 +98,27 @@ namespace Project_1
             Console.Write("\n");
         }
 
-        static void PrintOne()
+        static void PrintOneWord(Dictionary<string, string> glossary)
         {
+            string word;
 
+            if(glossary.Count == 0)
+            {
+                Console.WriteLine("Словарь пустой");
+            }
+            else
+            {
+                word = TakeWord();
+
+                if (glossary.ContainsKey(word))
+                {
+                    Console.WriteLine($"слово {word} означает {glossary[word]}");
+                }
+                else
+                {
+                    Console.WriteLine("Такого слова нету в словаре.");
+                }
+            }
         }
     }
 }
