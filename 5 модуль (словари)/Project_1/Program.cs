@@ -9,7 +9,7 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string Add = "add";
+            const string AddWord = "addword";
             const string PrintAll = "printall";
             const string PrintWord = "printone";
             const string Exit = "exit";
@@ -18,10 +18,10 @@ namespace Project_1
             bool isExitProgram = false;
             Dictionary<string, string> glossary = new Dictionary<string, string>();
 
-            while (!isExitProgram)
+            while (isExitProgram == false)
             {
                 Console.WriteLine("\nвыбирите действие:");
-                Console.WriteLine($"1.{Add}");
+                Console.WriteLine($"1.{AddWord}");
                 Console.WriteLine($"2.{PrintWord}");
                 Console.WriteLine($"3.{PrintAll}");
                 Console.WriteLine($"4.{Exit}");
@@ -30,16 +30,16 @@ namespace Project_1
                 
                 switch (command.ToLower())
                 {
-                    case Add:
-                        AddWord(glossary);
+                    case AddWord:
+                        AddWordMethod(glossary);
                         break;
 
                     case PrintWord:
-                        PrintOneWord(glossary);
+                        PrintOneWordMethod(glossary);
                         break;
 
                     case PrintAll:
-                        PrintDictionary(glossary);
+                        PrintDictionaryMethod(glossary);
                         break;
 
                     case Exit:
@@ -59,12 +59,12 @@ namespace Project_1
             return templWord;
         }
 
-        static void AddWord(Dictionary<string, string> glossary)
+        static void AddWordMethod(Dictionary<string, string> glossary)
         {
             string word = TakeWord();
-            bool repeat = FindWord(glossary, word);
+            bool wordIsRepeat = glossary.ContainsKey(word);
 
-            if (repeat)
+            if (wordIsRepeat)
             {
                 Console.Write("\nПовтор, такое слово уже есть.");
             }
@@ -75,30 +75,16 @@ namespace Project_1
             }
         }
 
-        static bool FindWord(Dictionary<string,string> glossary, string word)
+        static void PrintDictionaryMethod(Dictionary<string,string> glossary)
         {
-            bool repeat = false;
-
-            foreach (var item in glossary)
+            foreach (var word in glossary)
             {
-                if (item.Key == word)
-                {
-                    repeat = true;
-                }
-            }
-            return repeat;
-        }
-
-        static void PrintDictionary(Dictionary<string,string> glossary)
-        {
-            foreach (var item in glossary)
-            {
-                Console.WriteLine($"слово {item.Key} означает {item.Value}");
+                Console.WriteLine($"слово {word.Key} означает {word.Value}");
             }
             Console.Write("\n");
         }
 
-        static void PrintOneWord(Dictionary<string, string> glossary)
+        static void PrintOneWordMethod(Dictionary<string, string> glossary)
         {
             string word;
 

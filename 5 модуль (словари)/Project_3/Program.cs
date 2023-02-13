@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace Project_3
 {
+
     class MainClass
     {
         public static void Main(string[] args)
         {
             List<int> numbers = new List<int>();
 
-            const string AddNumberCommand = "add";
-            const string SummCommand = "summ";
-            const string PrintCommand = "print";
+            const string AddNumberCommand = "addnumber";
+            const string SummCommand = "printsumm";
+            const string PrintCommand = "printallnumber";
             const string ExitProgramCommand = "exit";
 
             bool isWork = true;
