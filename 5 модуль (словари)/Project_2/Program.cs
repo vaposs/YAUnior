@@ -4,6 +4,14 @@ using System.Globalization;
 
 namespace Project_2
 {
+
+    /*
+     * 3) bool isConversionSucceeded = true; - отвечает за конвертацию правельный ввод числа
+     * 5) static void Print(Queue<int> checks, int maxCheck) - разве метод просто отвечает за вывод? Вы можно сказать обслуживаете клиентов
+     */
+
+   
+
     class MainClass
     {
         public static void Main(string[] args)
@@ -13,12 +21,13 @@ namespace Project_2
 
             int maxChecks = GetNumber();
             CreateQueue(checks, maxChecks);
-            Print(checks, maxChecks);
+            QueueService(checks, maxChecks);
         }
 
         static void CreateQueue(Queue<int> checks, int maxChecks)
         {
             int randomNumb;
+            Random random = new Random();
 
             Console.Write("Введите минимальную сумму чека - ");
             int minNumb = GetNumber();
@@ -27,7 +36,7 @@ namespace Project_2
 
             for (int i = 0; i < maxChecks; i++)
             {
-                randomNumb = GetRandomNumber(minNumb, maxNumb);
+                randomNumb = random.Next(minNumb, maxNumb);
                 checks.Enqueue(randomNumb);
             }
         }
@@ -44,34 +53,19 @@ namespace Project_2
                 line = Console.ReadLine();
                 isSuccess = int.TryParse(line, out number);
 
-                if (isSuccess)
+                if (isSuccess && number >= 0)
                 {
                     isConversionSucceeded = false;
                 }
                 else
                 {
-                    Console.WriteLine($" строка - {line}, не число. Повторите ввод. ");
-                }
-                number = Convert.ToInt32(line);
-
-                if(number < 0)
-                {
-                    isConversionSucceeded = true;
-                    Console.WriteLine($"Число {number} меньше нуля. введите другие число.");
+                    Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
                 }
             }
             return number;
         }
 
-        static int GetRandomNumber(int minNumb, int maxNumb)
-        {
-            Random random = new Random();
-            int number = random.Next(minNumb,maxNumb);
-
-            return number;
-        }
-
-        static void Print(Queue<int> checks, int maxCheck)
+        static void QueueService(Queue<int> checks, int maxCheck)
         {
             int endSumm = 0;
 
