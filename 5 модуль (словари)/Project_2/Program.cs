@@ -7,7 +7,6 @@ namespace Project_2
 
     /*
      * 3) bool isConversionSucceeded = true; - отвечает за конвертацию правельный ввод числа
-     * 5) static void Print(Queue<int> checks, int maxCheck) - разве метод просто отвечает за вывод? Вы можно сказать обслуживаете клиентов
      */
 
    
