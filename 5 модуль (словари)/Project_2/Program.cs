@@ -4,13 +4,6 @@ using System.Globalization;
 
 namespace Project_2
 {
-
-    /*
-     * 3) bool isConversionSucceeded = true; - отвечает за конвертацию правельный ввод числа
-     */
-
-   
-
     class MainClass
     {
         public static void Main(string[] args)
@@ -20,7 +13,7 @@ namespace Project_2
 
             int maxChecks = GetNumber();
             CreateQueue(checks, maxChecks);
-            QueueService(checks, maxChecks);
+            ServeNumberQueue(checks, maxChecks);
         }
 
         static void CreateQueue(Queue<int> checks, int maxChecks)
@@ -64,7 +57,7 @@ namespace Project_2
             return number;
         }
 
-        static void QueueService(Queue<int> checks, int maxCheck)
+        static void ServeNumberQueue(Queue<int> checks, int maxCheck)
         {
             int endSumm = 0;
 
