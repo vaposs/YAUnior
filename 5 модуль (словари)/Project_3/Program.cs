@@ -3,18 +3,15 @@ using System.Collections.Generic;
 
 namespace Project_3
 {
-
     class MainClass
     {
         public static void Main(string[] args)
         {
-            List<int> numbers = new List<int>();
-
             const string AddNumberCommand = "addnumber";
             const string SummCommand = "printsumm";
-            const string PrintCommand = "printallnumber";
             const string ExitProgramCommand = "exit";
 
+            List<int> numbers = new List<int>();
             bool isWork = true;
 
             while (isWork)
@@ -22,8 +19,7 @@ namespace Project_3
                 Console.WriteLine($"\nВведите команду \n");
                 Console.WriteLine($"1.{AddNumberCommand}");
                 Console.WriteLine($"2.{SummCommand}");
-                Console.WriteLine($"3.{PrintCommand}");
-                Console.WriteLine($"5.{ExitProgramCommand}");
+                Console.WriteLine($"4.{ExitProgramCommand}");
 
                 Console.Write("\nВведите команду - ");
 
@@ -37,16 +33,16 @@ namespace Project_3
                         AddNumber(numbers);
                         break;
 
-                    case PrintCommand:
-                        Print(numbers);
-                        break;
-
                     case SummCommand:
                         Summ(numbers);
                         break;
 
                     case ExitProgramCommand:
                         isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine($"{command} - такой команды нет.");
                         break;
                 }
             }
@@ -79,21 +75,6 @@ namespace Project_3
             Console.WriteLine($"Сумма чисел равна - {endSumm}");
         }
 
-        static void Print(List<int> numbers)
-        {
-            if (numbers.Count == 0)
-            {
-                Console.Write("Список пустой.");
-            }
-            else
-            {
-                for (int i = 0; i < numbers.Count; i++)
-                {
-                    Console.Write($" {numbers[i]} ");
-                }
-            }
-        }
-
         static int GetNumber()
         {
             string line;
@@ -105,9 +86,8 @@ namespace Project_3
             {
                 Console.Write("введите целое число - ");
                 line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
 
-                if (isSuccess)
+                if (int.TryParse(line, out number))
                 {
                     number = Convert.ToInt32(line);
                     isConversionSucceeded = false;
