@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Security;
 
 namespace Project_1
 {
@@ -9,7 +7,7 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string AddWord = "addword";
+            const string AddNewWord = "addnewword";
             const string PrintAllDictionary = "printalldictionary";
             const string PrintMeaningWord = "printmeaningword";
             const string Exit = "exit";
@@ -21,7 +19,7 @@ namespace Project_1
             while (isExitProgram == false)
             {
                 Console.WriteLine("\nвыбирите действие:");
-                Console.WriteLine($"1.{AddWord}");
+                Console.WriteLine($"1.{AddNewWord}");
                 Console.WriteLine($"2.{PrintMeaningWord}");
                 Console.WriteLine($"3.{PrintAllDictionary}");
                 Console.WriteLine($"4.{Exit}");
@@ -30,8 +28,8 @@ namespace Project_1
                 
                 switch (command.ToLower())
                 {
-                    case AddWord:
-                        AddNewWord(glossary);
+                    case AddNewWord:
+                        AddNew(glossary);
                         break;
 
                     case PrintMeaningWord:
@@ -63,7 +61,7 @@ namespace Project_1
             return templWord;
         }
 
-        static void AddNewWord(Dictionary<string, string> glossary)
+        static void AddNew(Dictionary<string, string> glossary)
         {
             string word = TakeWord();
             bool wordIsRepeat = glossary.ContainsKey(word);
