@@ -5,9 +5,6 @@ using System.Collections.Specialized;
 
 namespace Project_4
 {
-
-    // проверить повторения
-
     class MainClass
     {
         public static void Main(string[] args)
