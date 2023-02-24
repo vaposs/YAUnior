@@ -13,7 +13,7 @@ namespace Project_2
 
             int maxChecks = GetNumber();
             CreateQueue(checks, maxChecks);
-            ServeNumberQueue(checks, maxChecks);
+            ServeNumberQueue(checks);
         }
 
         static void CreateQueue(Queue<int> checks, int maxChecks)
@@ -57,27 +57,18 @@ namespace Project_2
             return number;
         }
 
-        static void ServeNumberQueue(Queue<int> checks, int maxCheck)
+        static void ServeNumberQueue(Queue<int> checks)
         {
             int endSumm = 0;
 
-            for (int i = 0; i < maxCheck; i++)
+            while (checks.Count > 0)
             {
-                int tempCheck;
-
-                tempCheck = checks.Dequeue();
-                endSumm = endSumm + tempCheck;
-                PrintSumm(endSumm, tempCheck);
+                Console.WriteLine($"Размер чека - {checks.Peek()}");
+                Console.WriteLine($"Сумма денег в кассе - {endSumm += checks.Dequeue()}");
                 Console.ReadKey();
                 Console.Clear();
             }
             Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
-        }
-
-        static void PrintSumm(int endSumm, int tempCheck)
-        {
-            Console.WriteLine($"Размер чека - {tempCheck}");
-            Console.WriteLine($"Сумма денег в кассе - {endSumm}");
         }
     }
 }
