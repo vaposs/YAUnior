@@ -76,6 +76,8 @@ namespace Project_4
 
         static void DeleteDossier(Dictionary<string, string> dossier)
         {
+            bool repeat = true; 
+
             if (dossier.Count == 0)
             {
                 Console.WriteLine("Список досье пуст.");
@@ -84,7 +86,16 @@ namespace Project_4
             {
                 string tempName;
                 Console.Write("Введите ФИО досье для удаления - ");
-                tempName = Console.ReadLine();
+
+                if (dossier.ContainsKey(tempName = Console.ReadLine()) == repeat)
+                {
+                    Console.WriteLine("досье удалено");
+                    dossier.Remove(tempName);
+                }
+                else
+                {
+                    Console.WriteLine($"{tempName} - такого ФИО нет");
+                }
             }
         }
 
