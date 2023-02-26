@@ -11,29 +11,29 @@ namespace Project_2
             Queue<int> checks = new Queue<int>();
             Console.Write("Введите количество чеков в очереди - ");
 
-            int maxChecks = GetNumber();
-            CreateQueue(checks, maxChecks);
+            int maxChecks = GetPositiveNumber();
+            FillingQueue(checks, maxChecks);
             ServeNumberQueue(checks);
         }
 
-        static void CreateQueue(Queue<int> checks, int maxChecks)
+        static void FillingQueue(Queue<int> checks, int maxChecks)
         {
-            int randomNumb;
+            int randomNumber;
             Random random = new Random();
 
             Console.Write("Введите минимальную сумму чека - ");
-            int minNumb = GetNumber();
+            int minNumb = GetPositiveNumber();
             Console.Write("Введите максимальную сумму чека - ");
-            int maxNumb = GetNumber();
+            int maxNumb = GetPositiveNumber();
 
             for (int i = 0; i < maxChecks; i++)
             {
-                randomNumb = random.Next(minNumb, maxNumb);
-                checks.Enqueue(randomNumb);
+                randomNumber = random.Next(minNumb, maxNumb);
+                checks.Enqueue(randomNumber);
             }
         }
 
-        static int GetNumber()
+        static int GetPositiveNumber()
         {
             string line;
             bool isConversionSucceeded = true;
@@ -54,6 +54,7 @@ namespace Project_2
                     Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
                 }
             }
+
             return number;
         }
 
@@ -68,6 +69,7 @@ namespace Project_2
                 Console.ReadKey();
                 Console.Clear();
             }
+
             Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
         }
     }
