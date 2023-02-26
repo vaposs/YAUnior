@@ -61,23 +61,21 @@ namespace Project_4
             string tempName = "";
 
             Console.Write("Введите ФИО - ");
-            tempName = GetData();
+            tempName = Console.ReadLine();
 
             while (dossier.ContainsKey(tempName))
             {
                 Console.Write("Такое ФИО уже есть, введите заново ФИО - ");
-                tempName = GetData();
+                tempName = Console.ReadLine();
             }
 
             Console.Write("Введите професию - ");
-            tempProfesion = GetData();
+            tempProfesion = Console.ReadLine();
             dossier.Add(tempName, tempProfesion);
         }
 
         static void DeleteDossier(Dictionary<string, string> dossier)
         {
-            bool repeat = true; 
-
             if (dossier.Count == 0)
             {
                 Console.WriteLine("Список досье пуст.");
@@ -86,15 +84,15 @@ namespace Project_4
             {
                 string tempName;
                 Console.Write("Введите ФИО досье для удаления - ");
+                tempName = Console.ReadLine();
 
-                if (dossier.ContainsKey(tempName = Console.ReadLine()) == repeat)
+                if(dossier.Remove(tempName)== false)
                 {
-                    Console.WriteLine("досье удалено");
-                    dossier.Remove(tempName);
+                    Console.WriteLine($"{tempName} - такого ФИО нет");
                 }
                 else
                 {
-                    Console.WriteLine($"{tempName} - такого ФИО нет");
+                    Console.WriteLine("досье удалено");
                 }
             }
         }
@@ -107,7 +105,7 @@ namespace Project_4
             }
             else
             {
-                FirstLine();
+                PrintFirstLine();
                 foreach (var dossier in dossiers)
                 {
                     Console.WriteLine($"{dossier.Key} - {dossier.Value}");
@@ -115,15 +113,9 @@ namespace Project_4
             }
         }
 
-        static void FirstLine()
+        static void PrintFirstLine()
         {
             Console.WriteLine("Професия     -       ФИО     ");
-        }
-
-        static string GetData()
-        {
-            string data = Console.ReadLine();
-            return data;
         }
     }
 }

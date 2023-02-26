@@ -1,8 +1,7 @@
-﻿<Properties StartupConfiguration="{D1ACDF7D-2C3D-4F4E-905F-1C738CC0A2C9}|Default">
-  <MonoDevelop.Ide.ItemProperties.Project__4 PreferredExecutionTarget="MonoDevelop.Default" />
+﻿<Properties StartupConfiguration="{99E96A22-11E0-49EB-9F4F-93091EA1D71B}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="121" Column="2" />
+      <File FileName="Program.cs" Line="2" Column="34" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -14,6 +13,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
+  <MonoDevelop.Ide.ItemProperties.Project__1 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
