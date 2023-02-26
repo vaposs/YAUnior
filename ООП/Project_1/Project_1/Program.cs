@@ -29,7 +29,6 @@ namespace Project_1
             Speed = speed;
             Hanger = hanger;
             Thirst = thirst;
-
         }
 
         public void ShowStats()
