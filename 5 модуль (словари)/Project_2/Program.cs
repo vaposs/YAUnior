@@ -8,27 +8,38 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
+            int endSumm = 0;
             Queue<int> checks = new Queue<int>();
-            Console.Write("Введите количество чеков в очереди - ");
 
+            Console.Write("Введите количество чеков в очереди - ");
             int maxChecks = GetPositiveNumber();
-            FillingQueue(checks, maxChecks);
-            ServeNumberQueue(checks);
+            FillQueue(checks, maxChecks);
+
+            while (checks.Count > 0)
+            {
+                Console.WriteLine($"Размер чека - {checks.Peek()}");
+                endSumm += ServeNumberQueue( endSumm ,checks);
+                Console.WriteLine($"Сумма денег в кассе - {endSumm}");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
         }
 
-        static void FillingQueue(Queue<int> checks, int maxChecks)
+        static void FillQueue(Queue<int> checks, int maxChecks)
         {
             int randomNumber;
             Random random = new Random();
 
             Console.Write("Введите минимальную сумму чека - ");
-            int minNumb = GetPositiveNumber();
+            int minimumNumb = GetPositiveNumber();
             Console.Write("Введите максимальную сумму чека - ");
-            int maxNumb = GetPositiveNumber();
+            int maximumNumb = GetPositiveNumber();
 
             for (int i = 0; i < maxChecks; i++)
             {
-                randomNumber = random.Next(minNumb, maxNumb);
+                randomNumber = random.Next(minimumNumb, maximumNumb);
                 checks.Enqueue(randomNumber);
             }
         }
@@ -58,19 +69,11 @@ namespace Project_2
             return number;
         }
 
-        static void ServeNumberQueue(Queue<int> checks)
+        static int ServeNumberQueue(int check, Queue<int> checks)
         {
-            int endSumm = 0;
+            check = checks.Dequeue();
 
-            while (checks.Count > 0)
-            {
-                Console.WriteLine($"Размер чека - {checks.Peek()}");
-                Console.WriteLine($"Сумма денег в кассе - {endSumm += checks.Dequeue()}");
-                Console.ReadKey();
-                Console.Clear();
-            }
-
-            Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
+            return check;
         }
     }
 }
