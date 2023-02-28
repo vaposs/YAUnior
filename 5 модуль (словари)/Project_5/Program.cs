@@ -19,11 +19,11 @@ namespace Project_5
             int[] arraySecond = new int[sizeArraySecond];
             int[] mergeArray = new int[sizeArrayFirst + sizeArraySecond];
 
-            FillArray(ref arrayFirst);
-            FillArray(ref arraySecond);
-            MergeArrays(ref arrayFirst, ref arraySecond, ref mergeArray);
-            BubbleSort(ref mergeArray);
-            TransferCollection(ref mergeArray, solution);
+            FillArray(arrayFirst);
+            FillArray(arraySecond);
+            MergeArrays(arrayFirst,arraySecond,mergeArray);
+            SortArrayUsingBubble(mergeArray);
+            TransferCollection(mergeArray, solution);
             Console.Write("Результат - ");
             PrintSolution(solution);
         }
@@ -52,7 +52,7 @@ namespace Project_5
             return number;
         }
 
-        static void MergeArrays(ref int[] arrayFirst, ref int[] arraySecond, ref int[] MergeArray)
+        static void MergeArrays(int[] arrayFirst, int[] arraySecond, int[] MergeArray)
         {
             for (int i = 0; i < MergeArray.Length; i++)
             {
@@ -68,7 +68,7 @@ namespace Project_5
             }
         }
 
-        static void FillArray(ref int[] arrays)
+        static void FillArray(int[] arrays)
         {
             Random numb = new Random();
             int minRan = 1;
@@ -88,7 +88,7 @@ namespace Project_5
             }
         }
 
-        static void BubbleSort(ref int[] array)
+        static void SortArrayUsingBubble(int[] array)
         {
             int tempСell;
 
@@ -107,7 +107,7 @@ namespace Project_5
             }
         }
 
-        static void TransferCollection(ref int[] array, List<int> solution)
+        static void TransferCollection(int[] array, List<int> solution)
         {
             for (int i = 0; i < array.Length; i++)
             {
