@@ -6,7 +6,7 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            Player player = new Player(50,1,5,10,50, 50);
+            Player player = new Player(50,1,5,10,50,50);
 
             player.ShowStats();
         }
@@ -14,12 +14,12 @@ namespace Project_1
 
     class Player
     {
-        public int Health;
-        public int Armor;
-        public int Damage;
-        public int Speed;
-        public int Hanger;
-        public int Thirst;
+        private int Health;
+        private int Armor;
+        private int Damage;
+        private int Speed;
+        private int Hanger;
+        private int Thirst;
 
         public Player(int health, int armor, int damage, int speed, int hanger, int thirst)
         {
@@ -29,6 +29,11 @@ namespace Project_1
             Speed = speed;
             Hanger = hanger;
             Thirst = thirst;
+        }
+
+        public Player()
+        {
+
         }
 
         public void ShowStats()
