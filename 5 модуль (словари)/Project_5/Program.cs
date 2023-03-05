@@ -17,15 +17,12 @@ namespace Project_5
             sizeArraySecond = GetNumber();
             int[] arrayFirst = new int[sizeArrayFirst];
             int[] arraySecond = new int[sizeArraySecond];
-            int[] mergeArray = new int[sizeArrayFirst + sizeArraySecond];
 
             FillArray(arrayFirst);
             FillArray(arraySecond);
-            MergeArrays(arrayFirst,arraySecond,mergeArray);
-            SortArrayUsingBubble(mergeArray);
-            TransferCollection(mergeArray, solution);
+            TransferCollection(arrayFirst, arraySecond, solution);
             Console.Write("Результат - ");
-            PrintSolution(solution);
+            PrintList(solution);
         }
 
         static int GetNumber()
@@ -52,22 +49,6 @@ namespace Project_5
             return number;
         }
 
-        static void MergeArrays(int[] arrayFirst, int[] arraySecond, int[] MergeArray)
-        {
-            for (int i = 0; i < MergeArray.Length; i++)
-            {
-                if (i < arrayFirst.Length)
-                {
-                    MergeArray[i] = arrayFirst[i];
-                }
-                else
-                {
-                    MergeArray[i] = arraySecond[i - arrayFirst.Length];
-                }
-
-            }
-        }
-
         static void FillArray(int[] arrays)
         {
             Random numb = new Random();
@@ -80,7 +61,7 @@ namespace Project_5
             }
         }
 
-        static void PrintSolution(List<int> solution)
+        static void PrintList(List<int> solution)
         {
             foreach (var numb in solution)
             {
@@ -88,32 +69,23 @@ namespace Project_5
             }
         }
 
-        static void SortArrayUsingBubble(int[] array)
+        static void TransferCollection(int[] arrayFirst, int[] arraySecond, List<int> solution)
         {
-            int tempСell;
-
-            for (int i = 0; i < array.Length- 1; i++)
+            for (int i = 0; i < (arrayFirst.Length + arraySecond.Length); i++)
             {
-                for (int j = 0; j < array.Length - 1; j++)
+                if(i < arrayFirst.Length)
                 {
-                    if (array[i] > array[i + 1])
+                    if (solution.Contains(arrayFirst[i]) == false)
                     {
-                        tempСell = array[i];
-                        array[i] = array[i + 1];
-                        array[i + 1] = tempСell;
-                        i = 0;
+                        solution.Add(arrayFirst[i]);
                     }
                 }
-            }
-        }
-
-        static void TransferCollection(int[] array, List<int> solution)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if(solution.Contains(array[i]) == false)
+                else
                 {
-                    solution.Add(array[i]);
+                    if (solution.Contains(arraySecond[i - arrayFirst.Length]) == false)
+                    {
+                        solution.Add(arraySecond[i - arrayFirst.Length]);
+                    }
                 }
             }
         }
