@@ -20,8 +20,13 @@ namespace Project_5
 
             FillArray(arrayFirst);
             FillArray(arraySecond);
-            TransferCollection(arrayFirst, arraySecond, solution);
-            Console.Write("Результат - ");
+            TransferCollection(arrayFirst, solution);
+            TransferCollection(arraySecond, solution);
+            Console.Write("Первый масив - ");
+            PrintArray(arrayFirst);
+            Console.Write("\nВторой масив - ");
+            PrintArray(arraySecond);
+            Console.Write("\nРезультат - ");
             PrintList(solution);
         }
 
@@ -69,23 +74,28 @@ namespace Project_5
             }
         }
 
-        static void TransferCollection(int[] arrayFirst, int[] arraySecond, List<int> solution)
+        static void PrintArray(int[] array)
         {
-            for (int i = 0; i < (arrayFirst.Length + arraySecond.Length); i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if(i < arrayFirst.Length)
+                if (i == array.Length - 1)
                 {
-                    if (solution.Contains(arrayFirst[i]) == false)
-                    {
-                        solution.Add(arrayFirst[i]);
-                    }
+                    Console.Write($"{array[i]}");
                 }
                 else
                 {
-                    if (solution.Contains(arraySecond[i - arrayFirst.Length]) == false)
-                    {
-                        solution.Add(arraySecond[i - arrayFirst.Length]);
-                    }
+                    Console.Write($"{array[i]}, ");
+                }
+            }
+        }
+
+        static void TransferCollection(int[] array, List<int> solution)
+        {
+            for (int i = 0; i < (array.Length); i++)
+            {
+                if (solution.Contains(array[i]) == false)
+                {
+                        solution.Add(array[i]);
                 }
             }
         }
