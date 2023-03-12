@@ -6,42 +6,72 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            Player player = new Player();
+            int positionX;
+            int positionY;
 
+            Console.Write("введите координату X - ");
+            positionX = GetNumber();
+            Console.Write("введите координату Y - ");
+            positionY = GetNumber();
+            Player player = new Player(positionX,positionY);
 
-            Console.WriteLine("рисуем карту");
+            Draw(player);
         }
 
-        public void Draw()
+        static int GetNumber()
         {
+            string line;
+            bool isConversionSucceeded = true;
+            bool isSuccess;
+            int number = 0;
 
+            while (isConversionSucceeded)
+            {
+                line = Console.ReadLine();
+                isSuccess = int.TryParse(line, out number);
+
+                if (isSuccess && number >= 0)
+                {
+                    isConversionSucceeded = false;
+                }
+                else
+                {
+                    Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
+                }
+            }
+            return number;
+        }
+
+        static void Draw(Player player)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    if(i == player._positionX - 1 && j == player._positionY - 1)
+                    {
+                        Console.Write(player.playerIcon);
+                    }
+                    else
+                    {
+                        Console.Write("+");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 
     class Player
     {
-        private int _positionX = 0;
-        private int _positionY = 0;
+        public char playerIcon = '@';
+        public int _positionX = 0;
+        public int _positionY = 0;
 
         public Player(int positionX, int positionY)
         {
             _positionX = positionX;
             _positionY = positionY;
         }
-
-        public Player()
-        {
-
-        }
-
-        public void ShowPosition()
-        {
-            Console.WriteLine("позиция игрока");
-        }
-
     }
 }
-
-//Создать класс игрока, у которого есть поля с его положением в x,y. 
-//Создать класс отрисовщик, с методом, который отрисует игрока. 
-//Попрактиковаться в работе со свойствами.
