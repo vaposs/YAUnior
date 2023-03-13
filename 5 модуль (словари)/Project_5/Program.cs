@@ -54,15 +54,15 @@ namespace Project_5
             return number;
         }
 
-        static void FillArray(int[] arrays)
+        static void FillArray(int[] array)
         {
-            Random numb = new Random();
-            int minRan = 1;
-            int maxRan = 10;
+            Random ramdom = new Random();
+            int minimalRamdomNumber = 1;
+            int maximalRamdomNumber = 10;
 
-            for (int i = 0; i < arrays.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                arrays[i] = numb.Next(minRan,maxRan);
+                array[i] = ramdom.Next(minimalRamdomNumber,maximalRamdomNumber);
             }
         }
 
