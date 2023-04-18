@@ -33,7 +33,7 @@ namespace Project_2
     class Player
     {
         private int _x;
-        public int _y;
+        private int _y;
 
         public Player(int x, int y)
         {
