@@ -6,72 +6,49 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            int positionX;
-            int positionY;
+            int positionPlayerX;
+            int positionPlayerY;
 
-            Console.Write("введите координату X - ");
-            positionX = GetNumber();
-            Console.Write("введите координату Y - ");
-            positionY = GetNumber();
-            Player player = new Player(positionX,positionY);
+            Console.Write("Введите позицию игрока X: ");
+            positionPlayerX = Convert.ToInt32(Console.ReadLine()); 
+            Console.Write("Введите позицию игрока Y: ");
+            positionPlayerY = Convert.ToInt32(Console.ReadLine());
 
-            Draw(player);
+            Render renderer = new Render();
+            Player player = new Player(positionPlayerX, positionPlayerY);
+
+            renderer.DrawPlayer(player.GetX(),player.GetY());
         }
+    }
 
-        static int GetNumber()
+    class Render
+    {
+        public void DrawPlayer(int x, int y, char playerIcon = '@')
         {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isSuccess;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
-
-                if (isSuccess && number >= 0)
-                {
-                    isConversionSucceeded = false;
-                }
-                else
-                {
-                    Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
-                }
-            }
-            return number;
-        }
-
-        static void Draw(Player player)
-        {
-            for (int i = 0; i < 20; i++)
-            {
-                for (int j = 0; j < 20; j++)
-                {
-                    if(i == player._positionX - 1 && j == player._positionY - 1)
-                    {
-                        Console.Write(player.playerIcon);
-                    }
-                    else
-                    {
-                        Console.Write("+");
-                    }
-                }
-                Console.WriteLine();
-            }
+            Console.SetCursorPosition(x,y);
+            Console.Write(playerIcon);
         }
     }
 
     class Player
     {
-        public char playerIcon = '@';
-        public int _positionX = 0;
-        public int _positionY = 0;
+        private int _x;
+        public int _y;
 
-        public Player(int positionX, int positionY)
+        public Player(int x, int y)
         {
-            _positionX = positionX;
-            _positionY = positionY;
+            _x = x;
+            _y = y;
+        }
+
+        public int GetX()
+        {
+            return _x;
+        }
+
+        public int GetY()
+        {
+            return _y;
         }
     }
 }

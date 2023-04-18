@@ -6,7 +6,61 @@ namespace Project_3
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            const string AddPlayerCommand = "add";
+            const string ChangeStatusPlayerCommand = "print";
+            const string DeletePlayerCommand = "delete";
+            const string ExitProgramCommand = "exit";
+
+            bool isWork = true;
+
+            while (isWork)
+            {
+                Console.WriteLine($"Введите команду \n");
+                Console.WriteLine($"1.{AddPlayerCommand}");
+                Console.WriteLine($"2.{ChangeStatusPlayerCommand}");
+                Console.WriteLine($"3.{DeletePlayerCommand}");
+                Console.WriteLine($"6.{ExitProgramCommand}");
+
+                Console.Write("\nВведите команду - ");
+
+                string command;
+
+                command = Console.ReadLine();
+
+                switch (command.ToLower())
+                {
+                    case AddPlayerCommand:
+                        Console.WriteLine("добавить игрок");
+                        break;
+
+                    case ChangeStatusPlayerCommand:
+                        Console.WriteLine("бан/розбан игрока");
+                        break;
+
+                    case DeletePlayerCommand:
+                        Console.WriteLine("удалить досье");
+                        break;
+
+                    case ExitProgramCommand:
+                        isWork = false;
+                        break;
+                }
+            }
+        }
+
+        static void AddPlayerCommand()
+        {
+            
+        }
+
+        static void ChangeStatusPlayerCommand()
+        {
+            // ------------------------
+        }
+
+        static void DeletePlayerCommand()
+        {
+            // ------------------------
         }
     }
 }
@@ -26,6 +80,7 @@ class Player
         ban = _ban;
     }
 }
+
 
 //Реализовать базу данных игроков и методы для работы с ней. 
 //У игрока может быть уникальный номер, ник, уровень, флаг – забанен ли он(флаг - bool). 
