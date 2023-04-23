@@ -10,45 +10,69 @@ namespace Project_2
             int positionPlayerY;
 
             Console.Write("Введите позицию игрока X: ");
-            positionPlayerX = Convert.ToInt32(Console.ReadLine()); 
+            positionPlayerX = GetNumber();
             Console.Write("Введите позицию игрока Y: ");
-            positionPlayerY = Convert.ToInt32(Console.ReadLine());
+            positionPlayerY = GetNumber();
+            Console.Clear();
 
             Render renderer = new Render();
             Player player = new Player(positionPlayerX, positionPlayerY);
 
-            renderer.DrawPlayer(player.GetX(),player.GetY());
+            renderer.DrawPlayer(player.PositionX, player.PositionY);
+        }
+
+        static int GetNumber()
+        {
+            string line;
+            bool isConversionSucceeded = true;
+            bool isSuccess;
+            int number = 0;
+
+            while (isConversionSucceeded)
+            {
+                Console.Write("введите целое число - ");
+                line = Console.ReadLine();
+                isSuccess = int.TryParse(line, out number);
+
+                if (isSuccess)
+                {
+                    if(number < 0)
+                    {
+                        Console.WriteLine($"число {number} меньше нуля, введите другое число");
+                    }
+                    else
+                    {
+                        isConversionSucceeded = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"строка {line} не может быть конвертирована в число");
+                }
+            }
+            return number;
         }
     }
 
     class Render
     {
-        public void DrawPlayer(int x, int y, char playerIcon = '@')
+        public void DrawPlayer(int positionX, int positionY, char playerIcon = '@')
         {
-            Console.SetCursorPosition(x,y);
+            Console.SetCursorPosition(positionX, positionY);
             Console.Write(playerIcon);
         }
     }
 
     class Player
     {
-        private int _x;
-        private int _y;
+        public int PositionX { get; private set; }
 
-        public Player(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
+        public int PositionY { get; private set; }
 
-        public int GetX()
+        public Player(int positionX, int positionY)
         {
-            return _x;
-        }
-
-        public int GetY()
-        {
-            return _y;
+            PositionX = positionX;
+            PositionY = positionY;
         }
     }
 }
