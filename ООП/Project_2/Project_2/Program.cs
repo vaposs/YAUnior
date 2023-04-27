@@ -15,7 +15,7 @@ namespace Project_2
             positionPlayerY = GetNumber();
             Console.Clear();
 
-            Render renderer = new Render();
+            Renderer renderer = new Renderer();
             Player player = new Player(positionPlayerX, positionPlayerY);
 
             renderer.DrawPlayer(player.PositionX, player.PositionY);
@@ -24,11 +24,11 @@ namespace Project_2
         static int GetNumber()
         {
             string line;
-            bool isConversionSucceeded = true;
+            bool isSuitableNumber = true;
             bool isSuccess;
             int number = 0;
 
-            while (isConversionSucceeded)
+            while (isSuitableNumber)
             {
                 Console.Write("введите целое число - ");
                 line = Console.ReadLine();
@@ -36,13 +36,13 @@ namespace Project_2
 
                 if (isSuccess)
                 {
-                    if(number < 0)
+                    if (number < 0)
                     {
                         Console.WriteLine($"число {number} меньше нуля, введите другое число");
                     }
                     else
                     {
-                        isConversionSucceeded = false;
+                        isSuitableNumber = false;
                     }
                 }
                 else
@@ -54,7 +54,7 @@ namespace Project_2
         }
     }
 
-    class Render
+    class Renderer
     {
         public void DrawPlayer(int positionX, int positionY, char playerIcon = '@')
         {
@@ -65,14 +65,14 @@ namespace Project_2
 
     class Player
     {
-        public int PositionX { get; private set; }
-
-        public int PositionY { get; private set; }
-
         public Player(int positionX, int positionY)
         {
             PositionX = positionX;
             PositionY = positionY;
         }
+
+        public int PositionX { get; private set; }
+        public int PositionY { get; private set; }
     }
+
 }
