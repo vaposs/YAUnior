@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Доработать. 1 - первый комментарий из прошлой проверки не был исправлен. Вам нужен еще один класс - Database. В котором будет сосредоточена вся логика работы с базой данных.
+//class MainClass - не стоит переименовывать класс Program, он отвечает именно за работу программы. В class Program оставляйте одну функцию Main (можно общую функцию по типу
+//ReadInt()), а для всего остального функционала выделяйте дополнительный класс.
+
+// новый класс создан, по поводу переименования class MainClass, ничего не переименововал. не понимаю как исправить и что имеенно имеется в виду.
+
 namespace Project_3
 {
     class MainClass
@@ -10,10 +16,11 @@ namespace Project_3
             const string AddPlayerCommand = "1";
             const string ChangeStatusPlayerCommand = "2";
             const string DeletePlayerCommand = "3";
-            const string PrintPlayerCommand = "4"; 
+            const string PrintPlayerCommand = "4";
             const string ExitProgramCommand = "5";
 
             List<Player> players = new List<Player>();
+            DataBase dataBase = new DataBase();
             bool isWork = true;
 
             while (isWork)
@@ -27,25 +34,24 @@ namespace Project_3
                 Console.Write($"Введите номер команды - ");
 
                 string command;
-
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
                     case AddPlayerCommand:
-                        AddPlayer(players);
+                        dataBase.AddPlayer(players);
                         break;
 
                     case ChangeStatusPlayerCommand:
-                        ChangeStatus(players);
+                        dataBase.ChangeStatus(players);
                         break;
 
                     case DeletePlayerCommand:
-                        DeletePlayer(players);
+                        dataBase.DeletePlayer(players);
                         break;
 
                     case PrintPlayerCommand:
-                        PrintBasePlayer(players);
+                        dataBase.PrintBasePlayer(players);
                         break;
 
                     case ExitProgramCommand:
@@ -54,8 +60,18 @@ namespace Project_3
                 }
             }
         }
+    }   
+}
 
-        static void AddPlayer(List<Player> players)
+class DataBase
+{
+    public void AddPlayer(List<Player> players)
+    {
+        if (RegisterUniqueNumber(players) == 0)
+        {
+            Console.WriteLine("База игроков переполнена");
+        }
+        else
         {
             int number = RegisterUniqueNumber(players);
             string name = RegisterUniqueName(players) + Convert.ToString(number);
@@ -63,120 +79,137 @@ namespace Project_3
             bool isBan = false;
             AddElement(players, number, name, lvl, isBan);
         }
+    }
 
-        static void AddElement(List<Player> players, int number, string name, int lvl, bool isBan)
+    private void AddElement(List<Player> players, int number, string name, int lvl, bool isBan)
+    {
+        Player tempPlayer = new Player(number, name, lvl, isBan);
+        players.Add(tempPlayer);
+    }
+
+    public void ChangeStatus(List<Player> players)
+    {
+        const string BanPlayer = "1";
+        const string UnBanPlayer = "2";
+
+        string command;
+        int numberPlayer;
+        bool isWork = true;
+
+        while (isWork)
         {
-            Player tempPlayer = new Player(number, name, lvl, isBan);
-            players.Add(tempPlayer);
-            Console.WriteLine(tempPlayer);
-        }
+            Console.WriteLine($"{BanPlayer}.Забанить игрока");
+            Console.WriteLine($"{UnBanPlayer}.Розбанить игрока");
+            Console.Write($"Введите номер команды - ");
+            command = Convert.ToString(GetNumber());
+            Console.Write($"Введите номер игрока - ");
+            numberPlayer = GetNumber();
 
-        static void ChangeStatus(List<Player> players)
-        {
-            const string BanPlayer = "1";
-            const string UnBanPlayer = "2";
-
-            string command;
-            int numberPlayer;
-            bool isWork = true;
-
-            while (isWork)
+            switch (command)
             {
-                Console.WriteLine($"{BanPlayer}.Забанить игрока");
-                Console.WriteLine($"{UnBanPlayer}.Розбанить игрока");
-                Console.Write($"Введите номер команды - ");
-                command = Convert.ToString(GetNumber());
-                Console.Write($"Введите номер игрока - ");
-                numberPlayer = GetNumber();
-
-                switch (command)
-                {
-                    case BanPlayer:
-                        foreach (var player in players)
+                case BanPlayer:
+                    foreach (var player in players)
+                    {
+                        if (numberPlayer == player.Number)
                         {
-                            if (numberPlayer == player.GetNumber())
-                            {
-                                player.BanPrayer();
-                            }
+                            player.BanPrayer();
                         }
-                        isWork = false;
-                        break;
-
-                    case UnBanPlayer:
-                        foreach (var player in players)
-                        {
-                            if (numberPlayer == player.GetNumber())
-                            {
-                                player.UnBanPrayer();
-                            }
-                        }
-                        isWork = false;
-                        break;
-                }
-            }
-        }
-
-        static void DeletePlayer(List<Player> players)
-        {
-            Console.Write("Введите номер ирока для удаления - ");
-
-            int deleteNumberPlayers = GetNumber();
-
-            DeleteElement(players, deleteNumberPlayers);
-        }
-
-        static void DeleteElement(List<Player> players, int deleteNumberPlayers)
-        {
-            int indexDelete = 0;
-
-            foreach (var player in players)
-            {
-                if(player.GetNumber() == deleteNumberPlayers)
-                {
-                    players.RemoveAt(indexDelete);
+                    }
+                    isWork = false;
                     break;
-                }
-                indexDelete++;
+
+                case UnBanPlayer:
+                    foreach (var player in players)
+                    {
+                        if (numberPlayer == player.Number)
+                        {
+                            player.UnBanPrayer();
+                        }
+                    }
+                    isWork = false;
+                    break;
             }
-        }       
+        }
+    }
 
-        static public int RegisterUniqueNumber(List<Player> players)
+    public void DeletePlayer(List<Player> players)
+    {
+        Console.Write("Введите номер ирока для удаления - ");
+
+        int deleteNumberPlayers = GetNumber();
+
+        DeleteElement(players, deleteNumberPlayers);
+    }
+
+    private void DeleteElement(List<Player> players, int deleteNumberPlayers)
+    {
+        int indexDelete = 0;
+
+        foreach (var player in players)
         {
-            bool newNumber = false;
-            int randomNumber = 0;
-            Random random = new Random();
-
-            randomNumber = random.Next();
-
-            while (newNumber)
+            if (player.Number == deleteNumberPlayers)
             {
-                foreach (var number in players)
+                players.RemoveAt(indexDelete);
+                break;
+            }
+            indexDelete++;
+        }
+    }
+
+    private int RegisterUniqueNumber(List<Player> players)
+    {
+        bool isNewNumber = true;
+        bool repick = false;
+        int repicks = 0;
+        int randomNumber = 0;
+        Random random = new Random();
+
+        if(players.Count == 0)
+        {
+            randomNumber = random.Next();
+        }
+        else
+        {
+            while(isNewNumber)
+            {
+                repick = false;
+                randomNumber = random.Next();
+
+                foreach (var player in players)
                 {
-                    if (number.GetNumber()== randomNumber)
+                    if(player.Number == randomNumber)
                     {
-                        randomNumber = random.Next();
-                    }
-                    else
-                    {
-                        newNumber = true;
+                        repick = true;
                     }
                 }
+
+                if (repick == false)
+                {
+                    isNewNumber = false;
+                }
+
+                repicks++;
+
+                if (repick == true && repicks > int.MaxValue)
+                {
+                    return 0;
+                }
             }
-
-            return randomNumber;
         }
+        return randomNumber;
+    }
 
-        static void PrintFirstLine()
-        {
-            Console.WriteLine("уникальный номер   |\t     имя\t   |    лвл    |    бан(true/false)    ");
-        }
+    private void PrintFirstLine()
+    {
+        Console.WriteLine("уникальный номер   |\t     имя\t   |    лвл    |    бан(true/false)    ");
+    }
 
-        static public string RegisterUniqueName(List<Player> players)
-        {
-            int numberNames = 5;
-            int number = RegisterUniqueNumber(players) % numberNames;
+    private string RegisterUniqueName(List<Player> players)
+    {
+        int numberNames = 5;
+        int number = RegisterUniqueNumber(players) % numberNames;
 
-            List<string> name = new List<string>() {
+        List<string> name = new List<string>() {
                 "илья", "олег", "джон", "марк", "ефим",
                 "яков", "отто", "аким", "адам", "лука",
                 "инна", "клим", "наум", "глеб", "осип",
@@ -188,142 +221,120 @@ namespace Project_3
                 "петя", "ланг", "агей", "сева", "боря"
             };
 
-            return name[number];
-        }
+        return name[number];
+    }
 
-        static void PrintBasePlayer(List<Player> basePlayer)
+    public void PrintBasePlayer(List<Player> basePlayer)
+    {
+        PrintFirstLine();
+
+        foreach (var player in basePlayer)
         {
-            PrintFirstLine();
-
-            foreach (var player in basePlayer)
-            {
-                player.Print();
-            }
+            player.Print();
         }
+    }
 
-        static int GetNumber()
+    private int GetNumber()
+    {
+        string line;
+        bool isConversionSucceeded = true;
+        bool isNumber;
+        int number = 0;
+
+        while (isConversionSucceeded)
         {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isNumber;
-            int number = 0;
+            line = Console.ReadLine();
+            isNumber = int.TryParse(line, out number);
 
-            while (isConversionSucceeded)
+            if (isNumber)
             {
-                line = Console.ReadLine();
-                isNumber = int.TryParse(line, out number);
-
-                if (isNumber)
+                if (number < 0)
                 {
-                    if (number < 0)
-                    {
-                        Console.Write("Неверный ввод. Число меньше нуля.");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
+                    Console.Write("Неверный ввод. Число меньше нуля.");
                 }
                 else
                 {
-                    Console.Write("Неверный ввод.");
+                    isConversionSucceeded = false;
                 }
             }
-
-            return number;
-        }
-
-        static bool TryGetPlayer(List<Player> players, int number)
-        {
-            bool isSuccess = false;
-
-            foreach (var player in players)
+            else
             {
-                if(number == player.GetNumber())
-                {
-                    return true;
-                }
+                Console.Write("Неверный ввод.");
             }
-
-            return isSuccess;
         }
+
+        return number;
     }
 
-    class Player
+    private bool TryGetPlayer(List<Player> players, int number)
     {
-        public Player(int number, string name, int lvl, bool ban)
-        {
-            Number = number;
-            Name = name;
-            Lvl = lvl;
-            Ban = ban;
-        }
+        bool isSuccess = false;
 
-        private int Number { get; set; }
-        private string Name { get; set; }
-        private int Lvl { get; set; }
-        private bool Ban { get; set; }
-
-        public void Print()
+        foreach (var player in players)
         {
-            Console.Write(Number + "\t\t");
-            Console.Write(Name + "\t\t");
-            Console.Write(Lvl + "\t\t");
-            Console.Write(Ban + "\n");
-        }
-
-        public string Names()
-        {
-            return this.Names();
-        }
-
-        public bool BanPrayer()
-        {
-            if(this.Ban == false)
+            if (number == player.Number)
             {
-                Console.WriteLine("Плаер забанен");
-                return this.Ban = true;
-            }
-            else
-            {
-                Console.WriteLine("Плаер уже забанен");
-                return this.Ban;
+                return true;
             }
         }
 
-        public int GetNumber()
-        {
-            return Number;
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public bool UnBanPrayer()
-        {
-            if (this.Ban == true)
-            {
-                Console.WriteLine("Плаер розабанен");
-                return this.Ban = false;
-            }
-            else
-            {
-                Console.WriteLine("Плаер уже розабанен");
-                return this.Ban;
-            }
-        }
+        return isSuccess;
     }
 }
 
+class Player
+{
+    public Player(int number, string name, int lvl, bool ban)
+    {
+        Number = number;
+        Name = name;
+        Lvl = lvl;
+        Ban = ban;
+    }
 
-//Доработать. 1 - первый комментарий из прошлой проверки не был исправлен. Вам нужен еще один класс - Database. В котором будет сосредоточена вся логика работы с базой данных.
-//class MainClass - не стоит переименовывать класс Program, он отвечает именно за работу программы. В class Program оставляйте одну функцию Main (можно общую функцию по типу
-//ReadInt()), а для всего остального функционала выделяйте дополнительный класс.
-//
-//2 - private int Number { get; set; } и т.д. - Зачем приватные свойства? В таком случае, лучше сделать обычными приватными полями. А если вы хотите отдавать только на
-//чтение (без изменений данных внутри), вы можете сделать public int Number { get; private set; } Тогда и методы GetNumber/Names вам не нужны.
-//
-//3 - while (newNumber) - цикл не отработает, у вас сразу newNumber = false. булевые переменные должны называться со вспомогательного глагола, как будто вы задаёте вопрос,
-//на который можно ответить да или нет. (is, can, have)
+    public int Number { get; private set; }
+    public string Name { get; private set; }
+    private int Lvl { get; set; }
+    private bool Ban { get; set; }
+
+    public void Print()
+    {
+        Console.Write(Number + "\t\t");
+        Console.Write(Name + "\t\t");
+        Console.Write(Lvl + "\t\t");
+        Console.Write(Ban + "\n");
+    }
+
+    public string Names()
+    {
+        return this.Names();
+    }
+
+    public bool BanPrayer()
+    {
+        if (this.Ban == false)
+        {
+            Console.WriteLine("Плаер забанен");
+            return this.Ban = true;
+        }
+        else
+        {
+            Console.WriteLine("Плаер уже забанен");
+            return this.Ban;
+        }
+    }
+
+    public bool UnBanPrayer()
+    {
+        if (this.Ban == true)
+        {
+            Console.WriteLine("Плаер розабанен");
+            return this.Ban = false;
+        }
+        else
+        {
+            Console.WriteLine("Плаер уже розабанен");
+            return this.Ban;
+        }
+    }
+}
