@@ -1,71 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//Доработать. 1 - первый комментарий из прошлой проверки не был исправлен. Вам нужен еще один класс - Database. В котором будет сосредоточена вся логика работы с базой данных.
-//class MainClass - не стоит переименовывать класс Program, он отвечает именно за работу программы. В class Program оставляйте одну функцию Main (можно общую функцию по типу
-//ReadInt()), а для всего остального функционала выделяйте дополнительный класс.
-
-// новый класс создан, по поводу переименования class MainClass, ничего не переименововал. не понимаю как исправить и что имеенно имеется в виду.
-
 namespace Project_3
 {
-    class MainClass
+    class Program
     {
         public static void Main(string[] args)
         {
-            const string AddPlayerCommand = "1";
-            const string ChangeStatusPlayerCommand = "2";
-            const string DeletePlayerCommand = "3";
-            const string PrintPlayerCommand = "4";
-            const string ExitProgramCommand = "5";
-
-            List<Player> players = new List<Player>();
             DataBase dataBase = new DataBase();
-            bool isWork = true;
-
-            while (isWork)
-            {
-                Console.WriteLine($"{AddPlayerCommand}. Добавить игрока");
-                Console.WriteLine($"{ChangeStatusPlayerCommand}. Бан/Розбан");
-                Console.WriteLine($"{DeletePlayerCommand}. Удалить игрока");
-                Console.WriteLine($"{PrintPlayerCommand}. Вывести список игроков");
-                Console.WriteLine($"{ExitProgramCommand}. Выход");
-
-                Console.Write($"Введите номер команды - ");
-
-                string command;
-                command = Console.ReadLine();
-
-                switch (command.ToLower())
-                {
-                    case AddPlayerCommand:
-                        dataBase.AddPlayer(players);
-                        break;
-
-                    case ChangeStatusPlayerCommand:
-                        dataBase.ChangeStatus(players);
-                        break;
-
-                    case DeletePlayerCommand:
-                        dataBase.DeletePlayer(players);
-                        break;
-
-                    case PrintPlayerCommand:
-                        dataBase.PrintBasePlayer(players);
-                        break;
-
-                    case ExitProgramCommand:
-                        isWork = false;
-                        break;
-                }
-            }
+            dataBase.Begin();
         }
     }   
 }
 
 class DataBase
 {
-    public void AddPlayer(List<Player> players)
+    public void Begin()
+    {
+        const string AddPlayerCommand = "1";
+        const string BanPlayerCommand = "2";
+        const string UnBanPlayerCommand = "3";
+        const string DeletePlayerCommand = "4";
+        const string PrintPlayerCommand = "5";
+        const string ExitProgramCommand = "6";
+
+        List<Player> players = new List<Player>();
+        bool isWork = true;
+        bool banPlayer = false;
+
+        while (isWork)
+        {
+            Console.WriteLine($"{AddPlayerCommand}. Добавить игрока");
+            Console.WriteLine($"{BanPlayerCommand}. Бан игпрока");
+            Console.WriteLine($"{UnBanPlayerCommand}. Розбан игрока");
+            Console.WriteLine($"{DeletePlayerCommand}. Удалить игрока");
+            Console.WriteLine($"{PrintPlayerCommand}. Вывести список игроков");
+            Console.WriteLine($"{ExitProgramCommand}. Выход");
+
+            Console.Write($"Введите номер команды - ");
+
+            string command;
+            command = Console.ReadLine();
+
+            switch (command.ToLower())
+            {
+                case AddPlayerCommand:
+                    AddPlayer(players);
+                    break;
+
+                case BanPlayerCommand:
+                    BanPlayer(players, banPlayer);
+                    break;
+
+                case UnBanPlayerCommand:
+                    BanPlayer(players, banPlayer);
+                    break;
+
+                case DeletePlayerCommand:
+                    DeletePlayer(players);
+                    break;
+
+                case PrintPlayerCommand:
+                    PrintBasePlayer(players);
+                    break;
+
+                case ExitProgramCommand:
+                    isWork = false;
+                    break;
+            }
+        }
+    }
+
+    private void AddPlayer(List<Player> players)
     {
         if (RegisterUniqueNumber(players) == 0)
         {
@@ -87,52 +93,35 @@ class DataBase
         players.Add(tempPlayer);
     }
 
-    public void ChangeStatus(List<Player> players)
+    private void BanPlayer(List<Player> players, bool statusBan)
     {
-        const string BanPlayer = "1";
-        const string UnBanPlayer = "2";
+        Console.Write("Введите ID игрока для бана/розбана - ");
 
-        string command;
-        int numberPlayer;
-        bool isWork = true;
+        int numberPlayer = GetNumber();
 
-        while (isWork)
+        if(TryGetPlayer(players, numberPlayer))
         {
-            Console.WriteLine($"{BanPlayer}.Забанить игрока");
-            Console.WriteLine($"{UnBanPlayer}.Розбанить игрока");
-            Console.Write($"Введите номер команды - ");
-            command = Convert.ToString(GetNumber());
-            Console.Write($"Введите номер игрока - ");
-            numberPlayer = GetNumber();
-
-            switch (command)
+            foreach (var player in players)
             {
-                case BanPlayer:
-                    foreach (var player in players)
+                if(statusBan == false)
+                {
+                    if (player.Number == numberPlayer)
                     {
-                        if (numberPlayer == player.Number)
-                        {
-                            player.BanPrayer();
-                        }
+                        player.BanPrayer();
                     }
-                    isWork = false;
-                    break;
-
-                case UnBanPlayer:
-                    foreach (var player in players)
+                }
+                if (statusBan == true)
+                {
+                    if (player.Number == numberPlayer)
                     {
-                        if (numberPlayer == player.Number)
-                        {
-                            player.UnBanPrayer();
-                        }
+                        player.UnBan();
                     }
-                    isWork = false;
-                    break;
+                }
             }
         }
     }
 
-    public void DeletePlayer(List<Player> players)
+    private void DeletePlayer(List<Player> players)
     {
         Console.Write("Введите номер ирока для удаления - ");
 
@@ -158,45 +147,11 @@ class DataBase
 
     private int RegisterUniqueNumber(List<Player> players)
     {
-        bool isNewNumber = true;
-        bool repick = false;
-        int repicks = 0;
-        int randomNumber = 0;
-        Random random = new Random();
+        const int nextNumber = 1;
 
-        if(players.Count == 0)
-        {
-            randomNumber = random.Next();
-        }
-        else
-        {
-            while(isNewNumber)
-            {
-                repick = false;
-                randomNumber = random.Next();
+        int currentIndex = players.Count + nextNumber;
 
-                foreach (var player in players)
-                {
-                    if(player.Number == randomNumber)
-                    {
-                        repick = true;
-                    }
-                }
-
-                if (repick == false)
-                {
-                    isNewNumber = false;
-                }
-
-                repicks++;
-
-                if (repick == true && repicks > int.MaxValue)
-                {
-                    return 0;
-                }
-            }
-        }
-        return randomNumber;
+        return currentIndex;
     }
 
     private void PrintFirstLine()
@@ -224,7 +179,7 @@ class DataBase
         return name[number];
     }
 
-    public void PrintBasePlayer(List<Player> basePlayer)
+    private void PrintBasePlayer(List<Player> basePlayer)
     {
         PrintFirstLine();
 
@@ -270,7 +225,7 @@ class DataBase
     {
         bool isSuccess = false;
 
-        foreach (var player in players)
+        foreach (Player player in players)
         {
             if (number == player.Number)
             {
@@ -284,57 +239,50 @@ class DataBase
 
 class Player
 {
-    public Player(int number, string name, int lvl, bool ban)
+    public Player(int number, string name, int lvl, bool isBan)
     {
         Number = number;
         Name = name;
         Lvl = lvl;
-        Ban = ban;
+        IsBan = isBan;
     }
 
     public int Number { get; private set; }
     public string Name { get; private set; }
-    private int Lvl { get; set; }
-    private bool Ban { get; set; }
+    public int Lvl { get; private set; }
+    public bool IsBan { get; private set; }
 
     public void Print()
     {
         Console.Write(Number + "\t\t");
         Console.Write(Name + "\t\t");
         Console.Write(Lvl + "\t\t");
-        Console.Write(Ban + "\n");
+        Console.Write(IsBan + "\n");
     }
 
-    public string Names()
+    public void BanPrayer()
     {
-        return this.Names();
-    }
-
-    public bool BanPrayer()
-    {
-        if (this.Ban == false)
+        if (IsBan == false)
         {
-            Console.WriteLine("Плаер забанен");
-            return this.Ban = true;
+            Console.WriteLine("Плеер забанен");
+            IsBan = true;
         }
         else
         {
-            Console.WriteLine("Плаер уже забанен");
-            return this.Ban;
+            Console.WriteLine("Плеер уже забанен");
         }
     }
 
-    public bool UnBanPrayer()
+    public void UnBan()
     {
-        if (this.Ban == true)
+        if (IsBan == true)
         {
             Console.WriteLine("Плаер розабанен");
-            return this.Ban = false;
+            IsBan = false;
         }
         else
         {
             Console.WriteLine("Плаер уже розабанен");
-            return this.Ban;
         }
     }
 }
