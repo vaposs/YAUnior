@@ -10,11 +10,14 @@ namespace Project_3
             DataBase dataBase = new DataBase();
             dataBase.Begin();
         }
-    }   
+    }
 }
 
 class DataBase
 {
+    List<Player> players = new List<Player>();
+    int _currentIndex = 1;
+
     public void Begin()
     {
         const string AddPlayerCommand = "1";
@@ -24,9 +27,7 @@ class DataBase
         const string PrintPlayerCommand = "5";
         const string ExitProgramCommand = "6";
 
-        List<Player> players = new List<Player>();
         bool isWork = true;
-        bool banPlayer = false;
 
         while (isWork)
         {
@@ -45,23 +46,23 @@ class DataBase
             switch (command.ToLower())
             {
                 case AddPlayerCommand:
-                    AddPlayer(players);
+                    AddPlayer();
                     break;
 
                 case BanPlayerCommand:
-                    BanPlayer(players, banPlayer);
+                    BanPlayer();
                     break;
 
                 case UnBanPlayerCommand:
-                    BanPlayer(players, banPlayer);
+                    Unban();
                     break;
 
                 case DeletePlayerCommand:
-                    DeletePlayer(players);
+                    DeletePlayer();
                     break;
 
                 case PrintPlayerCommand:
-                    PrintBasePlayer(players);
+                    PrintBasePlayer();
                     break;
 
                 case ExitProgramCommand:
@@ -71,87 +72,68 @@ class DataBase
         }
     }
 
-    private void AddPlayer(List<Player> players)
+    private void AddPlayer()
     {
-        if (RegisterUniqueNumber(players) == 0)
+        int number = _currentIndex++;
+        string name = RegisterUniqueName();
+        int lvl = 1;
+        bool isBan = false;
+        Player tempPlayer = new Player(number, name, lvl, isBan);
+        players.Add(new Player(number,name,lvl,isBan));
+    }
+
+    private void BanPlayer()
+    {
+        Player tempPlayer;
+
+        Console.Write("Введите ID игрока для бана - ");
+
+        tempPlayer = TryGetPlayer();
+
+        if(tempPlayer == null)
         {
-            Console.WriteLine("База игроков переполнена");
+            Console.WriteLine("такого плеера нету");
         }
         else
         {
-            int number = RegisterUniqueNumber(players);
-            string name = RegisterUniqueName(players) + Convert.ToString(number);
-            int lvl = 1;
-            bool isBan = false;
-            AddElement(players, number, name, lvl, isBan);
+            tempPlayer.BanPrayer();
         }
     }
 
-    private void AddElement(List<Player> players, int number, string name, int lvl, bool isBan)
+    private void Unban()
     {
-        Player tempPlayer = new Player(number, name, lvl, isBan);
-        players.Add(tempPlayer);
-    }
+        Player tempPlayer;
 
-    private void BanPlayer(List<Player> players, bool statusBan)
-    {
-        Console.Write("Введите ID игрока для бана/розбана - ");
+        Console.Write("Введите ID игрока для бана - ");
 
-        int numberPlayer = GetNumber();
+        tempPlayer = TryGetPlayer();
 
-        if(TryGetPlayer(players, numberPlayer))
+        if (tempPlayer == null)
         {
-            foreach (var player in players)
-            {
-                if(statusBan == false)
-                {
-                    if (player.Number == numberPlayer)
-                    {
-                        player.BanPrayer();
-                    }
-                }
-                if (statusBan == true)
-                {
-                    if (player.Number == numberPlayer)
-                    {
-                        player.UnBan();
-                    }
-                }
-            }
+            Console.WriteLine("такого плеера нету");
+        }
+        else
+        {
+            tempPlayer.Unban();
         }
     }
 
-    private void DeletePlayer(List<Player> players)
+    private void DeletePlayer()
     {
+        Player tempPlayer;
+
         Console.Write("Введите номер ирока для удаления - ");
 
-        int deleteNumberPlayers = GetNumber();
+        tempPlayer = TryGetPlayer();
 
-        DeleteElement(players, deleteNumberPlayers);
-    }
-
-    private void DeleteElement(List<Player> players, int deleteNumberPlayers)
-    {
-        int indexDelete = 0;
-
-        foreach (var player in players)
+        if (tempPlayer == null)
         {
-            if (player.Number == deleteNumberPlayers)
-            {
-                players.RemoveAt(indexDelete);
-                break;
-            }
-            indexDelete++;
+            Console.WriteLine("такого плеера нету");
         }
-    }
-
-    private int RegisterUniqueNumber(List<Player> players)
-    {
-        const int nextNumber = 1;
-
-        int currentIndex = players.Count + nextNumber;
-
-        return currentIndex;
+        else
+        {
+            players.Remove(tempPlayer);
+        }
     }
 
     private void PrintFirstLine()
@@ -159,10 +141,11 @@ class DataBase
         Console.WriteLine("уникальный номер   |\t     имя\t   |    лвл    |    бан(true/false)    ");
     }
 
-    private string RegisterUniqueName(List<Player> players)
+    private string RegisterUniqueName()
     {
-        int numberNames = 5;
-        int number = RegisterUniqueNumber(players) % numberNames;
+        int numberNames = 44;
+        Random random = new Random();
+        int number = random.Next() % numberNames;
 
         List<string> name = new List<string>() {
                 "илья", "олег", "джон", "марк", "ефим",
@@ -179,11 +162,11 @@ class DataBase
         return name[number];
     }
 
-    private void PrintBasePlayer(List<Player> basePlayer)
+    private void PrintBasePlayer()
     {
         PrintFirstLine();
 
-        foreach (var player in basePlayer)
+        foreach (Player player in players)
         {
             player.Print();
         }
@@ -217,23 +200,21 @@ class DataBase
                 Console.Write("Неверный ввод.");
             }
         }
-
         return number;
     }
 
-    private bool TryGetPlayer(List<Player> players, int number)
+    private Player TryGetPlayer()
     {
-        bool isSuccess = false;
+        int number = GetNumber();
 
         foreach (Player player in players)
         {
             if (number == player.Number)
             {
-                return true;
+                return player;
             }
         }
-
-        return isSuccess;
+        return null;
     }
 }
 
@@ -273,7 +254,7 @@ class Player
         }
     }
 
-    public void UnBan()
+    public void Unban()
     {
         if (IsBan == true)
         {
