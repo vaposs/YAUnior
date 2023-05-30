@@ -7,15 +7,15 @@ namespace Project_3
     {
         public static void Main(string[] args)
         {
-            DataBase dataBase = new DataBase();
+            Database dataBase = new Database();
             dataBase.Begin();
         }
     }
 }
 
-class DataBase
+class Database
 {
-    List<Player> players = new List<Player>();
+    private List<Player> _players = new List<Player>();
     int _currentIndex = 1;
 
     public void Begin()
@@ -54,7 +54,7 @@ class DataBase
                     break;
 
                 case UnBanPlayerCommand:
-                    Unban();
+                    UnbanPlayer();
                     break;
 
                 case DeletePlayerCommand:
@@ -62,7 +62,7 @@ class DataBase
                     break;
 
                 case PrintPlayerCommand:
-                    PrintBasePlayer();
+                    ShowPlayer();
                     break;
 
                 case ExitProgramCommand:
@@ -78,8 +78,7 @@ class DataBase
         string name = RegisterUniqueName();
         int lvl = 1;
         bool isBan = false;
-        Player tempPlayer = new Player(number, name, lvl, isBan);
-        players.Add(new Player(number,name,lvl,isBan));
+        _players.Add(new Player(number,name,lvl,isBan));
     }
 
     private void BanPlayer()
@@ -96,11 +95,11 @@ class DataBase
         }
         else
         {
-            tempPlayer.BanPrayer();
+            tempPlayer.Ban();
         }
     }
 
-    private void Unban()
+    private void UnbanPlayer()
     {
         Player tempPlayer;
 
@@ -132,7 +131,7 @@ class DataBase
         }
         else
         {
-            players.Remove(tempPlayer);
+            _players.Remove(tempPlayer);
         }
     }
 
@@ -143,30 +142,16 @@ class DataBase
 
     private string RegisterUniqueName()
     {
-        int numberNames = 44;
-        Random random = new Random();
-        int number = random.Next() % numberNames;
+        Console.Write("Введите имя игрока - ");
 
-        List<string> name = new List<string>() {
-                "илья", "олег", "джон", "марк", "ефим",
-                "яков", "отто", "аким", "адам", "лука",
-                "инна", "клим", "наум", "глеб", "осип",
-                "юлий", "фома", "арон", "роза", "ваня",
-                "арам", "влас", "иуда", "боян", "лавр",
-                "коля", "фрол", "женя", "зоря", "рейн",
-                "миша", "изот", "шарф", "леон", "гуго",
-                "гиви", "икар", "саша", "арий", "пров",
-                "петя", "ланг", "агей", "сева", "боря"
-            };
-
-        return name[number];
+        return Console.ReadLine(); 
     }
 
-    private void PrintBasePlayer()
+    private void ShowPlayer()
     {
         PrintFirstLine();
 
-        foreach (Player player in players)
+        foreach (Player player in _players)
         {
             player.Print();
         }
@@ -207,7 +192,7 @@ class DataBase
     {
         int number = GetNumber();
 
-        foreach (Player player in players)
+        foreach (Player player in _players)
         {
             if (number == player.Number)
             {
@@ -241,7 +226,7 @@ class Player
         Console.Write(IsBan + "\n");
     }
 
-    public void BanPrayer()
+    public void Ban()
     {
         if (IsBan == false)
         {
@@ -258,12 +243,12 @@ class Player
     {
         if (IsBan == true)
         {
-            Console.WriteLine("Плаер розабанен");
+            Console.WriteLine("Плеер розабанен");
             IsBan = false;
         }
         else
         {
-            Console.WriteLine("Плаер уже розабанен");
+            Console.WriteLine("Плеер уже розабанен");
         }
     }
 }
