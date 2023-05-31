@@ -18,6 +18,8 @@ namespace Project_4
 
         public void Play()
         {
+            bool isGameOver = true;
+            int i = 0;
             string namePlayer;
 
             Console.WriteLine("Начнем игру");
@@ -26,18 +28,30 @@ namespace Project_4
             namePlayer = Console.ReadLine();
             Player player = new Player(namePlayer);
 
-            //------------------------------создали ирока
-            while (true)
+            while (isGameOver)
             {
+                Console.Clear();
                 Card card = _deck.GiveCard();
                 player.TakeCard(card);
                 player.ShowCards();
-                _deck.ShowStatus();
-                
+                Console.WriteLine();
+
+                if (player.ShowScore() > 21)
+                {
+                    Console.WriteLine($"перебор,{namePlayer} набрал {player.ShowScore()}");
+                    isGameOver = false;
+                }
+                else
+                {
+                    Console.Write(player.ShowScore());
+                    Console.WriteLine();
+                    _deck.ShowStatus();
+                }
+
                 Console.ReadKey();
             }
-            
 
+            Console.WriteLine("конец");
         }
     }
 
@@ -65,6 +79,18 @@ namespace Project_4
                 Console.WriteLine();
             }
         }
+
+        public int ShowScore()
+        {
+            int _score = 0;
+
+            foreach (Card card in _cards)
+            {
+                _score += card.Score();
+            }
+
+            return _score;
+        }
     }
 
     class Card
@@ -82,12 +108,17 @@ namespace Project_4
         {
             Console.Write(Name);
         }
+
+        public int Score()
+        {
+            return ValueCard;
+        }
     }
 
     class Deck
     {
         private Dictionary<int, string> deck = new Dictionary<int, string>()
-        {  
+        {
             {1,"Ace-♦"},
             {2,"Ace-♥"},
             {3,"Ace-♣"},
@@ -171,7 +202,7 @@ namespace Project_4
             while (repick)
             {
                 numberCard = randomCard.Next() % deck.Count;
-                if(inDeck[numberCard] == false)
+                if (inDeck[numberCard] == false)
                 {
                     repick = false;
                     inDeck[numberCard] = true;
@@ -188,62 +219,10 @@ namespace Project_4
 
         public void ShowStatus()
         {
-            foreach (bool i in inDeck)
+            foreach (bool status in inDeck)
             {
-                Console.Write(i + " ");
+                Console.Write(status + " ");
             }
         }
     }
 }
-
-/*
-
-            // беру карту
-            // рисую карту
-            // считаю очки карты
-            // прорисовка карт
-
-        private int GetNumber()
-        {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isNumber;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                line = Console.ReadLine();
-                isNumber = int.TryParse(line, out number);
-
-                if (isNumber)
-                {
-                    if (number < 0)
-                    {
-                        Console.Write("Неверный ввод. Число меньше нуля.");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод.");
-                }
-            }
-
-            return number;
-        }
-
-
-/* создать колоду карт ---------------------------------------------------------
- * создать выбор количеста игроков за столом
- * создать добавления карт ботам
- * создать подбор карт игроку
- * создать логическую концовку игры
-
-Есть колода с картами. Игрок достает карты, пока не решит, что ему хватит карт (может быть как выбор пользователя, 
-так и количество сколько карт надо взять). После выводиться вся информация о вытянутых картах.
-Возможные классы: Карта, Колода, Игрок.
-
-*/
