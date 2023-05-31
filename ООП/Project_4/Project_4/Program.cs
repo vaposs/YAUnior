@@ -32,6 +32,8 @@ namespace Project_4
                 Card card = _deck.GiveCard();
                 player.TakeCard(card);
                 player.ShowCards();
+                _deck.ShowStatus();
+                
                 Console.ReadKey();
             }
             
@@ -60,6 +62,7 @@ namespace Project_4
             foreach (Card card in _cards)
             {
                 card.ShowName();
+                Console.WriteLine();
             }
         }
     }
@@ -84,59 +87,59 @@ namespace Project_4
     class Deck
     {
         private Dictionary<int, string> deck = new Dictionary<int, string>()
-        {
-            {1,"Ace-Diamonds"},
-            {2,"Ace-Hearts"},
-            {3,"Ace-Clubs"},
-            {4,"Ace-Spades"},
-            {5,"King-Diamonds"},
-            {6,"King-Hearts"},
-            {7,"King-Clubs"},
-            {8,"King-Spades"},
-            {9,"Queen-Diamonds"},
-            {10,"Queen-Hearts"},
-            {11,"Queen-Clubs"},
-            {12,"Queen-Spades"},
-            {13,"Jack-Diamonds"},
-            {14,"Jack-Hearts"},
-            {15,"Jack-Clubs"},
-            {16,"Jack-Spades"},
-            {17,"Ten-Diamonds"},
-            {18,"Ten-Hearts"},
-            {19,"Ten-Clubs"},
-            {20,"Ten-Spades"},
-            {21,"Nine-Diamonds"},
-            {22,"Nine-Hearts"},
-            {23,"Nine-Clubs"},
-            {24,"Nine-Spades"},
-            {25,"Eght-Diamonds"},
-            {26,"Eght-Hearts"},
-            {27,"Eght-Clubs"},
-            {28,"Eght-Spades"},
-            {29,"Seven-Diamonds"},
-            {30,"Seven-Hearts"},
-            {31,"Seven-Clubs"},
-            {32,"Seven-Spades"},
-            {33,"Six-Diamonds"},
-            {34,"Six-Hearts"},
-            {35,"Six-Clubs"},
-            {36,"Six-Spades"},
-            {37,"Five-Diamonds"},
-            {38,"Five-Hearts"},
-            {39,"Five-Clubs"},
-            {40,"Five-Spades"},
-            {41,"Four-Diamonds"},
-            {42,"Four-Hearts"},
-            {43,"Four-Clubs"},
-            {44,"Four-Spades"},
-            {45,"Three-Diamonds"},
-            {46,"Three-Hearts"},
-            {47,"Three-Clubs"},
-            {48,"Three-Spades"},
-            {49,"Two-Diamonds"},
-            {50,"Two-Hearts"},
-            {51,"Two-Clubs"},
-            {52,"Two-Spades"}
+        {  
+            {1,"Ace-♦"},
+            {2,"Ace-♥"},
+            {3,"Ace-♣"},
+            {4,"Ace-♠"},
+            {5,"King-♦"},
+            {6,"King-♥"},
+            {7,"King-♣"},
+            {8,"King-♠"},
+            {9,"Queen-♦"},
+            {10,"Queen-♥"},
+            {11,"Queen-♣"},
+            {12,"Queen-♠"},
+            {13,"Jack-♦"},
+            {14,"Jack-♥"},
+            {15,"Jack-♣"},
+            {16,"Jack-♠"},
+            {17,"Ten-♦"},
+            {18,"Ten-♥"},
+            {19,"Ten-♣"},
+            {20,"Ten-♠"},
+            {21,"Nine-♦"},
+            {22,"Nine-♥"},
+            {23,"Nine-♣"},
+            {24,"Nine-♠"},
+            {25,"Eght-♦"},
+            {26,"Eght-♥"},
+            {27,"Eght-♣"},
+            {28,"Eght-♠"},
+            {29,"Seven-♦"},
+            {30,"Seven-♥"},
+            {31,"Seven-♣"},
+            {32,"Seven-♠"},
+            {33,"Six-♦"},
+            {34,"Six-♥"},
+            {35,"Six-♣"},
+            {36,"Six-♠"},
+            {37,"Five-♦"},
+            {38,"Five-♥"},
+            {39,"Five-♣"},
+            {40,"Five-♠"},
+            {41,"Four-♦"},
+            {42,"Four-♥"},
+            {43,"Four-♣"},
+            {44,"Four-♠"},
+            {45,"Three-♦"},
+            {46,"Three-♥"},
+            {47,"Three-♣"},
+            {48,"Three-♠"},
+            {49,"Two-♦"},
+            {50,"Two-♥"},
+            {51,"Two-♣"},
+            {52,"Two-♠"}
         };
         private bool[] inDeck = new bool[52];
         private Dictionary<string, int> card = new Dictionary<string, int>()
@@ -158,17 +161,37 @@ namespace Project_4
 
         public Card GiveCard()
         {
-            int numberCard;
+            int numberCard = 0;
             int valueCard;
             string nameCard;
+            bool repick = true;
 
             Random randomCard = new Random();
-            numberCard = randomCard.Next() % deck.Count;
-            deck.TryGetValue(numberCard,out nameCard);
+
+            while (repick)
+            {
+                numberCard = randomCard.Next() % deck.Count;
+                if(inDeck[numberCard] == false)
+                {
+                    repick = false;
+                    inDeck[numberCard] = true;
+                }
+            }
+
+            deck.TryGetValue(numberCard, out nameCard);
+
             string[] templeString = nameCard.Split('-');
             card.TryGetValue(templeString[0], out valueCard);
 
             return new Card(nameCard, valueCard);
+        }
+
+        public void ShowStatus()
+        {
+            foreach (bool i in inDeck)
+            {
+                Console.Write(i + " ");
+            }
         }
     }
 }
@@ -178,7 +201,7 @@ namespace Project_4
             // беру карту
             // рисую карту
             // считаю очки карты
-
+            // прорисовка карт
 
         private int GetNumber()
         {
@@ -212,65 +235,12 @@ namespace Project_4
             return number;
         }
 
-        private void TakeCard(bool[] inDeck, Dictionary<int,string> deck)
-        {
-            string nameCard;
-            int countCard = 52;
-            int cardIndex;
-            Random random = new Random();
-
-            cardIndex = random.Next() % countCard;
-            while(inDeck[cardIndex] == true)
-            {
-                cardIndex = random.Next() % countCard;
-            }
-
-            Console.WriteLine(cardIndex);
-            inDeck[cardIndex - 1] = true;
-            deck.TryGetValue(cardIndex, out nameCard);
-            Console.WriteLine(nameCard);
-        }
-
-        public void Print(bool[] inDeck)
-        {
-            for (int i = 0; i < inDeck.Length; i++)
-            {
-                Console.Write(inDeck[i] + " ");
-            }
-            Console.WriteLine("\n");
-        }
-
-    }
 
 /* создать колоду карт ---------------------------------------------------------
  * создать выбор количеста игроков за столом
  * создать добавления карт ботам
  * создать подбор карт игроку
  * создать логическую концовку игры
-  
- -------------------- розделения имени
-
-
-suit - масть карты
-Diamonds(Бубы / Алмазы)
-Hearts(Черви / Сердца)
-Clubs(Трефы / Клубы)
-Spades(Пики / Лопаты)
-
-rank - ранг карты
-Ace(Туз)
-Jack(Валет / Джек)
-Queen(Дама / Королева(
-King(Король)
-ten
-nine
-eght
-seven
-six
-five
-four
-three
-two
 
 Есть колода с картами. Игрок достает карты, пока не решит, что ему хватит карт (может быть как выбор пользователя, 
 так и количество сколько карт надо взять). После выводиться вся информация о вытянутых картах.

@@ -7,8 +7,8 @@ namespace Project_3
     {
         public static void Main(string[] args)
         {
-            Database dataBase = new Database();
-            dataBase.Begin();
+            Database database = new Database();
+            database.Begin();
         }
     }
 }
@@ -75,7 +75,7 @@ class Database
     private void AddPlayer()
     {
         int number = _currentIndex++;
-        string name = RegisterUniqueName();
+        string name = Console.ReadLine();
         int lvl = 1;
         bool isBan = false;
         _players.Add(new Player(number,name,lvl,isBan));
@@ -83,68 +83,61 @@ class Database
 
     private void BanPlayer()
     {
-        Player tempPlayer;
+        Player playerForBan;
 
         Console.Write("Введите ID игрока для бана - ");
 
-        tempPlayer = TryGetPlayer();
+        playerForBan = TryGetPlayer();
 
-        if(tempPlayer == null)
+        if(playerForBan == null)
         {
             Console.WriteLine("такого плеера нету");
         }
         else
         {
-            tempPlayer.Ban();
+            playerForBan.Ban();
         }
     }
 
     private void UnbanPlayer()
     {
-        Player tempPlayer;
+        Player playerForUnban;
 
         Console.Write("Введите ID игрока для бана - ");
 
-        tempPlayer = TryGetPlayer();
+        playerForUnban = TryGetPlayer();
 
-        if (tempPlayer == null)
+        if (playerForUnban == null)
         {
             Console.WriteLine("такого плеера нету");
         }
         else
         {
-            tempPlayer.Unban();
+            playerForUnban.Unban();
         }
     }
 
     private void DeletePlayer()
     {
-        Player tempPlayer;
+        Player playerForDelete;
 
         Console.Write("Введите номер ирока для удаления - ");
 
-        tempPlayer = TryGetPlayer();
+        playerForDelete = TryGetPlayer();
 
-        if (tempPlayer == null)
+        if (playerForDelete == null)
         {
             Console.WriteLine("такого плеера нету");
         }
         else
         {
-            _players.Remove(tempPlayer);
+            _players.Remove(playerForDelete);
         }
     }
 
     private void PrintFirstLine()
     {
         Console.WriteLine("уникальный номер   |\t     имя\t   |    лвл    |    бан(true/false)    ");
-    }
-
-    private string RegisterUniqueName()
-    {
-        Console.Write("Введите имя игрока - ");
-
-        return Console.ReadLine(); 
     }
 
     private void ShowPlayer()
@@ -185,6 +178,7 @@ class Database
                 Console.Write("Неверный ввод.");
             }
         }
+
         return number;
     }
 
@@ -199,6 +193,7 @@ class Database
                 return player;
             }
         }
+
         return null;
     }
 }
