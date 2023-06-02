@@ -8,7 +8,7 @@ namespace Project_4
         public static void Main(string[] args)
         {
             Game game = new Game();
-            game.Play();
+            game.Played();
         }
     }
 
@@ -16,10 +16,10 @@ namespace Project_4
     {
         private Deck _deck = new Deck();
 
-        public void Play()
+        public void Played()
         {
+            const int MaxScore = 21; 
             bool isGameOver = true;
-            int i = 0;
             string namePlayer;
 
             Console.WriteLine("Начнем игру");
@@ -34,18 +34,15 @@ namespace Project_4
                 Card card = _deck.GiveCard();
                 player.TakeCard(card);
                 player.ShowCards();
-                Console.WriteLine();
 
-                if (player.ShowScore() > 21)
+                if (player.ShowScore() > MaxScore)
                 {
-                    Console.WriteLine($"перебор,{namePlayer} набрал {player.ShowScore()}");
+                    Console.Write($"перебор,{namePlayer} набрал {player.ShowScore()}");
                     isGameOver = false;
                 }
                 else
                 {
                     Console.Write(player.ShowScore());
-                    Console.WriteLine();
-                    _deck.ShowStatus();
                 }
 
                 Console.ReadKey();
@@ -76,153 +73,91 @@ namespace Project_4
             foreach (Card card in _cards)
             {
                 card.ShowName();
-                Console.WriteLine();
             }
         }
 
         public int ShowScore()
         {
-            int _score = 0;
+            int score = 0;
 
             foreach (Card card in _cards)
             {
-                _score += card.Score();
+                score += card.Scored();
             }
 
-            return _score;
+            return score;
         }
     }
 
     class Card
     {
-        public Card(string name, int valueCard)
+        public Card(string name, int value)
         {
             Name = name;
-            ValueCard = valueCard;
+            Value = value;
         }
 
         private string Name { get; set; }
-        private int ValueCard { get; set; }
+        private int Value { get; set; }
+
+        public string ReturnName()
+        {
+            return Name;
+        }
+
+        public int Scored()
+        {
+            return Value;
+        }
 
         public void ShowName()
         {
-            Console.Write(Name);
-        }
-
-        public int Score()
-        {
-            return ValueCard;
+            Console.WriteLine(Name);
         }
     }
 
     class Deck
     {
-        private Dictionary<int, string> deck = new Dictionary<int, string>()
-        {
-            {1,"Ace-♦"},
-            {2,"Ace-♥"},
-            {3,"Ace-♣"},
-            {4,"Ace-♠"},
-            {5,"King-♦"},
-            {6,"King-♥"},
-            {7,"King-♣"},
-            {8,"King-♠"},
-            {9,"Queen-♦"},
-            {10,"Queen-♥"},
-            {11,"Queen-♣"},
-            {12,"Queen-♠"},
-            {13,"Jack-♦"},
-            {14,"Jack-♥"},
-            {15,"Jack-♣"},
-            {16,"Jack-♠"},
-            {17,"Ten-♦"},
-            {18,"Ten-♥"},
-            {19,"Ten-♣"},
-            {20,"Ten-♠"},
-            {21,"Nine-♦"},
-            {22,"Nine-♥"},
-            {23,"Nine-♣"},
-            {24,"Nine-♠"},
-            {25,"Eght-♦"},
-            {26,"Eght-♥"},
-            {27,"Eght-♣"},
-            {28,"Eght-♠"},
-            {29,"Seven-♦"},
-            {30,"Seven-♥"},
-            {31,"Seven-♣"},
-            {32,"Seven-♠"},
-            {33,"Six-♦"},
-            {34,"Six-♥"},
-            {35,"Six-♣"},
-            {36,"Six-♠"},
-            {37,"Five-♦"},
-            {38,"Five-♥"},
-            {39,"Five-♣"},
-            {40,"Five-♠"},
-            {41,"Four-♦"},
-            {42,"Four-♥"},
-            {43,"Four-♣"},
-            {44,"Four-♠"},
-            {45,"Three-♦"},
-            {46,"Three-♥"},
-            {47,"Three-♣"},
-            {48,"Three-♠"},
-            {49,"Two-♦"},
-            {50,"Two-♥"},
-            {51,"Two-♣"},
-            {52,"Two-♠"}
-        };
-        private bool[] inDeck = new bool[52];
-        private Dictionary<string, int> card = new Dictionary<string, int>()
-        {
-            { "Ace", 11 },
-            { "King", 4 },
-            { "Queen", 3 },
-            { "Jack", 2 },
-            { "Ten", 10 },
-            { "Nine", 9 },
-            { "Eght", 8 },
-            { "Seven", 7 },
-            { "Six", 6 },
-            { "Five", 5 },
-            { "Four", 4 },
-            { "Three", 3 },
-            { "Two", 2 }
-        };
+        private List<Card> _inDeck = new List<Card>();
+
+        private string[] rank = new string[] {"Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two"};
+        private char[] suit = new char[] { '♦', '♥', '♣', '♠' };
+        private int[] value = new int[] { 11, 4, 3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2 }; 
 
         public Card GiveCard()
         {
-            int numberCard = 0;
-            int valueCard;
-            string nameCard;
-            bool repick = true;
+            int numberCardRank;
+            int numberCardSuit;
+            int valueCard = 0;
+            string nameCard = "";
+            bool isRepick = true;
 
-            Random randomCard = new Random();
-
-            while (repick)
+            while (isRepick)
             {
-                numberCard = randomCard.Next() % deck.Count;
-                if (inDeck[numberCard] == false)
+                Random randomNumber = new Random();
+
+                numberCardRank = randomNumber.Next(rank.Length);
+                numberCardSuit = randomNumber.Next(suit.Length);
+                valueCard = value[numberCardRank];
+                nameCard = ($"{rank[numberCardRank]}-{suit[numberCardSuit]}");
+
+                if (_inDeck.Count == 0)
                 {
-                    repick = false;
-                    inDeck[numberCard] = true;
+                    return new Card(nameCard, valueCard);
+                }
+                else
+                {
+                    foreach (Card card in _inDeck)
+                    {
+                        if (card.ReturnName() != nameCard)
+                        {
+                            isRepick = false;
+                        }
+                    }
                 }
             }
 
-            deck.TryGetValue(numberCard, out nameCard);
-
-            string[] templeString = nameCard.Split('-');
-            card.TryGetValue(templeString[0], out valueCard);
-
             return new Card(nameCard, valueCard);
-        }
-
-        public void ShowStatus()
-        {
-            foreach (bool status in inDeck)
-            {
-                Console.Write(status + " ");
-            }
         }
     }
 }
