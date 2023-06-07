@@ -1,16 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-//4) В поиске книги по параметрам - не нужно создавать 2 дополнительных списка - достаточно найти требуем параметр (например, название книги)
-//в списке книг и вывести эту книгу в консоль.
-//
-//5) Не нравится идея удаления книги по названию. Могут быть книги с одинаковым названием,
-//но разных автором и разных годов выпуска - например Математика 5 класс. Сделайте удаление по номеру книги в списке (индексу) .
-//
-//6) Ищите книгу не зависимо от регистра введенных букв
-
-
 namespace Project_5
 {
     class MainClass
@@ -170,13 +160,20 @@ namespace Project_5
             }
         }
 
-        private void PrintLibrary(List<Book> Libriary)
+        private void PrintLibrary(List<Book> libriary)
         {
-            int numberBook = 1;
-            foreach (Book book in Libriary)
+            if(libriary.Count == 0)
             {
-                Console.Write(numberBook++ + ". ");
-                book.Print();
+                Console.WriteLine("Библиотека пуста");
+            }
+            else
+            {
+                int numberBook = 1;
+                foreach (Book book in libriary)
+                {
+                    Console.Write(numberBook++ + ". ");
+                    book.Print();
+                }
             }
         }
 
@@ -381,10 +378,9 @@ namespace Project_5
             }
             else
             {
-                Book bookForDelete;
-
                 Console.Write("Введите номер книги для удаления - ");
-
+                int bookForDelete = GetPositiveNumber();
+                _books.RemoveAt(bookForDelete - 1);
             }
         }
 
@@ -447,7 +443,6 @@ namespace Project_5
 
         private void PrintSortName()
         {
-            List<Book> names = new List<Book>(); 
             string name;
 
             Console.Write("Введите название - ");
@@ -457,16 +452,13 @@ namespace Project_5
             {
                 if(name == book.Name)
                 {
-                    names.Add(book);
+                    book.Print();
                 }
             }
-
-            PrintLibrary(names);
         }
 
         private void PrintSortAuthor()
         {
-            List<Book> author = new List<Book>();
             string name;
 
             Console.Write("Введите имя автора - ");
@@ -476,16 +468,13 @@ namespace Project_5
             {
                 if (name == book.Author)
                 {
-                    author.Add(book);
+                    book.Print();
                 }
             }
-
-            PrintLibrary(author);
         }
 
         private void PrintSortGenre()
         {
-            List<Book> genre = new List<Book>();
             string name;
 
             Console.Write("Введите жанр - ");
@@ -495,16 +484,13 @@ namespace Project_5
             {
                 if (name == book.Genre)
                 {
-                    genre.Add(book);
+                    book.Print();
                 }
             }
-
-            PrintLibrary(genre);
         }
 
         private void PrintSortColor()
         {
-            List<Book> color = new List<Book>();
             string name;
 
             Console.Write("Введите цвет - ");
@@ -514,11 +500,9 @@ namespace Project_5
             {
                 if (name == book.Color)
                 {
-                    color.Add(book);
+                    book.Print();
                 }
             }
-
-            PrintLibrary(color);
         }
     }
 
