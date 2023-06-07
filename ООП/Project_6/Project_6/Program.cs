@@ -9,29 +9,33 @@ namespace Project_6
         {
             Dealer dealer = new Dealer("asd");
             dealer.CreateGoods();
-
         }
     }
 
     class Item
     {
-        public Item(string name, int tierItem, int value)
+        public Item(string name, int tier, int value)
         {
             Name = name;
-            TierItem = tierItem;
+            Tier = tier;
             Value = value;
 
         }
 
         public string Name { get; private set; }
-        public int TierItem { get; private set; }
+        public int Tier { get; private set; }
         public int Value { get; private set; }
 
         public void ShowInfo()
         {
             Console.Write(Name + " - ");
-            Console.Write(TierItem + " - ");
+            Console.Write(Tier + " - ");
             Console.WriteLine(Value);
+        }
+
+        public int ToTier()
+        {
+            return Tier;
         }
     }
 
@@ -77,17 +81,14 @@ namespace Project_6
             Console.Write("Введите количество товаров у торговца - ");
             countItem = GetNumber();
 
-            Console.WriteLine(_goods.Count);
-
             for (int i = 0; i < countItem; i++)
             {
                 tierItem = randomNumber.Next(MinRandomTier, MaxRandomTier);
                 valueItem = randomNumber.Next(MinRandomValue, MaxRandomValue) * tierItem;
                 _goods.Add(new Item(NameItem(),tierItem,valueItem));
             }
-            Console.WriteLine(_goods.Count);
-            ShowGoods();
 
+            ShowGoods();
             Console.ReadKey();
         }
 
@@ -105,9 +106,9 @@ namespace Project_6
 
                 if (isNumber)
                 {
-                    if (number < 0)
+                    if (number < 1)
                     {
-                        Console.Write("Неверный ввод. Число меньше нуля. Повторите ввод - ");
+                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
                     }
                     else
                     {
@@ -125,31 +126,83 @@ namespace Project_6
 
         private void ShowGoods()
         {
+            int indexNumber = 1;
+            SortGoods();
+
             foreach (Item item in _goods)
             {
+                Console.Write(indexNumber + ". ");
                 item.ShowInfo();
+                indexNumber++;
             }
+        }
+
+        private void SortGoods()
+        {
+            List<int> temp = new List<int>(_goods.Count);
+            List<Item> templGoods = new List<Item>(_goods.Count);
+
+            for (int i = 0; i < _goods.Count; i++)
+            {
+                temp.Add(_goods[i].ToTier());
+            }
+
+            temp.Sort();
+
+            for (int i = 0; i < _goods.Count; i++)
+            {
+                for (int j = 0; j < _goods.Count; j++)
+                {
+                    if (temp[i] == _goods[j].Tier)
+                    {
+                        templGoods.Add(_goods[i]);
+                    }
+                }
+            }
+
+            _goods = templGoods;
+        }
+
+        public Item SealItem()
+        {
+            int itemNumber = 0;
+            ShowGoods();
+            Console.WriteLine("Введите номер товара для покупки - ");
+            itemNumber = GetNumber();
+
+            return _goods[itemNumber];
+        }
+    }
+
+    class Player
+    {
+        private List<Item> _inventar = new List<Item>();
+
+        public Player(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
+
+        public void BuyItem(Item item)
+        {
+            _inventar.Add(item);
+        }
+
+        public void SeelItem()
+        {
+
         }
     }
 }
 
-// сортировка по тиру
-// создать класс игрока
-// -в нем лист как инвентарь!
-// -метод вывода вилимости инвенторя
 // - покупка продажа предметов
 
-// создать класс ИТЕМ
-// в нем 2 параметра - имя и стоимость
 
-// создать класс торговец
-// лист ИТЕМОВ
 // методы покупки продажи выводы всего инвенторя 
 
 
 //Существует продавец, он имеет у себя список товаров, и при нужде, может вам его показать, также продавец может продать вам товар.
 //После продажи товар переходит к вам, и вы можете также посмотреть свои вещи. 
 
-//Возможные классы – игрок, продавец, товар. 
-
-//Вы можете сделать так, как вы видите это.

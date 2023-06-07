@@ -1,6 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+//4) В поиске книги по параметрам - не нужно создавать 2 дополнительных списка - достаточно найти требуем параметр (например, название книги)
+//в списке книг и вывести эту книгу в консоль.
+//
+//5) Не нравится идея удаления книги по названию. Могут быть книги с одинаковым названием,
+//но разных автором и разных годов выпуска - например Математика 5 класс. Сделайте удаление по номеру книги в списке (индексу) .
+//
+//6) Ищите книгу не зависимо от регистра введенных букв
+
+
 namespace Project_5
 {
     class MainClass
@@ -8,7 +18,7 @@ namespace Project_5
         public static void Main(string[] args)
         {
             Library library = new Library();
-            library.Begin();
+            library.Work();
         }
     }
 
@@ -16,7 +26,7 @@ namespace Project_5
     {
         private List<Book> _books = new List<Book>();
 
-        public void Begin()
+        public void Work()
         {
             const string AddBookCommand = "1";
             const string DeleteBookCommand = "2";
@@ -77,7 +87,7 @@ namespace Project_5
             Console.Write("Введите имя автора: ");
             string author = Console.ReadLine();
             Console.Write("Введите год выхода в свет: ");
-            int bookRelease = GetNumber();
+            int bookRelease = GetPositiveNumber();
             Console.WriteLine("Выберите жанр книги:");
             string genre = GenreSelection();
             Console.Write("Цвет обложки книги: ");
@@ -86,7 +96,7 @@ namespace Project_5
             _books.Add(new Book(name, author, bookRelease, genre, color));
         }
 
-        private int GetNumber()
+        private int GetPositiveNumber()
         {
             string line;
             bool isConversionSucceeded = true;
@@ -160,10 +170,12 @@ namespace Project_5
             }
         }
 
-        private void PrintLibrary(List<Book> Libr)
+        private void PrintLibrary(List<Book> Libriary)
         {
-            foreach (Book book in Libr)
+            int numberBook = 1;
+            foreach (Book book in Libriary)
             {
+                Console.Write(numberBook++ + ". ");
                 book.Print();
             }
         }
@@ -285,8 +297,8 @@ namespace Project_5
 
         private void SortBooksForName()
         {
-            List<string> temp = new List<string>(_books.Count);
-            List<Book> templLibrary = new List<Book>(_books.Count);
+            List<string> temp = new List<string>();
+            List<Book> templLibrary = new List<Book>();
 
             for (int i = 0; i < _books.Count; i++)
             {
@@ -311,8 +323,8 @@ namespace Project_5
 
         private void SortBooksForAuthor()
         {
-            List<string> temp = new List<string>(_books.Count);
-            List<Book> templLibrary = new List<Book>(_books.Count);
+            List<string> temp = new List<string>();
+            List<Book> templLibrary = new List<Book>();
 
             for (int i = 0; i < _books.Count; i++)
             {
@@ -337,8 +349,8 @@ namespace Project_5
 
         private void SortBooksForGenre()
         {
-            List<string> temp = new List<string>(_books.Count);
-            List<Book> templLibrary = new List<Book>(_books.Count);
+            List<string> temp = new List<string>();
+            List<Book> templLibrary = new List<Book>();
 
             for (int i = 0; i < _books.Count; i++)
             {
@@ -371,19 +383,8 @@ namespace Project_5
             {
                 Book bookForDelete;
 
-                Console.Write("Введите название для удаления - ");
+                Console.Write("Введите номер книги для удаления - ");
 
-                bookForDelete = TryGetBook();
-
-                if (bookForDelete == null)
-                {
-                    Console.WriteLine("такой книги нету");
-                }
-                else
-                {
-                    _books.Remove(bookForDelete);
-                    Console.WriteLine("Книга удалена.");
-                }
             }
         }
 
