@@ -7,10 +7,105 @@ namespace Project_6
     {
         public static void Main(string[] args)
         {
-            Dealer dealer = new Dealer("asd");
+            string namePlayer;
+            int moneyPlayer = 100;
+
+            Console.Write("Введите имя - ");
+            namePlayer = Console.ReadLine();
+            Player player = new Player(namePlayer, moneyPlayer);
+
+            Trade(player);
+        }
+
+        static void Trade(Player player)
+        {
+            const string ShowGoodsCommand = "1";
+            const string BuyGoodCommand = "2";
+            const string SealGoodCommand = "3";
+            const string ExitGame = "4";
+            const int MinMoney = 100;
+            const int MaxMoney = 500;
+
+            bool isTrade = true;
+
+
+            Random moreMoney = new Random();
+            Dealer dealer = new Dealer("Traider", moreMoney.Next(MinMoney, MaxMoney));
+
+            Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
             dealer.CreateGoods();
+
+            while (isTrade)
+            {
+
+                Console.WriteLine($"\nДенег у торговца - {dealer.Money}, денег у вас - {player.Money}");
+
+                Console.WriteLine($"{ShowGoodsCommand}. Показать товары и инвентарь игрока: ");
+                Console.WriteLine($"{BuyGoodCommand}. Купить.");
+                Console.WriteLine($"{SealGoodCommand}. Продать.");
+                Console.WriteLine($"{ExitGame}. Выход");
+                Console.Write("Введите номер команды - ");
+
+                string command;
+                command = Console.ReadLine();
+
+                switch (command.ToLower())
+                {
+                    case ShowGoodsCommand:
+                        ShowGoods(dealer, player);
+                        break;
+
+                    case BuyGoodCommand:
+                        BuyGoods(dealer,player);
+                        break;
+
+                    case SealGoodCommand:
+                        SaleGoods(dealer, player);
+                        break;
+
+                    case ExitGame:
+                        isTrade = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Не верная команда.\n");
+                        break;
+                }
+            }
+        }
+
+        static void ShowGoods(Dealer dealer, Player player)
+        {
+            dealer.ShowGoods();
+            player.ShowInventar();
+        }
+
+        static void BuyGoods(Dealer dealer, Player player)
+        {
+            if(dealer.CountGoods() == 0)
+            {
+                Console.WriteLine($"У {dealer.Name} не осталось товара");
+            }
+            else
+            {
+                player.BuyItem(dealer.SaleItem());
+            }
+        }
+
+        static void SaleGoods(Dealer dealer, Player player)
+        {
+            if (player.CountGoods() == 0)
+            {
+                Console.WriteLine($"У {player.Name} не осталось товара");
+            }
+            else
+            {
+                dealer.BuyItem(player.SaleItem());
+            }
         }
     }
+
+    
 
     class Item
     {
@@ -28,14 +123,9 @@ namespace Project_6
 
         public void ShowInfo()
         {
-            Console.Write(Name + " - ");
-            Console.Write(Tier + " - ");
+            Console.Write(Name + "\t\t\t");
+            Console.Write(Tier + "\t\t");
             Console.WriteLine(Value);
-        }
-
-        public int ToTier()
-        {
-            return Tier;
         }
     }
 
@@ -43,28 +133,14 @@ namespace Project_6
     {
         private List<Item> _goods = new List<Item>();
 
-        public Dealer(string name)
+        public Dealer(string name, int money)
         {
             Name = name;
+            Money = money;
         }
 
         public string Name { get; private set; }
-
-        private string NameItem()
-        {
-            Random randomName = new Random();
-
-            string[] tools = {
-                "молоток", "лопата","топор",
-                "кирка", "меч", "лук", "посох",
-                "лопата", "нагрудник", "наручи",
-                "поножья", "шлем", "штаны"
-            };
-            string nameItem = "";
-
-            nameItem = tools[randomName.Next(0,13)];
-            return nameItem;
-        }
+        public int Money { get; private set; }
 
         public void CreateGoods()
         {
@@ -78,8 +154,8 @@ namespace Project_6
             int tierItem;
             int valueItem;
 
-            Console.Write("Введите количество товаров у торговца - ");
-            countItem = GetNumber();
+            Console.Write("Сколько товаров вы видите на прилавке - ");
+            countItem = GetPositiveNumber();
 
             for (int i = 0; i < countItem; i++)
             {
@@ -87,12 +163,95 @@ namespace Project_6
                 valueItem = randomNumber.Next(MinRandomValue, MaxRandomValue) * tierItem;
                 _goods.Add(new Item(NameItem(),tierItem,valueItem));
             }
-
-            ShowGoods();
-            Console.ReadKey();
         }
 
-        private int GetNumber()
+        public void ShowGoods()
+        {
+            int indexNumber = 1;
+            //SortGoods();
+            Console.WriteLine($"{Name} товары");
+            PrintFirstLine();
+            foreach (Item item in _goods)
+            {
+                Console.Write(indexNumber + ". ");
+                item.ShowInfo();
+                indexNumber++;
+            }
+        }
+
+        public Item SaleItem() 
+        {
+            int itemNumber;
+            Item tempItem;
+            Console.Write("Введите номер товара для покупки - ");
+            itemNumber = GetPositiveNumber();
+
+            tempItem = _goods[itemNumber - 1];
+            _goods.RemoveAt(itemNumber - 1);
+            SallingPlus(tempItem);
+
+            return tempItem;
+        }
+
+        public int CountGoods()
+        {
+            return _goods.Count;
+        }
+
+        public void BuyItem(Item item)
+        {
+            if ((Money - item.Value) >= 0)
+            {
+                SallingMinus(item);
+                _goods.Add(item);
+            }
+            else
+            {
+                Console.WriteLine("не достаточно денег");
+            }
+        }
+
+        private void PrintFirstLine()
+        {
+            const string nameGoods = "Название товара";
+            const string tierGoods = "Уровень товара";
+            const string valueGoods = "Стоимость товара";
+
+            Console.WriteLine($"{nameGoods}\t\t{tierGoods}\t\t{valueGoods}");
+        }
+
+        private void SortGoods()
+        {
+            List<int> temp = new List<int>();
+            List<Item> templGoods = new List<Item>();
+
+            foreach (var item in _goods)
+            {
+                Console.WriteLine($"{item.Name}-{item.Tier}-{item.Value}");
+            }
+
+            for (int i = 0; i < _goods.Count; i++)
+            {
+                temp.Add(_goods[i].Tier);
+            }
+
+            temp.Sort();
+
+            for (int i = 0; i < _goods.Count; i++)
+            {
+                for (int j = 0; j < _goods.Count; j++)
+                {
+                    if (temp[i] == _goods[j].Tier)
+                    {
+                        templGoods.Add(_goods[j]);
+                    }
+                }
+            }
+
+            _goods = templGoods;
+        }
+
+        private int GetPositiveNumber()
         {
             string line;
             bool isConversionSucceeded = true;
@@ -124,75 +283,135 @@ namespace Project_6
             return number;
         }
 
-        private void ShowGoods()
+        private string NameItem()
         {
-            int indexNumber = 1;
-            SortGoods();
+            Random randomName = new Random();
 
-            foreach (Item item in _goods)
-            {
-                Console.Write(indexNumber + ". ");
-                item.ShowInfo();
-                indexNumber++;
-            }
+            string[] tools = {
+                "молоток", "лопата","топор",
+                "кирка", "меч  ", "лук  ", "посох",
+                "лопата", "нагрудник", "наручи",
+                "поножья", "шлем ", "штаны"
+            };
+            string nameItem = "";
+
+            nameItem = tools[randomName.Next(0, 13)];
+            return nameItem;
         }
 
-        private void SortGoods()
+        private void SallingPlus(Item item)
         {
-            List<int> temp = new List<int>(_goods.Count);
-            List<Item> templGoods = new List<Item>(_goods.Count);
-
-            for (int i = 0; i < _goods.Count; i++)
-            {
-                temp.Add(_goods[i].ToTier());
-            }
-
-            temp.Sort();
-
-            for (int i = 0; i < _goods.Count; i++)
-            {
-                for (int j = 0; j < _goods.Count; j++)
-                {
-                    if (temp[i] == _goods[j].Tier)
-                    {
-                        templGoods.Add(_goods[i]);
-                    }
-                }
-            }
-
-            _goods = templGoods;
+            Money += item.Value;
         }
 
-        public Item SealItem()
+        private void SallingMinus(Item item)
         {
-            int itemNumber = 0;
-            ShowGoods();
-            Console.WriteLine("Введите номер товара для покупки - ");
-            itemNumber = GetNumber();
-
-            return _goods[itemNumber];
+            Money -= item.Value;
         }
+
     }
 
     class Player
     {
         private List<Item> _inventar = new List<Item>();
 
-        public Player(string name)
+        public Player(string name, int money)
         {
             Name = name;
+            Money = money;
         }
 
         public string Name { get; private set; }
+        public int Money { get; private set; }
 
         public void BuyItem(Item item)
         {
-            _inventar.Add(item);
+            if ((Money - item.Value) >= 0)
+            {
+                SallingMinus(item);
+                _inventar.Add(item);
+            }
+            else
+            {
+                Console.WriteLine("не достаточно денег");
+            }
         }
 
-        public void SeelItem()
+        public Item SaleItem()
         {
+            int itemNumber;
+            Item tempItem;
+            Console.Write("Введите номер товара для покупки - ");
+            itemNumber = GetPositiveNumber();
 
+            tempItem = _inventar[itemNumber - 1];
+            _inventar.RemoveAt(itemNumber - 1);
+            SallingPlus(tempItem);
+            return tempItem;
+        }
+
+        public void ShowInventar()
+        {
+            Console.WriteLine($"\n{Name} товары");
+
+            if (_inventar.Count == 0)
+            {
+                Console.WriteLine("в карманах пусто");
+            }
+            else
+            {
+                foreach (Item item in _inventar)
+                {
+                    item.ShowInfo();
+                }
+            }
+        }
+
+        public int CountGoods()
+        {
+            return _inventar.Count;
+        }
+
+        private int GetPositiveNumber()
+        {
+            string line;
+            bool isConversionSucceeded = true;
+            bool isNumber;
+            int number = 0;
+
+            while (isConversionSucceeded)
+            {
+                line = Console.ReadLine();
+                isNumber = int.TryParse(line, out number);
+
+                if (isNumber)
+                {
+                    if (number < 1)
+                    {
+                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
+                    }
+                    else
+                    {
+                        isConversionSucceeded = false;
+                    }
+                }
+                else
+                {
+                    Console.Write("Неверный ввод. Повторите ввод - ");
+                }
+            }
+
+            return number;
+        }
+
+        private void SallingMinus(Item item)
+        {
+             Money -= item.Value;
+        }
+
+        private void SallingPlus(Item item)
+        {
+            Money += item.Value;
         }
     }
 }
@@ -203,6 +422,8 @@ namespace Project_6
 // методы покупки продажи выводы всего инвенторя 
 
 
-//Существует продавец, он имеет у себя список товаров, и при нужде, может вам его показать, также продавец может продать вам товар.
+//Существует продавец, он имеет у себя список товаров, и при нужде, может вам его
+//показать, также продавец может продать вам товар.
+//
 //После продажи товар переходит к вам, и вы можете также посмотреть свои вещи. 
 
