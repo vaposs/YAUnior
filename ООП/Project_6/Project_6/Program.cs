@@ -220,7 +220,7 @@ namespace Project_6
             Console.WriteLine($"{nameGoods}\t\t{tierGoods}\t\t{valueGoods}");
         }
 
-        private void SortGoods()
+        /*private void SortGoods()
         {
             List<int> temp = new List<int>();
             List<Item> templGoods = new List<Item>();
@@ -249,7 +249,7 @@ namespace Project_6
             }
 
             _goods = templGoods;
-        }
+        } дорабатываю */
 
         private int GetPositiveNumber()
         {
@@ -415,15 +415,3 @@ namespace Project_6
         }
     }
 }
-
-// - покупка продажа предметов
-
-
-// методы покупки продажи выводы всего инвенторя 
-
-
-//Существует продавец, он имеет у себя список товаров, и при нужде, может вам его
-//показать, также продавец может продать вам товар.
-//
-//После продажи товар переходит к вам, и вы можете также посмотреть свои вещи. 
-
