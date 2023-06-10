@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//5) Методы сортировки разорвали шаблон - они увеличивают количество книг в какой-то геометрической прогрессии.
-
-
 namespace Project_5
 {
     class MainClass
@@ -23,10 +20,9 @@ namespace Project_5
         {
             const string AddBookCommand = "1";
             const string DeleteBookCommand = "2";
-            const string SortedBookCommand = "3";
-            const string PrintBookCommand = "4";
-            const string PrintSortBookCommand = "5";
-            const string ExitProgramCommand = "6";
+            const string PrintBookCommand = "3";
+            const string PrintSortBookCommand = "4";
+            const string ExitProgramCommand = "5";
 
             bool isWork = true;
 
@@ -34,7 +30,6 @@ namespace Project_5
             {
                 Console.WriteLine($"{AddBookCommand}. Добавить книгу");
                 Console.WriteLine($"{DeleteBookCommand}. Удалить книгу");
-                Console.WriteLine($"{SortedBookCommand}. Отсортировать книги");
                 Console.WriteLine($"{PrintBookCommand}. Вывести список книг");
                 Console.WriteLine($"{PrintSortBookCommand}. Вывести не полный список книг");
                 Console.WriteLine($"{ExitProgramCommand}. Выход");
@@ -52,10 +47,6 @@ namespace Project_5
 
                     case DeleteBookCommand:
                         DeleteBook();
-                        break;
-
-                    case SortedBookCommand:
-                        Sorted();
                         break;
 
                     case PrintBookCommand:
@@ -252,134 +243,6 @@ namespace Project_5
             return genre;
         }
 
-        private void Sorted()
-        {
-            if (_books.Count == 0)
-            {
-                Console.WriteLine("Библиотека пуста.");
-            }
-            else
-            {
-                const string ByName = "1";
-                const string ByAuthor = "2";
-                const string ByGenre = "3";
-
-                Console.WriteLine("Как желаете отсортировать: ");
-                Console.WriteLine($"{ByName}. По имени.");
-                Console.WriteLine($"{ByAuthor}. По автору.");
-                Console.WriteLine($"{ByGenre}. По жанру.");
-
-                Console.Write("Введите номер команды - ");
-
-                string command;
-                command = Console.ReadLine();
-
-                switch (command.ToLower())
-                {
-                    case ByName:
-                        SortBooksForName();
-                        break;
-
-                    case ByAuthor:
-                        SortBooksForAuthor();
-                        break;
-
-                    case ByGenre:
-                        SortBooksForGenre();
-                        break;
-
-                    default:
-                        Console.WriteLine("Не верная команда. Сортировка не выполнена\n");
-                        break;
-                }
-            }
-        }
-
-        private void SortBooksForName()
-        {
-            List<string> tempName = new List<string>();
-            List<string> tempGenre = new List<string>();
-            List<string> tempColor = new List<string>();
-
-
-            List<Book> templLibrary = new List<Book>();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                tempName.Add(_books[i].Name);
-                tempColor.Add(_books[i].Color);
-                tempGenre.Add(_books[i].Genre);
-
-            }
-
-            tempName.Sort();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                foreach(Book book in _books)
-                {
-                    if(tempName[i] == book.Name && tempGenre[i] == book.Genre && tempColor[i] == book.Color)
-                    {
-                        templLibrary.Add(book);
-                    }
-                }
-            }
-
-            _books = templLibrary;
-        }
-
-        private void SortBooksForAuthor()
-        {
-            List<string> temp = new List<string>();
-            List<Book> templLibrary = new List<Book>();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                temp.Add(_books[i].Author);
-            }
-
-            temp.Sort();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                for (int j = 0; j < _books.Count; j++)
-                {
-                    if (temp[i] == _books[j].Author)
-                    {
-                        templLibrary.Add(_books[j]);
-                    }
-                }
-            }
-
-            _books = templLibrary;
-        }
-
-        private void SortBooksForGenre()
-        {
-            List<string> temp = new List<string>();
-            List<Book> templLibrary = new List<Book>();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                temp.Add(_books[i].Genre);
-            }
-
-            temp.Sort();
-
-            for (int i = 0; i < _books.Count; i++)
-            {
-                for (int j = 0; j < _books.Count; j++)
-                {
-                    if (temp[i] == _books[j].Genre)
-                    {
-                        templLibrary.Add(_books[j]);
-                    }
-                }
-            }
-
-            _books = templLibrary;
-        }
-
         private void DeleteBook()
         {
             if(_books.Count == 0)
@@ -468,7 +331,7 @@ namespace Project_5
 
             foreach (Book book in _books)
             {
-                if(name == book.Name)
+                if(name.ToLower() == book.Name.ToLower())
                 {
                     book.Print();
                 }
@@ -477,14 +340,14 @@ namespace Project_5
 
         private void PrintSortAuthor()
         {
-            string name;
+            string author;
 
             Console.Write("Введите имя автора - ");
-            name = Console.ReadLine();
+            author = Console.ReadLine();
 
             foreach (Book book in _books)
             {
-                if (name == book.Author)
+                if (author.ToLower() == book.Author.ToLower())
                 {
                     book.Print();
                 }
@@ -493,14 +356,14 @@ namespace Project_5
 
         private void PrintSortGenre()
         {
-            string name;
+            string genre;
 
             Console.Write("Введите жанр - ");
-            name = Console.ReadLine();
+            genre = Console.ReadLine();
 
             foreach (Book book in _books)
             {
-                if (name == book.Genre)
+                if (genre.ToLower() == book.Genre.ToLower())
                 {
                     book.Print();
                 }
@@ -509,14 +372,14 @@ namespace Project_5
 
         private void PrintSortColor()
         {
-            string name;
+            string color;
 
             Console.Write("Введите цвет - ");
-            name = Console.ReadLine();
+            color = Console.ReadLine();
 
             foreach (Book book in _books)
             {
-                if (name == book.Color)
+                if (color.ToLower() == book.Color.ToLower())
                 {
                     book.Print();
                 }
