@@ -22,41 +22,41 @@ namespace Project_4
     class Game
     {
         private Deck _deck = new Deck();
-        private List<Card> deck = new List<Card>();
+        private List<Card> _allDeck = new List<Card>();
 
         public void Play(Player player)
         {
-            const string da = "1";
-            const string no = "2";
-            bool isGameOver = true;
-            _deck.DeckBuilding(deck);
+            const string nextCard = "1";
+            const string stopGame = "2";
+            bool isNotGameOver = true;
+            _deck.Building(_allDeck);
+            _deck.Shuffle(_allDeck);
 
-            while (isGameOver)
+            while (isNotGameOver)
             {
-                if (deck.Count == 0)
+                if (_allDeck.Count == 0)
                 {
-                    player.GiveCard(_deck.TakeCard(deck));
+                    player.GiveCard(_deck.TakeCard(_allDeck));
                     player.ShowCards();
                     Console.WriteLine(player.ShowScore());
-
                 }
                 else
                 {
                     Console.WriteLine("карту?");
-                    Console.WriteLine($"{da}. да ");
-                    Console.WriteLine($"{no}. нет ");
+                    Console.WriteLine($"{nextCard}. да ");
+                    Console.WriteLine($"{stopGame}. нет ");
 
                     string command = Console.ReadLine();
                     Console.Clear();
 
                     switch (command.ToLower())
                     {
-                        case da:
-                            isGameOver = PrintGame(player);
+                        case nextCard:
+                            isNotGameOver = NextRound(player);
                             break;
 
-                        case no:
-                            isGameOver = false;
+                        case stopGame:
+                            isNotGameOver = false;
                             break;
                     }
                 }
@@ -66,11 +66,11 @@ namespace Project_4
             Console.ReadKey();
         }
 
-        public bool PrintGame(Player player)
+        public bool NextRound(Player player)
         {
             const int MaxScore = 21;
 
-            player.GiveCard(_deck.TakeCard(deck));
+            player.GiveCard(_deck.TakeCard(_allDeck));
             player.ShowCards();
 
             if (player.ShowScore() > MaxScore)
@@ -85,7 +85,6 @@ namespace Project_4
                 return true;
             }
         }
-
     }
 
     class Player
@@ -139,67 +138,57 @@ namespace Project_4
 
     class Deck
     {
-        private string[] _rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two" };
-        private char[] _suitCard = new char[] { '♦', '♥', '♣', '♠' };
-        private int[] _valueCard = new int[] { 11, 4, 3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-
-        public void DeckBuilding(List<Card> deck)
+        public void Building(List<Card> deck)
         {
-            const int MaxCards = 52;
-
-            int numberCardRank;
-            int numberCardSuit;
-            int valueCard = 0;
+            string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two" };
+            char[] suitCard = new char[] { '♦', '♥', '♣', '♠' };
+            int[] valueCard = new int[] { 11, 4, 3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             string nameCard = "";
-            bool isRepick;
 
-            Random randomNumber = new Random();
-
-            for(int i = 0; i < MaxCards; i++)
+            for (int i = 0; i < suitCard.Length; i++)
             {
-                isRepick = true;
-
-                while (isRepick)
+                for (int j = 0; j < rankCard.Length; j++)
                 {
-                    numberCardRank = randomNumber.Next(13);
-                    numberCardSuit = randomNumber.Next(4);
-                    valueCard = _valueCard[numberCardRank];
-                    nameCard = ($"{_rankCard[numberCardRank]}-{_suitCard[numberCardSuit]}");
-
-                    if (deck.Count == 0)
-                    {
-                        isRepick = false;
-                    }
-                    else
-                    {
-                        isRepick = false;
-
-                        foreach (Card card in deck)
-                        {
-                            if (nameCard == card.Name)
-                            {
-                                isRepick = true;
-                            }
-                        }
-                    }
+                    nameCard = $"{rankCard[j]}-{suitCard[i]}";
+                    deck.Add(new Card(nameCard,valueCard[j]));
                 }
+            }
+        }
 
-                deck.Add(new Card(nameCard,valueCard));
+        public void Shuffle(List<Card> cards)
+        {
+            Card temporaryCard;
+            Card temporaryCard2;
+            int randNumber;
+            Random randomCard = new Random();
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                randNumber = randomCard.Next(cards.Count);
+                temporaryCard = cards[i];
+                temporaryCard2 = cards[randNumber];
+                cards[i] = temporaryCard2;
+                cards[randNumber] = temporaryCard;
             }
         }
 
         public Card TakeCard(List<Card> deck)
         {
+            int randomNumber;
             Random randomCard = new Random();
-
-            return deck[randomCard.Next(deck.Count)];
+            randomNumber = randomCard.Next(deck.Count);
+            Card tempCard = deck[randomNumber];
+            deck.RemoveAt(randomNumber);
+            return tempCard;
         }
 
-        public void ShowDeck(List<Card> deck)
+        public void Show(List<Card> deck)
         {
+            int number = 1;
+
             foreach (Card card in deck)
             {
-                Console.WriteLine($"{card.Name} - {card.Value}");
+                Console.WriteLine($"{number++}. {card.Name} - {card.Value}");
             }
         }
     }

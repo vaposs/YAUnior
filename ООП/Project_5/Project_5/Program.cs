@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//5) Методы сортировки разорвали шаблон - они увеличивают количество книг в какой-то геометрической прогрессии.
+
+
 namespace Project_5
 {
     class MainClass
@@ -56,7 +59,7 @@ namespace Project_5
                         break;
 
                     case PrintBookCommand:
-                        PrintLibrary(_books);
+                        PrintLibrary();
                         break;
 
                     case PrintSortBookCommand:
@@ -120,15 +123,15 @@ namespace Project_5
 
         private string ColorBook()
         {
-            const string green = "1";
-            const string blue = "2";
-            const string yellow = "3";
-            const string red = "4";
+            const string GreenCommand = "1";
+            const string BlueCommand = "2";
+            const string YellowCommand = "3";
+            const string RedCommand = "4";
 
-            Console.WriteLine($"{green}. Зеленый");
-            Console.WriteLine($"{blue}. Синий");
-            Console.WriteLine($"{yellow}. Желтый");
-            Console.WriteLine($"{red}. Красная");
+            Console.WriteLine($"{GreenCommand}. Зеленый");
+            Console.WriteLine($"{BlueCommand}. Синий");
+            Console.WriteLine($"{YellowCommand}. Желтый");
+            Console.WriteLine($"{RedCommand}. Красная");
 
             Console.Write($"Введите какая обложка - ");
 
@@ -137,19 +140,19 @@ namespace Project_5
 
             switch (command.ToLower())
             {
-                case green:
+                case GreenCommand:
                     return "green";
                     break;
 
-                case blue:
+                case BlueCommand:
                     return "blue";
                     break;
 
-                case yellow:
+                case YellowCommand:
                     return "yellow";
                     break;
 
-                case red:
+                case RedCommand:
                     return "red";
                     break;
 
@@ -160,16 +163,16 @@ namespace Project_5
             }
         }
 
-        private void PrintLibrary(List<Book> libriary)
+        private void PrintLibrary()
         {
-            if(libriary.Count == 0)
+            if(-_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста");
             }
             else
             {
                 int numberBook = 1;
-                foreach (Book book in libriary)
+                foreach (Book book in _books)
                 {
                     Console.Write(numberBook++ + ". ");
                     book.Print();
@@ -179,27 +182,27 @@ namespace Project_5
 
         private string GenreSelection()
         {
-            const string Romance = "1";
-            const string Science = "2";
-            const string Horror = "3";
-            const string Documentary = "4";
-            const string Action = "5";
-            const string Drama = "6";
-            const string Comedy = "7";
-            const string Adventure = "8";
-            const string YouChose = "9";
+            const string RomanceCommand = "1";
+            const string ScienceCommand = "2";
+            const string HorrorCommand = "3";
+            const string DocumentaryCommand = "4";
+            const string ActionCommand = "5";
+            const string DramaCommand = "6";
+            const string ComedyCommand = "7";
+            const string AdventureCommand = "8";
+            const string YouChoseCommand = "9";
 
             string genre = "";
 
-            Console.WriteLine($"{Romance}. Роман");
-            Console.WriteLine($"{Science}. Сай-фай");
-            Console.WriteLine($"{Horror}. Ужастик");
-            Console.WriteLine($"{Documentary}. Документалка");
-            Console.WriteLine($"{Action}. Экшен");
-            Console.WriteLine($"{Drama}. Драма");
-            Console.WriteLine($"{Comedy}. Комедия");
-            Console.WriteLine($"{Adventure}. Приключения");
-            Console.WriteLine($"{YouChose}. Ввести свой жанр -");
+            Console.WriteLine($"{RomanceCommand}. Роман");
+            Console.WriteLine($"{ScienceCommand}. Сай-фай");
+            Console.WriteLine($"{HorrorCommand}. Ужастик");
+            Console.WriteLine($"{DocumentaryCommand}. Документалка");
+            Console.WriteLine($"{ActionCommand}. Экшен");
+            Console.WriteLine($"{DramaCommand}. Драма");
+            Console.WriteLine($"{ComedyCommand}. Комедия");
+            Console.WriteLine($"{AdventureCommand}. Приключения");
+            Console.WriteLine($"{YouChoseCommand}. Ввести свой жанр -");
 
             Console.Write($"Введите номер команды - ");
 
@@ -208,35 +211,35 @@ namespace Project_5
 
             switch (command.ToLower())
             {
-                case Romance:
+                case RomanceCommand:
                     genre = "роман";
                     break;
 
-                case Science:
+                case ScienceCommand:
                     genre = "сай-фай";
                     break;
 
-                case Horror:
+                case HorrorCommand:
                     genre = "ужастик";
                     break;
 
-                case Documentary:
+                case DocumentaryCommand:
                     genre = "документалка";
                     break;
 
-                case Action:
+                case ActionCommand:
                     genre = "экшен";
                     break;
 
-                case Drama:
+                case DramaCommand:
                     genre = "драма";
                     break;
 
-                case Comedy:
+                case ComedyCommand:
                     genre = "комедия";
                     break;
 
-                case Adventure:
+                case AdventureCommand:
                     genre = "приключения";
                     break;
 
@@ -294,23 +297,30 @@ namespace Project_5
 
         private void SortBooksForName()
         {
-            List<string> temp = new List<string>();
+            List<string> tempName = new List<string>();
+            List<string> tempGenre = new List<string>();
+            List<string> tempColor = new List<string>();
+
+
             List<Book> templLibrary = new List<Book>();
 
             for (int i = 0; i < _books.Count; i++)
             {
-                temp.Add(_books[i].Name);
+                tempName.Add(_books[i].Name);
+                tempColor.Add(_books[i].Color);
+                tempGenre.Add(_books[i].Genre);
+
             }
 
-            temp.Sort();
+            tempName.Sort();
 
             for (int i = 0; i < _books.Count; i++)
             {
-                for (int j = 0; j < _books.Count; j++)
+                foreach(Book book in _books)
                 {
-                    if (temp[i] == _books[j].Name)
+                    if(tempName[i] == book.Name && tempGenre[i] == book.Genre && tempColor[i] == book.Color)
                     {
-                        templLibrary.Add(_books[j]);
+                        templLibrary.Add(book);
                     }
                 }
             }
@@ -380,7 +390,15 @@ namespace Project_5
             {
                 Console.Write("Введите номер книги для удаления - ");
                 int bookForDelete = GetPositiveNumber();
-                _books.RemoveAt(bookForDelete - 1);
+
+                if(bookForDelete - 1 > _books.Count)
+                {
+                    Console.WriteLine("неверный номер книги");
+                }
+                else
+                {
+                    _books.RemoveAt(bookForDelete - 1);
+                }
             }
         }
 
@@ -401,16 +419,16 @@ namespace Project_5
 
         private void PrintSortLibrary()
         {
-            const string Name = "1";
-            const string Author = "2";
-            const string Genre = "3";
-            const string Color = "4";
+            const string NameCommand = "1";
+            const string AuthorCommand = "2";
+            const string GenreCommand = "3";
+            const string ColorCommand = "4";
 
             Console.WriteLine("выберите по какому принципу сортировать: ");
-            Console.WriteLine($"{Name}. По имени");
-            Console.WriteLine($"{Author}. По автору");
-            Console.WriteLine($"{Genre}. По жанру");
-            Console.WriteLine($"{Color}. По цвету обложки");
+            Console.WriteLine($"{NameCommand}. По имени");
+            Console.WriteLine($"{AuthorCommand}. По автору");
+            Console.WriteLine($"{GenreCommand}. По жанру");
+            Console.WriteLine($"{ColorCommand}. По цвету обложки");
 
             Console.Write($"Введите номер команды - ");
 
@@ -419,19 +437,19 @@ namespace Project_5
 
             switch (command.ToLower())
             {
-                case Name:
+                case NameCommand:
                     PrintSortName();
                     break;
 
-                case Author:
+                case AuthorCommand:
                     PrintSortAuthor();
                     break;
 
-                case Genre:
+                case GenreCommand:
                     PrintSortGenre();
                     break;
 
-                case Color:
+                case ColorCommand:
                     PrintSortColor();
                     break;
 
@@ -525,26 +543,26 @@ namespace Project_5
 
         public void Print()
         {
-            const string green = "green";
-            const string blue = "blue";
-            const string yellow = "yellow";
-            const string red = "red";
+            const string GreenCommand = "green";
+            const string BlueCommand = "blue";
+            const string YellowCommand = "yellow";
+            const string RedCommand = "red";
 
             switch (Color)
             {
-                case green:
+                case GreenCommand:
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
 
-                case blue:
+                case BlueCommand:
                     Console.ForegroundColor = ConsoleColor.Blue;
                     break;
 
-                case yellow:
+                case YellowCommand:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
 
-                case red:
+                case RedCommand:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
             }
@@ -556,7 +574,5 @@ namespace Project_5
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
         }
-
-
     }
 }
