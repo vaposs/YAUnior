@@ -33,10 +33,10 @@ namespace Project_5
                 Console.WriteLine($"{PrintBookCommand}. Вывести список книг");
                 Console.WriteLine($"{PrintSortBookCommand}. Вывести не полный список книг");
                 Console.WriteLine($"{ExitProgramCommand}. Выход");
-
                 Console.Write($"Введите номер команды - ");
 
                 string command;
+
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
@@ -123,9 +123,7 @@ namespace Project_5
             Console.WriteLine($"{BlueCommand}. Синий");
             Console.WriteLine($"{YellowCommand}. Желтый");
             Console.WriteLine($"{RedCommand}. Красная");
-
             Console.Write($"Введите какая обложка - ");
-
             string command;
             command = Console.ReadLine();
 
@@ -263,21 +261,6 @@ namespace Project_5
                     _books.RemoveAt(bookForDelete - 1);
                 }
             }
-        }
-
-        private Book TryGetBook()
-        {
-            string name = Console.ReadLine();
-
-            foreach (Book book in _books)
-            {
-                if (name == book.Name)
-                {
-                    return book;
-                }
-            }
-
-            return null;
         }
 
         private void PrintSortLibrary()

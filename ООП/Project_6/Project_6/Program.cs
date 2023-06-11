@@ -1,6 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//1) Пересмотрите новую лекцию 07:41:49 - СТАТИКА ЭТО ПЛОХО и избавьтесь от статических методов (кроме Main) . Перенесите логику меню и
+//товарообмена в класс Магазин в методы Work и Trade.
+//
+//2) много лишних пусты строк - Пустые строки НЕ ставятся с прилегающей внутренней стороны фигурных скобок - https://trello.com/c/RE1sLWs7 .
+//
+//3) MinMoney и MaxMoney - это переменные, а не константы .
+//
+//4) По условию задачи покупатель может только купить, но не продать товар, а продавец - только продать, но не купить товар .
+//
+//5) У торгующих сторон есть сходные данные (деньги, список товаров, метод показывающий товары), которые лучше вынести в родительский класс .
+
 namespace Project_6
 {
     class MainClass
@@ -17,7 +28,7 @@ namespace Project_6
             Trade(player);
         }
 
-        static void Trade(Player player)
+        public void Trade(Player player)
         {
             const string ShowGoodsCommand = "1";
             const string BuyGoodCommand = "2";
@@ -74,13 +85,13 @@ namespace Project_6
             }
         }
 
-        static void ShowGoods(Dealer dealer, Player player)
+        void ShowGoods(Dealer dealer, Player player)
         {
             dealer.ShowGoods();
             player.ShowInventar();
         }
 
-        static void BuyGoods(Dealer dealer, Player player)
+        void BuyGoods(Dealer dealer, Player player)
         {
             if(dealer.CountGoods() == 0)
             {
@@ -92,7 +103,7 @@ namespace Project_6
             }
         }
 
-        static void SaleGoods(Dealer dealer, Player player)
+        void SaleGoods(Dealer dealer, Player player)
         {
             if (player.CountGoods() == 0)
             {
@@ -104,8 +115,6 @@ namespace Project_6
             }
         }
     }
-
-    
 
     class Item
     {
