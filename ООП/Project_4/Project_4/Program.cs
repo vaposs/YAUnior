@@ -7,15 +7,8 @@ namespace Project_4
     {
         public static void Main(string[] args)
         {
-            string namePlayer;
-
-            Console.Write("Введите имя игрока - ");
-
-            namePlayer = Console.ReadLine();
-            Player player = new Player(namePlayer);
-
             Game game = new Game();
-            game.Play(player);
+            game.Play();
         }
     }
 
@@ -23,11 +16,17 @@ namespace Project_4
     {
         private Deck _deck = new Deck();
         private List<Card> _allDeck = new List<Card>();
+        private string namePlayer;
 
-        public void Play(Player player)
+        public void Play()
         {
-            const string nextCard = "1";
-            const string stopGame = "2";
+            Console.Write("Введите имя игрока - ");
+            namePlayer = Console.ReadLine();
+            Player player = new Player(namePlayer);
+
+            const string NextCard = "1";
+            const string StopGame = "2";
+
             bool isNotGameOver = true;
             _deck.Building(_allDeck);
             _deck.Shuffle(_allDeck);
@@ -36,26 +35,26 @@ namespace Project_4
             {
                 if (_allDeck.Count == 0)
                 {
-                    player.GiveCard(_deck.TakeCard(_allDeck));
+                    player.TakeCard(_deck.GiveCard(_allDeck));
                     player.ShowCards();
                     Console.WriteLine(player.ShowScore());
                 }
                 else
                 {
                     Console.WriteLine("карту?");
-                    Console.WriteLine($"{nextCard}. да ");
-                    Console.WriteLine($"{stopGame}. нет ");
+                    Console.WriteLine($"{NextCard}. да ");
+                    Console.WriteLine($"{StopGame}. нет ");
 
                     string command = Console.ReadLine();
                     Console.Clear();
 
                     switch (command.ToLower())
                     {
-                        case nextCard:
-                            isNotGameOver = NextRound(player);
+                        case NextCard:
+                            isNotGameOver = PlayNextRound(player);
                             break;
 
-                        case stopGame:
+                        case StopGame:
                             isNotGameOver = false;
                             break;
                     }
@@ -66,11 +65,11 @@ namespace Project_4
             Console.ReadKey();
         }
 
-        public bool NextRound(Player player)
+        public bool PlayNextRound(Player player)
         {
             const int MaxScore = 21;
 
-            player.GiveCard(_deck.TakeCard(_allDeck));
+            player.TakeCard(_deck.GiveCard(_allDeck));
             player.ShowCards();
 
             if (player.ShowScore() > MaxScore)
@@ -118,7 +117,7 @@ namespace Project_4
             return score;
         }
 
-        public void GiveCard(Card newCard)
+        public void TakeCard(Card newCard)
         {
             _cardsInHand.Add(newCard);
         }
@@ -138,6 +137,8 @@ namespace Project_4
 
     class Deck
     {
+        private List<Card> localDeck = new List<Card>();
+
         public void Building(List<Card> deck)
         {
             string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two" };
@@ -150,9 +151,11 @@ namespace Project_4
                 for (int j = 0; j < rankCard.Length; j++)
                 {
                     nameCard = $"{rankCard[j]}-{suitCard[i]}";
-                    deck.Add(new Card(nameCard,valueCard[j]));
+                    localDeck.Add(new Card(nameCard, valueCard[j]));
                 }
             }
+
+            deck = localDeck;
         }
 
         public void Shuffle(List<Card> cards)
@@ -161,18 +164,21 @@ namespace Project_4
             Card temporaryCard2;
             int randNumber;
             Random randomCard = new Random();
+            localDeck = cards;
 
-            for (int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < localDeck.Count; i++)
             {
-                randNumber = randomCard.Next(cards.Count);
-                temporaryCard = cards[i];
-                temporaryCard2 = cards[randNumber];
-                cards[i] = temporaryCard2;
-                cards[randNumber] = temporaryCard;
+                randNumber = randomCard.Next(localDeck.Count);
+                temporaryCard = localDeck[i];
+                temporaryCard2 = localDeck[randNumber];
+                localDeck[i] = temporaryCard2;
+                localDeck[randNumber] = temporaryCard;
             }
+
+            cards = localDeck;
         }
 
-        public Card TakeCard(List<Card> deck)
+        public Card GiveCard(List<Card> deck)
         {
             int randomNumber;
             Random randomCard = new Random();
@@ -180,16 +186,6 @@ namespace Project_4
             Card tempCard = deck[randomNumber];
             deck.RemoveAt(randomNumber);
             return tempCard;
-        }
-
-        public void Show(List<Card> deck)
-        {
-            int number = 1;
-
-            foreach (Card card in deck)
-            {
-                Console.WriteLine($"{number++}. {card.Name} - {card.Value}");
-            }
         }
     }
 }
