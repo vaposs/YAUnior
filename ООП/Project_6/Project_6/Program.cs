@@ -28,7 +28,7 @@ namespace Project_6
             Trade(player);
         }
 
-        public void Trade(Player player)
+        void Trade(Player player)
         {
             const string ShowGoodsCommand = "1";
             const string BuyGoodCommand = "2";

@@ -15,27 +15,26 @@ namespace Project_4
     class Game
     {
         private Deck _deck = new Deck();
-        private List<Card> _allDeck = new List<Card>();
+        private List<Card> _mainDeck;
         private string namePlayer;
 
         public void Play()
         {
+            const string NextCard = "1";
+            const string StopGame = "2";
+
             Console.Write("Введите имя игрока - ");
             namePlayer = Console.ReadLine();
             Player player = new Player(namePlayer);
 
-            const string NextCard = "1";
-            const string StopGame = "2";
-
             bool isNotGameOver = true;
-            _deck.Building(_allDeck);
-            _deck.Shuffle(_allDeck);
-
+            _mainDeck = _deck.Building();
+            
             while (isNotGameOver)
             {
-                if (_allDeck.Count == 0)
+                if (_mainDeck.Count == 0)
                 {
-                    player.TakeCard(_deck.GiveCard(_allDeck));
+                    player.TakeCard(_deck.GiveCard());
                     player.ShowCards();
                     Console.WriteLine(player.ShowScore());
                 }
@@ -65,11 +64,11 @@ namespace Project_4
             Console.ReadKey();
         }
 
-        public bool PlayNextRound(Player player)
+        private bool PlayNextRound(Player player)
         {
             const int MaxScore = 21;
 
-            player.TakeCard(_deck.GiveCard(_allDeck));
+            player.TakeCard(_deck.GiveCard());
             player.ShowCards();
 
             if (player.ShowScore() > MaxScore)
@@ -137,9 +136,9 @@ namespace Project_4
 
     class Deck
     {
-        private List<Card> localDeck = new List<Card>();
+        private List<Card> _cards = new List<Card>();
 
-        public void Building(List<Card> deck)
+        public List<Card> Building()
         {
             string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two" };
             char[] suitCard = new char[] { '♦', '♥', '♣', '♠' };
@@ -151,41 +150,40 @@ namespace Project_4
                 for (int j = 0; j < rankCard.Length; j++)
                 {
                     nameCard = $"{rankCard[j]}-{suitCard[i]}";
-                    localDeck.Add(new Card(nameCard, valueCard[j]));
+                    _cards.Add(new Card(nameCard, valueCard[j]));
                 }
             }
 
-            deck = localDeck;
+            Shuffle();
+            
+            return _cards;
         }
 
-        public void Shuffle(List<Card> cards)
+        public Card GiveCard()
+        {
+            int randomNumber;
+            Random randomCard = new Random();
+            randomNumber = randomCard.Next(_cards.Count);
+            Card tempCard = _cards[randomNumber];
+            _cards.Remove(_cards[randomNumber]);
+            return tempCard;
+        }
+
+        private void Shuffle()
         {
             Card temporaryCard;
             Card temporaryCard2;
             int randNumber;
             Random randomCard = new Random();
-            localDeck = cards;
 
-            for (int i = 0; i < localDeck.Count; i++)
+            for (int i = 0; i < _cards.Count; i++)
             {
-                randNumber = randomCard.Next(localDeck.Count);
-                temporaryCard = localDeck[i];
-                temporaryCard2 = localDeck[randNumber];
-                localDeck[i] = temporaryCard2;
-                localDeck[randNumber] = temporaryCard;
+                randNumber = randomCard.Next(_cards.Count);
+                temporaryCard = _cards[i];
+                temporaryCard2 = _cards[randNumber];
+                _cards[i] = temporaryCard2;
+                _cards[randNumber] = temporaryCard;
             }
-
-            cards = localDeck;
-        }
-
-        public Card GiveCard(List<Card> deck)
-        {
-            int randomNumber;
-            Random randomCard = new Random();
-            randomNumber = randomCard.Next(deck.Count);
-            Card tempCard = deck[randomNumber];
-            deck.RemoveAt(randomNumber);
-            return tempCard;
         }
     }
 }
