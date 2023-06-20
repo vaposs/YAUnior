@@ -26,7 +26,6 @@ namespace Project_6
             Name = name;
             Tier = tier;
             Value = value;
-
         }
 
         public string Name { get; private set; }
@@ -60,11 +59,10 @@ namespace Project_6
             const int MaxRandomTier = 5;
             const int MinRandomValue = 1;
             const int MaxRandomValue = 10;
-
-            Random randomNumber = new Random();
             int countItem;
             int tierItem;
             int valueItem;
+            Random randomNumber = new Random();
 
             Console.Write("Сколько товаров вы видите на прилавке - ");
             countItem = GetPositiveNumber();
@@ -80,6 +78,7 @@ namespace Project_6
         public void ShowGoods()
         {
             int indexNumber = 1;
+
             Console.WriteLine($"{Name} товары");
             PrintFirstLine();
             foreach (Item item in _goods)
@@ -150,14 +149,12 @@ namespace Project_6
                     Console.Write("Неверный ввод. Повторите ввод - ");
                 }
             }
-
             return number;
         }
 
         private string NameItem()
         {
             Random randomName = new Random();
-
             string[] tools = {
                 "молоток", "лопата","топор",
                 "кирка", "меч  ", "лук  ", "посох",
@@ -231,11 +228,9 @@ namespace Project_6
         {
             const string BuyGoodCommand = "1";
             const string ExitGame = "2";
-
             int minMoney = 100;
             int maxMoney = 500;
             bool isTrade = true;
-
             Random moreMoney = new Random();
             Dealer dealer = new Dealer("Traider", moreMoney.Next(minMoney, maxMoney));
 
@@ -244,13 +239,13 @@ namespace Project_6
 
             while (isTrade)
             {
+                string command;
+
                 Console.WriteLine($"\nДенег у торговца - {dealer.Money}, денег у вас - {player.Money}");
                 ShowGoods(dealer, player);
                 Console.WriteLine($"{BuyGoodCommand}. Купить.");
                 Console.WriteLine($"{ExitGame}. Выход");
                 Console.Write("Введите номер команды - ");
-
-                string command;
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
@@ -316,7 +311,6 @@ namespace Project_6
                     Console.Write("Неверный ввод. Повторите ввод - ");
                 }
             }
-
             return number;
         }
     }
