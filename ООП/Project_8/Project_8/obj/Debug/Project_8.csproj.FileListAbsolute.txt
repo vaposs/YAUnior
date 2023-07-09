@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/obj/Debug/Project_8.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/obj/Debug/Project_8.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/bin/Debug/Project_8.exe
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/bin/Debug/Project_8.pdb
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/obj/Debug/Project_8.exe
+/Users/walter/GitHub/YAUnior/ООП/Project_8/Project_8/obj/Debug/Project_8.pdb
