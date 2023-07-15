@@ -17,16 +17,31 @@ namespace Project_8
     {
         Fighter _firstFighter;
         Fighter _secondFighter;
+        private List<Fighter> _fighters = new List<Fighter>();
+        private int _maxXpBar = 0;
+        private bool _changeXp = false;
+        private const int _SpecialHitChance = 30;
+
+        public Fight()
+        {
+            _fighters.Add(new Infantryman(150, 10, 7, 3, false));
+            _fighters.Add(new Barbarian(120,6,10, 0, true));
+            _fighters.Add(new Paladin(130,10,8, 0, true));
+            _fighters.Add(new Tramp(85,3,14, 3, false));
+            _fighters.Add(new Ranger(90,5,13, 3, false));
+        }
 
         public void Play()
         {
             Console.WriteLine("Добро пожаловать на арену.");
             Console.WriteLine("Выберите первого бойца.");
             _firstFighter = FighterChoice();
+
             Console.WriteLine("Выберите второго бойца.");
             _secondFighter = FighterChoice();
 
             Round();
+
             Console.ReadKey();
         }
 
@@ -34,57 +49,59 @@ namespace Project_8
         {
             int specialHitFirstFighter;
             int specialHitSecondFighter;
+            int normalFirstAtack = _firstFighter.Atack;
+            int normalFirstArmor = _firstFighter.Armor;
+            int normalSecondAtack = _secondFighter.Atack;
+            int normalSecondArmor = _secondFighter.Armor;
+
             bool endRound = true;
-            int normalAtackFirstFighter = _firstFighter.Atack;
-            int normalAtackSecondFighter = _secondFighter.Atack;
-            int normalArmorFirstFighter = _firstFighter.Armor;
-            int normalArmorSecondFighter = _secondFighter.Armor;
 
             while (endRound)
             {
-                specialHitFirstFighter = RandomPercentage();
-                specialHitSecondFighter = RandomPercentage();
-                Console.Clear();
-
-                if(_firstFighter.isPasiveskil == true)
-                {
-                    _firstFighter.Ability();
-                }
-                else
-                {
-                    if(specialHitFirstFighter < 30)
-                    {
-                        _firstFighter.Ability();
-                    }
-                    else
-                    {
-                        _secondFighter.TakeDamage(Damage(_firstFighter.Atack, _secondFighter.Armor));
-                    }
-                }
-
-                if(_secondFighter.isPasiveskil == true)
-                {
-                    _secondFighter.Ability();
-                }
-                else
-                {
-                    if(specialHitSecondFighter < 30)
-                    {
-                        _secondFighter.Ability();
-                    }
-                    else
-                    {
-                        _firstFighter.TakeDamage(Damage(_secondFighter.Atack, _secondFighter.Armor));
-                    }
-                }
-
-                _firstFighter.NormalArmorAtack(normalAtackFirstFighter, normalArmorFirstFighter);
-                _secondFighter.NormalArmorAtack(normalAtackSecondFighter, normalArmorSecondFighter);
+                _firstFighter.NormalAtackArmor(_firstFighter, normalFirstAtack, normalFirstArmor);
+                _secondFighter.NormalAtackArmor(_secondFighter, normalSecondAtack, normalSecondArmor);
 
                 PrintBar(_firstFighter.Health);
                 ShowStats(_firstFighter);
                 PrintBar(_secondFighter.Health);
                 ShowStats(_secondFighter);
+
+                specialHitFirstFighter = RandomPercentage();
+                specialHitSecondFighter = RandomPercentage();
+
+                if(_firstFighter.IsPasiveSkil == false)
+                {
+                    if (specialHitFirstFighter >= _SpecialHitChance)
+                    {
+                        _firstFighter.Ability();
+                    }
+                    else
+                    {
+                        _secondFighter.TakeDamage(_firstFighter.MakeDamage());
+                    }
+                }
+                else
+                {
+                    _firstFighter.Ability();
+                    _secondFighter.TakeDamage(_firstFighter.MakeDamage());
+                }
+
+                if(_secondFighter.IsPasiveSkil == false)
+                {
+                    if(specialHitSecondFighter >= _SpecialHitChance)
+                    {
+                        _secondFighter.Ability();
+                    }
+                    else
+                    {
+                        _firstFighter.TakeDamage(_secondFighter.MakeDamage());
+                    }
+                }
+                else
+                {
+                    _secondFighter.Ability();
+                    _firstFighter.TakeDamage(_firstFighter.MakeDamage());
+                }
 
                 if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
                 {
@@ -102,9 +119,26 @@ namespace Project_8
                     {
                         Console.WriteLine($"Бой окончен, победил {_firstFighter.GetType().Name}");
                     }
-                } 
+                }
 
                 Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        private void ShowStatsInChose(Fighter fighter)
+        {
+            Console.WriteLine($"{fighter.GetType().Name}\t\t XP = {fighter.Health}\t ATK = {fighter.Atack} \t ARM = {fighter.Armor}");
+        }
+
+        private void ShowAllFighter()
+        {
+            int index = 1;
+
+            foreach (Fighter fighter in _fighters)
+            {
+                Console.Write($"{index++}. ");
+                ShowStatsInChose(fighter);
             }
         }
 
@@ -120,66 +154,48 @@ namespace Project_8
             Random random = new Random();
 
             return random.Next(minNumber, maxNumber);
-        } 
-
-        private int Damage(int atack, int armor)
-        {
-            int damage;
-
-            damage = atack - armor;
-
-            if (damage <= 0)
-            {
-                damage = 1;
-            }
-
-            return damage;
-        } 
+        }
 
         private Fighter FighterChoice()
         {
-            const string FirstFighter = "1";
-            const string SecondFighter = "2";
-            const string ThirdFighter = "3";
-            const string FourthFighter = "4";
-            const string FifthFighter = "5";
+            const int FirstFighter = 0;
+            const int SecondFighter = 1;
+            const int ThirdFighter = 2;
+            const int FourthFighter = 3;
+            const int FifthFighter = 4;
 
             bool isRightChoice = true;
             Fighter fighter = null;
 
             while (isRightChoice)
             {
-                Console.WriteLine($"{FirstFighter}. Щитоносец (Блок щитом)");
-                Console.WriteLine($"{SecondFighter}. Варвар (Неистовый крик)");
-                Console.WriteLine($"{ThirdFighter}. Паладин (Божетвенный свет)");
-                Console.WriteLine($"{FourthFighter}. Плут (Критический удар)");
-                Console.WriteLine($"{FifthFighter}. Ренджер (Двойной удар)\n");
+                ShowAllFighter();
                 Console.Write("Боец под номеров - ");
 
-                string command = Console.ReadLine();
+                int command = GetNumber();
 
                 isRightChoice = false;
 
-                switch (command.ToLower())
+                switch (--command)
                 {
                     case FirstFighter:
-                        fighter = CreatingFighterInfantryman();
+                        fighter = _fighters[command];
                         break;
 
                     case SecondFighter:
-                        fighter = CreateFighterBarbarian();
+                        fighter = _fighters[command];
                         break;
 
                     case ThirdFighter:
-                        fighter = CreateFighterPaladin();
+                        fighter = _fighters[command];
                         break;
 
                     case FourthFighter:
-                        fighter = CreateFighterTramp();
+                        fighter = _fighters[command];
                         break;
 
                     case FifthFighter:
-                        fighter = CreateFighterRanger();
+                        fighter = _fighters[command];
                         break;
 
                     default:
@@ -192,60 +208,20 @@ namespace Project_8
             return fighter;
         } 
 
-        private Fighter CreatingFighterInfantryman()
-        {
-            int heathInfantryman = 100;
-            int armorInfantryman = 0;
-            int atackInfantryman = 5;
-            bool isPasiveskil = false;
-
-            return new Infantryman(heathInfantryman, armorInfantryman, atackInfantryman, isPasiveskil);
-        } 
-
-        private Fighter CreateFighterBarbarian()
-        {
-            int heathBarbarian = 80;
-            int armorBarbarian = 4;
-            int atackBarbarian = 13;
-            bool isPasiveskil = false;
-
-            return new Barbarian(heathBarbarian, armorBarbarian, atackBarbarian, isPasiveskil);
-        } 
-
-        private Fighter CreateFighterPaladin()
-        {
-            int heathPaladin = 110;
-            int armorPaladin = 5;
-            int atackPaladin = 13;
-            bool isPasiveskil = true;
-
-            return new Paladin(heathPaladin, armorPaladin, atackPaladin, isPasiveskil);
-        } 
-
-        private Fighter CreateFighterTramp()
-        {
-            int heathTramp = 75;
-            int armorTramp = 0;
-            int atackTramp = 17;
-            bool isPasiveskil = false;
-
-            return new Tramp(heathTramp, armorTramp, atackTramp, isPasiveskil);
-        } 
-
-        private Fighter CreateFighterRanger()
-        {
-            int heathRanger = 90;
-            int armorRanger = 4;
-            int atackRanger = 13;
-            bool isPasiveskil = false;
-
-            return new Ranger(heathRanger, armorRanger, atackRanger, isPasiveskil);
-        } 
-
         private void PrintBar( int number)
         {
-            int xpBar = 110;
-            char[] healtBar = new char[xpBar];
+            if (_firstFighter.Health >= _secondFighter.Health && _changeXp == false)
+            {
+                _maxXpBar = _firstFighter.Health;
+                _changeXp = true;
+            }
+            else if (_secondFighter.Health > _firstFighter.Health && _changeXp == false)
+            {
+                _maxXpBar = _secondFighter.Health;
+                _changeXp = true;
+            }
+            
+            char[] healtBar = new char[_maxXpBar];
 
             Console.Write("[");
 
@@ -264,57 +240,80 @@ namespace Project_8
                 Console.ResetColor();
             }
             Console.Write("]");
-        } 
+        }
+
+        private int GetNumber()
+        {
+            string line;
+            bool isConversionSucceeded = true;
+            bool isNumber;
+            int number = 0;
+
+            while (isConversionSucceeded)
+            {
+                line = Console.ReadLine();
+                isNumber = int.TryParse(line, out number);
+
+                if (isNumber)
+                {
+                    if (number < 0)
+                    {
+                        Console.Write("Неверный ввод. Число меньше нуля.");
+                    }
+                    else
+                    {
+                        isConversionSucceeded = false;
+                    }
+                }
+                else
+                {
+                    Console.Write("Неверный ввод.");
+                }
+            }
+
+            return number;
+        }
     }
 
     abstract class Fighter
     {
-        public int Health { get; private set; }
-        public int Armor { get; private set; }
-        public int Atack { get; private set; }
-        public bool isPasiveskil { get; private set; }
+        public int Health { get; protected set; }
+        public int Armor { get; protected set; }
+        public int Atack { get; protected set; }
+        public int CoolDawn { get; protected set; }
+        public bool IsPasiveSkil { get; protected set; }
 
-        public Fighter(int health, int armor, int atack, bool isPasivskil)
+        public Fighter(int health, int armor, int atack,int cooldawn, bool isPasivSkil)
         {
             Health = health;
             Armor = armor;
             Atack = atack;
-            isPasiveskil = isPasivskil;
+            CoolDawn = cooldawn;
+            IsPasiveSkil = isPasivSkil;
+        }
+
+        public int MakeDamage()
+        {
+            return Atack;
         }
 
         public void TakeDamage(int damage)
         {
-            Health -= damage;
+            if(Armor >= damage)
+            {
+                damage = 1;
+                Health -= damage;
+            }
+            else
+            {
+                Health -= damage - Armor;
+            }
         }
 
-        public void NormalArmorAtack(int normalAtack, int normalArmor)
+        public void NormalAtackArmor(Fighter fighter, int normalAtack, int normalArmor)
         {
-            Atack = normalAtack;
-            Armor = normalArmor;
-        }
-
-        public void BarbarianAbiliti(int damageIncreaseFactor)
-        {
-            Atack = Atack + damageIncreaseFactor;
-        }
-
-        public void GraceGods(int atack)
-        {
-            int percentageVampirism = 25;
-            int percentageAll = 100;
-
-            Health += atack / percentageVampirism * percentageAll;
-        }
-
-        public void CritDamage(int atack)
-        {
-            int criticalDamageMultiplier = 3;
-            Atack = atack * criticalDamageMultiplier;
-        }
-
-        public void DoubleAtack(int atack)
-        {
-            Atack = Atack + Atack;
+            fighter.Armor = normalArmor;
+            fighter.Atack = normalAtack;
         }
 
         public abstract void Ability();
@@ -322,86 +321,411 @@ namespace Project_8
 
     class Infantryman : Fighter
     {
-        public Infantryman(int health, int armor, int atack, bool isPasiveskil) : base(health, armor, atack, isPasiveskil)
+        int Shild = 100;
+
+        public Infantryman(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
         public override void Ability()
         {
-            Console.WriteLine("Блок щитом");
-            if(isPasiveskil == false)
-            {
-                ShieldBlock();
-            }
+            Console.WriteLine("способность щита");
+            ShieldBlock();
         }
 
         private void ShieldBlock()
         {
-            int damage = 0;
-
-            TakeDamage(damage);
+            Armor = Shild;
         }
     }
 
     class Barbarian : Fighter
     {
-        private int _damageIncreaseFactor = 3;
-
-        public Barbarian(int health, int armor, int atack, bool isPasiveskil) : base(health, armor, atack, isPasiveskil)
+        public Barbarian(int health, int armor, int atack,int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
         public override void Ability()
         {
-            if (isPasiveskil == false)
-            {
-                Console.WriteLine("Прирост урона");
-                BarbarianAbiliti(_damageIncreaseFactor);
-            }
+            Console.WriteLine("способность жажда крови");
+            Bloodlust();
+        }
+
+        private void Bloodlust()
+        {
+            Atack++;
         }
     }
 
     class Paladin : Fighter
     {
-        public Paladin(int health, int armor, int atack, bool isPasiveskil) : base(health, armor, atack, isPasiveskil)
+        const int _BlessingCount = 3; 
+
+        public Paladin(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
         public override void Ability()
         {
-            Console.WriteLine("Милость богов, раны затягиваются");
-            GraceGods(Atack);
+            Console.WriteLine("способность паладина");
+            Blessing();
+        }
+
+        private void Blessing()
+        {
+            Health += _BlessingCount;
         }
     }
 
     class Tramp : Fighter
     {
-        public Tramp(int health, int armor, int atack, bool isPasiveskil) : base(health, armor, atack, isPasiveskil)
+        const int CritCount = 2;
+
+        public Tramp(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
         public override void Ability()
         {
-            Console.WriteLine("Вы наносите критический урон");
-            CritDamage(Atack);
+            Console.WriteLine("способность вора");
+            CritDamage();
+        }
+
+        private void CritDamage()
+        {
+            Atack = Atack * CritCount;
         }
     }
 
     class Ranger : Fighter
     {
-        public Ranger(int health, int armor, int atack, bool isPasiveskil) : base(health, armor, atack, isPasiveskil)
+        public Ranger(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
         public override void Ability()
         {
-            Console.WriteLine("Вы наносите двойной удар");
-            DoubleAtack(Atack);
+            Console.WriteLine("способность ренджера");
+            DoubleAtack();
+        }
+
+        private void DoubleAtack()
+        {
+            Atack = Atack + Atack;
         }
     }
 }
+
+
+
+ /*
+using System;
+using System.Collections.Generic;
+
+namespace Gladiators
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isActive = true;
+            ConsoleKeyInfo key;
+
+            while (isActive)
+            {
+                Console.Clear();
+                Console.WriteLine("Гладиаторские бои\n");
+                Console.WriteLine("Esc - Выход");
+                Console.WriteLine("Any key - Выбрать бойцов\n");
+                key = Console.ReadKey(true);
+                Ring ring = new Ring();
+                Fighter firstFighter;
+                Fighter secondFighter;
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.Escape:
+                        isActive = false;
+                        Console.WriteLine("\nПока! Ещё увидимся!\n");
+                        break;
+                    default:
+                        ring.ShowAll();
+                        Console.Write("Выбери первого бойца: ");
+                        ring.Choose(out firstFighter);
+                        ring.ShowAll();
+                        Console.Write("Выбери второго бойца: ");
+                        ring.Choose(out secondFighter);
+                        ring.Fight(firstFighter, secondFighter);
+                        break;
+                }
+
+                Console.ReadKey(true);
+            }
+        }
+    }
+
+    class Ring
+    {
+        private List<Fighter> _warriors = new List<Fighter>();
+
+        public Ring()
+        {
+            _warriors.Add(new Knight("Arnold the Fearless", 1800, 100, 30));
+            _warriors.Add(new Dwarf("Dworoum Goldback", 4000, 110, 15));
+            _warriors.Add(new Elf("Delmuth Lorakas", 1800, 220, 20));
+            _warriors.Add(new Hobbit("Hildebold Twofoot", 1300, 150, 40));
+            _warriors.Add(new Orc("Zortguth V", 2200, 160, 10));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Список участников:");
+
+            for (int i = 0; i < _warriors.Count; i++)
+            {
+                Console.Write($"{i + 1}. ");
+                _warriors[i].ShowStats();
+            }
+
+            Console.WriteLine();
+        }
+
+        public void Choose(out Fighter fighter)
+        {
+            Random random = new Random();
+            int fighterIndex = ReadInt() - 1;
+
+            if (fighterIndex < _warriors.Count && fighterIndex >= 0)
+            {
+                fighter = _warriors[fighterIndex];
+                _warriors.RemoveAt(fighterIndex);
+            }
+            else
+            {
+                Console.WriteLine("Выберу бойца за тебя..\n");
+                fighterIndex = random.Next(0, _warriors.Count);
+                fighter = _warriors[fighterIndex];
+                _warriors.RemoveAt(fighterIndex);
+            }
+
+            Console.Write("Выбран боец: ");
+            fighter.ShowStats();
+            Console.WriteLine();
+        }
+
+        public void Fight(Fighter firstFighter, Fighter secondFighter)
+        {
+            float normalDamageFirst = firstFighter.Damage;
+            float normalArmorFirst = firstFighter.Armor;
+            float normalDamageSecond = secondFighter.Damage;
+            float normalArmorSecond = secondFighter.Armor;
+
+            while (firstFighter.Health > 0 && secondFighter.Health > 0)
+            {
+                Console.WriteLine();
+
+                if (firstFighter.Recharging == 0)
+                {
+                    firstFighter.UsePower();
+                }
+
+                if (firstFighter.Duration > 0)
+                {
+                    firstFighter.ReduceDuration();
+                }
+                else
+                {
+                    firstFighter.Normalize(firstFighter, normalDamageFirst, normalArmorFirst);
+                }
+
+                if (secondFighter.Recharging == 0)
+                {
+                    secondFighter.UsePower();
+                }
+
+                if (secondFighter.Duration > 0)
+                {
+                    secondFighter.ReduceDuration();
+                }
+                else
+                {
+                    secondFighter.Normalize(secondFighter, normalDamageSecond, normalArmorSecond);
+                }
+
+                firstFighter.TakeDamage(secondFighter.Damage);
+                secondFighter.TakeDamage(firstFighter.Damage);
+                firstFighter.ShowStats();
+                secondFighter.ShowStats();
+                firstFighter.SkipTurn();
+                secondFighter.SkipTurn();
+
+                if (firstFighter.Health <= 0 && secondFighter.Health <= 0)
+                {
+                    Console.WriteLine("Ничья, оба погибли");
+                }
+                else if (firstFighter.Health <= 0)
+                {
+                    Console.WriteLine($"{secondFighter.Name} победил!");
+                }
+                else if (secondFighter.Health <= 0)
+                {
+                    Console.WriteLine($"{firstFighter.Name} победил!");
+                }
+            }
+        }
+
+        private int ReadInt()
+        {
+            int result;
+
+            while (int.TryParse(Console.ReadLine(), out result) == false)
+            {
+                Console.WriteLine("Неверный ввод числа!\nНеобходимо ввести целое число.");
+                Console.Write("Введите целое число: ");
+            }
+
+            return result;
+        }
+    }
+
+    class Fighter
+    {
+        public string Name { get; protected set; }
+        public float Health { get; protected set; }
+        public float Damage { get; protected set; }
+        public float Armor { get; protected set; }
+        public int Recharging { get; protected set; }
+        public int Duration { get; protected set; }
+
+        public Fighter(string name, int health, int damage, int armor)
+        {
+            Name = name;
+            Health = health;
+            Damage = damage;
+            Armor = armor;
+        }
+
+        public void ShowStats()
+        {
+            Console.WriteLine($"\"{Name}\"   |{Health}HP   {Damage}DMG   {Armor}ARMOR|");
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (Armor <= 100)
+            {
+                Health -= damage * (100 - Armor) / 100;
+            }
+        }
+
+        public void Normalize(Fighter fighter, float normalDamage, float normalArmor)
+        {
+            fighter.Armor = normalArmor;
+            fighter.Damage = normalDamage;
+        }
+
+        public void SkipTurn() => Recharging -= 1;
+
+        public void ReduceDuration() => Duration -= 1;
+
+        public virtual void UsePower() { }
+    }
+
+    class Knight : Fighter
+    {
+        public Knight(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        public override void UsePower()
+        {
+            Console.WriteLine($"\t{Name} использует способность \"Помолиться\"");
+            Pray();
+        }
+
+        private void Pray()
+        {
+            Health += 200;
+            Damage *= 1.1f;
+            Recharging = 2;
+            Duration = 0;
+        }
+    }
+
+    class Dwarf : Fighter
+    {
+        public Dwarf(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        public override void UsePower()
+        {
+            Console.WriteLine($"\t{Name} использует способность \"Топать\"");
+            Stomp();
+        }
+
+        private void Stomp()
+        {
+            Damage *= 2.5f;
+            Armor *= 0.5f;
+            Recharging = 3;
+            Duration = 1;
+        }
+    }
+
+    class Elf : Fighter
+    {
+        public Elf(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        public override void UsePower()
+        {
+            Console.WriteLine($"\t{Name} использует способность \"Читать мысли\"");
+            ReadThoughts();
+        }
+
+        private void ReadThoughts()
+        {
+            Armor = 100;
+            Recharging = 4;
+            Duration = 1;
+        }
+    }
+
+    class Hobbit : Fighter
+    {
+        public Hobbit(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        public override void UsePower()
+        {
+            Console.WriteLine($"\t{Name} использует способность \"Спрятаться\"");
+            Hide();
+        }
+
+        public void Hide()
+        {
+            Armor += 8;
+            Recharging = 3;
+            Duration = 2;
+        }
+    }
+
+    class Orc : Fighter
+    {
+        public Orc(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        public override void UsePower()
+        {
+            Console.WriteLine($"\t{Name} использует способность \"Рычать\"");
+            Roar();
+        }
+
+        public void Roar()
+        {
+            Damage += 50;
+            Health -= 100;
+            Recharging = 2;
+            Duration = 3;
+        }
+    }
+} */
