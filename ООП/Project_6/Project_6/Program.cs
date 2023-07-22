@@ -8,7 +8,7 @@ namespace Project_6
         public static void Main(string[] args)
         {
             string namePlayer;
-            int moneyPlayer = 20;
+            int moneyPlayer = 100;
 
             Console.Write("Введите имя - ");
             namePlayer = Console.ReadLine();
@@ -67,14 +67,15 @@ namespace Project_6
 
         public Item ItemForSeel()
         {
-            int itemNumber;
+            int itemNumber = 0;
             Item tempItem;
             bool suitableNumber = true;
 
-            Console.Write("Введите номер товара для покупки - ");
-            itemNumber = GetPositiveNumber();
+
             while (suitableNumber)
             {
+                Console.Write("Введите номер товара для покупки - ");
+                itemNumber = GetPositiveNumber();
 
                 if (itemNumber < 1 || itemNumber > Items.Count)
                 {
