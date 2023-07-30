@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Exs_5;
 
@@ -13,8 +13,14 @@ class Program
         float usdToYuan = 7.21f;
         float yuanToUsd = 0.13f;
         float currencyCount;
-        const string wayOut = "exit";
-        bool next = true;
+        bool isConverterActive = true;
+        const string FirstCommand = "1";
+        const string SecondCommand = "2";
+        const string ThirdCommand = "3";
+        const string FourthCommand = "4";
+        const string FifthCommand = "5";
+        const string SixthCommand = "6";
+        const string WayOut = "exit";
 
         Console.WriteLine("Добрый день! В нашем обменнике вы можете поменять доллары, юани и рубли на соответсвующие валюты. " +
             "Для начала давайте узнаем сколько у вас денег и в какой валюте.");
@@ -25,20 +31,20 @@ class Program
         Console.Write("Введите баланс юаней:");
         float yuan = Convert.ToSingle(Console.ReadLine());
 
-        while (next)
+        while (isConverterActive)
         {
-            Console.WriteLine("Выбирете, какой обмен вы хотите произвести: 1- Рубли в доллары. 2- Доллары в рубли. 3- Рубли в юани. " +
-           "4- Юани в рубли. 5- Доллары в юани. 6- Юани в доллары.");
+            Console.WriteLine("Выбирете, какой обмен вы хотите произвести:" + FirstCommand + "- Рубли в доллары." + SecondCommand + "- Доллары в рубли." + ThirdCommand + "- Рубли в юани." +
+           FourthCommand + "- Юани в рубли." + FifthCommand + "- Доллары в юани." + SixthCommand + "- Юани в доллары.");
             string userInput = Console.ReadLine();
-            Console.ReadKey();
-
+            
             switch (userInput)
             {
-                case "1":
+                case FirstCommand:
                     {
                         Console.WriteLine("Обмен рублей на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (rub >= currencyCount)
                         {
                             rub -= currencyCount;
@@ -47,15 +53,15 @@ class Program
                         else
                         {
                             Console.WriteLine("Недостаточно денег.");
-                            break;
                         }
                         break;
                     }
-                case "2":
+                case SecondCommand:
                     {
                         Console.WriteLine("Обмен долларов на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (usd >= currencyCount)
                         {
                             usd -= currencyCount;
@@ -67,11 +73,12 @@ class Program
                         }
                         break;
                     }
-                case "3":
+                case ThirdCommand:
                     {
                         Console.WriteLine("Обмен рублей на юани.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (rub >= currencyCount)
                         {
                             rub -= currencyCount;
@@ -83,11 +90,12 @@ class Program
                         }
                         break;
                     }
-                case "4":
+                case FourthCommand:
                     {
                         Console.WriteLine("Обмен юаней на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (yuan >= currencyCount)
                         {
                             yuan -= currencyCount;
@@ -99,11 +107,12 @@ class Program
                         }
                         break;
                     }
-                case "5":
+                case FifthCommand:
                     {
                         Console.WriteLine("Обмен долларов на юани.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (usd >= currencyCount)
                         {
                             usd -= currencyCount;
@@ -115,11 +124,12 @@ class Program
                         }
                         break;
                     }
-                case "6":
+                case SixthCommand:
                     {
                         Console.WriteLine("Обмен юаней на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (yuan >= currencyCount)
                         {
                             yuan -= currencyCount;
@@ -135,14 +145,11 @@ class Program
             Console.WriteLine("Ваш баланс " + rub + " рублей , " + usd + " долларов и " + yuan + " юаней.");
             Console.WriteLine("Повторить операцию?");
 
-            if (Console.ReadLine() == wayOut)
+            if (Console.ReadLine() == WayOut)
             {
-                next = false;
-            } 
+                isConverterActive = false;
+            }
             Console.ReadKey();
         }
-        }
     }
-
-
-
+}
