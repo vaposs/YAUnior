@@ -6,6 +6,13 @@ class Program
 {
     static void Main(string[] args)
     {
+        const string FirstCommand = "1";
+        const string SecondCommand = "2";
+        const string ThirdCommand = "3";
+        const string FourthCommand = "4";
+        const string FifthCommand = "5";
+        const string SixthCommand = "6";
+        const string WayOut = "exit";
         float rubToUsd = 0.01f;
         float usdToRub = 90.49f;
         float rubToYuan = 0.08f;
@@ -14,13 +21,6 @@ class Program
         float yuanToUsd = 0.13f;
         float currencyCount;
         bool isConverterActive = true;
-        const string FirstCommand = "1";
-        const string SecondCommand = "2";
-        const string ThirdCommand = "3";
-        const string FourthCommand = "4";
-        const string FifthCommand = "5";
-        const string SixthCommand = "6";
-        const string WayOut = "exit";
 
         Console.WriteLine("Добрый день! В нашем обменнике вы можете поменять доллары, юани и рубли на соответсвующие валюты. " +
             "Для начала давайте узнаем сколько у вас денег и в какой валюте.");
