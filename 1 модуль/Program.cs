@@ -55,6 +55,7 @@ class Program
                             Console.WriteLine("Недостаточно денег.");
                         }
                         break;
+                    
                 case CommandUsdToRub:
                         Console.WriteLine("Обмен долларов на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять?");
@@ -70,6 +71,7 @@ class Program
                             Console.WriteLine("Недостаточно денег.");
                         }
                         break;
+
                 case CommandRubToYuan:
                         Console.WriteLine("Обмен рублей на юани.");
                         Console.WriteLine("Сколько вы хотите обменять?");
@@ -85,6 +87,7 @@ class Program
                             Console.WriteLine("Недостаточно денег.");
                         }
                         break;
+
                 case CommandYuanToRub:
                         Console.WriteLine("Обмен юаней на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять?");
@@ -100,6 +103,7 @@ class Program
                             Console.WriteLine("Недостаточно денег.");
                         }
                         break;
+
                 case CommandUsdToYuan:
                         Console.WriteLine("Обмен долларов на юани.");
                         Console.WriteLine("Сколько вы хотите обменять?");
@@ -115,6 +119,7 @@ class Program
                             Console.WriteLine("Недостаточно денег.");
                         }
                         break;
+
                 case CommandYuanToUsd:
                         Console.WriteLine("Обмен юаней на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять?");
