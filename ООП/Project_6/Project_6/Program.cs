@@ -11,7 +11,6 @@ namespace Project_6
 {
     class UserUtils
     {
-
         public static int GenerateRandomNumber(int min, int max)
         {
             Random randomNumber = new Random();
