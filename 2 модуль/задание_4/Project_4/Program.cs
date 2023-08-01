@@ -33,6 +33,7 @@ namespace Project_4
                 {
                     isWork = false;
                 }
+
                 else if (Convert.ToInt32(enteredData) !=0)
                 {
                     int[] newArray = new int[array.Length + 1];

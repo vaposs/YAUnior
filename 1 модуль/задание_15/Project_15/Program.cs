@@ -91,11 +91,12 @@ namespace Project_13
                                 Console.WriteLine("неверный ввод, попробуйте снова.");
                             }
                         }
-
                         break;
+
                     case MenuBarResetColor:
                         Console.ResetColor();
                         break;
+
                     case MenuBarWriteAll:
                         string stringAge = Convert.ToString(age);
                         int coutChar = CountNumber + stringAge.Length + name.Length + surname.Length + password.Length;
@@ -113,9 +114,11 @@ namespace Project_13
                         }
 
                         break;
+
                     case MenuBarExit:
                         toOut = false;
                         break;
+
                     default:
                         Console.Clear();
                         Console.WriteLine("Не верный ввод, попробуйсте снова.");

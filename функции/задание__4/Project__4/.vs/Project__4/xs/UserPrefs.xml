@@ -2,13 +2,8 @@
   <MonoDevelop.Ide.ItemProperties.Project____4 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../../задание_4/Program.cs">
     <Files>
-      <File FileName="../../задание_4/Program.cs" Line="46" Column="63" />
+      <File FileName="../../задание_4/Program.cs" Line="22" Column="2" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />

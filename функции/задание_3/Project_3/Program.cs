@@ -1,37 +1,26 @@
 ﻿using System;
 
-namespace Project_3
+namespace Project_11
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            GetNumber();   
-        }
+            int conditionDigit = 7;
+            int divisionRemainder = 5;
+            int maxDigit = 100;
 
-        static void GetNumber()
-        {
-           string line;
-           bool isConversionSucceeded = true;
-           bool isSuccess;
-           int number;
+            Console.WriteLine($"Будем выводить числа с остатком от деления '{divisionRemainder}' и меньше чем '{maxDigit}'.");
+            Console.WriteLine("Нажмите Enter для старта.");
+            Console.WriteLine("Продолжить . . .");
+            Console.ReadLine();
 
-           while (isConversionSucceeded)
-           {
-                Console.Write("введите целое число - ");
-                line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
-
-                if (isSuccess)
-                {
-                    Console.WriteLine($"строка {line} успешно конвертирован в число - {number} ");
-                    isConversionSucceeded = false;
-                }
-                else
-                {
-                    Console.WriteLine($"строка {line} не может быть конвертирована");
-                }
-           }
+            for (int numberOfIterations = 5; maxDigit > numberOfIterations; numberOfIterations += conditionDigit)
+            {
+                Console.WriteLine($" Число - {numberOfIterations}");
+            }
+            Console.WriteLine("Вывод окончен.");
+            Console.ReadKey();
         }
     }
-}
+} 

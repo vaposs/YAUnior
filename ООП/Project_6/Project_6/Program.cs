@@ -1,8 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// 7) Не надо объявлять 2 и более объектов ранодом в одном классе. - достаточно одного. Но если Random используется в нескольких классах - сделайте класс UserUtils,
+// в нем public static int GenerateRandomNumber(int min, int max).
+// И обращайтесь к этому методу напрямую без объявления объекта класса. Например: int index = UserUtils.GenerateRandomNumber(_products.Coun
+
+
+
 namespace Project_6
 {
+    class UserUtils
+    {
+
+        public static int GenerateRandomNumber(int min, int max)
+        {
+            Random randomNumber = new Random();
+
+            return randomNumber.Next(min, max);
+        }
+    }
+
     class MainClass
     {
         public static void Main(string[] args)
@@ -13,9 +30,9 @@ namespace Project_6
             Console.Write("Введите имя - ");
             namePlayer = Console.ReadLine();
             Player player = new Player(namePlayer, moneyPlayer);
-            Trade trade = new Trade();
+            Shop shop = new Shop();
 
-            trade.Menu(player);
+            shop.Work(player);
         }
     }
 
@@ -38,8 +55,6 @@ namespace Project_6
             int itemsCount;
             int tierItem;
             int valueItem;
-            Random randomTier = new Random();
-            Random randomValue= new Random();
 
 
             Console.Write("Сколько товаров вы видите на прилавке - ");
@@ -47,9 +62,9 @@ namespace Project_6
 
             for (int i = 0; i < itemsCount; i++)
             {
-                tierItem = randomTier.Next(MinRandomTier, MaxRandomTier);
-                valueItem = randomValue.Next(MinRandomValue, MaxRandomValue) * tierItem;
-                Items.Add(new Item(NameItem(),tierItem,valueItem));
+                tierItem = UserUtils.GenerateRandomNumber(MinRandomTier, MaxRandomTier);
+                valueItem = UserUtils.GenerateRandomNumber(MinRandomValue, MaxRandomValue) * tierItem;
+                Items.Add(new Item(Fill(),tierItem,valueItem));
             }
         }
 
@@ -68,7 +83,6 @@ namespace Project_6
         public Item ItemForSeel()
         {
             int itemNumber = 0;
-            Item tempItem;
             bool suitableNumber = true;
 
 
@@ -129,7 +143,7 @@ namespace Project_6
             return number;
         }
 
-        private string NameItem()
+        private string Fill()
         {
             Random randomName = new Random();
             string nameItem = "";
@@ -157,6 +171,21 @@ namespace Project_6
         {
             SallingMinus(item);
             Items.Add(item);
+        }
+
+        public bool CanBuy(Player player, Dealer dealer)
+        {
+            Item itemForBuy = dealer.ItemForSeel();
+            bool isBuy;
+
+            if (player.Money - itemForBuy.Value >= 0)
+            {
+                return isBuy = true;
+            }
+            else
+            {
+                return isBuy = false;
+            }
         }
 
         private void SallingMinus(Item item)
@@ -187,6 +216,7 @@ namespace Project_6
         {
             int indexNumber = 1;
             PrintFirstLine();
+
             if (Items.Count < 1)
             {
                 Console.WriteLine("товаров нет\n");
@@ -212,9 +242,9 @@ namespace Project_6
         }
     }
 
-    class Trade
+    class Shop
     {
-        public void Menu(Player player)
+        public void Work(Player player)
         {
             const string BuyGoodCommand = "1";
             const string ExitGameCommand = "2";
@@ -223,8 +253,8 @@ namespace Project_6
             int maxMoney = 500;
             bool isTrade = true;
 
-            Random moneyInTraider = new Random();
-            Dealer dealer = new Dealer("Traider", moneyInTraider.Next(minMoney, maxMoney));
+            int moneyInTraider = UserUtils.GenerateRandomNumber(minMoney,maxMoney);
+            Dealer dealer = new Dealer("Traider", moneyInTraider);
 
             Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
             dealer.CreateGoods();
@@ -245,7 +275,7 @@ namespace Project_6
                 switch (command.ToLower())
                 {
                     case BuyGoodCommand:
-                        BuyGood(dealer, player);
+                        TransferProduct(dealer, player);
                         break;
 
                     case ExitGameCommand:
@@ -259,7 +289,7 @@ namespace Project_6
             }
         }
 
-        private void BuyGood(Dealer dealer, Player player)
+        private void TransferProduct(Dealer dealer, Player player)
         {
             if (dealer.CountGoods() == 0)
             {
@@ -267,7 +297,7 @@ namespace Project_6
             }
             else
             {
-                if (CanBuy(player, dealer) == false)
+                if (player.CanBuy(player, dealer) == false)
                 {
                     Console.WriteLine("у игрока не хватает монет");
                 }
@@ -275,21 +305,6 @@ namespace Project_6
                 {
                     player.BuyItem(dealer.SaleItem(dealer.TakeItem()));
                 }
-            }
-        }
-
-        private bool CanBuy(Player player,Dealer dealer)
-        {
-            Item itemForBuy = dealer.ItemForSeel();
-            bool isBuy;
-
-            if (player.Money - itemForBuy.Value >= 0)
-            {
-                return isBuy = true;
-            }
-            else
-            {
-                return isBuy = false;
             }
         }
     }
