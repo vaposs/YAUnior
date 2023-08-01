@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// 7) Не надо объявлять 2 и более объектов ранодом в одном классе. - достаточно одного. Но если Random используется в нескольких классах - сделайте класс UserUtils,
-// в нем public static int GenerateRandomNumber(int min, int max).
-// И обращайтесь к этому методу напрямую без объявления объекта класса. Например: int index = UserUtils.GenerateRandomNumber(_products.Coun
-
-
-
 namespace Project_6
 {
     class UserUtils
