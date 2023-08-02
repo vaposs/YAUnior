@@ -3,16 +3,6 @@ using System.Collections.Generic;
 
 namespace Project_6
 {
-    class UserUtils
-    {
-        public static int GenerateRandomNumber(int min, int max)
-        {
-            Random randomNumber = new Random();
-
-            return randomNumber.Next(min, max);
-        }
-    }
-
     class MainClass
     {
         public static void Main(string[] args)
@@ -29,82 +19,16 @@ namespace Project_6
         }
     }
 
-    class Dealer: Human
+    class UserUtils
     {
-        private Item _itemForSeel;
-
-        public Dealer(string name, int money) : base(name, money)
+        public static int GenerateRandomNumber(int min, int max)
         {
+            Random randomNumber = new Random();
 
+            return randomNumber.Next(min, max);
         }
 
-        public void CreateGoods()
-        {
-            const int MinRandomTier = 1;
-            const int MaxRandomTier = 5;
-            const int MinRandomValue = 1;
-            const int MaxRandomValue = 10;
-
-            int itemsCount;
-            int tierItem;
-            int valueItem;
-
-
-            Console.Write("Сколько товаров вы видите на прилавке - ");
-            itemsCount = GetPositiveNumber();
-
-            for (int i = 0; i < itemsCount; i++)
-            {
-                tierItem = UserUtils.GenerateRandomNumber(MinRandomTier, MaxRandomTier);
-                valueItem = UserUtils.GenerateRandomNumber(MinRandomValue, MaxRandomValue) * tierItem;
-                Items.Add(new Item(Fill(),tierItem,valueItem));
-            }
-        }
-
-        public Item TakeItem()
-        {
-            return _itemForSeel;
-        }
-
-        public Item SaleItem(Item item)
-        {
-            SallingPlus(item);
-            Items.Remove(item);
-            return item;
-        }
-
-        public Item ItemForSeel()
-        {
-            int itemNumber = 0;
-            bool suitableNumber = true;
-
-
-            while (suitableNumber)
-            {
-                Console.Write("Введите номер товара для покупки - ");
-                itemNumber = GetPositiveNumber();
-
-                if (itemNumber < 1 || itemNumber > Items.Count)
-                {
-                    Console.WriteLine("неверное число");
-                }
-                else
-                {
-                    suitableNumber = false;
-                }
-            }
-
-            _itemForSeel = Items[itemNumber - 1];
-
-            return _itemForSeel;
-        }
-
-        private void SallingPlus(Item item)
-        {
-            Money += item.Value;
-        }
-         
-        private int GetPositiveNumber()
+        public static int GetPositiveNumber()
         {
             string line;
             bool isConversionSucceeded = true;
@@ -135,61 +59,11 @@ namespace Project_6
 
             return number;
         }
-
-        private string Fill()
-        {
-            Random randomName = new Random();
-            string nameItem = "";
-
-            string[] tools = {
-                "молоток", "лопата","топор",
-                "кирка", "меч  ", "лук  ", "посох",
-                "лопата", "нагрудник", "наручи",
-                "поножья", "шлем ", "штаны"
-            };
-
-            nameItem = tools[randomName.Next(0, tools.Length)];
-            return nameItem;
-        }
     }
 
-    class Player: Human
-    {
-        public Player(string name, int money) : base(name, money)
-        {
-
-        }
-
-        public void BuyItem(Item item)
-        {
-            SallingMinus(item);
-            Items.Add(item);
-        }
-
-        public bool CanBuy(Player player, Dealer dealer)
-        {
-            Item itemForBuy = dealer.ItemForSeel();
-            bool isBuy;
-
-            if (player.Money - itemForBuy.Value >= 0)
-            {
-                return isBuy = true;
-            }
-            else
-            {
-                return isBuy = false;
-            }
-        }
-
-        private void SallingMinus(Item item)
-        {
-             Money -= item.Value;
-        }
-    }
-    
     abstract class Human
     {
-        protected List<Item> Items = new List<Item>();
+        protected List<Product> Product = new List<Product>();
 
         public string Name { get; protected set; }
         public int Money { get; protected set; }
@@ -202,24 +76,24 @@ namespace Project_6
 
         public int CountGoods()
         {
-            return Items.Count;
+            return Product.Count;
         }
 
-        public void ShowGoods()
+        public void ShowProduct()
         {
             int indexNumber = 1;
             PrintFirstLine();
 
-            if (Items.Count < 1)
+            if (Product.Count < 1)
             {
                 Console.WriteLine("товаров нет\n");
             }
             else
             {
-                foreach (Item item in Items)
+                foreach (Product product in Product)
                 {
                     Console.Write(indexNumber + ". ");
-                    item.ShowInfo();
+                    product.ShowInfo();
                     indexNumber++;
                 }
             }
@@ -227,19 +101,104 @@ namespace Project_6
 
         private void PrintFirstLine()
         {
-            const string NameGoods = "Название товара";
-            const string TierGoods = "Уровень товара";
-            const string ValueGoods = "Стоимость товара";
+            const string NameProducts = "Название товара";
+            const string TierProducts = "Уровень товара";
+            const string ValueProducts = "Стоимость товара";
 
-            Console.WriteLine($"{NameGoods}\t\t{TierGoods}\t\t{ValueGoods}");
+            Console.WriteLine($"{NameProducts}\t\t{TierProducts}\t\t{ValueProducts}");
         }
     }
 
+    class Dealer : Human
+    {
+        public Dealer(string name, int money) : base(name, money)
+        {
+
+        }
+
+        public void CreateProducts()
+        {
+            const int MinRandomTier = 1;
+            const int MaxRandomTier = 5;
+            const int MinRandomValue = 1;
+            const int MaxRandomValue = 10;
+
+            int productCount;
+            int tierProduct;
+            int valueProduct;
+
+            Console.Write("Сколько товаров вы видите на прилавке - ");
+            productCount = UserUtils.GetPositiveNumber();
+
+            for (int i = 0; i < productCount; i++)
+            {
+                tierProduct = UserUtils.GenerateRandomNumber(MinRandomTier, MaxRandomTier);
+                valueProduct = UserUtils.GenerateRandomNumber(MinRandomValue, MaxRandomValue) * tierProduct;
+                Product.Add(new Product(Products(),tierProduct,valueProduct));
+            }
+        }
+
+        public bool CheckProductAvailability(int productNumber)
+        {
+            if (productNumber <= Product.Count)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int ReturnProductValue(int productNumber)
+        {
+            return Product[productNumber].Value;
+        }
+
+        public Product SellProduct(int numberProduct)
+        {
+            Product tempProduct = Product[numberProduct];
+            Product.RemoveAt(numberProduct);
+            Money += tempProduct.Value;
+            return tempProduct;
+        }
+
+        private string Products()
+        {
+            Random randomName = new Random();
+            string nameProduct = "";
+
+            string[] tools = {
+                "молоток", "лопата","топор",
+                "кирка", "меч  ", "лук  ", "посох",
+                "лопата", "нагрудник", "наручи",
+                "поножья", "шлем ", "штаны"
+            };
+
+            nameProduct = tools[randomName.Next(0, tools.Length)];
+            return nameProduct;
+        }
+    }
+
+    class Player: Human
+    {
+        public Player(string name, int money) : base(name, money)
+        {
+
+        }
+
+        public void BuyProduct(Product product)
+        {
+            Product.Add(product);
+            Money -= product.Value;
+        }
+    }
+    
     class Shop
     {
         public void Work(Player player)
         {
-            const string BuyGoodCommand = "1";
+            const string BuyProductCommand = "1";
             const string ExitGameCommand = "2";
 
             int minMoney = 100;
@@ -250,24 +209,24 @@ namespace Project_6
             Dealer dealer = new Dealer("Traider", moneyInTraider);
 
             Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
-            dealer.CreateGoods();
+            dealer.CreateProducts();
 
             while (isTrade)
             {
                 string command;
 
                 Console.WriteLine($"\nДенег у торговца - {dealer.Money}, денег у вас - {player.Money}");
-                dealer.ShowGoods();
+                dealer.ShowProduct();
                 Console.WriteLine($"\nТовары {player.Name}");
-                player.ShowGoods();
-                Console.WriteLine($"{BuyGoodCommand}. Купить.");
+                player.ShowProduct();
+                Console.WriteLine($"{BuyProductCommand}. Купить.");
                 Console.WriteLine($"{ExitGameCommand}. Выход");
                 Console.Write("Введите номер команды - ");
                 command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
-                    case BuyGoodCommand:
+                    case BuyProductCommand:
                         TransferProduct(dealer, player);
                         break;
 
@@ -290,21 +249,44 @@ namespace Project_6
             }
             else
             {
-                if (player.CanBuy(player, dealer) == false)
+                SellProduct(dealer, player);
+            }
+        }
+
+        private void SellProduct(Dealer dealer, Player player)
+        {
+            Product tempProduct;
+            int itemNumber = 0;
+            bool suitableNumber = true;
+
+            while (suitableNumber)
+            {
+                Console.Write("Введите номер товара для покупки - ");
+                itemNumber = UserUtils.GetPositiveNumber() - 1;
+
+                if (dealer.CheckProductAvailability(itemNumber) == true)
                 {
-                    Console.WriteLine("у игрока не хватает монет");
+                    if (player.Money >= dealer.ReturnProductValue(itemNumber))
+                    {
+                        player.BuyProduct(dealer.SellProduct(itemNumber));
+                    }
+                    else
+                    {
+                        Console.WriteLine("не зватает монет для покупки");
+                    }
+                    suitableNumber = false;
                 }
                 else
                 {
-                    player.BuyItem(dealer.SaleItem(dealer.TakeItem()));
+                    Console.WriteLine("такого товара нету");
                 }
             }
         }
     }
 
-    class Item
+    class Product
     {
-        public Item(string name, int tier, int value)
+        public Product(string name, int tier, int value)
         {
             Name = name;
             Tier = tier;
