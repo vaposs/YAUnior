@@ -6,9 +6,6 @@ namespace Project_6
     //3 - CreateProducts - зачем константы? Это обычные переменные.Так же, почему у них именно эти значения? Если изменится список с товарами - будете и в этом методе менять?
     // по данному пункту не очень понятно возражение. В данном случае использую выдуманую градацию предмета по качеству. да применяется только в данном методе и не зависит от
     // количества елементов в списке товаров.
-    // 
-    //9 - public Product SellProduct - поменяйте логику, не нужно возвращать товар.Задача метода - его продать
-
 
     class MainClass
     {
@@ -20,9 +17,7 @@ namespace Project_6
             Console.Write("Введите имя - ");
             namePlayer = Console.ReadLine();
             Player player = new Player(namePlayer, moneyPlayer);
-            Shop shop = new Shop();
-
-            shop.Work(player);
+            new Shop().Work(player);
         }
     }
 
@@ -129,7 +124,6 @@ namespace Project_6
             int maxRandomTier = 5;
             int minRandomPrice = 1;
             int maxRandomPrice = 10;
-
             int productCount;
             int tierProduct;
             int valueProduct;
@@ -276,7 +270,7 @@ namespace Project_6
         private void Trade(Dealer dealer, Player player)
         {
             Product tempProduct;
-            int productNumber = 0;
+            int productNumber;
             bool suitableNumber = true;
 
             while (suitableNumber)
@@ -288,12 +282,13 @@ namespace Project_6
                 {
                     if (player.CanBuy(dealer.ReturnProduct(productNumber)))
                     {
-                        player.BuyProduct(dealer.SellProduct(productNumber));//-----------------
+                        player.BuyProduct(dealer.SellProduct(productNumber));
                     }
                     else
                     {
                         Console.WriteLine("не зватает монет для покупки");
                     }
+
                     suitableNumber = false;
                 }
                 else
