@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Project_6
 {
+    //3 - CreateProducts - зачем константы? Это обычные переменные.Так же, почему у них именно эти значения? Если изменится список с товарами - будете и в этом методе менять?
+    // по данному пункту не очень понятно возражение. В данном случае использую выдуманую градацию предмета по качеству. да применяется только в данном методе и не зависит от
+    // количества елементов в списке товаров.
+    // 
+    //9 - public Product SellProduct - поменяйте логику, не нужно возвращать товар.Задача метода - его продать
+
+
     class MainClass
     {
         public static void Main(string[] args)
@@ -32,15 +39,15 @@ namespace Project_6
         {
             string line;
             bool isConversionSucceeded = true;
-            bool isNumber;
+            bool isCorrectNumber;
             int number = 0;
 
             while (isConversionSucceeded)
             {
                 line = Console.ReadLine();
-                isNumber = int.TryParse(line, out number);
+                isCorrectNumber = int.TryParse(line, out number);
 
-                if (isNumber)
+                if (isCorrectNumber)
                 {
                     if (number < 1)
                     {
@@ -63,7 +70,7 @@ namespace Project_6
 
     abstract class Human
     {
-        protected List<Product> Product = new List<Product>();
+        protected List<Product> Products = new List<Product>();
 
         public string Name { get; protected set; }
         public int Money { get; protected set; }
@@ -74,9 +81,9 @@ namespace Project_6
             Money = money;
         }
 
-        public int CountGoods()
+        public int GetCountProduct()
         {
-            return Product.Count;
+            return Products.Count;
         }
 
         public void ShowProduct()
@@ -84,13 +91,13 @@ namespace Project_6
             int indexNumber = 1;
             PrintFirstLine();
 
-            if (Product.Count < 1)
+            if (Products.Count < 1)
             {
                 Console.WriteLine("товаров нет\n");
             }
             else
             {
-                foreach (Product product in Product)
+                foreach (Product product in Products)
                 {
                     Console.Write(indexNumber + ". ");
                     product.ShowInfo();
@@ -118,10 +125,10 @@ namespace Project_6
 
         public void CreateProducts()
         {
-            const int MinRandomTier = 1;
-            const int MaxRandomTier = 5;
-            const int MinRandomValue = 1;
-            const int MaxRandomValue = 10;
+            int minRandomTier = 1;
+            int maxRandomTier = 5;
+            int minRandomPrice = 1;
+            int maxRandomPrice = 10;
 
             int productCount;
             int tierProduct;
@@ -132,15 +139,15 @@ namespace Project_6
 
             for (int i = 0; i < productCount; i++)
             {
-                tierProduct = UserUtils.GenerateRandomNumber(MinRandomTier, MaxRandomTier);
-                valueProduct = UserUtils.GenerateRandomNumber(MinRandomValue, MaxRandomValue) * tierProduct;
-                Product.Add(new Product(Products(),tierProduct,valueProduct));
+                tierProduct = UserUtils.GenerateRandomNumber(minRandomTier, maxRandomTier);
+                valueProduct = UserUtils.GenerateRandomNumber(minRandomPrice, maxRandomPrice) * tierProduct;
+                Products.Add(new Product(GenerateNameProducts(), tierProduct, valueProduct));
             }
         }
 
-        public bool CheckProductAvailability(int productNumber)
+        public bool VerifyProductAvailability(int productNumber)
         {
-            if (productNumber <= Product.Count)
+            if (productNumber <= Products.Count)
             {
                 return true;
             }
@@ -150,20 +157,20 @@ namespace Project_6
             }
         }
 
-        public int ReturnProductValue(int productNumber)
+        public Product ReturnProduct(int productNumber)
         {
-            return Product[productNumber].Value;
+            return Products[productNumber];
         }
 
         public Product SellProduct(int numberProduct)
         {
-            Product tempProduct = Product[numberProduct];
-            Product.RemoveAt(numberProduct);
+            Product tempProduct = Products[numberProduct];
+            Products.RemoveAt(numberProduct);
             Money += tempProduct.Value;
             return tempProduct;
         }
 
-        private string Products()
+        private string GenerateNameProducts()
         {
             Random randomName = new Random();
             string nameProduct = "";
@@ -171,7 +178,7 @@ namespace Project_6
             string[] tools = {
                 "молоток", "лопата","топор",
                 "кирка", "меч  ", "лук  ", "посох",
-                "лопата", "нагрудник", "наручи",
+                "лифчик", "нагрудник", "наручи",
                 "поножья", "шлем ", "штаны"
             };
 
@@ -189,8 +196,21 @@ namespace Project_6
 
         public void BuyProduct(Product product)
         {
-            Product.Add(product);
+            Products.Add(product);
             Money -= product.Value;
+        }
+
+        public bool CanBuy(Product product)
+        {
+            if(Money >= product.Value)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
     
@@ -203,7 +223,7 @@ namespace Project_6
 
             int minMoney = 100;
             int maxMoney = 500;
-            bool isTrade = true;
+            bool isTradeDeal = true;
 
             int moneyInTraider = UserUtils.GenerateRandomNumber(minMoney,maxMoney);
             Dealer dealer = new Dealer("Traider", moneyInTraider);
@@ -211,7 +231,7 @@ namespace Project_6
             Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
             dealer.CreateProducts();
 
-            while (isTrade)
+            while (isTradeDeal)
             {
                 string command;
 
@@ -231,7 +251,7 @@ namespace Project_6
                         break;
 
                     case ExitGameCommand:
-                        isTrade = false;
+                        isTradeDeal = false;
                         break;
 
                     default:
@@ -243,32 +263,32 @@ namespace Project_6
 
         private void TransferProduct(Dealer dealer, Player player)
         {
-            if (dealer.CountGoods() == 0)
+            if (dealer.GetCountProduct() == 0)
             {
                 Console.WriteLine($"У {dealer.Name} не осталось товаров");
             }
             else
             {
-                SellProduct(dealer, player);
+                Trade(dealer, player);
             }
         }
 
-        private void SellProduct(Dealer dealer, Player player)
+        private void Trade(Dealer dealer, Player player)
         {
             Product tempProduct;
-            int itemNumber = 0;
+            int productNumber = 0;
             bool suitableNumber = true;
 
             while (suitableNumber)
             {
                 Console.Write("Введите номер товара для покупки - ");
-                itemNumber = UserUtils.GetPositiveNumber() - 1;
+                productNumber = UserUtils.GetPositiveNumber() - 1;
 
-                if (dealer.CheckProductAvailability(itemNumber) == true)
+                if (dealer.VerifyProductAvailability(productNumber) == true)
                 {
-                    if (player.Money >= dealer.ReturnProductValue(itemNumber))
+                    if (player.CanBuy(dealer.ReturnProduct(productNumber)))
                     {
-                        player.BuyProduct(dealer.SellProduct(itemNumber));
+                        player.BuyProduct(dealer.SellProduct(productNumber));//-----------------
                     }
                     else
                     {

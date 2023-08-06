@@ -99,6 +99,19 @@ class Database
         }
     }
 
+    private void BanPlayer2()
+    {
+        if(TryGetPlayer(out Player player))
+        {
+            player.Ban();
+            Console.WriteLine("игрок забанен");
+        }
+        else
+        {
+            Console.WriteLine("ошибка ввода данных");
+        }
+    }
+
     private void UnbanPlayer()
     {
         Player playerForUnban;
@@ -150,7 +163,7 @@ class Database
         }
     }
 
-    private int GetNumber()
+    private int GetPositiveNumber()
     {
         string line;
         bool isConversionSucceeded = true;
@@ -184,7 +197,7 @@ class Database
 
     private Player TryGetPlayer()
     {
-        int number = GetNumber();
+        int number = GetPositiveNumber();
 
         foreach (Player player in _players)
         {
@@ -195,6 +208,25 @@ class Database
         }
 
         return null;
+    }
+
+    private bool TryGetPlayer(out Player player)
+    {
+        player = null;
+
+        Console.WriteLine("Введите Id игрока - ");
+        int id = GetPositiveNumber();
+
+        foreach(Player nextPlayer in _players)
+        {
+            if( nextPlayer.Number == id)
+            {
+                player = nextPlayer;
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
@@ -246,4 +278,6 @@ class Player
             Console.WriteLine("Плеер уже розабанен");
         }
     }
+
+   
 }

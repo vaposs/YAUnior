@@ -6,7 +6,7 @@ namespace задание_16
     {
         public static void Main(string[] args)
         {
-            const int firstAndLastChar = 4;
+            const int firstAndLastChar = 2;
             Console.Write("Введите имя - ");
             string name = Console.ReadLine();
             Console.Write("Введите символ - ");
@@ -19,12 +19,13 @@ namespace задание_16
                 Console.Write(frameSymbol);
             }
 
-            Console.Write($"\n{frameSymbol} {name} {frameSymbol}\n");
+            Console.Write($"\n{frameSymbol}{name}{frameSymbol}\n");
 
             for (int i = 0; i < charToLine; i++)
             {
                 Console.Write(frameSymbol);
             }
+            Console.ReadKey();
         }
     }
 }

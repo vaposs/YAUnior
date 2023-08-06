@@ -4,3 +4,9 @@
 /Users/walter/GitHub/YAUnior/задание_16/Project_16/obj/Debug/Project_16.csproj.CoreCompileInputs.cache
 /Users/walter/GitHub/YAUnior/задание_16/Project_16/obj/Debug/Project_16.exe
 /Users/walter/GitHub/YAUnior/задание_16/Project_16/obj/Debug/Project_16.pdb
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/bin/Debug/Project_16.exe
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/bin/Debug/Project_16.pdb
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/obj/Debug/Project_16.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/obj/Debug/Project_16.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/obj/Debug/Project_16.exe
+/Users/walter/GitHub/YAUnior/1 модуль/задание_16/Project_16/obj/Debug/Project_16.pdb
