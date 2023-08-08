@@ -3,10 +3,6 @@ using System.Collections.Generic;
 
 namespace Project_6
 {
-    //3 - CreateProducts - зачем константы? Это обычные переменные.Так же, почему у них именно эти значения? Если изменится список с товарами - будете и в этом методе менять?
-    // по данному пункту не очень понятно возражение. В данном случае использую выдуманую градацию предмета по качеству. да применяется только в данном методе и не зависит от
-    // количества елементов в списке товаров.
-
     class MainClass
     {
         public static void Main(string[] args)
@@ -21,13 +17,13 @@ namespace Project_6
         }
     }
 
-    class UserUtils
-    {
+     class UserUtils
+     { 
         public static int GenerateRandomNumber(int min, int max)
         {
-            Random randomNumber = new Random();
+            Random random = new Random();
 
-            return randomNumber.Next(min, max);
+            return random.Next(min, max);
         }
 
         public static int GetPositiveNumber()
@@ -61,12 +57,10 @@ namespace Project_6
 
             return number;
         }
-    }
+     }
 
     abstract class Human
     {
-        protected List<Product> Products = new List<Product>();
-
         public string Name { get; protected set; }
         public int Money { get; protected set; }
 
@@ -75,6 +69,8 @@ namespace Project_6
             Name = name;
             Money = money;
         }
+
+        protected List<Product> Products = new List<Product>();
 
         public int GetCountProduct()
         {
@@ -104,7 +100,7 @@ namespace Project_6
         private void PrintFirstLine()
         {
             const string NameProducts = "Название товара";
-            const string TierProducts = "Уровень товара";
+            const string TierProducts = "Качество товара";
             const string ValueProducts = "Стоимость товара";
 
             Console.WriteLine($"{NameProducts}\t\t{TierProducts}\t\t{ValueProducts}");
@@ -141,14 +137,7 @@ namespace Project_6
 
         public bool VerifyProductAvailability(int productNumber)
         {
-            if (productNumber <= Products.Count)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return productNumber <= Products.Count;
         }
 
         public Product ReturnProduct(int productNumber)
@@ -196,15 +185,7 @@ namespace Project_6
 
         public bool CanBuy(Product product)
         {
-            if(Money >= product.Value)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+            return Money >= product.Value;
         }
     }
     

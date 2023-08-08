@@ -11,12 +11,8 @@ using System.Collections.Generic;
 //Супермаркет содержит список товаров, из которых клиент выбирает товары для покупки.
 
 
-//создать список покупателей (Queue) 10 штук
-// - у каждого корзина с набором товаров и запас денег
-
-//создаем магазин с надором товаров (+- 20 штук)
-
-
+// генерация списка товаров      +
+// генерация очереди             +
 
 namespace Progect_9
 {
@@ -90,9 +86,11 @@ namespace Progect_9
             {
                 if (_buyers.Count > 1)
                 {
-                    tempBuyer = _buyers.Dequeue();
-                    tempBuyer.ShowStatsBuyer();
-                    tempBuyer.ShowBasket();
+                    Console.WriteLine("Полный список товаров магазина: ");
+                    foreach (Product product in _products)
+                    {
+                        product.ShowInfo();
+                    }
                 }
                 else
                 {
