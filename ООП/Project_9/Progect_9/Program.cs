@@ -1,19 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//Написать программу администрирования супермаркетом.
-//В супермаркете есть очередь клиентов.
-//У каждого клиента в корзине есть товары, также у клиентов есть деньги.
-//Клиент, когда подходит на кассу, получает итоговую сумму покупки и старается её оплатить. 
-//Если оплатить клиент не может, то он рандомный товар из корзины выкидывает до тех пор, пока его денег
-//не хватит для оплаты. 
-//Клиентов можно делать ограниченное число на старте программы.
-//Супермаркет содержит список товаров, из которых клиент выбирает товары для покупки.
-
-
-// генерация списка товаров      +
-// генерация очереди             +
-
 namespace Progect_9
 {
     class MainClass
@@ -23,17 +10,16 @@ namespace Progect_9
             Shop shop = new Shop();
 
             shop.Work();
-            Console.ReadKey();
         }
     }
 
     class UserUtils
     {
-        public static int GenerateRandomNumber(int min, int max)
+        public static int GenerateRandomNumber(int minNumber, int maxNumber)
         {
             Random randomNumber = new Random();
 
-            return randomNumber.Next(min, max);
+            return randomNumber.Next(minNumber, maxNumber);
         }
 
         public static int GetPositiveNumber()
@@ -74,23 +60,46 @@ namespace Progect_9
         Queue<Buyer> _buyers = new Queue<Buyer>();
         List<Product> _products = new List<Product>();
         int _currentIndex = 1;
+        Buyer tempBuyer;
 
-        public void Work()// нужно выполнить проверку на суму чека и сколько денег у покупателя и если денег нет, уведомить об етом и удалят случайный товар
+        public void Work()
         {
-            Buyer tempBuyer;
+            bool isNextBuyer;
             bool isWork = true;
+
             CreatStoreAssortment();
             CreationQueueBuyers();
+            CreateBasketBuyers();
 
             while (isWork)
             {
-                if (_buyers.Count > 1)
+                Console.WriteLine("\nВы видите в очереди:\n");
+                ShowQueueBuyers();
+
+                if (_buyers.Count > 0)
                 {
-                    Console.WriteLine("Полный список товаров магазина: ");
-                    foreach (Product product in _products)
+                    tempBuyer = _buyers.Dequeue();
+                    Console.WriteLine();
+                    tempBuyer.ShowStatsBuyer();
+                    tempBuyer.ShowBasket();
+
+                    isNextBuyer = false;
+
+                    while (isNextBuyer == false)
                     {
-                        product.ShowInfo();
+                        if (tempBuyer.Money >= tempBuyer.GetSummBusket())
+                        {
+                            isNextBuyer = true;
+                            Console.WriteLine($"покупатель {tempBuyer.Id} оплату произвел, следущий ...");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Монет для оплаты не достаочно, исключаем случайный товар с корзины");
+                            tempBuyer.ExcludeRandomProduct();
+                        }
                     }
+                    Console.WriteLine("----------------------------------------------------------------------");
+                    Console.ReadKey();
                 }
                 else
                 {
@@ -98,27 +107,29 @@ namespace Progect_9
                     isWork = false;
                 }
             }
-        }// ????????
+
+            Console.ReadKey();
+            Console.WriteLine("конец програмы");
+        }
 
         private void CreationQueueBuyers()
         {
-            const int MinBuyersInQueue = 3;
-            const int MaxBuyersInQueue = 10;
-            const int MinMoneyBuyer = 500;
-            const int MaxMoneyBuyer = 1000;
-
+            int minBuyersInQueue = 3;
+            int maxBuyersInQueue = 10;
+            int minMoneyBuyer = 300;
+            int maxMoneyBuyer = 700;
             int buyersInQueue;
             Buyer tempBuyer;
 
-            buyersInQueue = UserUtils.GenerateRandomNumber(MinBuyersInQueue, MaxBuyersInQueue);
+            buyersInQueue = UserUtils.GenerateRandomNumber(minBuyersInQueue, maxBuyersInQueue);
 
             for (int i = 0; i < buyersInQueue; i++)
             {
-                tempBuyer = new Buyer(_currentIndex++, UserUtils.GenerateRandomNumber(MinMoneyBuyer, MaxMoneyBuyer));
+                tempBuyer = new Buyer(_currentIndex++, UserUtils.GenerateRandomNumber(minMoneyBuyer, maxMoneyBuyer));
                 tempBuyer.TakeProductInBasket(GivetProduct());
                 _buyers.Enqueue(tempBuyer);
             }
-        }// создаю очередь посетителей и формирую их корзины
+        }
 
         private void CreatStoreAssortment()
         {
@@ -137,28 +148,46 @@ namespace Progect_9
             }
 
             Shuffle();
-        }// создаю асортимент товара
+        }
 
         private void Shuffle()
         {
             Product temporaryProduct;
             Product temporaryProduct2;
-            int randNumber;
-            Random randomCard = new Random();
+            int randomNumber;
 
             for (int i = 0; i < _products.Count; i++)
             {
-                randNumber = randomCard.Next(_products.Count);
+                randomNumber = UserUtils.GenerateRandomNumber(0, _products.Count);
                 temporaryProduct = _products[i];
-                temporaryProduct2 = _products[randNumber];
+                temporaryProduct2 = _products[randomNumber];
                 _products[i] = temporaryProduct2;
-                _products[randNumber] = temporaryProduct;
+                _products[randomNumber] = temporaryProduct;
             }
-        } // перемешиваю товар в слуайной последовательности
+        }
 
-        public Product GivetProduct() // отдаю товар из магазина
+        public Product GivetProduct()
         {
             return _products[UserUtils.GenerateRandomNumber(0,_products.Count)];
+        }
+
+        public void ShowQueueBuyers()
+        {
+            foreach (Buyer buyer in _buyers)
+            {
+                buyer.ShowStatsBuyer();
+            }
+        }
+
+        public void CreateBasketBuyers()
+        {
+            foreach (Buyer buyer in _buyers)
+            {
+                for (int i = 0; i < buyer.TakeSizeBasket(); i++)
+                {
+                    buyer.TakeProductInBasket(GivetProduct());
+                }
+            }
         }
     }
 
@@ -175,31 +204,52 @@ namespace Progect_9
         public int Id { get; private set; }
         public int Money { get; private set; }
 
-        public void TakeProductInBasket(Product product) // заполняю корзину покупателя случайными товарами
-        {
-            const int MinProductInBusket = 1;
-            const int MaxProductInBusket = 15;
-
-            int basketSize = UserUtils.GenerateRandomNumber(MinProductInBusket, MaxProductInBusket);
-
-            for (int i = 0; i < basketSize; i++)
-            {
-               _basket.Add(product);
-            }
-        }
-
         public void ShowBasket()
         {
             foreach (Product product in _basket)
             {
                 product.ShowInfo();
             }
-        } // вывод на екран купленых товаров
+        } 
 
         public void ShowStatsBuyer()
         {
-            Console.WriteLine($"ID посетителя - {Id}, в кошельке - {Money}");
-        } // вывод на екран информации о покупателе
+            Console.WriteLine($"ID посетителя - {Id}, в кошельке - {Money}, сумма чека покупателя - {GetSummBusket()}");
+        } 
+
+        public void TakeProductInBasket(Product product) 
+        {
+            _basket.Add(product);
+        }
+
+        public int TakeSizeBasket()
+        {
+            int minSizeBasket = 5;
+            int maxSizeBasket = 15;
+
+            int sizeBasket = UserUtils.GenerateRandomNumber(minSizeBasket,maxSizeBasket);
+
+            return sizeBasket;
+        } 
+
+        public int GetSummBusket()
+        {
+            int summ = 0;
+
+            foreach (Product product in _basket)
+            {
+                summ += product.Value;
+            }
+
+            return summ;
+        } 
+
+        public void ExcludeRandomProduct()
+        {
+            int productNumderForExclude = UserUtils.GenerateRandomNumber(0, _basket.Count);
+            Console.WriteLine($"Продукт {_basket[productNumderForExclude].Name} исключен из корзины");
+            _basket.RemoveAt(productNumderForExclude);
+        }
     }
 
     class Product
@@ -213,13 +263,13 @@ namespace Progect_9
         public string Name { get;private set; }
         public int Value { get; private set; }
 
-        public void ShowInfo() // вывод на екран информации о товаре
+        public void ShowInfo() 
         {
             Console.Write(Name + "\t\t\t");
             Console.WriteLine(Value);
         }
 
-        private int ValueProduct() // присвоение случайной стоимости товара
+        private int ValueProduct() 
         {
             int minValue = 10;
             int maxValue = 100;

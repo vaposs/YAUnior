@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//1) 10 - 14 строчки перенесите в конструктор игрока, изменив немного названия переменных.
+//
+//2) Нарушен порядок в классе. Должен быть следующий: поля, конструктор, свойства, методы.Дальше сортировка в каждом блоке в следующем порядке -
+//  публичные, protected (защищенный) и приватные.А также сначала статика, readonly, затем остальные. Подробнее: https://clck.ru/at8vs
+//
+//  4) dealer.CreateProducts(); - лучше это делать в конструкторе.
+
+
 namespace Project_6
 {
-    class MainClass
-    {
-        public static void Main(string[] args)
+    /*
+     * public static void Main(string[] args)
         {
             string namePlayer;
             int moneyPlayer = 100;
@@ -15,15 +22,27 @@ namespace Project_6
             Player player = new Player(namePlayer, moneyPlayer);
             new Shop().Work(player);
         }
+     */
+
+    class MainClass
+    {
+        public static void Main(string[] args)
+        {
+            int moneyPlayer = 0;
+            string namePlayer = "";
+
+            Player player = new Player(namePlayer, moneyPlayer);
+            new Shop().Work(player);
+        }
     }
 
-     class UserUtils
+    class UserUtils
      { 
-        public static int GenerateRandomNumber(int min, int max)
+        public static int GenerateRandomNumber(int minRandomNumber, int maxRandomNumber)
         {
             Random random = new Random();
 
-            return random.Next(min, max);
+            return random.Next(minRandomNumber, maxRandomNumber);
         }
 
         public static int GetPositiveNumber()
@@ -69,6 +88,8 @@ namespace Project_6
             Name = name;
             Money = money;
         }
+
+
 
         protected List<Product> Products = new List<Product>();
 
@@ -174,7 +195,24 @@ namespace Project_6
     {
         public Player(string name, int money) : base(name, money)
         {
+            Name = SetName();
+            Money = SetMoney();
+        }
 
+        private string SetName()
+        {
+            string namePlayer;
+
+            Console.Write("Введите имя - ");
+            return Name = Console.ReadLine();
+        }
+
+        private int SetMoney()
+        {
+            Console.Write("Введите количество монет в кармане - ");
+            int money = UserUtils.GetPositiveNumber();
+
+            return money;
         }
 
         public void BuyProduct(Product product)
@@ -204,7 +242,7 @@ namespace Project_6
             Dealer dealer = new Dealer("Traider", moneyInTraider);
 
             Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
-            dealer.CreateProducts();
+ /**/           dealer.CreateProducts();
 
             while (isTradeDeal)
             {
