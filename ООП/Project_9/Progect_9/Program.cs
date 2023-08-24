@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//4) поля должны иметь явный модификатор доступа и соответствующую нотацию
-
-//Александр Михновец
-
 namespace Progect_9
 {
     class MainClass

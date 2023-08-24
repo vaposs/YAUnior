@@ -1,37 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//1) 10 - 14 строчки перенесите в конструктор игрока, изменив немного названия переменных.
-//
-//2) Нарушен порядок в классе. Должен быть следующий: поля, конструктор, свойства, методы.Дальше сортировка в каждом блоке в следующем порядке -
-//  публичные, protected (защищенный) и приватные.А также сначала статика, readonly, затем остальные. Подробнее: https://clck.ru/at8vs
-//
-//  4) dealer.CreateProducts(); - лучше это делать в конструкторе.
-
-
 namespace Project_6
 {
-    /*
-     * public static void Main(string[] args)
-        {
-            string namePlayer;
-            int moneyPlayer = 100;
-
-            Console.Write("Введите имя - ");
-            namePlayer = Console.ReadLine();
-            Player player = new Player(namePlayer, moneyPlayer);
-            new Shop().Work(player);
-        }
-     */
-
     class MainClass
     {
         public static void Main(string[] args)
         {
-            int moneyPlayer = 0;
-            string namePlayer = "";
+            int money = 0;
+            string name = "";
 
-            Player player = new Player(namePlayer, moneyPlayer);
+            Player player = new Player(name, money);
             new Shop().Work(player);
         }
     }
@@ -80,6 +59,8 @@ namespace Project_6
 
     abstract class Human
     {
+        protected List<Product> Products = new List<Product>();
+
         public string Name { get; protected set; }
         public int Money { get; protected set; }
 
@@ -88,10 +69,6 @@ namespace Project_6
             Name = name;
             Money = money;
         }
-
-
-
-        protected List<Product> Products = new List<Product>();
 
         public int GetCountProduct()
         {
@@ -132,28 +109,7 @@ namespace Project_6
     {
         public Dealer(string name, int money) : base(name, money)
         {
-
-        }
-
-        public void CreateProducts()
-        {
-            int minRandomTier = 1;
-            int maxRandomTier = 5;
-            int minRandomPrice = 1;
-            int maxRandomPrice = 10;
-            int productCount;
-            int tierProduct;
-            int valueProduct;
-
-            Console.Write("Сколько товаров вы видите на прилавке - ");
-            productCount = UserUtils.GetPositiveNumber();
-
-            for (int i = 0; i < productCount; i++)
-            {
-                tierProduct = UserUtils.GenerateRandomNumber(minRandomTier, maxRandomTier);
-                valueProduct = UserUtils.GenerateRandomNumber(minRandomPrice, maxRandomPrice) * tierProduct;
-                Products.Add(new Product(GenerateNameProducts(), tierProduct, valueProduct));
-            }
+            CreateProducts();
         }
 
         public bool VerifyProductAvailability(int productNumber)
@@ -189,6 +145,27 @@ namespace Project_6
             nameProduct = tools[randomName.Next(0, tools.Length)];
             return nameProduct;
         }
+
+        private void CreateProducts()
+        {
+            int minRandomTier = 1;
+            int maxRandomTier = 5;
+            int minRandomPrice = 1;
+            int maxRandomPrice = 10;
+            int productCount;
+            int tierProduct;
+            int valueProduct;
+
+            Console.Write("Сколько товаров вы видите на прилавке - ");
+            productCount = UserUtils.GetPositiveNumber();
+
+            for (int i = 0; i < productCount; i++)
+            {
+                tierProduct = UserUtils.GenerateRandomNumber(minRandomTier, maxRandomTier);
+                valueProduct = UserUtils.GenerateRandomNumber(minRandomPrice, maxRandomPrice) * tierProduct;
+                Products.Add(new Product(GenerateNameProducts(), tierProduct, valueProduct));
+            }
+        }
     }
 
     class Player: Human
@@ -197,22 +174,6 @@ namespace Project_6
         {
             Name = SetName();
             Money = SetMoney();
-        }
-
-        private string SetName()
-        {
-            string namePlayer;
-
-            Console.Write("Введите имя - ");
-            return Name = Console.ReadLine();
-        }
-
-        private int SetMoney()
-        {
-            Console.Write("Введите количество монет в кармане - ");
-            int money = UserUtils.GetPositiveNumber();
-
-            return money;
         }
 
         public void BuyProduct(Product product)
@@ -224,6 +185,22 @@ namespace Project_6
         public bool CanBuy(Product product)
         {
             return Money >= product.Value;
+        }
+
+        private string SetName()
+        {
+            string name;
+
+            Console.Write("Введите имя - ");
+            return Name = Console.ReadLine();
+        }
+
+        private int SetMoney()
+        {
+            Console.Write("Введите количество монет в кармане - ");
+            int money = UserUtils.GetPositiveNumber();
+
+            return money;
         }
     }
     
@@ -242,7 +219,6 @@ namespace Project_6
             Dealer dealer = new Dealer("Traider", moneyInTraider);
 
             Console.WriteLine($"Вы подошли в прилавку торговца {dealer.Name} и смотрите на товары.");
- /**/           dealer.CreateProducts();
 
             while (isTradeDeal)
             {
