@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/bin/Debug/Project_10.exe
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/bin/Debug/Project_10.pdb
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/obj/Debug/Project_10.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/obj/Debug/Project_10.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/obj/Debug/Project_10.exe
+/Users/walter/GitHub/YAUnior/ООП/Project_10/Project_10/obj/Debug/Project_10.pdb

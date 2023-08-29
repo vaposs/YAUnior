@@ -14,21 +14,21 @@ namespace Project_8
 
     class Fight
     {
-        private const int _SpecialHitChance = 30;
+        private int _SpecialHitChance = 30;
 
         Fighter _firstFighter;
         Fighter _secondFighter;
         private List<Fighter> _fighters = new List<Fighter>();
-        private int _maxXpBar = 0;
-        private bool _changeXp = false;
+        private int _maxHpBar = 0;
+        private bool _changeHP = false;
         
         public Fight()
         {
-            _fighters.Add(new Infantryman(150, 8, 7, 0, false));
-            _fighters.Add(new Barbarian(120,6,10, 0, true));
-            _fighters.Add(new Paladin(130,0,8, 0, true));
-            _fighters.Add(new Tramp(85,3,14, 0, false));
-            _fighters.Add(new Ranger(90,5,13, 0, false));
+            _fighters.Add(new Infantryman("Infantryman", 150, 8, 7, 0, false));
+            _fighters.Add(new Barbarian("Barbarian", 120,6,10, 0, true));
+            _fighters.Add(new Paladin("Paladin", 130,0,8, 0, true));
+            _fighters.Add(new Tramp("Tramp", 85,3,14, 0, false));
+            _fighters.Add(new Ranger("Ranger", 90,5,13, 0, false));
         }
 
         public void Play()
@@ -40,62 +40,68 @@ namespace Project_8
             Console.WriteLine("Выберите второго бойца.");
             _secondFighter = FighterChoice();
 
-            Round();
+            Fighting();
 
             Console.ReadKey();
         }
 
-        public void Round()
+        public void Fighting()
         {
             int specialHitFirstFighter;
             int specialHitSecondFighter;
-            int normalFirstAtack = _firstFighter.Atack;
-            int normalFirstArmor = _firstFighter.Armor;
-            int normalSecondAtack = _secondFighter.Atack;
-            int normalSecondArmor = _secondFighter.Armor;
+            int normalFirstFighterDamage = _firstFighter.Atack;
+            int normalFirstFighterArmore = _firstFighter.Armor;
+            int normalSecondFighterDamage = _secondFighter.Atack;
+            int normalSecondFighterArmore = _secondFighter.Armor;
 
             bool endRound = true;
 
             while (endRound)
             {
-                if(_firstFighter.IsPasiveSkil == false)
+                if (_firstFighter.IsPasiveSkil == false)
                 {
-                    specialHitFirstFighter = RandomPercentage();
-                    Console.WriteLine(specialHitFirstFighter);
+                    specialHitFirstFighter = GenerateRandomNumber();
+
                     if (specialHitFirstFighter >= _SpecialHitChance)
                     {
-                        _firstFighter.Ability();
-                        _secondFighter.TakeDamage(_firstFighter.MakeDamage());
+                        _firstFighter.UseAbility();
+                        _secondFighter.TakeDamage(_firstFighter.Atack);
+                        _secondFighter.MakeDamage(_firstFighter);
                     }
                     else
                     {
-                        _secondFighter.TakeDamage(_firstFighter.MakeDamage());
+                        _secondFighter.TakeDamage(_firstFighter.Atack);
+                        _secondFighter.MakeDamage(_firstFighter);
                     }
                 }
                 else
                 {
-                    _firstFighter.Ability();
-                    _secondFighter.TakeDamage(_firstFighter.MakeDamage());
+                    _firstFighter.UseAbility();
+                    _secondFighter.TakeDamage(_firstFighter.Atack);
+                    _secondFighter.MakeDamage(_firstFighter);
                 }
 
                 if (_secondFighter.IsPasiveSkil == false)
                 {
-                    specialHitSecondFighter = RandomPercentage();
-                    Console.WriteLine(specialHitSecondFighter);
+                    specialHitSecondFighter = GenerateRandomNumber();
+
                     if (specialHitSecondFighter >= _SpecialHitChance)
                     {
-                        _secondFighter.Ability();
-                        _firstFighter.TakeDamage(_secondFighter.MakeDamage());
+                        _secondFighter.UseAbility();
+                        _firstFighter.TakeDamage(_secondFighter.Atack);
+                        _firstFighter.MakeDamage(_secondFighter);
                     }
                     else
                     {
-                        _firstFighter.TakeDamage(_secondFighter.MakeDamage());
+                        _firstFighter.TakeDamage(_secondFighter.Atack);
+                        _firstFighter.MakeDamage(_secondFighter);
                     }
                 }
                 else
                 {
-                    _secondFighter.Ability();
-                    _firstFighter.TakeDamage(_secondFighter.MakeDamage());
+                    _secondFighter.UseAbility();
+                    _firstFighter.TakeDamage(_secondFighter.Atack);
+                    _firstFighter.MakeDamage(_secondFighter);
                 }
 
                 if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
@@ -108,22 +114,22 @@ namespace Project_8
                     }
                     else if (_firstFighter.Health <= 0)
                     {
-                        Console.WriteLine($"Бой окончен, победил {_secondFighter.GetType().Name}");
+                        Console.WriteLine($"Бой окончен, победил {_secondFighter.Name}");
                     }
                     else
                     {
-                        Console.WriteLine($"Бой окончен, победил {_firstFighter.GetType().Name}");
+                        Console.WriteLine($"Бой окончен, победил {_firstFighter.Name}");
                     }
                 }
 
                 if (_firstFighter.IsPasiveSkil == false)
                 {
-                    _firstFighter.NormalAtackArmor(_firstFighter, normalFirstAtack, normalFirstArmor);
+                    _firstFighter.NormalizeDamageArmor(_firstFighter, normalFirstFighterDamage, normalFirstFighterArmore);
                 }
 
                 if (_secondFighter.IsPasiveSkil == false)
                 {
-                    _secondFighter.NormalAtackArmor(_secondFighter, normalSecondAtack, normalSecondArmor);
+                    _secondFighter.NormalizeDamageArmor(_secondFighter, normalSecondFighterDamage, normalSecondFighterArmore);
 
                 }
 
@@ -137,7 +143,7 @@ namespace Project_8
 
         private void ShowStatsInChose(Fighter fighter)
         {
-            Console.WriteLine($"{fighter.GetType().Name}\t\t XP = {fighter.Health}\t ATK = {fighter.Atack} \t ARM = {fighter.Armor}");
+            Console.WriteLine($"{fighter.Name}\t\t HP = {fighter.Health}\t ATK = {fighter.Atack} \t ARM = {fighter.Armor}");
         }
 
         private void ShowAllFighter()
@@ -156,7 +162,7 @@ namespace Project_8
             Console.WriteLine($"{fighter.GetType().Name}\t XP = {fighter.Health}\t ATK = {fighter.Atack}");
         }  
 
-        private int RandomPercentage()
+        private int GenerateRandomNumber()
         {
             int minNumber = 0;
             int maxNumber = 100;
@@ -167,12 +173,6 @@ namespace Project_8
 
         private Fighter FighterChoice()
         {
-            const int FirstFighter = 0;
-            const int SecondFighter = 1;
-            const int ThirdFighter = 2;
-            const int FourthFighter = 3;
-            const int FifthFighter = 4;
-
             bool isRightChoice = true;
             Fighter fighter = null;
 
@@ -182,53 +182,35 @@ namespace Project_8
                 Console.Write("Боец под номеров - ");
 
                 int command = GetNumber();
-                isRightChoice = false;
 
-                switch (--command)
+                if(--command > _fighters.Count)
                 {
-                    case FirstFighter:
-                        fighter = _fighters[command].Clone();
-                        break;
-
-                    case SecondFighter:
-                        fighter = _fighters[command].Clone();
-                        break;
-
-                    case ThirdFighter:
-                        fighter = _fighters[command].Clone();
-                        break;
-
-                    case FourthFighter:
-                        fighter = _fighters[command].Clone();
-                        break;
-
-                    case FifthFighter:
-                        fighter = _fighters[command].Clone();
-                        break;
-
-                    default:
-                        isRightChoice = true;
-                        Console.WriteLine("Не верный ввод, повторите");
-                        break;
+                    Console.WriteLine("неверный ввод числа");
+                }
+                else
+                {
+                    fighter = _fighters[command].Clone();
+                    isRightChoice = false;
                 }
             }
+
             return fighter;
         } 
 
         private void PrintBar( int number)
         {
-            if (_firstFighter.Health >= _secondFighter.Health && _changeXp == false)
+            if (_firstFighter.Health >= _secondFighter.Health && _changeHP == false)
             {
-                _maxXpBar = _firstFighter.Health;
-                _changeXp = true;
+                _maxHpBar = _firstFighter.Health;
+                _changeHP = true;
             }
-            else if (_secondFighter.Health > _firstFighter.Health && _changeXp == false)
+            else if (_secondFighter.Health > _firstFighter.Health && _changeHP == false)
             {
-                _maxXpBar = _secondFighter.Health;
-                _changeXp = true;
+                _maxHpBar = _secondFighter.Health;
+                _changeHP = true;
             }
             
-            char[] healtBar = new char[_maxXpBar];
+            char[] healtBar = new char[_maxHpBar];
 
             Console.Write("[");
 
@@ -283,15 +265,17 @@ namespace Project_8
     }
 
     abstract class Fighter
-     {
+    {
+        public string Name { get; protected set; }
         public int Health { get; protected set; }
         public int Armor { get; protected set; }
         public int Atack { get; protected set; }
         public int CoolDawn { get; protected set; }
         public bool IsPasiveSkil { get; protected set; }
 
-        public Fighter(int health, int armor, int atack,int cooldawn, bool isPasivSkil)
+        public Fighter(string name, int health, int armor, int atack,int cooldawn, bool isPasivSkil)
         {
+            Name = name;
             Health = health;
             Armor = armor;
             Atack = atack;
@@ -299,9 +283,16 @@ namespace Project_8
             IsPasiveSkil = isPasivSkil;
         }
         
-        public int MakeDamage()
+        public void MakeDamage(Fighter fighter)
         {
-            return Atack;
+            if (Atack - fighter.Armor >= 0)
+            {
+                fighter.Health -= Atack - Armor;
+            }
+            else
+            {
+                fighter.Health--;
+            }
         }
 
         public void TakeDamage(int damage)
@@ -317,13 +308,13 @@ namespace Project_8
             }
         }
 
-        public void NormalAtackArmor(Fighter fighter, int normalAtack, int normalArmor)
+        public void NormalizeDamageArmor(Fighter fighter, int normalAtack, int normalArmor)
         {
             fighter.Armor = normalArmor;
             fighter.Atack = normalAtack;
         }
 
-        public abstract void Ability();
+        public abstract void UseAbility();
 
         public abstract Fighter Clone();
     }
@@ -332,17 +323,12 @@ namespace Project_8
     {
         int _shieldStrike = 15;
 
-        public Infantryman(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
+        public Infantryman(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
-        private Infantryman(Infantryman infantryman):this(infantryman.Health, infantryman.Armor, infantryman.Atack, infantryman.CoolDawn, infantryman.IsPasiveSkil)
-        {
-
-        }
-
-        public override void Ability()
+        public override void UseAbility()
         {
             Console.WriteLine("Удар щитом");
             Atack = _shieldStrike;
@@ -350,23 +336,18 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Infantryman(this);
+            return new Infantryman(Name, Health, Armor, Atack, CoolDawn, IsPasiveSkil);
         }
     }
 
     class Barbarian : Fighter
     {
-        public Barbarian(int health, int armor, int atack,int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
+        public Barbarian(string name, int health, int armor, int atack,int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
-        private Barbarian(Barbarian barbarian) : this(barbarian.Health, barbarian.Armor, barbarian.Atack, barbarian.CoolDawn, barbarian.IsPasiveSkil)
-        {
-
-        }
-
-        public override void Ability()
+        public override void UseAbility()
         {
             if (CoolDawn > 0)
             {
@@ -382,7 +363,7 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Barbarian(this);
+            return new Barbarian(Name, Health, Armor, Atack, CoolDawn, IsPasiveSkil);
         }
     }
 
@@ -390,17 +371,12 @@ namespace Project_8
     {
         private int _maxHealth;
 
-        public Paladin(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
-        {
-
-        }
-
-        private Paladin(Paladin paladin) : this(paladin.Health, paladin.Armor, paladin.Atack, paladin.CoolDawn, paladin.IsPasiveSkil)
+        public Paladin(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
         {
             _maxHealth = Health;
         }
 
-        public override void Ability()
+        public override void UseAbility()
         {
             Console.WriteLine("божественные прикосновение");
 
@@ -416,23 +392,18 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Paladin(this);   
+            return new Paladin(Name, Health, Armor, Atack, CoolDawn, IsPasiveSkil);   
         }
     }
 
     class Tramp : Fighter
     {
-        public Tramp(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
+        public Tramp(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
-        private Tramp(Tramp tramp) : this(tramp.Health, tramp.Armor, tramp.Atack, tramp.CoolDawn, tramp.IsPasiveSkil)
-        {
-
-        }
-
-        public override void Ability()
+        public override void UseAbility()
         {
             Console.WriteLine("Подлый удар");
             Atack = Atack + Atack;
@@ -440,7 +411,7 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Tramp(this);
+            return new Tramp(Name, Health, Armor, Atack, CoolDawn, IsPasiveSkil);
         }
     }
 
@@ -448,17 +419,12 @@ namespace Project_8
     {
         private int _armorAbility = 100;
 
-        public Ranger(int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(health, armor, atack, cooldawn, isPasiveSkil)
+        public Ranger(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
         {
 
         }
 
-        private Ranger(Ranger ranger) : this(ranger.Health, ranger.Armor, ranger.Atack, ranger.CoolDawn, ranger.IsPasiveSkil)
-        {
-
-        }
-
-        public override void Ability()
+        public override void UseAbility()
         {
             Console.WriteLine("Cлытся с тенями");
             Armor = _armorAbility;
@@ -466,7 +432,7 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Ranger(this);
+            return new Ranger(Name, Health, Armor, Atack, CoolDawn, IsPasiveSkil);
         }
     }
 }
