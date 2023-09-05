@@ -8,27 +8,26 @@ namespace Project_8
         public static void Main(string[] args)
         {
             Fight fight = new Fight();
+
             fight.Play();
         }
     }
 
     class Fight
     {
-        private int _specialHitChance = 30;
-
-        Fighter _firstFighter;
-        Fighter _secondFighter;
+        private Fighter _firstFighter;
+        private Fighter _secondFighter;
         private List<Fighter> _fighters = new List<Fighter>();
         private int _maxHealthPointsBar = 0;
         private bool _changeHealthPoints = false;
         
-        private Fight()
+        public Fight()
         {
             _fighters.Add(new Infantryman("Infantryman", 150, 8, 7, 0, false));
-            _fighters.Add(new Barbarian("Barbarian", 120,6,10, 0, true));
+            _fighters.Add(new Barbarian("Barbarian", 120,6,10, 3, true));
             _fighters.Add(new Paladin("Paladin", 130,0,8, 0, true));
-            _fighters.Add(new Tramp("Tramp", 85,3,14, 0, false));
-            _fighters.Add(new Ranger("Ranger", 90,5,13, 0, false));
+            _fighters.Add(new Tramp("Tramp", 85,3,2, 0, false));
+            _fighters.Add(new Ranger("Ranger", 90,5,2, 0, false));
         }
 
         public void Play()
@@ -56,89 +55,53 @@ namespace Project_8
 
             while (endRound)
             {
+                _firstFighter.DealDamage(_secondFighter);
+                _secondFighter.DealDamage(_firstFighter);
+
+                endRound = IsGameOver(_firstFighter, _secondFighter, endRound);
+
                 if (_firstFighter.HasPassviveSkill == false)
                 {
-                    int specialHitFirstFighter = GenerateRandomNumber();
-
-                    if (specialHitFirstFighter >= _specialHitChance)
-                    {
-                        _firstFighter.UseAbility();
-                        _secondFighter.TakeDamage(_firstFighter.Atack);
-                        _secondFighter.DealDamage(_firstFighter);
-                    }
-                    else
-                    {
-                        _secondFighter.TakeDamage(_firstFighter.Atack);
-                        _secondFighter.DealDamage(_firstFighter);
-                    }
-                }
-                else
-                {
-                    _firstFighter.UseAbility();
-                    _secondFighter.TakeDamage(_firstFighter.Atack);
-                    _secondFighter.DealDamage(_firstFighter);
+                    _firstFighter.NormalizeDamageArmor(normalFirstFighterDamage, normalFirstFighterArmore);
                 }
 
                 if (_secondFighter.HasPassviveSkill == false)
                 {
-                    int specialHitSecondFighter = GenerateRandomNumber();
-
-                    if (specialHitSecondFighter >= _specialHitChance)
-                    {
-                        _secondFighter.UseAbility();
-                        _firstFighter.TakeDamage(_secondFighter.Atack);
-                        _firstFighter.DealDamage(_secondFighter);
-                    }
-                    else
-                    {
-                        _firstFighter.TakeDamage(_secondFighter.Atack);
-                        _firstFighter.DealDamage(_secondFighter);
-                    }
-                }
-                else
-                {
-                    _secondFighter.UseAbility();
-                    _firstFighter.TakeDamage(_secondFighter.Atack);
-                    _firstFighter.DealDamage(_secondFighter);
-                }
-
-                if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
-                {
-                    endRound = false;
-
-                    if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
-                    {
-                        Console.WriteLine("Боевая ничья");
-                    }
-                    else if (_firstFighter.Health <= 0)
-                    {
-                        Console.WriteLine($"Бой окончен, победил {_secondFighter.Name}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Бой окончен, победил {_firstFighter.Name}");
-                    }
-                }
-
-                if (_firstFighter.HasPassviveSkill == false)
-                {
-                    _firstFighter.NormalizeDamageArmor(_firstFighter, normalFirstFighterDamage, normalFirstFighterArmore);
-                }
-
-                if (_secondFighter.HasPassviveSkill == false)
-                {
-                    _secondFighter.NormalizeDamageArmor(_secondFighter, normalSecondFighterDamage, normalSecondFighterArmore);
+                    _secondFighter.NormalizeDamageArmor(normalSecondFighterDamage, normalSecondFighterArmore);
 
                 }
 
-                PrintBar(_firstFighter.Health);
+                PrintHealBar(_firstFighter.Health);
                 ShowStats(_firstFighter);
-                PrintBar(_secondFighter.Health);
+                PrintHealBar(_secondFighter.Health);
                 ShowStats(_secondFighter);
                 Console.ReadKey();
             }
         }
 
+        private bool IsGameOver(Fighter firstFighter, Fighter secondFighter, bool endRound)
+        {
+            if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
+            {
+                if (firstFighter.Health <= 0 && secondFighter.Health <= 0)
+                {
+                    Console.WriteLine("Боевая ничья");
+                }
+                else if (_firstFighter.Health <= 0)
+                {
+                    Console.WriteLine($"Бой окончен, победил {_secondFighter.Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"Бой окончен, победил {_firstFighter.Name}");
+                }
+
+                endRound = false;
+            }
+
+            return endRound;
+        }
+        
         private void ShowStatsInChose(Fighter fighter)
         {
             Console.WriteLine($"{fighter.Name}\t\t HP = {fighter.Health}\t ATK = {fighter.Atack} \t ARM = {fighter.Armor}");
@@ -159,15 +122,6 @@ namespace Project_8
         {
             Console.WriteLine($"{fighter.GetType().Name}\t XP = {fighter.Health}\t ATK = {fighter.Atack}");
         }  
-
-        private int GenerateRandomNumber()
-        {
-            int minNumber = 0;
-            int maxNumber = 100;
-            Random random = new Random();
-
-            return random.Next(minNumber, maxNumber);
-        }
 
         private Fighter FighterChoice()
         {
@@ -195,7 +149,7 @@ namespace Project_8
             return fighter;
         } 
 
-        private void PrintBar( int number)
+        private void PrintHealBar( int number)
         {
             if (_firstFighter.Health >= _secondFighter.Health && _changeHealthPoints == false)
             {
@@ -265,6 +219,9 @@ namespace Project_8
 
     abstract class Fighter
     {
+        private int _specialHitChance = 30;
+        private int specialHitFighter;
+
         public string Name { get; protected set; }
         public int Health { get; protected set; }
         public int Armor { get; protected set; }
@@ -282,21 +239,51 @@ namespace Project_8
             HasPassviveSkill = hasPassviveSkill;
         }
         
-        public void DealDamage(Fighter fighter)
+        public void DealDamage(Fighter enemy)
         {
-            if (Atack - fighter.Armor >= 0)
+            if (HasPassviveSkill == false)
             {
-                fighter.Health -= Atack - Armor;
+                specialHitFighter = GenerateRandomNumber();
+
+                if (specialHitFighter >= _specialHitChance)
+                {
+                    UseAbility();
+                    enemy.TakeDamage(Atack);
+                }
+                else
+                {
+                    enemy.TakeDamage(Atack);
+                }
             }
             else
             {
-                fighter.Health--;
+                UseAbility();
+                enemy.TakeDamage(Atack);
             }
         }
 
-        public void TakeDamage(int damage)
+        private int GenerateRandomNumber()
         {
-            if(Armor >= damage)
+            int minNumber = 0;
+            int maxNumber = 100;
+            Random random = new Random();
+
+            return random.Next(minNumber, maxNumber);
+        }
+
+        public void NormalizeDamageArmor(int normalAtack, int normalArmor)
+        {
+            Armor = normalArmor;
+            Atack = normalAtack;
+        }
+
+        public abstract void UseAbility();
+
+        public abstract Fighter Clone();
+
+        private void TakeDamage(int damage)
+        {
+            if (Armor >= damage)
             {
                 damage = 1;
                 Health -= damage;
@@ -306,16 +293,6 @@ namespace Project_8
                 Health -= damage - Armor;
             }
         }
-
-        public void NormalizeDamageArmor(Fighter fighter, int normalAtack, int normalArmor)
-        {
-            fighter.Armor = normalArmor;
-            fighter.Atack = normalAtack;
-        }
-
-        public abstract void UseAbility();
-
-        public abstract Fighter Clone();
     }
 
     class Infantryman : Fighter
