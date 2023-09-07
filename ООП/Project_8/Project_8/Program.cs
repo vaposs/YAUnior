@@ -13,14 +13,59 @@ namespace Project_8
         }
     }
 
+    class UserUtils
+    {
+        public static int GenerateRandomNumber()
+        {
+            int minNumber = 0;
+            int maxNumber = 100;
+
+            Random random = new Random();
+
+            return random.Next(minNumber, maxNumber);
+        }
+
+        public static int GetPositiveNumber()
+        {
+            string playerCommand;
+            bool isConversionSucceeded = true;
+            bool isCorrectNumber;
+            int number = 0;
+
+            while (isConversionSucceeded)
+            {
+                playerCommand = Console.ReadLine();
+                isCorrectNumber = int.TryParse(playerCommand, out number);
+
+                if (isCorrectNumber)
+                {
+                    if (number < 1)
+                    {
+                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
+                    }
+                    else
+                    {
+                        isConversionSucceeded = false;
+                    }
+                }
+                else
+                {
+                    Console.Write("Неверный ввод. Повторите ввод - ");
+                }
+            }
+
+            return number;
+        }
+    }
+
     class Fight
     {
         private Fighter _firstFighter;
         private Fighter _secondFighter;
         private List<Fighter> _fighters = new List<Fighter>();
-        private int _maxHealthPointsBar = 0;
-        private bool _changeHealthPoints = false;
-        
+        private int _maximumFrameLength;
+
+
         public Fight()
         {
             _fighters.Add(new Infantryman("Infantryman", 150, 8, 7, 0, false));
@@ -34,10 +79,10 @@ namespace Project_8
         {
             Console.WriteLine("Добро пожаловать на арену.");
             Console.WriteLine("Выберите первого бойца.");
-            _firstFighter = FighterChoice();
+            _firstFighter = ChoiceFighter();
 
             Console.WriteLine("Выберите второго бойца.");
-            _secondFighter = FighterChoice();
+            _secondFighter = ChoiceFighter();
 
             Fighting();
 
@@ -46,19 +91,16 @@ namespace Project_8
 
         private void Fighting()
         {
-            int normalFirstFighterDamage = _firstFighter.Atack;
+            int normalFirstFighterDamage = _firstFighter.Damage;
             int normalFirstFighterArmore = _firstFighter.Armor;
-            int normalSecondFighterDamage = _secondFighter.Atack;
+            int normalSecondFighterDamage = _secondFighter.Damage;
             int normalSecondFighterArmore = _secondFighter.Armor;
 
-            bool endRound = true;
-
-            while (endRound)
+            
+            while (IsGameOver(_firstFighter, _secondFighter))
             {
-                _firstFighter.DealDamage(_secondFighter);
-                _secondFighter.DealDamage(_firstFighter);
-
-                endRound = IsGameOver(_firstFighter, _secondFighter, endRound);
+                _firstFighter.Atack(_secondFighter);
+                _secondFighter.Atack(_firstFighter);
 
                 if (_firstFighter.HasPassviveSkill == false)
                 {
@@ -71,16 +113,16 @@ namespace Project_8
 
                 }
 
-                PrintHealBar(_firstFighter.Health);
-                ShowStats(_firstFighter);
-                PrintHealBar(_secondFighter.Health);
-                ShowStats(_secondFighter);
+                _firstFighter.ShowStats();
+                _secondFighter.ShowStats();
                 Console.ReadKey();
             }
         }
 
-        private bool IsGameOver(Fighter firstFighter, Fighter secondFighter, bool endRound)
+        private bool IsGameOver(Fighter firstFighter, Fighter secondFighter)
         {
+            bool endRound = true;
+
             if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
             {
                 if (firstFighter.Health <= 0 && secondFighter.Health <= 0)
@@ -102,28 +144,18 @@ namespace Project_8
             return endRound;
         }
         
-        private void ShowStatsInChose(Fighter fighter)
-        {
-            Console.WriteLine($"{fighter.Name}\t\t HP = {fighter.Health}\t ATK = {fighter.Atack} \t ARM = {fighter.Armor}");
-        }
-
         private void ShowAllFighter()
         {
-            int index = 1;
+            int numberFighter = 1;
 
             foreach (Fighter fighter in _fighters)
             {
-                Console.Write($"{index++}. ");
-                ShowStatsInChose(fighter);
+                Console.Write($"{numberFighter++}. ");
+                fighter.ShowStatsInChose();
             }
         }
 
-        private void ShowStats(Fighter fighter)
-        {
-            Console.WriteLine($"{fighter.GetType().Name}\t XP = {fighter.Health}\t ATK = {fighter.Atack}");
-        }  
-
-        private Fighter FighterChoice()
+        private Fighter ChoiceFighter()
         {
             bool isRightChoice = true;
             Fighter fighter = null;
@@ -133,7 +165,7 @@ namespace Project_8
                 ShowAllFighter();
                 Console.Write("Боец под номеров - ");
 
-                int command = GetNumber();
+                int command = UserUtils.GetPositiveNumber();
 
                 if(--command > _fighters.Count)
                 {
@@ -148,138 +180,68 @@ namespace Project_8
 
             return fighter;
         } 
-
-        private void PrintHealBar( int number)
-        {
-            if (_firstFighter.Health >= _secondFighter.Health && _changeHealthPoints == false)
-            {
-                _maxHealthPointsBar = _firstFighter.Health;
-                _changeHealthPoints = true;
-            }
-            else if (_secondFighter.Health > _firstFighter.Health && _changeHealthPoints == false)
-            {
-                _maxHealthPointsBar = _secondFighter.Health;
-                _changeHealthPoints = true;
-            }
-            
-            char[] healtBar = new char[_maxHealthPointsBar];
-
-            Console.Write("[");
-
-            for (int i = 1; i < healtBar.Length - 1; i++)
-            {
-                if (i <= number)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write('o');
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write("o");
-                }
-                Console.ResetColor();
-            }
-
-            Console.Write("]");
-        }
-
-        private int GetNumber()
-        {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isNumber;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                line = Console.ReadLine();
-                isNumber = int.TryParse(line, out number);
-
-                if (isNumber)
-                {
-                    if (number < 0)
-                    {
-                        Console.Write("Неверный ввод. Число меньше нуля.");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод.");
-                }
-            }
-
-            return number;
-        }
     }
 
     abstract class Fighter
     {
         private int _specialHitChance = 30;
-        private int specialHitFighter;
+        private int _specialHitFighter;
 
         public string Name { get; protected set; }
         public int Health { get; protected set; }
         public int Armor { get; protected set; }
-        public int Atack { get; protected set; }
+        public int Damage { get; protected set; }
         public int Cooldawn { get; protected set; }
         public bool HasPassviveSkill { get; protected set; }
 
-        public Fighter(string name, int health, int armor, int atack,int cooldawn, bool hasPassviveSkill)
+        public Fighter(string name, int health, int armor, int damage,int cooldawn, bool hasPassviveSkill)
         {
             Name = name;
             Health = health;
             Armor = armor;
-            Atack = atack;
+            Damage = damage;
             Cooldawn = cooldawn;
             HasPassviveSkill = hasPassviveSkill;
         }
         
-        public void DealDamage(Fighter enemy)
+        public void Atack(Fighter enemy)
         {
             if (HasPassviveSkill == false)
             {
-                specialHitFighter = GenerateRandomNumber();
+                _specialHitFighter = UserUtils.GenerateRandomNumber();
 
-                if (specialHitFighter >= _specialHitChance)
+                if (_specialHitFighter >= _specialHitChance)
                 {
                     UseAbility();
-                    enemy.TakeDamage(Atack);
-                }
-                else
-                {
-                    enemy.TakeDamage(Atack);
                 }
             }
             else
             {
                 UseAbility();
-                enemy.TakeDamage(Atack);
             }
-        }
 
-        private int GenerateRandomNumber()
-        {
-            int minNumber = 0;
-            int maxNumber = 100;
-            Random random = new Random();
-
-            return random.Next(minNumber, maxNumber);
+            enemy.TakeDamage(Damage);
         }
 
         public void NormalizeDamageArmor(int normalAtack, int normalArmor)
         {
             Armor = normalArmor;
-            Atack = normalAtack;
+            Damage = normalAtack;
         }
 
         public abstract void UseAbility();
 
         public abstract Fighter Clone();
+
+        public void ShowStatsInChose()
+        {
+            Console.WriteLine($"{Name}\t\t HP = {Health}\t ATK = {Damage} \t ARM = {Armor}");
+        }
+
+        public void ShowStats()
+        {
+            Console.WriteLine($"{Name}\t XP = {Health}\t ATK = {Damage}");
+        }
 
         private void TakeDamage(int damage)
         {
@@ -292,6 +254,11 @@ namespace Project_8
             {
                 Health -= damage - Armor;
             }
+
+            if (Health < 0)
+            {
+                Health = 0;
+            }
         }
     }
 
@@ -299,7 +266,7 @@ namespace Project_8
     {
         int _shieldStrike = 15;
 
-        public Infantryman(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
+        public Infantryman(string name, int health, int armor, int damage, int cooldawn, bool isPasiveSkil) : base(name, health, armor, damage, cooldawn, isPasiveSkil)
         {
 
         }
@@ -307,18 +274,18 @@ namespace Project_8
         public override void UseAbility()
         {
             Console.WriteLine("Удар щитом");
-            Atack = _shieldStrike;
+            Damage = _shieldStrike;
         }
 
         public override Fighter Clone()
         {
-            return new Infantryman(Name, Health, Armor, Atack, Cooldawn, HasPassviveSkill);
+            return new Infantryman(Name, Health, Armor, Damage, Cooldawn, HasPassviveSkill);
         }
     }
 
     class Barbarian : Fighter
     {
-        public Barbarian(string name, int health, int armor, int atack,int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
+        public Barbarian(string name, int health, int armor, int damage,int cooldawn, bool isPasiveSkil) : base(name, health, armor, damage, cooldawn, isPasiveSkil)
         {
 
         }
@@ -328,7 +295,7 @@ namespace Project_8
             if (Cooldawn > 0)
             {
                 Console.WriteLine("накопления ярости");
-                ++Atack;
+                ++Damage;
                 Cooldawn = 0;
             }
             else
@@ -339,15 +306,16 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Barbarian(Name, Health, Armor, Atack, Cooldawn, HasPassviveSkill);
+            return new Barbarian(Name, Health, Armor, Damage, Cooldawn, HasPassviveSkill);
         }
     }
 
     class Paladin : Fighter
     {
         private int _maxHealth;
+        private int _recoveryIndex = 3;
 
-        public Paladin(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
+        public Paladin(string name, int health, int armor, int damage, int cooldawn, bool isPasiveSkil) : base(name, health, armor, damage, cooldawn, isPasiveSkil)
         {
             _maxHealth = Health;
         }
@@ -356,9 +324,9 @@ namespace Project_8
         {
             Console.WriteLine("божественные прикосновение");
 
-            if(_maxHealth - 3 > Health)
+            if(_maxHealth - _recoveryIndex > Health)
             {
-                Health += 3;
+                Health += _recoveryIndex;
             }
             else
             {
@@ -368,13 +336,13 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Paladin(Name, Health, Armor, Atack, Cooldawn, HasPassviveSkill);   
+            return new Paladin(Name, Health, Armor, Damage, Cooldawn, HasPassviveSkill);   
         }
     }
 
     class Tramp : Fighter
     {
-        public Tramp(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
+        public Tramp(string name, int health, int armor, int damage, int cooldawn, bool isPasiveSkil) : base(name, health, armor, damage, cooldawn, isPasiveSkil)
         {
 
         }
@@ -382,12 +350,12 @@ namespace Project_8
         public override void UseAbility()
         {
             Console.WriteLine("Подлый удар");
-            Atack = Atack + Atack;
+            Damage = Damage + Damage;
         }
 
         public override Fighter Clone()
         {
-            return new Tramp(Name, Health, Armor, Atack, Cooldawn, HasPassviveSkill);
+            return new Tramp(Name, Health, Armor, Damage, Cooldawn, HasPassviveSkill);
         }
     }
 
@@ -395,7 +363,7 @@ namespace Project_8
     {
         private int _armorAbility = 100;
 
-        public Ranger(string name, int health, int armor, int atack, int cooldawn, bool isPasiveSkil) : base(name, health, armor, atack, cooldawn, isPasiveSkil)
+        public Ranger(string name, int health, int armor, int damage, int cooldawn, bool isPasiveSkil) : base(name, health, armor, damage, cooldawn, isPasiveSkil)
         {
 
         }
@@ -408,7 +376,7 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Ranger(Name, Health, Armor, Atack, Cooldawn, HasPassviveSkill);
+            return new Ranger(Name, Health, Armor, Damage, Cooldawn, HasPassviveSkill);
         }
     }
 }

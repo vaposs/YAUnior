@@ -1,6 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//1.Clone - Спорный момент.Это не совсем клонирование. Клонирование предполагает копирование данных из полей текущего объекта.
+//Но и созданием это назвать нельзя, тк тогда это не ответственность класса который воссоздается, для этого фабрика нужна.
+//
+//2. А зачем вам тут вообще наследование? Классы кроме значения полей ничем не отличаются. Это все решается на уровне параметров конструктора
+//(что вы, по сути, и делаете, но на заем-то еще и наследование приплели). Тогда и клонирование, которое я описывал выше будет применима.
+//Просто создаете на старте программы "каталог рыб" и клонируете его элементы. Не усложняйте.
+//
+//3. Нарушен порядок в классе. Должен быть следующий: поля, конструктор, свойства, методы.Дальше сортировка в каждом блоке в
+//следующем порядке - публичные, protected (защищенный) и приватные.А также сначала статика, readonly, затем остальные.
+//Подробнее: https://stackoverflow.com/questions/150479/order-of-items-in-classes-fields-properties-constructors-methods
+
+//4.Чтоб не менять IsAlive вручную, можно просто сделать из него свойство возвращающее сравнение public bool IsAlive => Age > MaxAge;
+
 namespace Project_11
 {
     class MainClass
@@ -9,14 +22,13 @@ namespace Project_11
         {
             Aquarium aquarium = new Aquarium();
 
-            aquarium.WatchTheFish();
+            aquarium.ChoiceOption();
         }
     }
 
     class Aquarium
     {
-        private int _maxCountFish = 3;
-
+        private int _maxCountFish = 10;
         private List<Fish> _fishs = new List<Fish>();
         private List<Fish> _fishInAquarium = new List<Fish>();
         private int _countDay = 1;
@@ -30,17 +42,12 @@ namespace Project_11
             _fishs.Add(new Fish5("fish_5", 1, 17, "white", true));
         }
 
-        public void WatchTheFish()
+        public void ChoiceOption()
         {
-            const string WaitNexDayString = "ждать следущего дня";
-            const string WaitNexDayCommand = "1";
-            const string AddFishString = "добавить рыбку";
-            const string AddFishCommand = "2";
-            const string RemoveDeadFishString = "убрать мертвых рыб";
-            const string RemoveDeadFishCommand = "3";
-            const string ExitString = "выход";
-            const string ExitCommand = "4";
-
+            string waitNexDayCommand = "1";
+            string addFishCommand = "2";
+            string removeDeadFishCommand = "3";
+            string exitCommand = "4";
             bool isNextDay = true;
 
             while (isNextDay)
@@ -48,41 +55,41 @@ namespace Project_11
                 ShowFishInAquarium();
                 foreach (Fish fish in _fishInAquarium)
                 {
-                    fish.OneDay();
+                    fish.WaitNextDay();
                 }
 
                 Console.WriteLine($"День {_countDay}");
                 Console.WriteLine("вы стоите перед аквариумом, что вы хотите сделать:");
-                Console.WriteLine($"{WaitNexDayCommand}.{WaitNexDayString}");
-                Console.WriteLine($"{AddFishCommand}.{AddFishString}");
-                Console.WriteLine($"{RemoveDeadFishCommand}.{RemoveDeadFishString}");
-                Console.WriteLine($"{ExitCommand}.{ExitString}");
+                Console.WriteLine($"{waitNexDayCommand}. ждать следущего дня");
+                Console.WriteLine($"{addFishCommand}. добавить рыбку");
+                Console.WriteLine($"{removeDeadFishCommand}. убрать мертвых рыб");
+                Console.WriteLine($"{exitCommand}. выход");
                 Console.Write("\nВведите номер команды - ");
 
                 string command = Console.ReadLine();
+                Console.Clear();
 
                 switch (command.ToLower())
                 {
-                    case WaitNexDayCommand:
+                    case "1":
                         _countDay++;
                         Console.WriteLine("ждем");
                         break;
-                    case AddFishCommand:
+                    case "2":
                         AddFish();
                         break;
-                    case RemoveDeadFishCommand:
-                        RemoveDeadFish();
+                    case "3":
+                        RemoveDeadFishs();
                        break;
-                    case ExitCommand:
+                    case "4":
                         Console.WriteLine("вышли");
                         isNextDay = false;
                         break;
                     default:
-                        Console.WriteLine("неверная команда");
+                        Console.WriteLine("неверная команда, но день все равно потерян");
+                        _countDay++;
                         break;
                 }
-
-                Console.Clear();
             }
         }
 
@@ -94,6 +101,7 @@ namespace Project_11
             {
                 fish.Draw(fish.Color);
             }
+
             foreach (Fish fish in _fishInAquarium)
             {
                 Console.Write($"{index++}.");
@@ -101,13 +109,14 @@ namespace Project_11
             }
         }
 
-        private void RemoveDeadFish()
+        private void RemoveDeadFishs()
         {
             for (int i = 0; i < _fishInAquarium.Count; i++)
             {
                 if(_fishInAquarium[i].IsAlive == false)
                 {
                     _fishInAquarium.Remove(_fishInAquarium[i]);
+                    i--;
                 }
             }
         }
@@ -209,9 +218,10 @@ namespace Project_11
             IsAlive = isAlive;
         }
 
-        public void OneDay()
+        public void WaitNextDay()
         {
             Age++;
+
             if(Age >= MaxAge)
             {
                 Age = MaxAge;
