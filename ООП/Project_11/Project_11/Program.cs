@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+//2. public bool IsAlive { get { return Age < MaxAge; } } - есть короткая форма записи public bool IsAlive => Age < MaxAge;
+
+
 namespace Project_11
 {
     class MainClass
@@ -9,30 +13,30 @@ namespace Project_11
         {
             Aquarium aquarium = new Aquarium();
 
-            aquarium.ChoiceOption();
+            aquarium.Work();
         }
     }
 
     class UserUtils
     {
+        static Random _random = new Random();
+
         public static int GenerateRandomNumber(int minRandomNumber, int maxRandomNumber)
         {
-            Random random = new Random();
-
-            return random.Next(minRandomNumber, maxRandomNumber);
+            return _random.Next(minRandomNumber, maxRandomNumber);
         }
 
         public static int GetPositiveNumber()
         {
-            string line;
+            string userString;
             bool isConversionSucceeded = true;
             bool isCorrectNumber;
             int number = 0;
 
             while (isConversionSucceeded)
             {
-                line = Console.ReadLine();
-                isCorrectNumber = int.TryParse(line, out number);
+                userString = Console.ReadLine();
+                isCorrectNumber = int.TryParse(userString, out number);
 
                 if (isCorrectNumber)
                 {
@@ -61,7 +65,7 @@ namespace Project_11
         private List<Fish> _fishInAquarium = new List<Fish>();
         private int _countDay = 1;
 
-        public void ChoiceOption()
+        public void Work()
         {
             string waitNexDayCommand = "1";
             string addFishCommand = "2";
@@ -74,7 +78,7 @@ namespace Project_11
                 ShowFishInAquarium();
                 foreach (Fish fish in _fishInAquarium)
                 {
-                    fish.WaitNextDay();
+                    fish.WaitOneDay();
                 }
 
                 Console.WriteLine($"День {_countDay}");
@@ -115,7 +119,6 @@ namespace Project_11
         private void ShowFishInAquarium()
         {
             int index = 1;
-
             foreach (Fish fish in _fishInAquarium)
             {
                 fish.Draw(fish.Color);
@@ -161,10 +164,10 @@ namespace Project_11
 
         public Fish()
         {
-            Name = GetRandomName();
+            Name = GetName();
             Age = _ageFish;
             MaxAge = UserUtils.GenerateRandomNumber(_minRandomAgeFish, _maxRandomAgeFish);
-            Color = ChoiseColor();
+            Color = GetRandomColor();
         }
 
         public string Name { get; protected set; }
@@ -172,15 +175,9 @@ namespace Project_11
         public int MaxAge { get; protected set; }
         public string Color { get; protected set; }
 
-        public bool IsAlive
-        {
-            get
-            {
-                return Age < MaxAge;
-            }
-        }
+        public bool IsAlive => Age < MaxAge;
 
-        public void WaitNextDay()
+        public void WaitOneDay()
         {
             Age++;
 
@@ -192,21 +189,27 @@ namespace Project_11
 
         public void Draw(string color)
         {
+            const string greenColor = "green";
+            const string yellowColor = "yellow";
+            const string redColor = "red";
+            const string blueColor = "blue";
+            const string whiteColor = "white";
+
             switch (color)
             {
-                case "green":
+                case greenColor:
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
-                case "yellow":
+                case yellowColor:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
-                case "red":
+                case redColor:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case "blue":
+                case blueColor:
                     Console.ForegroundColor = ConsoleColor.Blue;
                     break;
-                case "white":
+                case whiteColor:
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
             }
@@ -239,13 +242,13 @@ namespace Project_11
             Console.WriteLine($"{Name}, текущий/максимальный возраст - {Age}/{MaxAge}, цвет - {Color}, жива/мертва - {IsAlive}");
         }
 
-        private string GetRandomName()
+        private string GetName()
         {
             Console.Write("придумайте имя рыбке - ");
             return Console.ReadLine();
         }
 
-        private string ChoiseColor()
+        private string GetRandomColor()
         {
             string[] color = new string[]
             {
