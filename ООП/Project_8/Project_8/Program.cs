@@ -1,6 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//1.Переменные именуются с маленькой буквы, только приватные поля с символа _ и маленькой буквы (исключение - константы), приватные статические поля с
+//  маленькой буквы s, символа_ (s_) и маленькой буквы, а всё остальное с большой буквы.  - не нашел где у меня переменная именнована не верно. просьа указать номер строки.
+//
+//2. Классы, конструкторы, методы, циклы, условия отделяются от остального кода пустой строкой с двух сторон. Перед } и после
+//{ пустые строки не нужны. Более 1 пустой строки подряд быть не должно. Подробнее все примеры разобраны
+//здесь: https://ijunior-knowledge-base.gitbook.io/baza-znanii-yayunior/c/pustye-stroki    - точно так же, просьа указать номер строки где ошибка.
+//
+//5. Damage = Damage + Damage; - с каждым использованием, урон увеличится в 2.  - все верно. так и задумано. Увеличивается на 1 ход, а потом методом ResetStats сбрасывается отбратно
+
 namespace Project_8
 {
     class MainClass
@@ -15,14 +24,14 @@ namespace Project_8
 
     class UserUtils
     {
-        static Random random = new Random();
+        static private Random _random = new Random();
 
         public static int GenerateRandomNumber()
         {
             int minNumber = 0;
             int maxNumber = 100;
 
-            return random.Next(minNumber, maxNumber);
+            return _random.Next(minNumber, maxNumber);
         }
 
         public static int GetPositiveNumber()
@@ -90,40 +99,35 @@ namespace Project_8
 
         private void Duel()
         {
-
-            int normalSecondFighterDamage = _secondFighter.Damage;
-            int normalSecondFighterArmore = _secondFighter.Armor;
-
-            
-            while (IsGameOver(_firstFighter, _secondFighter))
+            while (IsGameOver())
             {
                 _firstFighter.Atack(_secondFighter);
                 _secondFighter.Atack(_firstFighter);
-
-                if (_firstFighter.HasPassviveSkill == false)
-                {
-
-                }
-
-                if (_secondFighter.HasPassviveSkill == false)
-                {
-                    _secondFighter.ResetStats(normalSecondFighterDamage, normalSecondFighterArmore);
-
-                }
-
                 _firstFighter.ShowStats();
                 _secondFighter.ShowStats();
                 Console.ReadKey();
             }
+
+            IsWinner();
         }
 
-        private bool IsGameOver(Fighter firstFighter, Fighter secondFighter)
+        private bool IsGameOver()
         {
             bool endRound = true;
 
             if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
             {
-                if (firstFighter.Health <= 0 && secondFighter.Health <= 0)
+                endRound = false;
+            }
+
+            return endRound;
+        }
+
+        private void IsWinner()
+        {
+            if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
+            {
+                if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
                 {
                     Console.WriteLine("Боевая ничья");
                 }
@@ -136,10 +140,7 @@ namespace Project_8
                     Console.WriteLine($"Бой окончен, победил {_firstFighter.Name}");
                 }
 
-                endRound = false;
             }
-
-            return endRound;
         }
         
         private void ShowAllFighter()
@@ -214,7 +215,6 @@ namespace Project_8
                 if (_specialHitFighter >= _specialHitChance)
                 {
                     UseAbility();
-                    ResetStats(_normalDamag, _normalArmor);
                 }
             }
             else
@@ -223,6 +223,7 @@ namespace Project_8
             }
 
             enemy.TakeDamage(Damage);
+            ResetStats(_normalDamag, _normalArmor);
         }
 
         public void ResetStats(int normalAtack, int normalArmor)
@@ -350,7 +351,7 @@ namespace Project_8
 
     class Tramp : Fighter
     {
-        public Tramp() : base("Tramp", 85, 3, 2, 0, false)
+        public Tramp() : base("Tramp", 85, 3, 8, 0, false)
         {
 
         }
