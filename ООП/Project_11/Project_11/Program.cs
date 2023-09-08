@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-//2. public bool IsAlive { get { return Age < MaxAge; } } - есть короткая форма записи public bool IsAlive => Age < MaxAge;
-
-
 namespace Project_11
 {
     class MainClass
