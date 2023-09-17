@@ -83,17 +83,57 @@ namespace Project_12
         List<Animal> _fishsAviary = new List<Animal>();
         int _numberAviary = 0;
 
-        
         public void Work()
         {
-            ConsoleKey move;
-            const ConsoleKey KeyExit = ConsoleKey.Escape;
-            bool work = true;
+            //ConsoleKey move;
+            //const ConsoleKey KeyExit = ConsoleKey.Escape;
+            //bool work = true;
 
             InputAnimalInfo();
             FillingCharacteristicsAnimal();
             CreateAnimals();
             AllocationAnimalsAviary();
+
+            Console.WriteLine($"{_animals.Count} +++++");
+
+            /*
+
+            Console.WriteLine("птицы");
+
+            foreach (Animal animal in _birdsAviary)
+            {
+                animal.ShowInfo();
+            }
+
+            Console.WriteLine("амфибии");
+
+            foreach (Animal animal in _amphibiansAviary)
+            {
+                animal.ShowInfo();
+            }
+
+            Console.WriteLine("рептилии");
+
+            foreach (Animal animal in _reptilesAviary)
+            {
+                animal.ShowInfo();
+            }
+
+            Console.WriteLine("хордовые");
+
+            foreach (Animal animal in _mammalsAviary)
+            {
+                animal.ShowInfo();
+            }
+
+            Console.WriteLine("рыбы");
+
+            foreach (Animal animal in _fishsAviary)
+            {
+                animal.ShowInfo();
+            }
+
+            /*
 
             while(work)
             {
@@ -117,6 +157,8 @@ namespace Project_12
                         break;
                 }
             }
+
+            */
         }
 
         private void InputAnimalInfo()  // прочитали информацию с файла записали в строку
@@ -124,14 +166,13 @@ namespace Project_12
             string filePath = "/Users/walter/GitHub/YAUnior/ООП/Project_12/Project_12/animals_info.txt";
             StreamReader animalsInfoDocument = new StreamReader(filePath);
             _animalsInfo = animalsInfoDocument.ReadToEnd();
+
+            Console.WriteLine(_animalsInfo);
         }
 
         private void FillingCharacteristicsAnimal()  // создали масив строк характеристик животных
         {
             _animalsDataTable = _animalsInfo.Split('\n');
-
-            Console.WriteLine(_animalsInfo);
-            Console.ReadKey();
         }
 
         private void CreateAnimals()  // создали животных
@@ -142,11 +183,13 @@ namespace Project_12
             int indexGender = 2;
             int indexType = 3;
 
-            for (int i = 1; i < _animalsDataTable.Length; i++)
+            for (int i = 0; i < _animalsDataTable.Length; i++)
             {
                 animalInfo = _animalsDataTable[i].Split('_');
                 _animals.Add(new Animal(animalInfo[indexName], animalInfo[indexVoice], animalInfo[indexGender], animalInfo[indexType]));
             }
+
+            Console.WriteLine(_animals.Count + "верх");
         }
 
         private ConsoleKey MovingZoo()
@@ -158,31 +201,29 @@ namespace Project_12
 
         private void AllocationAnimalsAviary()
         {
-            const string birds = "birds";
-            const string amphibians = "amphibians";
-            const string reptiles = "reptiles";
-            const string mammals = "mammals";
-            const string fish = "fish";
+            const string Bird = "bird";
+            const string Amphibian = "amphibian";
+            const string Reptile = "reptile";
+            const string Mammal = "mammal";
+            const string Fish = "fish";
 
             foreach (Animal animal in _animals)
             {
-
-                Console.WriteLine(animal.Type);
                 switch (animal.Type)
                 {
-                    case birds:
+                    case Bird:
                         _birdsAviary.Add(animal);
                         break;
-                    case amphibians:
+                    case Amphibian:
                         _amphibiansAviary.Add(animal);
                         break;
-                    case reptiles:
+                    case Reptile:
                         _reptilesAviary.Add(animal);
                         break;
-                    case mammals:
+                    case Mammal:
                         _mammalsAviary.Add(animal);
                         break;
-                    case fish:
+                    case Fish:
                         _fishsAviary.Add(animal);
                         break;
                     default:
@@ -190,38 +231,39 @@ namespace Project_12
                         break;
                 }
             }
+
         } // распределения животных по вольерам
 
         private void ShowAnimalAviary(int numberAviary)
         {
-            const int firstAviary = 1;
-            const int secondAviary = 2;
-            const int thirdAviary = 3;
-            const int fourthAviary = 4;
-            const int fifthAviary = 5;
+            const int FirstAviary = 1;
+            const int SecondAviary = 2;
+            const int ThirdAviary = 3;
+            const int FourthAviary = 4;
+            const int FifthAviary = 5;
 
             switch (numberAviary)
             {
-                case firstAviary:
+                case FirstAviary:
                     ShowAnimal(_birdsAviary);
                     break;
-                case secondAviary:
+                case SecondAviary:
                     ShowAnimal(_amphibiansAviary);
                     break;
-                case thirdAviary:
+                case ThirdAviary:
                     ShowAnimal(_reptilesAviary);
                     break;
-                case fourthAviary:
+                case FourthAviary:
                     ShowAnimal(_mammalsAviary);
                     break;
-                case fifthAviary:
+                case FifthAviary:
                     ShowAnimal(_fishsAviary);
                     break;
                 default:
                     Console.WriteLine("что то пошло не так (ShowAnimalAviary)");
                     break;
             }
-        }  // вывод на екран жывотных в вольере
+        }  // вывод на екран животных в вольере
 
         private void ShowAnimal(List<Animal> animals)
         {
@@ -277,7 +319,8 @@ namespace Project_12
         {
             Console.Write(Name + "\t\t");
             Console.Write(Gender + "\t");
-            Console.WriteLine(AnimalVoice);
+            Console.Write(AnimalVoice + "\t");
+            Console.WriteLine(Type);
         }
     }
 }
