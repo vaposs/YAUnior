@@ -24,15 +24,15 @@ namespace Project_11
 
         public static int GetPositiveNumber()
         {
-            string userInput;
+            string readName;
             bool isConversionSucceeded = true;
             bool isCorrectNumber;
             int number = 0;
 
             while (isConversionSucceeded)
             {
-                userInput = Console.ReadLine();
-                isCorrectNumber = int.TryParse(userInput, out number);
+                readName = Console.ReadLine();
+                isCorrectNumber = int.TryParse(readName, out number);
 
                 if (isCorrectNumber)
                 {
@@ -57,6 +57,12 @@ namespace Project_11
 
     class Aquarium
     {
+        const string Wait = "1";
+        const string Add = "2";
+        const string Remove = "3";
+        const string Exit = "4";
+
+
         private int _maxCountFish = 10;
         private List<Fish> _fishInAquarium = new List<Fish>();
         private int _countDay = 1;
@@ -72,7 +78,7 @@ namespace Project_11
             while (isNextDay)
             {
                 ShowFishInAquarium();
-                OneDayAgo();
+                DayAgo();
                 
                 Console.WriteLine($"День {_countDay}");
                 Console.WriteLine("вы стоите перед аквариумом, что вы хотите сделать:");
@@ -87,17 +93,17 @@ namespace Project_11
 
                 switch (command.ToLower())
                 {
-                    case "1":
+                    case Wait:
                         _countDay++;
                         Console.WriteLine("ждем");
                         break;
-                    case "2":
+                    case Add:
                         AddFish();
                         break;
-                    case "3":
+                    case Remove:
                         RemoveDeadFishs();
                        break;
-                    case "4":
+                    case Exit:
                         Console.WriteLine("вышли");
                         isNextDay = false;
                         break;
@@ -149,7 +155,7 @@ namespace Project_11
             }
         }
 
-        private void OneDayAgo()
+        private void DayAgo()
         {
             foreach (Fish fish in _fishInAquarium)
             {
@@ -175,7 +181,7 @@ namespace Project_11
             Name = InputName();
             Age = _ageFish;
             MaxAge = UserUtils.GenerateRandomNumber(_minRandomAgeFish, _maxRandomAgeFish);
-            Color = GenerationRandomColor();
+            Color = GenerateRandomColor();
         }
 
         public string Name { get; protected set; }
@@ -250,7 +256,7 @@ namespace Project_11
             return Console.ReadLine();
         }
 
-        private string GenerationRandomColor()
+        private string GenerateRandomColor()
         {
             string[] color = new string[]
             {
