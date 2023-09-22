@@ -15,6 +15,12 @@ namespace Project_11
 
     class UserUtils
     {
+        const string _GreenColor = "green";
+        const string _YellowColor = "yellow";
+        const string _RedColor = "red";
+        const string _BlueColor = "blue";
+        const string _WhiteColor = "white";
+
         private static Random s_random = new Random();
 
         public static int GenerateRandomNumber(int minRandomNumber, int maxRandomNumber)
@@ -53,18 +59,80 @@ namespace Project_11
 
             return number;
         }
+
+        public static void Draw(string color)
+        {
+            switch (color)
+            {
+                case _GreenColor:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+                case _YellowColor:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case _RedColor:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case _BlueColor:
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case _WhiteColor:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+            }
+
+
+            char[,] fishPicture = new char[,]
+            {
+                {' ',' ',' ',' ',' ','/','`','·','.','¸',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+                {' ',' ',' ',' ','/','¸','.','.','¸','`',':',' ',' ',' ',' ',' ',' ',' ',' '},
+                {'¸','.','·','´',' ',' ','¸',' ',' ',' ','`','·','.','¸','.',',','·','´',')' },
+                {':',' ','©',' ',')',':','´',';',' ',' ',' ',' ',' ',' ','¸',' ',' ','{',' ',},
+                {' ','`','·','.','¸',' ','`','·',' ',' ','¸','.','·','´',' ','`','·','¸',')'},
+                {' ',' ',' ',' ',' ','`','`','´','´','´',' ',' ',' ',' ',' ',' ',' ',' ',' '}
+            };
+
+            for (int i = 0; i < fishPicture.GetLength(0); i++)
+            {
+                for (int j = 0; j < fishPicture.GetLength(1); j++)
+                {
+                    Console.Write(fishPicture[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.ResetColor();
+        }
+
+        public static string GenerateRandomColor()
+        {
+            string[] color = new string[]
+            {
+                _GreenColor, _YellowColor, _RedColor, _BlueColor, _WhiteColor
+            };
+
+            int indexColor = UserUtils.GenerateRandomNumber(0, color.Length);
+
+            return color[indexColor];
+        }
+
+        public static string InputName()
+        {
+            Console.Write("придумайте имя рыбке - ");
+            return Console.ReadLine();
+        }
     }
 
     class Aquarium
     {
-        const string Wait = "1";
-        const string Add = "2";
-        const string Remove = "3";
-        const string Exit = "4";
+        private const string Wait = "1";
+        private const string Add = "2";
+        private const string Remove = "3";
+        private const string Exit = "4";
 
 
         private int _maxCountFish = 10;
-        private List<Fish> _fishInAquarium = new List<Fish>();
+        private List<Fish> _fishs = new List<Fish>();
         private int _countDay = 1;
 
         public void Work()
@@ -78,7 +146,7 @@ namespace Project_11
             while (isNextDay)
             {
                 ShowFishInAquarium();
-                DayAgo();
+                WaitNextDay();
                 
                 Console.WriteLine($"День {_countDay}");
                 Console.WriteLine("вы стоите перед аквариумом, что вы хотите сделать:");
@@ -119,12 +187,12 @@ namespace Project_11
         {
             int index = 1;
 
-            foreach (Fish fish in _fishInAquarium)
+            foreach (Fish fish in _fishs)
             {
-                fish.Draw(fish.Color);
+                UserUtils.Draw(fish.Color);
             }
 
-            foreach (Fish fish in _fishInAquarium)
+            foreach (Fish fish in _fishs)
             {
                 Console.Write($"{index++}.");
                 fish.ShowInfo();
@@ -133,11 +201,11 @@ namespace Project_11
 
         private void RemoveDeadFishs()
         {
-            for (int i = 0; i < _fishInAquarium.Count; i++)
+            for (int i = 0; i < _fishs.Count; i++)
             {
-                if(_fishInAquarium[i].IsAlive == false)
+                if(_fishs[i].IsAlive == false)
                 {
-                    _fishInAquarium.Remove(_fishInAquarium[i]);
+                    _fishs.Remove(_fishs[i]);
                     i--;
                 }
             }
@@ -145,19 +213,19 @@ namespace Project_11
 
         private void AddFish()
         {
-            if(_fishInAquarium.Count >= _maxCountFish)
+            if(_fishs.Count >= _maxCountFish)
             {
                 Console.WriteLine("Аквариум переполен");
             }
             else
             {
-                _fishInAquarium.Add(new Fish());
+                _fishs.Add(new Fish());
             }
         }
 
-        private void DayAgo()
+        private void WaitNextDay()
         {
-            foreach (Fish fish in _fishInAquarium)
+            foreach (Fish fish in _fishs)
             {
                 fish.WaitOneDay();
             }
@@ -166,22 +234,16 @@ namespace Project_11
 
     class Fish
     {
-        const string _GreenColor = "green";
-        const string _YellowColor = "yellow";
-        const string _RedColor = "red";
-        const string _BlueColor = "blue";
-        const string _WhiteColor = "white";
-
-        int _ageFish = 0;
-        int _minRandomAgeFish = 4;
-        int _maxRandomAgeFish = 20;
+        private int _ageFish = 0;
+        private int _minRandomAgeFish = 4;
+        private int _maxRandomAgeFish = 20;
 
         public Fish()
         {
-            Name = InputName();
+            Name = UserUtils.InputName();
             Age = _ageFish;
             MaxAge = UserUtils.GenerateRandomNumber(_minRandomAgeFish, _maxRandomAgeFish);
-            Color = GenerateRandomColor();
+            Color = UserUtils.GenerateRandomColor();
         }
 
         public string Name { get; protected set; }
@@ -201,71 +263,9 @@ namespace Project_11
             }
         }
 
-        public void Draw(string color)
-        {
-            switch (color)
-            {
-                case _GreenColor:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-                case _YellowColor:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    break;
-                case _RedColor:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-                case _BlueColor:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    break;
-                case _WhiteColor:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-            }
-
-
-            char[,] fishPicture = new char[,]
-            {
-                {' ',' ',' ',' ',' ','/','`','·','.','¸',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-                {' ',' ',' ',' ','/','¸','.','.','¸','`',':',' ',' ',' ',' ',' ',' ',' ',' '},
-                {'¸','.','·','´',' ',' ','¸',' ',' ',' ','`','·','.','¸','.',',','·','´',')' },
-                {':',' ','©',' ',')',':','´',';',' ',' ',' ',' ',' ',' ','¸',' ',' ','{',' ',},
-                {' ','`','·','.','¸',' ','`','·',' ',' ','¸','.','·','´',' ','`','·','¸',')'},
-                {' ',' ',' ',' ',' ','`','`','´','´','´',' ',' ',' ',' ',' ',' ',' ',' ',' '}
-            };
-
-            for (int i = 0; i < fishPicture.GetLength(0); i++)
-            {
-                for (int j = 0; j < fishPicture.GetLength(1); j++)
-                {
-                    Console.Write(fishPicture[i,j]);
-                }
-                Console.WriteLine();
-            }
-
-            Console.ResetColor();
-        }
-
         public void ShowInfo()
         {
             Console.WriteLine($"{Name}, текущий/максимальный возраст - {Age}/{MaxAge}, цвет - {Color}, жива/мертва - {IsAlive}");
-        }
-
-        private string InputName()
-        {
-            Console.Write("придумайте имя рыбке - ");
-            return Console.ReadLine();
-        }
-
-        private string GenerateRandomColor()
-        {
-            string[] color = new string[]
-            {
-                _GreenColor, _YellowColor, _RedColor, _BlueColor, _WhiteColor
-            };
-
-            int indexColor = UserUtils.GenerateRandomNumber(0,color.Length);
-
-            return color[indexColor];
         }
     }
 }
