@@ -64,14 +64,15 @@ namespace Project_12
 
     class Zoo
     {
-        int _indexNumber = 1;
+        private int _indexNumber = 1;
+        private int _numberAviary = 0;
+        Dictionary<int, List<Animal>> _animalsDictionary = new Dictionary<int, List<Animal>>();
         List<Animal> _animals = new List<Animal>();
         List<Animal> _birdsAviary = new List<Animal>();
         List<Animal> _amphibiansAviary = new List<Animal>();
         List<Animal> _reptilesAviary = new List<Animal>();
         List<Animal> _mammalsAviary = new List<Animal>();
         List<Animal> _fishsAviary = new List<Animal>();
-        int _numberAviary = 0;
 
         public void Work()
         {
@@ -81,6 +82,7 @@ namespace Project_12
 
             CreateAnimal();
             AllocationAnimalsAviary();
+            CreateAnimalDictionary();
 
             while (work)
             {
@@ -105,6 +107,15 @@ namespace Project_12
                         break;
                 }
             }
+        }
+
+        private void CreateAnimalDictionary()
+        {
+            _animalsDictionary.Add(1, _birdsAviary);
+            _animalsDictionary.Add(2, _amphibiansAviary);
+            _animalsDictionary.Add(3, _reptilesAviary);
+            _animalsDictionary.Add(4, _mammalsAviary);
+            _animalsDictionary.Add(5, _fishsAviary);
         }
 
         private ConsoleKey MovingZoo()
@@ -147,38 +158,13 @@ namespace Project_12
                         break;
                 }
             }
-
         }
 
-        private void ShowAnimalAviary(int numberAviary)
+        private void ChooseAviary(int numberAviary)
         {
-            const int FirstAviary = 1;
-            const int SecondAviary = 2;
-            const int ThirdAviary = 3;
-            const int FourthAviary = 4;
-            const int FifthAviary = 5;
-
-            switch (numberAviary)
-            {
-                case FirstAviary:
-                    ShowAnimal(_birdsAviary);
-                    break;
-                case SecondAviary:
-                    ShowAnimal(_amphibiansAviary);
-                    break;
-                case ThirdAviary:
-                    ShowAnimal(_reptilesAviary);
-                    break;
-                case FourthAviary:
-                    ShowAnimal(_mammalsAviary);
-                    break;
-                case FifthAviary:
-                    ShowAnimal(_fishsAviary);
-                    break;
-                default:
-                    Console.WriteLine("что то пошло не так (ShowAnimalAviary)");
-                    break;
-            }
+            List<Animal> animals;
+            _animalsDictionary.TryGetValue(numberAviary, out animals);
+            ShowAnimal(animals);
         }
 
         private void ShowAnimal(List<Animal> animals)
@@ -212,14 +198,14 @@ namespace Project_12
         {
             _numberAviary--;
             NumberAviary();
-            ShowAnimalAviary(_numberAviary);
+            ChooseAviary(_numberAviary);
         }
 
         private void DownArrow()
         {
             _numberAviary++;
             NumberAviary();
-            ShowAnimalAviary(_numberAviary);
+            ChooseAviary(_numberAviary);
         }
 
         private void CreateAnimal()

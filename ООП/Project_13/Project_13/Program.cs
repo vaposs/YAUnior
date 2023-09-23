@@ -78,21 +78,20 @@ namespace Project_13
             Queue<Client> _clients = new Queue<Client>();
             Dictionary<string, int> _breakdowns = new Dictionary<string, int>();
 
-            public void Work() // начало
+            public void Work()
             {
-                // в автосервисе есть количество денег
-                // приехала машина на ремонт
-
                 stock.Creation();
-                CreateQueue();
+                CreateQueueClient();
                 CreateRepairPrice();
-                PrintPrice();
+
+                ShowQueue();
+                ShowPriceRepair();
 
                 stock.ShowPart();
 
                 Console.ReadKey();
             }
-            private void PrintPrice()
+            private void ShowPriceRepair()
             {
                 foreach (var item in _breakdowns)
                 {
@@ -100,19 +99,22 @@ namespace Project_13
                 }
             }
 
-            private void CreateQueue()
+            private void CreateQueueClient()
             {
                 int minPeople = 5;
                 int maxPeople = 30;
 
                 int queuePeople = UserUtils.GenerateRandomNumber(minPeople, maxPeople);
 
-                Console.WriteLine($"на сегодня записано на ремонт {queuePeople}");
-
                 for (int i = 0; i < queuePeople; i++)
                 {
                     _clients.Enqueue(new Client());
                 }
+            }
+
+            private void ShowQueue()
+            {
+                Console.WriteLine($"В очереди на ремонт {_clients.Count} клиентов");
             }
 
             private void CreateRepairPrice()
