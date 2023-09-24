@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//2. ESC замените переменной в строке. - встроке 88 ЕSC заменяется переменной. не ясен коментарий
+
 namespace Project_12
 {
     class MainClass
@@ -64,15 +66,10 @@ namespace Project_12
 
     class Zoo
     {
-        private int _indexNumber = 1;
+        Aviary _aviary = new Aviary();
         private int _numberAviary = 0;
+        private int _firstElementDictionary = 1;
         Dictionary<int, List<Animal>> _animalsDictionary = new Dictionary<int, List<Animal>>();
-        List<Animal> _animals = new List<Animal>();
-        List<Animal> _birdsAviary = new List<Animal>();
-        List<Animal> _amphibiansAviary = new List<Animal>();
-        List<Animal> _reptilesAviary = new List<Animal>();
-        List<Animal> _mammalsAviary = new List<Animal>();
-        List<Animal> _fishsAviary = new List<Animal>();
 
         public void Work()
         {
@@ -80,8 +77,6 @@ namespace Project_12
             const ConsoleKey KeyExit = ConsoleKey.Escape;
             bool work = true;
 
-            CreateAnimal();
-            AllocationAnimalsAviary();
             CreateAnimalDictionary();
 
             while (work)
@@ -94,10 +89,10 @@ namespace Project_12
                 switch (move)
                 {
                     case ConsoleKey.UpArrow:
-                        UpArrow();
+                        PressUpArrow();
                         break;
                     case ConsoleKey.DownArrow:
-                        DownArrow();
+                        PressDownArrow();
                         break;
                     case KeyExit:
                         work = false;
@@ -111,11 +106,11 @@ namespace Project_12
 
         private void CreateAnimalDictionary()
         {
-            _animalsDictionary.Add(1, _birdsAviary);
-            _animalsDictionary.Add(2, _amphibiansAviary);
-            _animalsDictionary.Add(3, _reptilesAviary);
-            _animalsDictionary.Add(4, _mammalsAviary);
-            _animalsDictionary.Add(5, _fishsAviary);
+            _animalsDictionary.Add(1, _aviary.CreateAnimal());
+            _animalsDictionary.Add(2, _aviary.CreateAnimal());
+            _animalsDictionary.Add(3, _aviary.CreateAnimal());
+            _animalsDictionary.Add(4, _aviary.CreateAnimal());
+            _animalsDictionary.Add(5, _aviary.CreateAnimal());
         }
 
         private ConsoleKey MovingZoo()
@@ -123,41 +118,6 @@ namespace Project_12
             ConsoleKey consoleKey;
 
             return consoleKey = Console.ReadKey().Key;
-        }
-
-        private void AllocationAnimalsAviary()
-        {
-            const string Bird = "bird";
-            const string Amphibian = "amphibian";
-            const string Reptile = "reptile";
-            const string Mammal = "mammal";
-            const string Fish = "fish";
-
-            foreach (Animal animal in _animals)
-            {
-                switch (animal.Type)
-                {
-                    case Bird:
-                        _birdsAviary.Add(animal);
-                        break;
-                    case Amphibian:
-                        _amphibiansAviary.Add(animal);
-                        break;
-                    case Reptile:
-                        _reptilesAviary.Add(animal);
-                        break;
-                    case Mammal:
-                        _mammalsAviary.Add(animal);
-                        break;
-                    case Fish:
-                        _fishsAviary.Add(animal);
-                        break;
-                    default:
-                        animal.ShowInfo();
-                        Console.WriteLine("что то пошло не так (AllocationAnimalsAviary)");
-                        break;
-                }
-            }
         }
 
         private void ChooseAviary(int numberAviary)
@@ -182,41 +142,55 @@ namespace Project_12
             return(animals[0].Type);
         }
 
-        private void NumberAviary()
+        private void ChangeNumberAviary()
         {
-            if(_numberAviary < 1)
+            if(_numberAviary < _firstElementDictionary)
             {
-                _numberAviary = 5;
+                _numberAviary = _animalsDictionary.Count;
             }
-            else if(_numberAviary > 5)
+            else if(_numberAviary > _animalsDictionary.Count)
             {
-                _numberAviary = 1;
+                _numberAviary = _firstElementDictionary;
             }
         }
 
-        private void UpArrow()
+        private void PressUpArrow()
         {
             _numberAviary--;
-            NumberAviary();
+            ChangeNumberAviary();
             ChooseAviary(_numberAviary);
         }
 
-        private void DownArrow()
+        private void PressDownArrow()
         {
             _numberAviary++;
-            NumberAviary();
+            ChangeNumberAviary();
             ChooseAviary(_numberAviary);
         }
+    }
 
-        private void CreateAnimal()
+    class Aviary
+    {
+        const string _Bird = "bird";
+        const string _Amphibian = "amphibian";
+        const string _Reptile = "reptile";
+        const string _Mammal = "mammal";
+        const string _Fish = "fish";
+
+        private int _indexNumber = 1;
+        private int _animalInAviary = 4;
+
+        public List<Animal> CreateAnimal()
         {
-            int animalCount = 20;
+            List<Animal> animals = new List<Animal>();
 
-            for (int i = 0; i < animalCount; i++)
+            for (int i = 0; i < _animalInAviary; i++)
             {
-                _animals.Add(new Animal(GetName(),GetAnimalVoice(), GetGender(), GetType()));
+                animals.Add(new Animal(GetName(), GetAnimalVoice(), GetGender(), GetType()));
                 _indexNumber++;
             }
+
+            return animals;
         }
 
         private string GetName()
@@ -233,45 +207,37 @@ namespace Project_12
 
         private string GetGender()
         {
-            string gender;
+            string[] gender = new string[] { "male", "female" };
 
-            if (_indexNumber % 2 == 1)
-            {
-                return gender = "male";
-            }
-            else
-            {
-                return gender = "female";
-            }
+            return gender[UserUtils.GenerateRandomNumber(0, gender.Length)];
         }
 
         private string GetType()
         {
-            const string Bird = "bird";
-            const string Amphibian = "amphibian";
-            const string Reptile = "reptile";
-            const string Mammal = "mammal";
-            const string Fish = "fish";
+            int firstType = 4;
+            int secondType = 8;
+            int thirdType = 12;
+            int fourthType = 16;
 
-            if (_indexNumber <= 4)
+            if (_indexNumber <= firstType)
             {
-                return Bird;
+                return _Bird;
             }
-            else if (_indexNumber > 4 && _indexNumber <= 8)
+            else if (_indexNumber > firstType && _indexNumber <= secondType)
             {
-                return Amphibian;
+                return _Amphibian;
             }
-            else if (_indexNumber > 8 && _indexNumber <= 12)
+            else if (_indexNumber > secondType && _indexNumber <= thirdType)
             {
-                return Reptile;
+                return _Reptile;
             }
-            else if (_indexNumber > 12 && _indexNumber <= 16)
+            else if (_indexNumber > thirdType && _indexNumber <= fourthType)
             {
-                return Mammal;
+                return _Mammal;
             }
             else
             {
-                return Fish;
+                return _Fish;
             }
         }
     }

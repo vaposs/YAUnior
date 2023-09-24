@@ -70,10 +70,31 @@ namespace Project_13
 
                 return number;
             }
+
+            public static Array ListBreakdowns()
+            {
+                string[] listBreakdowns = new string[]
+                {
+                    "РЕМОНТ ДВИГАТЕЛЕЙ",
+                    "РЕМОНТ АКПП",
+                    "РЕМОНТ СТАРТЕРОВ",
+                    "РЕМОНТ ГЕНЕРАТОРОВ",
+                    "РЕМОНТ ЭЛЕКТРОННЫХ БЛОКОВ",
+                    "ЧИСТКА ИНЖЕКТОРОВ",
+                    "ШИНОМОНТАЖ",
+                    "КУЗОВНОЙ РЕМОНТ ЛЮБОЙ СЛОЖНОСТИ",
+                    "ЗАМЕНА СТЕКОЛ",
+                    "ХИМЧИСТКА",
+                    "ПОЛИРОВКА"
+                };
+
+                return listBreakdowns;
+            }
         }
 
         class CarService
         {
+            private int _serviseMoney = 1000; 
             Stock stock = new Stock();
             Queue<Client> _clients = new Queue<Client>();
             Dictionary<string, int> _breakdowns = new Dictionary<string, int>();
@@ -83,16 +104,24 @@ namespace Project_13
                 stock.Creation();
                 CreateQueueClient();
                 CreateRepairPrice();
-
                 ShowQueue();
                 ShowPriceRepair();
-
                 stock.ShowPart();
 
+                while (_clients.Count < 0)
+                {
+
+
+                    Console.ReadKey();
+                }
+
+                Console.WriteLine("На сегодня клиенты закончились, пора домой");
                 Console.ReadKey();
             }
             private void ShowPriceRepair()
             {
+                Console.WriteLine("\nСтоимость ремонта:");
+
                 foreach (var item in _breakdowns)
                 {
                     Console.WriteLine(item.Key + "\t" + item.Value);
@@ -163,7 +192,7 @@ namespace Project_13
 
             public void ShowPart()
             {
-                Console.WriteLine("остаток запчастей:");
+                Console.WriteLine("\nОстаток запчастей на складе:");
                 foreach (var part in _parts)
                 {
                     Console.WriteLine($"{part.Key} в количестве - {part.Value}");
