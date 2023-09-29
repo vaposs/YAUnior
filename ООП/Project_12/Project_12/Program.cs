@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//2. ESC замените переменной в строке. - встроке 88 ЕSC заменяется переменной. не ясен коментарий
-
 namespace Project_12
 {
     class MainClass
@@ -23,58 +21,22 @@ namespace Project_12
         {
             return s_random.Next(minRandomNumber, maxRandomNumber);
         }
-
-        public static int GetPositiveNumber()
-        {
-            string userInputString;
-            bool isConversionSucceeded = true;
-            bool isCorrectNumber;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                userInputString = Console.ReadLine();
-                isCorrectNumber = int.TryParse(userInputString, out number);
-
-                if (isCorrectNumber)
-                {
-                    if (number < 1)
-                    {
-                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод. Повторите ввод - ");
-                }
-            }
-
-            return number;
-        }
-
-        public static ConsoleKeyInfo Navigation()
-        {
-            ConsoleKeyInfo consoleKey = Console.ReadKey();
-
-            return consoleKey;
-        }
     }
 
     class Zoo
     {
-        Aviary _aviary = new Aviary();
+        private Aviary _aviary = new Aviary();
         private int _numberAviary = 0;
         private int _firstElementDictionary = 1;
-        Dictionary<int, List<Animal>> _animalsDictionary = new Dictionary<int, List<Animal>>();
+        private Dictionary<int, List<Animal>> _animalsDictionary = new Dictionary<int, List<Animal>>();
 
         public void Work()
         {
-            ConsoleKey move;
             const ConsoleKey KeyExit = ConsoleKey.Escape;
+            const ConsoleKey MoveUpCommand = ConsoleKey.UpArrow;
+            const ConsoleKey MoveDownCommand = ConsoleKey.DownArrow;
+
+            ConsoleKey move;
             bool work = true;
 
             CreateAnimalDictionary();
@@ -88,10 +50,10 @@ namespace Project_12
 
                 switch (move)
                 {
-                    case ConsoleKey.UpArrow:
+                    case MoveUpCommand:
                         PressUpArrow();
                         break;
-                    case ConsoleKey.DownArrow:
+                    case MoveDownCommand:
                         PressDownArrow();
                         break;
                     case KeyExit:
@@ -106,11 +68,11 @@ namespace Project_12
 
         private void CreateAnimalDictionary()
         {
-            _animalsDictionary.Add(1, _aviary.CreateAnimal());
-            _animalsDictionary.Add(2, _aviary.CreateAnimal());
-            _animalsDictionary.Add(3, _aviary.CreateAnimal());
-            _animalsDictionary.Add(4, _aviary.CreateAnimal());
-            _animalsDictionary.Add(5, _aviary.CreateAnimal());
+            _animalsDictionary.Add(1, _aviary.CreateAnimalsList());
+            _animalsDictionary.Add(2, _aviary.CreateAnimalsList());
+            _animalsDictionary.Add(3, _aviary.CreateAnimalsList());
+            _animalsDictionary.Add(4, _aviary.CreateAnimalsList());
+            _animalsDictionary.Add(5, _aviary.CreateAnimalsList());
         }
 
         private ConsoleKey MovingZoo()
@@ -171,38 +133,71 @@ namespace Project_12
 
     class Aviary
     {
-        const string _Bird = "bird";
-        const string _Amphibian = "amphibian";
-        const string _Reptile = "reptile";
-        const string _Mammal = "mammal";
-        const string _Fish = "fish";
-
-        private int _indexNumber = 1;
         private int _animalInAviary = 4;
+        private AnimalCreator _animalCreator = new AnimalCreator();
 
-        public List<Animal> CreateAnimal()
+        public List<Animal> CreateAnimalsList()
         {
             List<Animal> animals = new List<Animal>();
 
             for (int i = 0; i < _animalInAviary; i++)
             {
-                animals.Add(new Animal(GetName(), GetAnimalVoice(), GetGender(), GetType()));
-                _indexNumber++;
+                animals.Add(_animalCreator.GetAnimal());
             }
 
             return animals;
         }
+    }
+
+    class AnimalCreator
+    {
+        const string _FirstAviary = "Вольер_1";
+        const string _SecondAviary = "Вольер_2";
+        const string _ThirdAviary = "Вольер_3";
+        const string _FourthAviary = "Вольер_4";
+        const string _FifthAviary = "Вольер_5";
+
+        private int _firstType = 4;
+        private int _secondType = 8;
+        private int _thirdType = 12;
+        private int _fourthType = 16;
+
+        private int _indexNumber = 1;
+        private int _randomNumber;
+
+        public Animal GetAnimal()
+        {
+            _indexNumber++;
+            return new Animal(GetName(), GetAnimalVoice(), GetGender(), GetType());
+        }
 
         private string GetName()
         {
-            string nameAnimal = $"nameAnimal{_indexNumber}";
-            return nameAnimal;
+            string[] nameAnimal = new string[]
+            {
+                "петух", "курица", "утка","соловей",
+                "корова", "мыш", "собака", "кот",
+                "лев", "волк", "свинья", "коза",
+                "барашек", "сова", "уж", "осел",
+                "павлин", "ежик", "лягушка", "лошадь"
+            };
+
+            _randomNumber = UserUtils.GenerateRandomNumber(0, nameAnimal.Length);
+
+            return nameAnimal[_randomNumber];
         }
 
         private string GetAnimalVoice()
         {
-            string animalVoice = $"animalVoice{_indexNumber}";
-            return animalVoice;
+            string[] voice = new string[]
+            {
+                "кукареку", "ко-ко-ко", "кря-кря", "уиииии",
+                "мууу", "пи-пи", "гав-гав", "мяуууу",
+                "агрррр", "авууууу", "хрю-хрю", "меееее",
+                "бееее", "ухуууу", "шшшшшш", "иааа",
+                 "ааааа", "фыр-фыр", "ква-ква", "иго-го"
+            };
+            return voice[_randomNumber];
         }
 
         private string GetGender()
@@ -214,46 +209,41 @@ namespace Project_12
 
         private string GetType()
         {
-            int firstType = 4;
-            int secondType = 8;
-            int thirdType = 12;
-            int fourthType = 16;
-
-            if (_indexNumber <= firstType)
+            if (_indexNumber <= _firstType)
             {
-                return _Bird;
+                return _FirstAviary;
             }
-            else if (_indexNumber > firstType && _indexNumber <= secondType)
+            else if (_indexNumber > _firstType && _indexNumber <= _secondType)
             {
-                return _Amphibian;
+                return _SecondAviary;
             }
-            else if (_indexNumber > secondType && _indexNumber <= thirdType)
+            else if (_indexNumber > _secondType && _indexNumber <= _thirdType)
             {
-                return _Reptile;
+                return _ThirdAviary;
             }
-            else if (_indexNumber > thirdType && _indexNumber <= fourthType)
+            else if (_indexNumber > _thirdType && _indexNumber <= _fourthType)
             {
-                return _Mammal;
+                return _FourthAviary;
             }
             else
             {
-                return _Fish;
+                return _FifthAviary;
             }
         }
     }
 
     class Animal
     {
-        public Animal(string name, string animalVoice, string gender, string type)
+        public Animal(string name, string voice, string gender, string type)
         {
             Name = name;
-            AnimalVoice = animalVoice;
+            Voice = voice;
             Gender = gender;
             Type = type;
         }
 
         public string Name { get; private set; }
-        public string AnimalVoice { get; private set; }
+        public string Voice { get; private set; }
         public string Gender { get; private set; }
         public string Type { get; private set; }
 
@@ -261,8 +251,12 @@ namespace Project_12
         {
             Console.Write(Name + "\t");
             Console.Write(Gender + "\t");
-            Console.Write(AnimalVoice + "\t");
+            Console.Write(Voice + "\t");
             Console.WriteLine(Type);
         }
     }
 }
+
+//5) Вольер может содержать список животных, которые в нем находятся.
+//Но создавать животных для вольера - это не его ответственность.
+//Это может сделать или Зоопарк или отдельный класс, генерирующий животных для вольера.
