@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// для коректной проверки работоспособности нуно поиграться с количеством деталей на складе и количеством клиентов
+
 namespace Project_13
 {
     class MainClass
@@ -22,102 +24,202 @@ namespace Project_13
             return s_random.Next(minRandomNumber, maxRandomNumber);
         }
 
-        public static bool GenerateRandomBool(int minRandomNumber, int maxRandomNumber)
+        public static bool GenerateRandomBool()
         {
-            bool result;
-
-            if (s_random.Next(minRandomNumber, maxRandomNumber) < 1)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-
-            return result;
+            return s_random.Next(2) < 1;
         }
     }
 
-
     class CarService
     {
-        private int _serviseMoney = 1000;
-        private Queue<Client> _clients = new Queue<Client>();
         private Stock _stock = new Stock();
-        private Dictionary<string, int> _breakdowns = new Dictionary<string, int>();
-        private Client _currentClient;
+        private Dictionary<string, int> _worksPrices;
+        private Queue<Client> _clients = new Queue<Client>();
+        private int _moneyServise = 1000;
 
         public void Work()
         {
-            CreateQueueClient();
-            _stock.CreationSpareParts();
-            CreateRepairPrice();
+            Client currentClient;
+            Detail brokenDetail;
+            Detail detail;
+            bool bankrupt = false;
+            int costPart;
+
+            CreatePriceWork();
+            GreateQueueClients();
+            _stock.Create();
+
 
             while (_clients.Count > 0)
             {
-                _currentClient = _clients.Dequeue();
-                Console.WriteLine($"Деньги сервиса - {_serviseMoney}");
+                Console.WriteLine($"Баланс автосервиса : {_moneyServise}");
                 ShowQueue();
-                ShowRepairPrice();
-                _stock.ShowPart();
-                _currentClient.ShowInfo();
+                ShowPrice();
+                currentClient = _clients.Dequeue();
+                currentClient.ShowInfo();
+                currentClient.Car.ShowDetails();
+                //_stock.ShowParts();   //  для коректного отображения включить!
 
+                while (currentClient.Car.NeedRepair() == true)
+                {
+                    brokenDetail = currentClient.Car.GetBrokenDetail();
+                    detail = _stock.GetDetail(brokenDetail.Name);
+                    _worksPrices.TryGetValue(brokenDetail.Name, out costPart);
+
+                    if (detail == null)
+                    {
+                        Console.Write($"\n{brokenDetail.Name} закончилась на складе ");
+                        Console.Write($"автосервис выплатил штраф {costPart}");
+                        _moneyServise -= costPart;
+                    }
+                    else
+                    {
+                        Console.Write($"\n{brokenDetail.Name} отремонтирована");
+
+                        _moneyServise += costPart;
+                    }
+
+                    currentClient.Car.GhangeStatus(brokenDetail);
+
+                    if (_moneyServise < 0)
+                    {
+                        Console.WriteLine("\nБАНКРОТ");
+                        Console.ReadKey();
+                        bankrupt = true;
+                        break;
+                    }
+                }
+
+                if(bankrupt == true)
+                {
+                    break;
+                }
+
+                Console.WriteLine("\n\nавтомобиль после ремонта:");
+                currentClient.Car.ShowDetails();
+                Console.WriteLine("нажмите любую кнопку для продолжения ...");
                 Console.ReadKey();
                 Console.Clear();
             }
-
+            Console.WriteLine($"Деньги автосервиса - {_moneyServise}");
+            Console.WriteLine("конец");
+            Console.ReadKey();
         }
 
-        private void CreateQueueClient()
+        private void CreatePriceWork()
         {
-            int minPeople = 10;
-            int maxPeople = 30;
-
-            int queuePeople = UserUtils.GenerateRandomNumber(minPeople, maxPeople);
-
-            for (int i = 1; i < queuePeople; i++)
+            _worksPrices = new Dictionary<string, int>()
             {
-                Car car = new Car();
-                _clients.Enqueue(new Client(i, car));
+                ["Engine"] = 100,
+                ["Starter"] = 100,
+                ["Generator"] = 100,
+                ["ElectronicUnit"] = 100,
+                ["Injector"] = 100,
+                ["Wheel"] = 100,
+                ["Body"] = 100,
+                ["Glass"] = 100
+            };
+        }
+
+        private void ShowPrice()
+        {
+            int index = 1;
+
+            foreach (var namePrise in _worksPrices)
+            {
+                Console.WriteLine($"{index++}.{namePrise.Key} - {namePrise.Value}");
+            }
+        }
+
+        private void GreateQueueClients()
+        {
+            int minimumClients = 8;
+            int maximumClients = 15;
+
+            int quentClient = UserUtils.GenerateRandomNumber(minimumClients, maximumClients);
+
+            for (int i = 1; i < quentClient; i++)
+            {
+                _clients.Enqueue(new Client(i));
             }
         }
 
         private void ShowQueue()
         {
-            Console.WriteLine($"В очереди на ремонт {_clients.Count} клиентов");
+            Console.WriteLine($"Клиентов в очереди - {_clients.Count}\n");
         }
+    }
 
-        private void CreateRepairPrice()
+    class Stock
+    {
+        private List<Detail> _details = new List<Detail>();
+        private StockDetailsFactory _stockDetailsFactory = new StockDetailsFactory();
+
+        public void Create()
         {
-            int minRepairPrice = 10;
-            int maxRepairPrice = 500;
+            int minPartsStock = 10;
+            int maxPartsStock = 30;
 
-            string[] listBreakdowns = new string[] {"запчасть двигателя", "запчасть стартера", "запчасть генератора", "запчасть електронных блоков", "запчасть инжектора", "колесо", "запчасть кузова", "стекло"};
+            _stockDetailsFactory.Create();
 
-            for (int i = 0; i < listBreakdowns.Length; i++)
+            int partsStock = UserUtils.GenerateRandomNumber(minPartsStock,maxPartsStock);
+
+            for (int i = 0; i < partsStock; i++)
             {
-                _breakdowns.Add(listBreakdowns[i], UserUtils.GenerateRandomNumber(minRepairPrice, maxRepairPrice));
+                _details.Add(_stockDetailsFactory.GetDetail());
             }
         }
 
-        private void ShowRepairPrice()
+        public void ShowParts()
         {
-            Console.WriteLine("Цена за ремонт:");
-
-            foreach (var breakdown in _breakdowns)
+            Console.WriteLine("\nДетали на складе:");
+            foreach (Detail detail in _details)
             {
-                Console.WriteLine($"{breakdown.Key} - {breakdown.Value}");
+                Console.WriteLine($"{detail.Name}");
             }
+        }
+
+        public Detail GetDetail(string detailName)
+        {
+            Detail detailGet = null;
+
+            foreach (Detail detail in _details)
+            {
+                if (detail.Name == detailName)
+                {
+                    detailGet = detail;
+                    _details.Remove(detail);
+                    return detailGet;
+                }
+            }
+
+            return detailGet;
         }
     }
 
     class Client
     {
-        public Client(int number, Car tranport)
+        public Client(int number)
         {
             Number = number;
-            Car = new Car();
+            List<Detail> details = CreateDetails();
+            Car = new Car(details);
+        }
+
+        private List<Detail> CreateDetails()
+        {
+            List<Detail> details = new List<Detail>();
+
+            details.Add(new Detail("Engine", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Starter", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Generator", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("ElectronicUnit", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Injector", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Wheel", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Body", UserUtils.GenerateRandomBool()));
+            details.Add(new Detail("Glass", UserUtils.GenerateRandomBool()));
+
+            return details;
         }
 
         public int Number { get; private set; }
@@ -125,161 +227,119 @@ namespace Project_13
 
         public void ShowInfo()
         {
-            Console.WriteLine($"клиент под номером {Number}");
-            Car.ShowBrecakdown();
-        }
+            Console.WriteLine($"\nклиент под номером - {Number}");
+        } // вывели номер клиента
     }
 
     class Car
     {
-        private int _minimalRiskBreakdown = 0;
-        private int _maximumRiskBreakdown = 2;
-
-        public Car()
+        public Car(List<Detail> details)
         {
-            Engine = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            Starter = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            Generator = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            ElectronicUnit = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            Wheel = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            Body = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
-            Glass = UserUtils.GenerateRandomBool(_minimalRiskBreakdown, _maximumRiskBreakdown);
+            Details = details;
         }
 
-        public int Number { get; private set; }
-        public bool Engine { get; private set; }
-        public bool Starter { get; private set; }
-        public bool Generator { get; private set; }
-        public bool ElectronicUnit { get; private set; }
-        public bool Injector { get; private set; }
-        public bool Wheel { get; private set; }
-        public bool Body { get; private set; }
-        public bool Glass { get; private set; }
+        public List<Detail> Details { get; private set; }
 
-        public void ShowBrecakdown()
+        public void ShowDetails()
         {
-            Console.WriteLine($"двигатель - {Engine}\nстартер - {Starter}\nгенератор - {Generator}\nелектроника - {ElectronicUnit}\nинжектор - {Injector}\nколесо - {Wheel}\nкорпус - {Body}\nстекла - {Glass}");
+            foreach (Detail detail in Details)
+            {
+                Console.Write($"{detail.Name} - ");
+                detail.ShowStatus();
+            }
+
+            Console.WriteLine();
+        }
+
+        public bool NeedRepair()
+        {
+            foreach (Detail detail in Details)
+            {
+                if(detail.Status == false)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Detail GetBrokenDetail()
+        {
+            foreach (Detail detail in Details)
+            {
+                if (detail.Status == false)
+                {
+                    return detail;
+                }
+            }
+
+            return null;
+        }
+
+        public void GhangeStatus(Detail inputDetail)
+        {
+            foreach (Detail detail in Details)
+            {
+                if (detail.Name == inputDetail.Name)
+                {
+                    detail.GhangeStatus();
+                }
+            }
         }
     }
 
-    class Stock
+    class Detail
     {
-        Dictionary<string, int> _parts = new Dictionary<string, int>();
-        string[] nameParts = new string[] {"запчасть двигателя", "запчасть стартера", "запчасть генератора", "запчасть електронных блоков", "запчасть для чистки инжектора", "колесо", "запчасть кузова", "стекло"};
-
-        private int _minPart = 3;
-        private int _maxPart = 15;
-
-        public void CreationSpareParts()
+        public Detail(string name, bool status)
         {
-            for (int i = 0; i < nameParts.Length; i++)
+            Name = name;
+            Status = status;
+        }
+
+        public string Name { get; private set; }
+        public bool Status { get; private set; }
+
+        public void ShowStatus()
+        {
+            if(Status == true)
             {
-                _parts.Add(nameParts[i],UserUtils.GenerateRandomNumber(_minPart,_maxPart));
+                Console.Write("целая\n");
+            }
+            else
+            {
+                Console.Write("сломаная\n");
             }
         }
 
-        public void ShowPart()
+        public void GhangeStatus()
         {
-            Console.WriteLine("\nОстаток запчастей на складе:");
-
-            foreach (var part in _parts)
-            {
-                Console.WriteLine($"{part.Key} - {part.Value}");
-            }
-
-            Console.WriteLine("\n");
+            Status = true;
         }
     }
-}
 
+    class StockDetailsFactory
+    {
+        private List<Detail> _spareParts = new List<Detail>();
 
-/*
-
-        
-
-
-        class CarService
+        public void Create()
         {
-            Dictionary<string, int> _breakdowns = new Dictionary<string, int>();
-
-            public void Work()
-            {
-                UserUtils.CreateListBreakdowns();
-                UserUtils.CreateListPart();
-                stock.CreationPart();
-                CreateQueueClient();
-                CreateRepairPrice();
-                
-                while (_clients.Count > 0) 
-                {
-                    currentСlient = _clients.Dequeue();
-                    Console.WriteLine($"Деньги сервиса - {_serviseMoney}");
-                    ShowQueue();
-                    ShowPriceRepair();
-                    stock.ShowPart();
-                    currentСlient.ShowBreakdown();
-                    if(stock.GetSparePart(currentСlient.Breakdown))
-                    {
-                        _serviseMoney += _breakdowns[currentСlient.Breakdown];
-                    }
-                    else
-                    {
-                        _serviseMoney -= _breakdowns[currentСlient.Breakdown];
-
-                        if(_serviseMoney < 0)
-                        {
-                            Console.WriteLine("вы плохой управляющий, сервис разорился");
-                            _clients.Clear();
-                        }
-                    }
-
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-
-                if(_serviseMoney < 0)
-                {
-                    Console.WriteLine("вы пошли бомжевать");
-                }
-                else
-                {
-                    Console.WriteLine("На сегодня клиенты закончились, пора домой");
-                }
-
-                Console.ReadKey();
-            }
-            
-            private void ShowPriceRepair()
-            {
-                Console.WriteLine("\nСтоимость ремонта:");
-
-                foreach (var item in _breakdowns)
-                {
-                    Console.WriteLine(item.Key + "\t" + item.Value);
-                }
-            } 
-            
-            private void CreateQueueClient()
-            {
-                int minPeople = 970;
-                int maxPeople = 1000;
-
-                int queuePeople = UserUtils.GenerateRandomNumber(minPeople, maxPeople);
-
-                for (int i = 1; i < queuePeople; i++)
-                {
-                    _clients.Enqueue(new Client(i));
-                }
-            } 
-            
-
-            
-
+            _spareParts.Add(new Detail("Engine", true));
+            _spareParts.Add(new Detail("Starter", true));
+            _spareParts.Add(new Detail("Generator", true));
+            _spareParts.Add(new Detail("ElectronicUnit", true));
+            _spareParts.Add(new Detail("Injector", true));
+            _spareParts.Add(new Detail("Wheel", true));
+            _spareParts.Add(new Detail("Body", true));
+            _spareParts.Add(new Detail("Glass", true));
 
         }
 
-
-
+        public Detail GetDetail()
+        {
+            return _spareParts[UserUtils.GenerateRandomNumber(0,_spareParts.Count)];
+        } // возврящаем детать
         
+    }
 
-*/
+}
