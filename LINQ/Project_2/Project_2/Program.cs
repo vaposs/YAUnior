@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-//В нашей великой стране Арстоцка произошла амнистия!
-//Всех людей, заключенных за преступление "Антиправительственное",
-//следует исключить из списка заключенных.
-//Есть список заключенных, каждый заключенный состоит из полей: ФИО, преступление.
-//Вывести список до амнистии и после.
-
 namespace Project_1
 {
     class MainClass
@@ -25,154 +19,61 @@ namespace Project_1
 
     class Database
     {
-        private List<Suspect> _suspects = new List<Suspect>();
-
-        private List<string> _nationals;
+        private List<Prisoner> _prisoners = new List<Prisoner>();
+        private List<Prisoner> _prisonersAfterAmnisty = new List<Prisoner>();
 
         public void Work()
         {
-            CreateListSuspect();
-            _nationals = CreateListNationals();
+            string crimeName = "антиправительственное";
 
-            Console.WriteLine($"Количество подозреаемых - {_suspects.Count}");
-            ShowSuspect(); //-- вывод изначального списка
+            CreateListPrisoner();
+            Console.WriteLine($"Количество заключенных - {_prisoners.Count}");
+            ShowPrisoner(_prisoners);
 
-            Console.WriteLine("введите параметры поиска:");
+            var filterPrisoner = from Prisoner prisoner in _prisoners
+                                 where FilterPrisoner(prisoner, crimeName)
+                                 select prisoner;
 
-            int height = GetSearchParameterHeight();
-            int weight = GetSearchParameterWeight();
-            string national = GetSearchParameterNational();
-
-            var filterSuspects = from Suspect suspect in _suspects
-                                 where suspect.Height == height
-                                 where suspect.Weight == weight
-                                 where suspect.Nationality == national
-                                 where suspect.Detained == false
-                                 select suspect;
-
-            int index = 1;
-            Console.WriteLine(filterSuspects.Count());
-
-            foreach (var suspect1 in filterSuspects)
+            foreach (Prisoner prisoner in filterPrisoner)
             {
-                string status = GetText(suspect1.Detained);
-
-                Console.WriteLine($"{index}.{suspect1.Name} - {status} - {suspect1.Height}/{suspect1.Weight} - {suspect1.Nationality}");
-                index++;
-            }
-        }
-
-        private int GetSearchParameterHeight()
-        {
-            Console.Write("Введите рост подозреваемого (150/220) - ");
-            return UserUtils.GetPositiveNumber();
-        }
-
-        private int GetSearchParameterWeight()
-        {
-            Console.Write("Введите вес подозреваемого (55/100) - ");
-            return UserUtils.GetPositiveNumber();
-        }
-
-        private string GetSearchParameterNational()
-        {
-            string choceDetective = "";
-            bool goodChoce = true;
-
-
-            while (goodChoce)
-            {
-                foreach (string national in _nationals)
-                {
-                    Console.Write(national + ", ");
-                }
-
-                Console.Write("\nвведите национальность подозреваемого из представленого списка:");
-
-                choceDetective = Console.ReadLine();
-
-                foreach (string national in _nationals)
-                {
-                    if (national == choceDetective)
-                    {
-                        goodChoce = false;
-                        break;
-                    }
-                }
+                _prisonersAfterAmnisty.Add(prisoner);
             }
 
-            return choceDetective;
+            Console.WriteLine($"\nКоличество заключенных послe амнистии - {filterPrisoner.Count()}");
+            ShowPrisoner(_prisonersAfterAmnisty);
         }
 
-        private List<string> CreateListNationals()
+        private bool FilterPrisoner(Prisoner prisoner, string crimeName)
         {
-            List<string> nationals = new List<string>();
-            bool repick;
-
-            foreach (Suspect suspect in _suspects)
+            if(prisoner.CrimeName == crimeName)
             {
-                repick = false;
-
-                if (nationals.Count < 1)
-                {
-                    nationals.Add(suspect.Nationality);
-                    repick = true;
-                }
-                else
-                {
-                    foreach (string national in nationals)
-                    {
-                        if (suspect.Nationality == national)
-                        {
-                            repick = true;
-                        }
-                    }
-                }
-
-                if (repick == false)
-                {
-                    nationals.Add(suspect.Nationality);
-                }
-            }
-
-            return nationals;
-        }
-
-        private void CreateListSuspect()
-        {
-            int minSuspects = 10000;
-            int maxSuspects = 15000;
-
-
-            for (int i = 0; i < UserUtils.GenerateRandomNumber(minSuspects, maxSuspects); i++)
-            {
-                _suspects.Add(new Suspect());
-            }
-
-        }
-
-        private void ShowSuspect()
-        {
-            int index = 1;
-
-            foreach (Suspect suspect in _suspects)
-            {
-                string status = GetText(suspect.Detained);
-
-                Console.WriteLine($"{index}.{suspect.Name} - {status} - {suspect.Height}/{suspect.Weight} - {suspect.Nationality}");
-                index++;
-            }
-        }
-
-        private string GetText(bool status)
-        {
-            if (status == true)
-            {
-                return "задержан";
+                return false;
             }
             else
             {
-                return "на свободе";
+                return true;
+            }
+        }
+
+        private void CreateListPrisoner()
+        {
+            int minPrisoner = 100;
+            int maxPrisoner = 150;
+
+            for (int i = 0; i < UserUtils.GenerateRandomNumber(minPrisoner, maxPrisoner); i++)
+            {
+                _prisoners.Add(new Prisoner());
+            }
+        }
+
+        private void ShowPrisoner(List<Prisoner> prisoners)
+        {
+            int index = 1;
+
+            foreach (Prisoner prisoner in prisoners)
+            {
+                Console.WriteLine($"{index}.{prisoner.Name} - {prisoner.CrimeName}");
+                index++;
             }
         }
     }
@@ -188,38 +89,9 @@ namespace Project_1
 
         public static bool GenerateRandomBool()
         {
-            return s_random.Next(2) < 1;
-        }
+            bool[] logic = { true, false };
 
-        public static int GetPositiveNumber()
-        {
-            string readName;
-            bool isConversionSucceeded = true;
-            bool isCorrectNumber;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                readName = Console.ReadLine();
-                isCorrectNumber = int.TryParse(readName, out number);
-
-                if (isCorrectNumber)
-                {
-                    if (number < 1)
-                    {
-                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод. Повторите ввод - ");
-                }
-            }
-            return number;
+            return logic[s_random.Next(0, logic.Length)];
         }
     }
 
@@ -228,15 +100,15 @@ namespace Project_1
         public Prisoner()
         {
             Name = GetName();
-            Detained = UserUtils.GenerateRandomBool();
+            CrimeName = GetCrimeName();
         }
 
         public string Name { get; private set; }
-        public bool Detained { get; private set; }
+        public string CrimeName { get; private set; }
 
         private string GetName()
         {
-            string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа",};
+            string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа", };
 
             return names[UserUtils.GenerateRandomNumber(0, names.Length)];
         }
@@ -247,9 +119,5 @@ namespace Project_1
 
             return names[UserUtils.GenerateRandomNumber(0, names.Length)];
         }
-
-
-
     }
-
 }
