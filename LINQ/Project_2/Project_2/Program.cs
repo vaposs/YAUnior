@@ -20,7 +20,7 @@ namespace Project_1
     class Database
     {
         private List<Prisoner> _prisoners = new List<Prisoner>();
-        private List<Prisoner> _prisonersAfterAmnisty = new List<Prisoner>();
+        private List<Prisoner> _prisonersAfterAmnisty;
 
         public void Work()
         {
@@ -34,12 +34,9 @@ namespace Project_1
                                  where FilterPrisoner(prisoner, crimeName)
                                  select prisoner;
 
-            foreach (Prisoner prisoner in filterPrisoner)
-            {
-                _prisonersAfterAmnisty.Add(prisoner);
-            }
-
-            Console.WriteLine($"\nКоличество заключенных послe амнистии - {filterPrisoner.Count()}");
+            _prisonersAfterAmnisty = filterPrisoner.ToList();
+            
+            Console.WriteLine($"\nКоличество заключенных послe амнистии - {_prisonersAfterAmnisty.Count()}");
             ShowPrisoner(_prisonersAfterAmnisty);
         }
 
