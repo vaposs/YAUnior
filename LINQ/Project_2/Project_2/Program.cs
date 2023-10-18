@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Project_1
+namespace Project_2
 {
     class MainClass
     {
@@ -20,7 +20,7 @@ namespace Project_1
     class Database
     {
         private List<Prisoner> _prisoners = new List<Prisoner>();
-        private List<Prisoner> _prisonersAfterAmnisty;
+        private PrisonerCreator _prisonerCreator = new PrisonerCreator();
 
         public void Work()
         {
@@ -30,26 +30,10 @@ namespace Project_1
             Console.WriteLine($"Количество заключенных - {_prisoners.Count}");
             ShowPrisoner(_prisoners);
 
-            var filterPrisoner = from Prisoner prisoner in _prisoners
-                                 where FilterPrisoner(prisoner, crimeName)
-                                 select prisoner;
+            var prisoners = _prisoners.Where(prisoner => prisoner.CrimeName != crimeName);
 
-            _prisonersAfterAmnisty = filterPrisoner.ToList();
-            
-            Console.WriteLine($"\nКоличество заключенных послe амнистии - {_prisonersAfterAmnisty.Count()}");
-            ShowPrisoner(_prisonersAfterAmnisty);
-        }
-
-        private bool FilterPrisoner(Prisoner prisoner, string crimeName)
-        {
-            if(prisoner.CrimeName == crimeName)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            Console.WriteLine($"\nКоличество заключенных послe амнистии - {prisoners.Count()}");
+            ShowPrisoner(prisoners.ToList());
         }
 
         private void CreateListPrisoner()
@@ -59,7 +43,7 @@ namespace Project_1
 
             for (int i = 0; i < UserUtils.GenerateRandomNumber(minPrisoner, maxPrisoner); i++)
             {
-                _prisoners.Add(new Prisoner());
+                _prisoners.Add(_prisonerCreator.Create());
             }
         }
 
@@ -94,15 +78,18 @@ namespace Project_1
 
     class Prisoner
     {
-        public Prisoner()
+        public Prisoner(string name, string crimeName)
         {
-            Name = GetName();
-            CrimeName = GetCrimeName();
+            Name = name;
+            CrimeName = crimeName;
         }
 
         public string Name { get; private set; }
         public string CrimeName { get; private set; }
+    }
 
+    class PrisonerCreator
+    {
         private string GetName()
         {
             string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа", };
@@ -110,11 +97,16 @@ namespace Project_1
             return names[UserUtils.GenerateRandomNumber(0, names.Length)];
         }
 
-        private string GetCrimeName()
+        public string GetCrimeName()
         {
             string[] names = new string[] { "кража", "убийство", "антиправительственное", "мошенничество", "торговля людьми" };
 
             return names[UserUtils.GenerateRandomNumber(0, names.Length)];
+        }
+
+        public Prisoner Create()
+        {
+            return new Prisoner(GetName(), GetCrimeName());
         }
     }
 }
