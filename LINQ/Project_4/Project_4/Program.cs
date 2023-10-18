@@ -23,17 +23,18 @@ namespace Project_4
 
         public void Work()
         {
+            string strenghtName = "силе";
+            string levelName = "левелу";
+
             CreateListPlayer();
             Console.WriteLine("Изначальный список игроков:");
             ShowPlayers(_players);
 
-            List<Player> sortedStrenght =  SortStrenght(_topPlayer);
-            Console.WriteLine("\nТоп 3 по силе:");
-            ShowPlayers(sortedStrenght);
+            Console.WriteLine($"\nТоп {_topPlayer} по {strenghtName}:");
+            ShowPlayers(TakeTopStrenght(_topPlayer));
 
-            List<Player> sortedLevels = SortLevel(_topPlayer);
-            Console.WriteLine("\nТоп 3 по левелу:");
-            ShowPlayers(sortedLevels);
+            Console.WriteLine($"\nТоп {_topPlayer} по {levelName}:");
+            ShowPlayers(TakeTopLevel(_topPlayer));
         }
 
         private void CreateListPlayer()
@@ -60,34 +61,14 @@ namespace Project_4
             }
         }
 
-        private List<Player> SortStrenght(int topPlayer)
+        private List<Player> TakeTopStrenght(int topPlayer)
         {
-            List<Player> sortedList = new List<Player>();
-
-            var filterPlayer = _players.OrderByDescending(player => player.Strength);
-            List<Player> players = filterPlayer.ToList();
-
-            for (int i = 0; i < topPlayer; i++)
-            {
-                sortedList.Add(players[i]);
-            }
-
-            return sortedList;
+            return _players.OrderByDescending(player => player.Strength).Take(topPlayer).ToList();
         }
 
-        private List<Player> SortLevel(int topPlayer)
+        private List<Player> TakeTopLevel(int topPlayer)
         {
-            List<Player> sortedList = new List<Player>();
-
-            var filterPlayer = _players.OrderByDescending(player => player.Level);
-            List<Player> players = filterPlayer.ToList();
-
-            for (int i = 0; i < topPlayer; i++)
-            {
-                sortedList.Add(players[i]);
-            }
-
-            return sortedList;
+            return _players.OrderByDescending(player => player.Level).Take(topPlayer).ToList();
         }
     }
 
