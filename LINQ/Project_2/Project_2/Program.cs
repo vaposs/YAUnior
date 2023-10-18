@@ -30,18 +30,17 @@ namespace Project_2
             Console.WriteLine($"Количество заключенных - {_prisoners.Count}");
             ShowPrisoner(_prisoners);
 
-            var prisoners = _prisoners.Where(prisoner => prisoner.CrimeName != crimeName);
-
-            Console.WriteLine($"\nКоличество заключенных послe амнистии - {prisoners.Count()}");
-            ShowPrisoner(prisoners.ToList());
+            Console.WriteLine($"\nКоличество заключенных послe амнистии - {_prisoners.Where(prisoner => prisoner.CrimeName != crimeName).Count()}");
+            ShowPrisoner(_prisoners.Where(prisoner => prisoner.CrimeName != crimeName).ToList());
         }
 
         private void CreateListPrisoner()
         {
             int minPrisoner = 100;
             int maxPrisoner = 150;
+            int countPrisoner = UserUtils.GenerateRandomNumber(minPrisoner, maxPrisoner);
 
-            for (int i = 0; i < UserUtils.GenerateRandomNumber(minPrisoner, maxPrisoner); i++)
+            for (int i = 0; i < countPrisoner; i++)
             {
                 _prisoners.Add(_prisonerCreator.Create());
             }
@@ -67,13 +66,6 @@ namespace Project_2
         {
             return s_random.Next(minRandomNumber, maxRandomNumber);
         }
-
-        public static bool GenerateRandomBool()
-        {
-            bool[] logic = { true, false };
-
-            return logic[s_random.Next(0, logic.Length)];
-        }
     }
 
     class Prisoner
@@ -90,13 +82,6 @@ namespace Project_2
 
     class PrisonerCreator
     {
-        private string GetName()
-        {
-            string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа", };
-
-            return names[UserUtils.GenerateRandomNumber(0, names.Length)];
-        }
-
         public string GetCrimeName()
         {
             string[] names = new string[] { "кража", "убийство", "антиправительственное", "мошенничество", "торговля людьми" };
@@ -107,6 +92,13 @@ namespace Project_2
         public Prisoner Create()
         {
             return new Prisoner(GetName(), GetCrimeName());
+        }
+
+        private string GetName()
+        {
+            string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа", };
+
+            return names[UserUtils.GenerateRandomNumber(0, names.Length)];
         }
     }
 }
