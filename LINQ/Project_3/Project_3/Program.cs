@@ -92,10 +92,10 @@ namespace Project_3
                 switch (playerCommand)
                 {
                     case 1:
-                        SortName();
+                        ShowByName();
                         break;
                     case 2:
-                        SortAge();
+                        ShowByAge();
                         break;
                     case 3:
                         ShowPatientWithDisease();
@@ -141,14 +141,14 @@ namespace Project_3
             }
         }
 
-        private void SortName()
+        private void ShowByName()
         {
             var filtersPatient = _patients.OrderBy(patient => patient.Name);
             _patients = filtersPatient.ToList();
             ShowPatient(_patients);
         }
 
-        private void SortAge()
+        private void ShowByAge()
         {
             var filtersPatient = _patients.OrderBy(patient => patient.Age);
             _patients = filtersPatient.ToList();
@@ -187,9 +187,9 @@ namespace Project_3
         private string GetSearchParameterDisease()
         {
             string choceDisease = "";
-            bool goodChoce = true;
+            bool correctСhoice = false;
 
-            while (goodChoce)
+            while (!correctСhoice)
             {
                 foreach (string disease in _disease)
                 {
@@ -203,7 +203,7 @@ namespace Project_3
                 {
                     if (disease == choceDisease)
                     {
-                        goodChoce = false;
+                        correctСhoice = true;
                         break;
                     }
                 }
