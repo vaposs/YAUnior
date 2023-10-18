@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/bin/Debug/Projet_5.exe
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/bin/Debug/Projet_5.pdb
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/obj/Debug/Projet_5.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/obj/Debug/Projet_5.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/obj/Debug/Projet_5.exe
+/Users/walter/GitHub/YAUnior/LINQ/Project_5/Projet_5/obj/Debug/Projet_5.pdb
