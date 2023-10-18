@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//2. var maxWeight = _suspects.Min(suspect => suspect.Weight); return maxWeight; -не вижу
+//смысла для этого методы выносить, но если делаете, то в любом случае не создавайте переменных,
+//которые не используете. Сразу возаращайте результат.
+
+// не понимаю как исправить даное замечание. Ментор в голосовом порекомендовал обратится к Вам за обьянениями.
+
+
 namespace Project_1
 {
     class MainClass
@@ -18,14 +25,14 @@ namespace Project_1
 
     class Database
     {
-        private SuspectCreator SuspectCreator = new SuspectCreator();
+        private SuspectCreator _SuspectCreator = new SuspectCreator();
         private List<Suspect> _suspects = new List<Suspect>();
         private string[] _nationals;
 
         public void Work()
         {
             CreateListSuspect();
-            _nationals = SuspectCreator.GetAllNational();
+            _nationals = _SuspectCreator.GetAllNational();
 
             Console.WriteLine($"Количество подозреаемых - {_suspects.Count}");
             ShowSuspect(_suspects);
@@ -36,31 +43,41 @@ namespace Project_1
 
         private List<Suspect> FilterSuspects()
         {
+            string hight = "рост";
+            string wight = "вес";
+            int maxValue;
+            int minValue;
+
             Console.WriteLine("введите параметры поиска:");
-            int height = GetSearchParameterHeight();
-            int weight = GetSearchParameterWeight();
+            minValue = GetMinHeihtg();
+            maxValue = GetMaxHeihtg();
+            int height = GetSearchParameter(hight, minValue, maxValue);
+            minValue = GetMinWeight();
+            maxValue = GetMaxWeight();
+            int weight = GetSearchParameter(wight, minValue, maxValue);
             string national = GetSearchParameterNational(_nationals);
 
-            var filterSuspects = from Suspect suspect in _suspects
-                                 where suspect.Height == height
+            var filterSuspects = _suspects.Where(suspect => suspect.Height == height
                                         && suspect.Weight == weight
                                         && suspect.Nationality == national
-                                        && suspect.Detained == false
-                                 select suspect;
+                                        && suspect.Detained == false);
 
             return filterSuspects.ToList();
         }
 
-        private int GetSearchParameterHeight()
+        private int GetSearchParameter(string nameSeachParameters, int minValue, int maxValue)
         {
-            Console.Write($"Введите рост подозреваемого ({GetMinHeihtg()}/{GetMaxHeihtg()}) - ");
-            return UserUtils.GetPositiveNumber();
-        }
+            Console.Write($"Введите {nameSeachParameters} подозреваемого ({minValue}/{maxValue}) - ");
+            int numbersPlayer = UserUtils.GetPositiveNumber();
 
-        private int GetSearchParameterWeight()
-        {
-            Console.Write($"Введите вес подозреваемого ({GetMinWeight()}/{GetMaxWeight()}) - ");
-            return UserUtils.GetPositiveNumber();
+            while (numbersPlayer < minValue || numbersPlayer > maxValue)
+            {
+                Console.WriteLine("неверный ввод");
+                Console.Write($"Введите {nameSeachParameters} подозреваемого ({minValue}/{maxValue}) - ");
+                numbersPlayer = UserUtils.GetPositiveNumber();
+            }
+
+            return numbersPlayer;
         }
 
         private string GetSearchParameterNational(string[] nationals)
@@ -99,7 +116,7 @@ namespace Project_1
 
             for (int i = 0; i < countSuspects; i++)
             {
-                _suspects.Add(SuspectCreator.Creator());
+                _suspects.Add(_SuspectCreator.Creator());
             }
         }
 
@@ -117,30 +134,22 @@ namespace Project_1
 
         private int GetMaxHeihtg()
         {
-            var maxHeight = _suspects.Max(suspect => suspect.Height);
-
-            return maxHeight;
+           return _suspects.Max(suspect => suspect.Height);
         }
 
         private int GetMinHeihtg()
         {
-            var maxHeight = _suspects.Min(suspect => suspect.Height);
-
-            return maxHeight;
+            return _suspects.Min(suspect => suspect.Height);
         }
 
         private int GetMaxWeight()
         {
-            var maxWeight = _suspects.Max(suspect => suspect.Weight);
-
-            return maxWeight;
+            return _suspects.Max(suspect => suspect.Weight);
         }
 
         private int GetMinWeight()
         {
-            var maxWeight = _suspects.Min(suspect => suspect.Weight);
-
-            return maxWeight;
+            return _suspects.Min(suspect => suspect.Weight);
         }
     }
 
