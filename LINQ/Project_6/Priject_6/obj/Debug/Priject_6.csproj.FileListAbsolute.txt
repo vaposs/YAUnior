@@ -1,0 +1,6 @@
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/bin/Debug/Priject_6.exe
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/bin/Debug/Priject_6.pdb
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/obj/Debug/Priject_6.csproj.AssemblyReference.cache
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/obj/Debug/Priject_6.csproj.CoreCompileInputs.cache
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/obj/Debug/Priject_6.exe
+/Users/walter/GitHub/YAUnior/LINQ/Project_6/Priject_6/obj/Debug/Priject_6.pdb
