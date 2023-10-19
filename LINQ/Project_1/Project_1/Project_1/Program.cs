@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-//2. var maxWeight = _suspects.Min(suspect => suspect.Weight); return maxWeight; -не вижу
-//смысла для этого методы выносить, но если делаете, то в любом случае не создавайте переменных,
-//которые не используете. Сразу возаращайте результат.
-
-// не понимаю как исправить даное замечание. Ментор в голосовом порекомендовал обратится к Вам за обьянениями.
-
-
 namespace Project_1
 {
     class MainClass
@@ -25,14 +18,14 @@ namespace Project_1
 
     class Database
     {
-        private SuspectCreator _SuspectCreator = new SuspectCreator();
+        private SuspectCreator _suspectCreator = new SuspectCreator();
         private List<Suspect> _suspects = new List<Suspect>();
         private string[] _nationals;
 
         public void Work()
         {
             CreateListSuspect();
-            _nationals = _SuspectCreator.GetAllNational();
+            _nationals = _suspectCreator.GetAllNational();
 
             Console.WriteLine($"Количество подозреаемых - {_suspects.Count}");
             ShowSuspect(_suspects);
@@ -49,11 +42,12 @@ namespace Project_1
             int minValue;
 
             Console.WriteLine("введите параметры поиска:");
-            minValue = GetMinHeihtg();
-            maxValue = GetMaxHeihtg();
+            minValue = _suspects.Min(suspect => suspect.Height);
+            maxValue = _suspects.Max(suspect => suspect.Height);
+
             int height = GetSearchParameter(hight, minValue, maxValue);
-            minValue = GetMinWeight();
-            maxValue = GetMaxWeight();
+            minValue = _suspects.Min(suspect => suspect.Weight);
+            maxValue = _suspects.Max(suspect => suspect.Weight);
             int weight = GetSearchParameter(wight, minValue, maxValue);
             string national = GetSearchParameterNational(_nationals);
 
@@ -116,7 +110,7 @@ namespace Project_1
 
             for (int i = 0; i < countSuspects; i++)
             {
-                _suspects.Add(_SuspectCreator.Creator());
+                _suspects.Add(_suspectCreator.Creator());
             }
         }
 
@@ -130,26 +124,6 @@ namespace Project_1
                 Console.WriteLine($"{index}.{suspect.Name} - {status} - {suspect.Height}/{suspect.Weight} - {suspect.Nationality}");
                 index++;
             }
-        }
-
-        private int GetMaxHeihtg()
-        {
-           return _suspects.Max(suspect => suspect.Height);
-        }
-
-        private int GetMinHeihtg()
-        {
-            return _suspects.Min(suspect => suspect.Height);
-        }
-
-        private int GetMaxWeight()
-        {
-            return _suspects.Max(suspect => suspect.Weight);
-        }
-
-        private int GetMinWeight()
-        {
-            return _suspects.Min(suspect => suspect.Weight);
         }
     }
 
@@ -222,7 +196,14 @@ namespace Project_1
 
     class SuspectCreator
     {
-        private string[] _nationals = new string[] { "HKG", "GRL", "GEO", "DNK", "UK" };
+        public SuspectCreator()
+        {
+            Nationals = new string[] { "HKG", "GRL", "GEO", "DNK", "UK" };
+            Names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа" };
+        }
+
+        public string[] Nationals { get; private set; }
+        public string[] Names { get; private set; }
 
         public Suspect Creator()
         {
@@ -231,14 +212,12 @@ namespace Project_1
 
         private string GetNationality()
         {
-            return _nationals[UserUtils.GenerateRandomNumber(0, _nationals.Length)];
+            return Nationals[UserUtils.GenerateRandomNumber(0, Nationals.Length)];
         }
 
         private string GetName()
         {
-            string[] names = new string[] { "Петя", "Филя", "Семен", "Вася", "Степа" };
-
-            return names[UserUtils.GenerateRandomNumber(0, names.Length)];
+            return Names[UserUtils.GenerateRandomNumber(0, Names.Length)];
         }
 
         private int GetHeight()
@@ -259,7 +238,7 @@ namespace Project_1
 
         public string[] GetAllNational()
         {
-            return _nationals;
+            return Nationals.ToArray();
         }
     }
 }
