@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Projet_5
+namespace Project_5
 {
     class MainClass
     {
@@ -29,8 +29,10 @@ namespace Projet_5
             int maxData = GetMaxData();
 
             Console.WriteLine("\nвыводим на екран всю просрочку");
-            int years = GetSearchParameter(minData, maxData);
-            Show(_packedRations.Where(packedRations => (packedRations.DateManufacture + packedRations.ProductExpirationDate) < years).ToList());
+            int years = GetSearchParameter(minData);
+            _packedRations = new List<PackedRations>(_packedRations.Where(packedRations => (packedRations.MaxDataExpiration()) < years).ToList());
+
+            Show(_packedRations);
         }
 
         private void CreatPackedRations()
@@ -50,7 +52,7 @@ namespace Projet_5
         {
             foreach (PackedRations packedRation in packedRations)
             {
-                Console.WriteLine($"{packedRation.Name}, дата производства - {packedRation.DateManufacture}, срок хранения - {packedRation.ProductExpirationDate}");
+                Console.WriteLine($"{packedRation.Name}, дата производства - {packedRation.DateManufacture}, срок хранения - {packedRation.ProductExpirationDate} - дата порчи - {packedRation.MaxDataExpiration()}");
             }
         }
 
@@ -64,21 +66,28 @@ namespace Projet_5
             return _packedRations.Min(packedRations => packedRations.DateManufacture);
         }
 
-        private int GetSearchParameter(int minData, int maxData)
+        private int GetSearchParameter(int minData)
         {
-            Console.Write($"укажите текущий год({minData}/{maxData}): ");
-            int numbersPlayer = UserUtils.GetPositiveNumber();
+            int numbersPlayer = 0;
+            bool isSecssesfull = false;
 
-            while (numbersPlayer < minData || numbersPlayer > maxData)
+            while (!isSecssesfull)
             {
-                Console.WriteLine("неверный ввод");
-                Console.Write($"укажите текущий год({minData}/{maxData}): ");
+                Console.Write($"укажите текущий год({minData}/ ...): ");
                 numbersPlayer = UserUtils.GetPositiveNumber();
+
+                if(numbersPlayer > minData)
+                {
+                    isSecssesfull = true;
+                }
+                else
+                {
+                    Console.WriteLine("неверный ввод");
+                }
             }
 
             return numbersPlayer;
         }
-
     }
 
     class UserUtils
@@ -135,6 +144,11 @@ namespace Projet_5
         public string Name { get; private set; }
         public int DateManufacture { get; private set; }
         public int ProductExpirationDate { get; private set; }
+
+        public int MaxDataExpiration()
+        {
+            return (DateManufacture + ProductExpirationDate);
+        }
     }
 
     class PackedRationsCreator
@@ -168,9 +182,3 @@ namespace Projet_5
         }
     }
 }
-
-
-
-//Есть набор тушенки. У тушенки есть название, год производства и срок годности.
-//Написать запрос для получения всех просроченных банок тушенки.
-//Чтобы не заморачиваться, можете думать, что считаем только года, без месяцев.
