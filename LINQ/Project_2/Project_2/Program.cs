@@ -30,8 +30,10 @@ namespace Project_2
             Console.WriteLine($"Количество заключенных - {_prisoners.Count}");
             ShowPrisoner(_prisoners);
 
-            Console.WriteLine($"\nКоличество заключенных послe амнистии - {_prisoners.Where(prisoner => prisoner.CrimeName != crimeName).Count()}");
-            ShowPrisoner(_prisoners.Where(prisoner => prisoner.CrimeName != crimeName).ToList());
+            _prisoners = new List<Prisoner>(_prisoners.Where(prisoner => prisoner.CrimeName != crimeName));
+
+            Console.WriteLine($"\nКоличество заключенных послe амнистии - {_prisoners.Count()}");
+            ShowPrisoner(_prisoners);
         }
 
         private void CreateListPrisoner()
