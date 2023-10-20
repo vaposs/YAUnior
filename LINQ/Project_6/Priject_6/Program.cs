@@ -29,11 +29,11 @@ namespace Priject_6
             Console.WriteLine("вывод подсписка");
 
             var filter = from Soldier soldier in _soldiers
-                         select new { name = soldier.Name, rank = soldier.Rank };
+                         select new { Name = soldier.Name, Rank = soldier.Rank };
 
             foreach (var soldier in filter)
             {
-                Console.WriteLine($"{soldier.name} - {soldier.rank}");
+                Console.WriteLine($"{soldier.Name} - {soldier.Rank}");
             }
         }
 
