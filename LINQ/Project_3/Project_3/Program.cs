@@ -92,10 +92,10 @@ namespace Project_3
                 switch (playerCommand)
                 {
                     case 1:
-                        ShowPatientWithName();
+                        ShowPatient(_patients.OrderBy(patient => patient.Name).ToList());
                         break;
                     case 2:
-                        ShowPatientWithAge();
+                        ShowPatient(_patients.OrderBy(patient => patient.Age).ToList());
                         break;
                     case 3:
                         ShowPatientWithDisease();
@@ -139,16 +139,6 @@ namespace Project_3
                     _disease.Add(patient.Disease);
                 }
             }
-        }
-
-        private void ShowPatientWithName()
-        {
-            ShowPatient(_patients.OrderBy(patient => patient.Name).ToList());
-        }
-
-        private void ShowPatientWithAge()
-        {
-            ShowPatient(_patients.OrderBy(patient => patient.Age).ToList());
         }
 
         private void ShowPatientWithDisease()
