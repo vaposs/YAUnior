@@ -8,59 +8,61 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed = 3;
     [SerializeField] private float _jumpForse = 5;
     [SerializeField] private bool _isGround;
-    private SpriteRenderer SpriteRenderer;
-    private Animator Animator;
-    private Rigidbody2D Rigidbody2D;
-    private float direction;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    private Rigidbody2D _rigidbody2D;
+    private float _direction;
+    private int _maxSpeed = 5;
+    private int _minSpeed = 0;
 
     private void Start()
     {
-        SpriteRenderer = GetComponent<SpriteRenderer>();
-        Animator = GetComponent<Animator>();
-        Rigidbody2D = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        direction = Input.GetAxis("Horizontal") * _speed;
+        _direction = Input.GetAxis("Horizontal") * _speed;
 
         if(Input.GetKey(KeyCode.D))
         {
             transform.Translate(_speed * Time.deltaTime,0,0);
-            Animator.SetFloat("speed",5);
+            _animator.SetFloat("speed",_maxSpeed);
             FlipX();
         }
         else if (Input.GetKey(KeyCode.A))
         {
             transform.Translate((_speed * Time.deltaTime) * -1, 0, 0);
-            Animator.SetFloat("speed", 5);
+            _animator.SetFloat("speed", _maxSpeed);
             FlipX();
         }
         else
         {
-            Animator.SetFloat("speed", 0);
+            _animator.SetFloat("speed", _minSpeed);
         }
     }
 
     private void FlipX()
     {
-        if (direction > 0)
+        if (_direction > 0)
         {
-            SpriteRenderer.flipX = false;
+            _spriteRenderer.flipX = false;
         }
-        else if (direction < 0)
+        else if (_direction < 0)
         {
-            SpriteRenderer.flipX = true;
+            _spriteRenderer.flipX = true;
         }
         else
         {
-            Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, Rigidbody2D.velocity.y);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision2D)
     {
         _isGround = true;
-        Animator.SetBool("isGroung", true);
+        _animator.SetBool("isGroung", true);
     }
 }

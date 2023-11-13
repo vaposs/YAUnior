@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Project_5/Script/Signal.cs" />
-    <Compile Include="Assets/Project_5/Script/Color.cs" />
     <Compile Include="Assets/Project_5/Script/Player.cs" />
   </ItemGroup>
   <ItemGroup>

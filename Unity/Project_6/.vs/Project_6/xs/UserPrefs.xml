@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{D9FF98E4-BCE7-593E-4B4D-79B6E63A7B2D}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrints/Spawn.cs">
+    <Files>
+      <File FileName="Assets/Scrints/Gun.cs" Line="33" Column="2" />
+      <File FileName="Assets/Scrints/Spawn.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scrints/Bullet.cs" Line="21" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="10ec1daa-edb2-4b70-afbe-c75b5c140e1f" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

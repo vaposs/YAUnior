@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{32C3BDE6-E125-3128-82C1-25D0441455A3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Project_6/Scripts/RotationGun.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Project_5/Script/Player.cs">
     <Files>
-      <File FileName="Assets/Project_6/Scripts/RotationGun.cs" Line="17" Column="2" />
+      <File FileName="Assets/Project_5/Script/Signal.cs" Line="57" Column="10" />
+      <File FileName="Assets/Project_5/Script/Player.cs" Line="32" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="26dcd96f-d019-41d0-9b7c-0146ae059865" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="10ec1daa-edb2-4b70-afbe-c75b5c140e1f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

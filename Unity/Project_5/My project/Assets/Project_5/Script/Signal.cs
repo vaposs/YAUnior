@@ -1,66 +1,59 @@
+using System;
 using UnityEngine;
 
 public class Signal : MonoBehaviour
 {
     [SerializeField] private AudioSource AudioSource;
-    private bool stayCollider = false;
-    private bool exitCollider = false;
+    private bool _stayCollider = false;
+    private bool _exitCollider = false;
+    private float _startVolume = 0.01f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.TryGetComponent<Player>(out Player player))
         {
             if (AudioSource.isPlaying == false)
             {
                 AudioSource.Play();
-                AudioSource.volume = 0.01f;
-
-                Debug.Log("включили воспроизведение звука - " + AudioSource.volume);
+                AudioSource.volume = _startVolume;
             }
         }
     }
     
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.TryGetComponent<Player>(out Player player))
         {
-            stayCollider = true;
+            _stayCollider = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.TryGetComponent<Player>(out Player player))
         {
-            exitCollider = true;
-            stayCollider = false;
+            _exitCollider = true;
+            _stayCollider = false;
         }
     }
 
     private void Update()
     {
-        if(stayCollider == true)
+        if(_stayCollider == true)
         {
             AudioSource.volume = Mathf.MoveTowards(AudioSource.volume, 1, 0.1f * Time.deltaTime);
-
-            Debug.Log("стоим в границах тригера/громкость верх - " + AudioSource.volume);
         }
 
-        if(exitCollider == true)
+        if(_exitCollider == true)
         {
-            AudioSource.volume = Mathf.MoveTowards(AudioSource.volume, 1, (0.1f * Time.deltaTime) * -1);
-
-            Debug.Log("вышли за границы тригера/громкость вниз - " + AudioSource.volume);
+            AudioSource.volume = Mathf.MoveTowards(AudioSource.volume, 1, (0.1f * Time.deltaTime) * -1);            Debug.Log("вышли за границы тригера/громкость вниз - " + AudioSource.volume);
         }
 
-        if(AudioSource.volume == 0)
+        if (AudioSource.volume == 0)
         {
             AudioSource.Stop();
-            stayCollider = false;
-            exitCollider = false;
-
-            Debug.Log("выключили звук");
+            _stayCollider = false;
+            _exitCollider = false;
         }
-
     }
 }
