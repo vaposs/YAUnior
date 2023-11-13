@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Signal : MonoBehaviour
 {
-    [SerializeField] private AudioSource AudioSource;
+    [SerializeField] private AudioSource _audioSource;
     private bool _stayCollider = false;
     private bool _exitCollider = false;
     private float _startVolume = 0.01f;
@@ -12,10 +12,10 @@ public class Signal : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            if (AudioSource.isPlaying == false)
+            if (_audioSource.isPlaying == false)
             {
-                AudioSource.Play();
-                AudioSource.volume = _startVolume;
+                _audioSource.Play();
+                _audioSource.volume = _startVolume;
             }
         }
     }
@@ -41,17 +41,17 @@ public class Signal : MonoBehaviour
     {
         if(_stayCollider == true)
         {
-            AudioSource.volume = Mathf.MoveTowards(AudioSource.volume, 1, 0.1f * Time.deltaTime);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, 1, 0.1f * Time.deltaTime);
         }
 
         if(_exitCollider == true)
         {
-            AudioSource.volume = Mathf.MoveTowards(AudioSource.volume, 1, (0.1f * Time.deltaTime) * -1);            Debug.Log("вышли за границы тригера/громкость вниз - " + AudioSource.volume);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, 1, (0.1f * Time.deltaTime) * -1);            Debug.Log("вышли за границы тригера/громкость вниз - " + _audioSource.volume);
         }
 
-        if (AudioSource.volume == 0)
+        if (_audioSource.volume == 0)
         {
-            AudioSource.Stop();
+            _audioSource.Stop();
             _stayCollider = false;
             _exitCollider = false;
         }
