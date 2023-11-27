@@ -1,14 +1,14 @@
 ﻿<Properties StartupConfiguration="{D9FF98E4-BCE7-593E-4B4D-79B6E63A7B2D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrints/Spawn.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scrints/Bullet.cs">
     <Files>
       <File FileName="Assets/Scrints/Gun.cs" Line="33" Column="2" />
-      <File FileName="Assets/Scrints/Spawn.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scrints/Bullet.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scrints/Spawn.cs" />
+      <File FileName="Assets/Scrints/Bullet.cs" Line="8" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="10ec1daa-edb2-4b70-afbe-c75b5c140e1f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="07b3ce8f-3c3c-4d81-99bd-ce4d85885e9e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

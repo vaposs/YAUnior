@@ -1,20 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float Speed;
+    [SerializeField] private int _timeToDie;
+    [SerializeField] private float _speed;
 
     void Start()
     {
-        Destroy(gameObject, 2);
-    }
+        Destroy(gameObject, _timeToDie);
 
-    public int Damage { get; internal set; }
+    }
 
     void Update()
     {
-        transform.Translate(Vector3.forward * Speed * Time.deltaTime);
+        transform.Translate(Vector2.right * _speed);
     }
 }

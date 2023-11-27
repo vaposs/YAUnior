@@ -145,11 +145,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2675815490076205327, guid: fe2b3fddfd8694fb7944a0f3a17d8f21, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.490716
+      value: 7.81
       objectReference: {fileID: 0}
     - target: {fileID: 2675815490076205327, guid: fe2b3fddfd8694fb7944a0f3a17d8f21, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.8767643
+      value: 3.92
       objectReference: {fileID: 0}
     - target: {fileID: 2675815490076205327, guid: fe2b3fddfd8694fb7944a0f3a17d8f21, type: 3}
       propertyPath: m_LocalPosition.z
@@ -523,7 +523,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -563,7 +563,7 @@ MonoBehaviour:
   - {fileID: 412340559}
   - {fileID: 237473804}
   - {fileID: 913791068}
-  _spawnTime: 3
+  _spawnTime: 1
   _prefab: {fileID: 4458771121372933441, guid: 0375c3cdbe6d344aab00f66ab4708146, type: 3}
 --- !u!4 &2054783371 stripped
 Transform:

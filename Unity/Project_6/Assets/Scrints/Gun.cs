@@ -6,8 +6,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private float _indexRotation = 0.5f;
     [SerializeField] private float _angleMin = -90;
     [SerializeField] private float _angleMax = 0;
-
-
+    private float _fullRotationAngle = 360;
 
     private void Update()
     {
@@ -19,7 +18,7 @@ public class Gun : MonoBehaviour
         _transform.Rotate(0,0,_indexRotation);
 
         var angle = transform.eulerAngles.z;
-        angle = Mathf.Repeat(angle + 180, 360) - 180;
+        angle = Mathf.Repeat(angle + _fullRotationAngle/2, _fullRotationAngle) - _fullRotationAngle / 2;
 
         if (angle < _angleMin)
         {
