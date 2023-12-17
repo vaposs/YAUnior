@@ -1,12 +1,15 @@
 ﻿<Properties StartupConfiguration="{92AC09AB-E3ED-B686-1923-C15BD726E424}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MainMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Project_6/Cube_mover.cs">
     <Files>
-      <File FileName="Assets/MainMenu.cs" Line="6" Column="31" />
+      <File FileName="Assets/Project_6/Cube_rotation.cs" Line="5" Column="1" />
+      <File FileName="Assets/Project_6/Sphere_move.cs" Line="23" Column="31" />
+      <File FileName="Assets/Project_6/Capsule_scale.cs" />
+      <File FileName="Assets/Project_6/Cube_mover.cs" Line="49" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="07b3ce8f-3c3c-4d81-99bd-ce4d85885e9e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e2df8e99-8752-4f9c-9317-f87a109f277c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
