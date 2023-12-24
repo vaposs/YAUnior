@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6be24434dc9442b83a624c50020123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sphereTransform: {fileID: 159653335}
   _startPoint: {fileID: 971382322}
   _endPoint: {fileID: 214014942}
   _speed: 0.5
@@ -524,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9695fa80a40f34b64861d36f5e5f5b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cubeTransform: {fileID: 1286972123}
   _minScale: 0.5
   _maxScale: 2.5
   _growthRate: 0.05
@@ -733,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4433d7072420345b3a58b4c00711cfd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cubeTransform: {fileID: 1614172457}
   _speedRotation: 200
 --- !u!1 &1619767042
 GameObject:
@@ -752,7 +755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1619767043
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -936,6 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd2737dcd8e84f52ae420d986a58728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _capsuleTransform: {fileID: 1655890039}
   _minScale: 0.5
   _maxScale: 2.5
   _growthRate: 0.01

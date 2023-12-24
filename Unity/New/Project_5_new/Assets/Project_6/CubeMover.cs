@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CubeMover : MonoBehaviour
 {
+    [SerializeField] private Transform _cubeTransform;
     [SerializeField] private float _minScale;
     [SerializeField] private float _maxScale;
     [SerializeField] private float _growthRate;
@@ -21,13 +22,13 @@ public class CubeMover : MonoBehaviour
     {
         while(true)
         {
-            transform.localScale += new Vector3(_growthRate, _growthRate, _growthRate);
+            _cubeTransform.localScale += new Vector3(_growthRate, _growthRate, _growthRate);
 
-            if (transform.localScale.x > _maxScale)
+            if (_cubeTransform.localScale.x > _maxScale)
             {
                 _growthRate = _growthRate * -1;
             }
-            else if (transform.localScale.x < _minScale)
+            else if (_cubeTransform.localScale.x < _minScale)
             {
                 _growthRate = _growthRate * -1;
             }
@@ -40,7 +41,7 @@ public class CubeMover : MonoBehaviour
     {
         while(true)
         {
-            transform.Rotate(transform.rotation.x, _speedRotation * Time.deltaTime, transform.rotation.z);
+            _cubeTransform.Rotate(_cubeTransform.rotation.x, _speedRotation * Time.deltaTime, _cubeTransform.rotation.z);
 
             yield return null;
         }
@@ -50,7 +51,7 @@ public class CubeMover : MonoBehaviour
     {
         while(true)
         {
-            transform.Translate(_speedMove,0,0);
+            _cubeTransform.Translate(_speedMove,0,0);
 
             yield return null;
         }
