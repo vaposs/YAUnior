@@ -358,6 +358,7 @@
 "Assets/Project_6/CubeMover.cs"
 "Assets/Project_6/CubeRotation.cs"
 "Assets/Project_6/SphereMove.cs"
+"Assets/Project_7/Scripth/Spawner.cs"
 -langversion:9.0
 
 /deterministic
