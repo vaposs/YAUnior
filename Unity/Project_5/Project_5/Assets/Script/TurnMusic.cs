@@ -6,6 +6,7 @@ public class TurnMusic : MonoBehaviour
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private Signal _signal;
+
     private float _minVolume = 0f;
     private float _startVolume = 0.1f;
     private float _maxVolume = 1f;
@@ -16,7 +17,6 @@ public class TurnMusic : MonoBehaviour
         {
             if (_audioSource.isPlaying == false)
             {
-                Debug.Log("старт");
                 _audioSource.Play();
                 _audioSource.volume = _startVolume;
                 _signal.ChangeVolume(_maxVolume);
@@ -26,7 +26,6 @@ public class TurnMusic : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("стоп");
         _signal.ChangeVolume(_minVolume);
     }
 }

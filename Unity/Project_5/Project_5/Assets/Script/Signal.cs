@@ -4,6 +4,7 @@ using UnityEngine;
 public class Signal : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
+
     private float _stepChangeVolume = 0.1f;
     private bool _workCoroutine = false;
 
@@ -11,7 +12,6 @@ public class Signal : MonoBehaviour
     {
         if(_workCoroutine == false)
         {
-            Debug.Log("корутина старт");
             StartCoroutine(VolumeUpOrDawn(targetVolume));
             _workCoroutine = true;
         }
@@ -22,11 +22,10 @@ public class Signal : MonoBehaviour
         }
     }
 
-    IEnumerator VolumeUpOrDawn(float targetVolume)
+    private IEnumerator VolumeUpOrDawn(float targetVolume)
     {
         while(_audioSource.volume != targetVolume)
         {
-            Debug.Log("корутина");
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _stepChangeVolume * Time.deltaTime);
 
             yield return null;
