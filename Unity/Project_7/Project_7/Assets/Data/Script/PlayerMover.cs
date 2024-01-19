@@ -1,10 +1,16 @@
 using System.Diagnostics;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
+
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForse;
+
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Collider2D _collider2D;
@@ -14,7 +20,7 @@ public class PlayerMover : MonoBehaviour
     private int _maxSpeed = 5;
     private int _minSpeed = 0;
 
-    void Start()
+    private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
@@ -22,7 +28,7 @@ public class PlayerMover : MonoBehaviour
         _collider2D = GetComponent<Collider2D>();
     }
 
-    void Update()
+    private void Update()
     {
         _direction = Input.GetAxisRaw("Horizontal") * _speed;
         _rigidbody2D.velocity = new Vector2(_direction, _rigidbody2D.velocity.y);

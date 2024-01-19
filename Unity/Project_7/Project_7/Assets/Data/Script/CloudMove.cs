@@ -5,14 +5,15 @@ public class CloudMove : MonoBehaviour
     [SerializeField] private Transform _pointStart;
     [SerializeField] private Transform _pointEnd;
     [SerializeField] private float _speed;
+
     private bool _moveBack = false;
 
-    void Start()
+    private void Start()
     {
         transform.position = _pointStart.position;
     }
 
-    void Update()
+    private void Update()
     {
         if(_moveBack)
         {
