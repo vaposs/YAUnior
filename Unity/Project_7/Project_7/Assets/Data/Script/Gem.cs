@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
+    private const string Player = nameof(Player);
+    private const string Dead = nameof(Dead);
+
     [SerializeField] private int _timeToDie;
 
     private Animator _animator;
@@ -16,9 +19,9 @@ public class Gem : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == Player)
         {
-            _animator.SetTrigger("Dead");
+            _animator.SetTrigger(Dead);
             Destroy(this.gameObject,1);
         }
     }

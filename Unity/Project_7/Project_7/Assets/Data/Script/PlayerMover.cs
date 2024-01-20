@@ -8,6 +8,11 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    private const string Horizontal = nameof(Horizontal);
+    private const string Speed = nameof(Speed);
+    private const string Jump = nameof(Jump);
+    private const string SpeedUpDown = nameof(SpeedUpDown);
+
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForse;
 
@@ -30,39 +35,39 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        _direction = Input.GetAxisRaw("Horizontal") * _speed;
+        _direction = Input.GetAxisRaw(Horizontal) * _speed;
         _rigidbody2D.velocity = new Vector2(_direction, _rigidbody2D.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && _isGround == true)
         {
             _isGround = false;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForse);
-            _animator.SetBool("Jump", true);
-            _animator.SetFloat("SpeedUpDown", _rigidbody2D.velocity.y);
+            _animator.SetBool(Jump, true);
+            _animator.SetFloat(SpeedUpDown, _rigidbody2D.velocity.y);
             FlipX();
         }
         else if(_rigidbody2D.velocity.y < 0)
         {
-            _animator.SetFloat("SpeedUpDown", _rigidbody2D.velocity.y);
+            _animator.SetFloat(SpeedUpDown, _rigidbody2D.velocity.y);
             FlipX();
         }
         else if(_rigidbody2D.velocity.x > 0)
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
-            _animator.SetFloat("Speed", _maxSpeed);
+            _animator.SetFloat(Speed, _maxSpeed);
             FlipX();
 
         }
         else if (_rigidbody2D.velocity.x < 0)
         {
             transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
-            _animator.SetFloat("Speed", _maxSpeed);
+            _animator.SetFloat(Speed, _maxSpeed);
             FlipX();
 
         }
         else
         {
-            _animator.SetFloat("Speed", _minSpeed);
+            _animator.SetFloat(Speed, _minSpeed);
         }
     }
 
@@ -85,8 +90,8 @@ public class PlayerMover : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         _isGround = true;
-        _animator.SetBool("Jump", false);
-        _animator.SetFloat("Speed",_rigidbody2D.velocity.x);
-        _animator.SetFloat("SpeedUpDown", 0);
+        _animator.SetBool(Jump, false);
+        _animator.SetFloat(Speed, _rigidbody2D.velocity.x);
+        _animator.SetFloat(SpeedUpDown, 0);
     }
 }

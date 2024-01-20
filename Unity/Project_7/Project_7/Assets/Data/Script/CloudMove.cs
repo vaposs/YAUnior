@@ -39,7 +39,6 @@ public class CloudMove : MonoBehaviour
             {
                 _moveBack = false;
             }
-            
         }
     }
 }
