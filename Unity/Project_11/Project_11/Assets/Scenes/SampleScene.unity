@@ -802,7 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointStart: {fileID: 1308705562}
   _pointEnd: {fileID: 2117202075}
-  _speed: 0.11
+  _speed: 0.03
 --- !u!212 &956423126
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointStart: {fileID: 502855560}
   _pointEnd: {fileID: 1901350874}
-  _speed: 0.05
+  _speed: 0.01
 --- !u!212 &1810311469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2203,7 +2203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointStart: {fileID: 1069924700}
   _pointEnd: {fileID: 1314172408}
-  _speed: 0.2
+  _speed: 0.06
 --- !u!212 &1957536888
 SpriteRenderer:
   m_ObjectHideFlags: 0

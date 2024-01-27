@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.right * _speed);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed);
     }
 
     public void SetTarget(Transform target)
