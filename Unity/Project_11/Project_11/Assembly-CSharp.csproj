@@ -58,10 +58,10 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Script/TrackTarget.cs" />
+    <Compile Include="Assets/Script/MoverTarget.cs" />
+    <Compile Include="Assets/Script/TrackerTarget.cs" />
     <Compile Include="Assets/Script/Bullet.cs" />
-    <Compile Include="Assets/Script/SpawnBullet.cs" />
-    <Compile Include="Assets/Script/TargetMove.cs" />
+    <Compile Include="Assets/Script/SpawnerBullets.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
