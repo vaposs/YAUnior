@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class SpawnBullet : MonoBehaviour
 {
-    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Bullet _bullet;
     [SerializeField] private float _speed;
     [SerializeField] private Transform _target;
     [SerializeField] private float _delayForShoot;
+
+    private Bullet _bullet;
 
     private void Start()
     {
@@ -17,15 +19,15 @@ public class SpawnBullet : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        while (true)
+        bool isWork = true;
+
+        while (isWork)
         {
-            Vector3 bulletTrack = (_target.position - transform.position).normalized;
-            GameObject bullet = Instantiate(_bullet, transform.position + bulletTrack, Quaternion.identity);
+            _bullet.SetDirection(_shootingTarget.position - transform.position).normalized);
+            _bullet = Instantiate(_bullet, transform.position + _bullet.BulletDirection, Quaternion.identity);
+            _bullet.Fly(_shootingPower);
 
-            bullet.GetComponent<Rigidbody>().transform.up = bulletTrack;
-            bullet.GetComponent<Rigidbody>().velocity = bulletTrack * _speed;
-
-            yield return _delayForShoot;
+            yield return new WaitForSeconds(_delayForShoot);
         }
     }
 }
