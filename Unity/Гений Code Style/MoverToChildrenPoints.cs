@@ -1,26 +1,26 @@
 using UnityEngine;
 
-public class MovePointChild : MonoBehaviour
+public class MoverToChildrenPoints : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Transform _points;
 
-    private Transform[] _pointsChild;
+    private Transform[] _waypoints;
     private int _currentPoint;
 
     private void Start()
     {
-        _pointsChild = new Transform[_points.childCount];
+        _waypoints = new Transform[_points.childCount];
 
         for (int i = 0; i < _points.childCount; i++)
         {
-            _pointsChild[i] = _points.GetChild(i).GetComponent<Transform>();
+            _waypoints[i] = _points.GetChild(i).transform;
         }
     }
 
     private void Update()
     {
-        Transform chosePoint = _pointsChild[_currentPoint];
+        Transform chosePoint = _waypoints[_currentPoint];
         transform.position = Vector3.MoveTowards(transform.position, chosePoint.position, _speed * Time.deltaTime);
 
         if (transform.position == chosePoint.position)
@@ -33,12 +33,12 @@ public class MovePointChild : MonoBehaviour
     {
         _currentPoint++;
 
-        if (_currentPoint == _pointsChild.Length)
+        if (_currentPoint == _waypoints.Length)
         {
             _currentPoint = 0;
         }
 
-        Vector3 currentPointPosition = _pointsChild[_currentPoint].transform.position;
+        Vector3 currentPointPosition = _waypoints[_currentPoint].transform.position;
         transform.forward = currentPointPosition - transform.position;
 
         return currentPointPosition;

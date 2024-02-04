@@ -25,9 +25,9 @@ public class SpawnBullet : MonoBehaviour
             var bullet = Instantiate(_bullet, transform.position + _direction, Quaternion.identity);
 
             bullet.transform.up = _direction;
-            bullet.GetComponent<Rigidbody>().velocity = _direction * _speed;
+            bullet.velocity = _direction * _speed;
 
-            yield return new WaitForSeconds(_delay);
+            yield return _delay;
         }
     }
 }
