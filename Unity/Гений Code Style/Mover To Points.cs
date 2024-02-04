@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MoverToChildrenPoints : MonoBehaviour
+public class MoverToPoints : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Transform _points;

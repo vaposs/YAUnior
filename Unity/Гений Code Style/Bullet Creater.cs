@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class SpawnBullet : MonoBehaviour
+public class BulletCreater: MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Rigidbody _bullet;
