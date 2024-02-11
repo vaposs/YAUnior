@@ -13,7 +13,7 @@ class Program
         int pacmanX;
         int pacmanY;
         int directionX = 0;
-        int directionY = 1;
+        int directionY = 0;
         int allDots = 0;
         int collectDots = 0;
 
@@ -54,18 +54,20 @@ class Program
             Console.ReadKey();
         }
     }
+
     static void Move (ref int positionX,ref int positionY, int directionX, int directionY)
     {
         char space = ' ';
+        char player = '@';
         Console.SetCursorPosition(positionY, positionX);
         Console.Write(space);
         positionX += directionX;
         positionY += directionY;
-        char player ='@';
-
+      
         Console.SetCursorPosition(positionY, positionX);
         Console.Write(player);
     }
+
     static void CollectDots(char [,] map, int pacmanX, int pacmanY,ref int collectDots)
     {
         char dots = '.';
@@ -77,10 +79,9 @@ class Program
             map[pacmanX, pacmanY] = space;
         }
     }
+
     static void ChangeDirection (ConsoleKeyInfo key, ref int directionX, ref int directionY)
     {
-
-
         switch (key.Key)
         {
             case ConsoleKey.UpArrow:
@@ -96,8 +97,8 @@ class Program
                 directionX = 0; directionY = 1;
                 break;
         }
-
     }
+
     static void DrawMap(char[,] map)
     {
         for (int i = 0; i < map.GetLength(0); i++)
@@ -106,10 +107,11 @@ class Program
             {
                 Console.Write(map[i, j]);
             }
+
             Console.WriteLine();
         }
-
     }
+
     static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots)
     {
         pacmanX = 0;
@@ -117,6 +119,9 @@ class Program
 
         string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
         char[,] map = new char[newFile.Length, newFile[0].Length];
+        char player = '@';
+        char dots = '.';
+        char space = ' ';
 
         for (int i = 0; i < map.GetLength(0); i++)
         {
@@ -124,15 +129,14 @@ class Program
             {
                 map[i, j] = newFile[i][j];
 
-                if (map[i, j] == '@')
+                if (map[i, j] == player)
                 {
                     pacmanX = i;
                     pacmanY = j;
                 }
-
-                else if (map[i,j]==' ')
+                else if (map[i,j]==space)
                 {
-                    map[i, j] = '.';
+                    map[i, j] = dots;
                     allDots++;
                 }
             }
@@ -141,4 +145,3 @@ class Program
         return map;
     }
 }
-
