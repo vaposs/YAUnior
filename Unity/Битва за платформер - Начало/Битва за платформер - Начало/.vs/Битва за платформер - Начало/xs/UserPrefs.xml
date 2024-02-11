@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{20D16FB2-B047-BDA5-3C57-592DC90B75B4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Data/Script/TakeHeals.cs">
+    <Files>
+      <File FileName="Assets/Data/Script/PlayerMover.cs" Line="123" Column="14" />
+      <File FileName="Assets/Data/Script/EnemyMover.cs" Line="51" Column="1" />
+      <File FileName="Assets/Data/Script/PlayerStalking.cs" Line="56" Column="1" />
+      <File FileName="Assets/Data/Script/CharacterTracking.cs" Line="30" Column="10" />
+      <File FileName="Assets/Data/Script/TakeDamage.cs" Line="18" Column="1" />
+      <File FileName="Assets/Data/Script/TakeHeals.cs" Line="30" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8487dfe4-53fe-4b13-9570-3e4ef6ffaddc" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
