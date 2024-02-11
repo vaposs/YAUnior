@@ -372,11 +372,11 @@
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Data/Script/CharacterTracking.cs"
+"Assets/Data/Script/Damage.cs"
 "Assets/Data/Script/EnemyMover.cs"
+"Assets/Data/Script/Heals.cs"
 "Assets/Data/Script/PlayerMover.cs"
-"Assets/Data/Script/PlayerStalking.cs"
-"Assets/Data/Script/TakeDamage.cs"
-"Assets/Data/Script/TakeHeals.cs"
+"Assets/Data/Script/SeachPlayer.cs"
 -langversion:9.0
 
 /deterministic

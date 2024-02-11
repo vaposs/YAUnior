@@ -12,16 +12,14 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _jumpForse;
 
     private string _groundTag = "Ground";
-    private string _enemyTag = "Enemy";
-    private string _itemTag = "Item";
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private float _direction;
     private bool _isGround = true;
     private int _maxHeals = 100;
     private int _heals;
-    private CharacterTracking _characterTracking;
-    private TakeHeals _takeHeals;
+    private PlayerStalking _playerStalking;
+    private Heals _takeHeals;
 
     private void Start()
     {
@@ -106,23 +104,18 @@ public class PlayerMover : MonoBehaviour
             _isGround = true;
         }
 
-        if (collision.transform.tag == _enemyTag)
+        if (collision.gameObject.TryGetComponent<PlayerStalking>(out _playerStalking))
         {
-            if(collision.gameObject.TryGetComponent<CharacterTracking>(out _characterTracking))
-            {
-                TakeDamage(_characterTracking.MakeDamage());
-            }
+            TakeDamage(_playerStalking.MakeDamage());
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag == _itemTag)
+        if (collision.gameObject.TryGetComponent<Heals>(out _takeHeals))
         {
-            if (collision.gameObject.TryGetComponent<TakeHeals>(out _takeHeals))
-            {
-                TakeHeals(_takeHeals.MakeHeals());
-            }
+            TakeHeals(_takeHeals.MakeHeals());
         }
     }
 }

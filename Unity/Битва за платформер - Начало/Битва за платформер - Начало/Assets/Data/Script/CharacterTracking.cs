@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterTracking : MonoBehaviour
+public class PlayerStalking: MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Transform _targetTransform;

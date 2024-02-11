@@ -31,13 +31,13 @@ public class EnemyMover : MonoBehaviour
 
         if (transform.position == target.position)
         {
-            if (_moveBack == false)
+            if (_moveBack)
             {
-                _moveBack = true;
+                _moveBack = false;
             }
             else
             {
-                _moveBack = false;
+                _moveBack = true;
             }
 
             FlipX();
