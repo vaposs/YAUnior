@@ -1,230 +1,137 @@
-﻿using System;
+namespace Exs_4;
+using System.IO;
+using System;
 
-namespace Project_4
+class Program
 {
-    class MainClass
+    static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        Console.CursorVisible= false;
+
+        bool isPlaying = true;
+
+        int pacmanX, pacmanY;
+        int pacmanDX = 0, pacmanDY = 1;
+        int allDots = 0;
+        int collectDots = 0;
+
+        char[,] map = ReadMap("GameMap", out pacmanX, out pacmanY, ref allDots);
+
+        DrawMap(map);
+        
+        while (isPlaying)
         {
-            Start();
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("Your dots: " + collectDots + "/" + allDots);
+ 
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                ChangeDirection(key,ref pacmanDX, ref pacmanDY);
+            }
+
+            if (map[pacmanX + pacmanDX, pacmanY + pacmanDY] != '#')
+            {
+                Move(ref pacmanX, ref pacmanY, pacmanDX, pacmanDY);
+                CollectDots (map, pacmanX, pacmanY, ref collectDots);
+            }
+
+            System.Threading.Thread.Sleep(200);
+
+            if (collectDots==allDots)
+            {
+                isPlaying = false;
+            }
         }
 
-        static void Start()
+        Console.SetCursorPosition(0, 21);
+
+        if (collectDots == allDots)
         {
-            int movesLeft;
-            int coinPrice = 5;
-            int score = 0;
-            char[,] fild;
-            int heroPositionX = 4;
-            int heroPositionY = 4;
-            uint positionCoinX = 1;
-            uint positionCoinY = 1;
-            bool isEnableCoin = false;
-            bool isFinish = true;
-            uint size = 1;
-            char blockIcon = '#';
-            char heroIcon = '@';
-            char coinIcon = '0';
-            char emptyBlock = ' ';
+            Console.WriteLine("You win!");
+            Console.ReadKey();
+        }
+    }
+    
+    static void Move (ref int X,ref int Y, int DX, int DY)
+    {
+        Console.SetCursorPosition(Y, X);
+        Console.Write(" ");
+        X += DX;
+        Y += DY;
 
-            Console.Write("Введите размер поля - ");
-            size = GetNumber();
-            movesLeft = Convert.ToInt32(size + size);
-            fild = new char[size, size];
-
-            while (isFinish)
+        Console.SetCursorPosition(Y,X);
+        Console.Write('@');
+    }
+    
+    static void CollectDots(char [,] map, int pacmanX, int pacmanY,ref int collectDots)
+    {
+        if (map[pacmanX, pacmanY] == '.')
+        {
+            collectDots++;
+            map[pacmanX, pacmanY] = ' ';
+        }
+    }
+    
+    static void ChangeDirection (ConsoleKeyInfo key, ref int DX, ref int DY)
+    {
+        switch (key.Key)
+        {
+            case ConsoleKey.UpArrow:
+                DX = -1; DY = 0;
+                break;
+            case ConsoleKey.DownArrow:
+                DX = 1; DY = 0;
+                break;
+            case ConsoleKey.LeftArrow:
+                DX = 0; DY = -1;
+                break;
+            case ConsoleKey.RightArrow:
+                DX = 0; DY = 1;
+                break;
+        }
+    }
+    
+    static void DrawMap(char[,] map)
+    {
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
             {
-                Console.Clear();
+                Console.Write(map[i, j]);
+            }
+            
+            Console.WriteLine();
+        }
+    }
+    
+    static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots)
+    {
+        pacmanX = 0;
+        pacmanY = 0;
 
-                isEnableCoin =  GetNextCoin(isEnableCoin, ref positionCoinX, ref positionCoinY, heroPositionX, heroPositionY, size);
+        string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
+        char[,] map = new char[newFile.Length, newFile[0].Length];
 
-                FillArray(fild, size, positionCoinX, positionCoinY, heroPositionX, heroPositionY, coinIcon, blockIcon, heroIcon, emptyBlock);
-                PrintArray(fild);
-                PrintScore(score);
-                PrintMove(ref movesLeft);
-                Move(fild, ref heroPositionX, ref heroPositionY, blockIcon);
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                map[i, j] = newFile[i][j];
 
-                if (positionCoinX == heroPositionX && positionCoinY == heroPositionY)
+                if (map[i, j] == '@')
                 {
-                    score++;
-                    movesLeft = movesLeft + coinPrice;
-                    isEnableCoin = false;
+                    pacmanX = i;
+                    pacmanY = j;
                 }
-                isFinish = GameIsOver(movesLeft, isFinish, score);
-            }
-        }
-
-        static void Move(char[,] fild, ref int heroPositionX, ref int heroPositionY, char blockIcon)
-        {
-            const ConsoleKey MoveUp = ConsoleKey.UpArrow;
-            const ConsoleKey MoveDown = ConsoleKey.DownArrow;
-            const ConsoleKey MoveRight = ConsoleKey.RightArrow;
-            const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
-
-            ConsoleKeyInfo charKey = Console.ReadKey();
-
-            switch (charKey.Key)
-            {
-                case MoveUp:
-                    heroPositionX--;
-
-                    if(fild[heroPositionX,heroPositionY] == blockIcon)
-                    {
-                        heroPositionX = heroPositionX + 1;
-                    }
-                    break;
-                case MoveDown:
-                    heroPositionX++;
-
-                    if (fild[heroPositionX, heroPositionY] == blockIcon)
-                    {
-                        heroPositionX = heroPositionX - 1;
-                    }
-                    break;
-                case MoveLeft:
-                    heroPositionY--;
-
-                    if (fild[heroPositionX, heroPositionY] == blockIcon)
-                    {
-                        heroPositionY = heroPositionY + 1;
-                    }
-                    break;
-                case MoveRight:
-                    heroPositionY++;
-
-                    if (fild[heroPositionX, heroPositionY] == blockIcon)
-                    {
-                        heroPositionY = heroPositionY - 1;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        static void CheckMove(char[,] fild, ref int heroPositionX, ref int heroPositionY, char blockIcon)
-        {
-            if (fild[heroPositionX, heroPositionY] == '#')
-            {
-                heroPositionX = heroPositionX - 1;
-            }
-        }
-
-        static void FillArray(char[,] fild, uint size, uint positionCoinX, uint positionCoinY, int heroPositionX, int heroPositionY, char coinIcon, char blockIcon, char heroIcon, char emptyBlock)
-        {
-            for (int i = 0; i < fild.GetLength(0); i++)
-            {
-                for (int j = 0; j < fild.GetLength(1); j++)
+                else if (map[i,j]==' ')
                 {
-                    if (positionCoinX == i && positionCoinY == j)
-                    {
-                        fild[i, j] = coinIcon;
-                    }
-                    else if (i == 0 || j == 0)
-                    {
-                        fild[i, j] = blockIcon;
-                    }
-                    else if (i == (size - 1) || j == (size - 1))
-                    {
-                        fild[i, j] = blockIcon;
-                    }
-                    else if (i == heroPositionX && j == heroPositionY)
-                    {
-                        fild[i, j] = heroIcon;
-                    }
-                    else
-                    {
-                        fild[i, j] = emptyBlock;
-                    }
+                    map[i, j] = '.';
+                    allDots++;
                 }
             }
         }
 
-        static void PrintArray(char[,] fild)
-        {
-            for (int i = 0; i < fild.GetLength(0); i++)
-            {
-                for (int j = 0; j < fild.GetLength(1); j++)
-                {
-                    Console.Write(fild[i, j]);
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        static uint GetNumber()
-        {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isSuccess;
-            uint number = 0;
-
-            while (isConversionSucceeded)
-            {
-                line = Console.ReadLine();
-                isSuccess = uint.TryParse(line, out number);
-
-                if (isSuccess)
-                {
-                    isConversionSucceeded = false;
-                }
-                else
-                {
-                    Console.Write($"неверное значение {line}, введите другое число - ");
-                }
-            }
-            return number;
-        }
-
-        static uint GetRandomNumber(uint sizeArray)
-        {
-            uint number = 0;
-            uint minRandom = 1;
-            uint maxRandom = sizeArray - 1;
-            int minRandomInt = Convert.ToInt32(minRandom);
-            int maxRandomInt = Convert.ToInt32(maxRandom);
-            Random randomNumber = new Random();
-
-            number = Convert.ToUInt32(randomNumber.Next(minRandomInt, maxRandomInt));
-            return number;
-        }
-
-        static bool GameIsOver(int move, bool OverGame, int score)
-        {
-            if (move <= 1)
-            {
-                OverGame = false;
-                Console.Clear();
-                Console.WriteLine($"Игра закончена, ваш счет - {score}");
-            }
-            return OverGame;
-        }
-
-        static void PrintScore(int score)
-        {
-            Console.WriteLine($"счет - {score}");
-        }
-
-        static void PrintMove(ref int movesLeft)
-        {
-            movesLeft--;
-            Console.Write($"Осталсь ходов - {movesLeft}");
-        }
-
-        static bool GetNextCoin(bool isEnableCoin, ref uint positionCoinX, ref uint positionCoinY, int heroPositionX, int heroPositionY, uint size)
-        {
-            if (isEnableCoin == false)
-            {
-                positionCoinX = GetRandomNumber(size);
-                positionCoinY = GetRandomNumber(size);
-
-                if (heroPositionX == positionCoinX && heroPositionY == positionCoinY)
-                {
-                    positionCoinX = GetRandomNumber(size);
-                    positionCoinY = GetRandomNumber(size);
-                }
-                isEnableCoin = true;
-            }
-            return isEnableCoin;
-        }
+        return map;
     }
 }
