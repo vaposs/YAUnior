@@ -6,6 +6,11 @@ class Program
 {
     static void Main(string[] args)
     {
+        const char player = '@';
+        const char dots = '.';
+        const char space = ' ';
+        const char wall = '#';
+
         Console.CursorVisible= false;
 
         bool isPlaying = true;
@@ -16,8 +21,8 @@ class Program
         int directionY = 0;
         int allDots = 0;
         int collectDots = 0;
-
-        char[,] map = ReadMap("GameMap", out pacmanX, out pacmanY, ref allDots);
+ 
+        char[,] map = ReadMap("GameMap", out pacmanX, out pacmanY, ref allDots, player, dots, space);
 
         DrawMap(map);
         
@@ -32,10 +37,10 @@ class Program
                 ChangeDirection(key,ref directionX, ref directionY);
             }
 
-            if (map[pacmanX + directionX, pacmanY + directionY] != '#')
+            if (map[pacmanX + directionX, pacmanY + directionY] != wall)
             {
-                Move(ref pacmanX, ref pacmanY, directionX, directionY);
-                CollectDots (map, pacmanX, pacmanY, ref collectDots);
+                Move(ref pacmanX, ref pacmanY, directionX, directionY, space, player);
+                CollectDots (map, pacmanX, pacmanY, ref collectDots,dots,space);
             }
 
             System.Threading.Thread.Sleep(200);
@@ -55,10 +60,8 @@ class Program
         }
     }
 
-    static void Move (ref int positionX,ref int positionY, int directionX, int directionY)
+    static void Move (ref int positionX,ref int positionY, int directionX, int directionY, char space, char player)
     {
-        char space = ' ';
-        char player = '@';
         Console.SetCursorPosition(positionY, positionX);
         Console.Write(space);
         positionX += directionX;
@@ -68,11 +71,8 @@ class Program
         Console.Write(player);
     }
 
-    static void CollectDots(char [,] map, int pacmanX, int pacmanY,ref int collectDots)
+    static void CollectDots(char [,] map, int pacmanX, int pacmanY,ref int collectDots, char dots, char space)
     {
-        char dots = '.';
-        char space = ' ';
-
         if (map[pacmanX, pacmanY] == dots)
         {
             collectDots++;
@@ -82,19 +82,22 @@ class Program
 
     static void ChangeDirection (ConsoleKeyInfo key, ref int directionX, ref int directionY)
     {
+        directionX = 0;
+        directionY = 0;
+
         switch (key.Key)
         {
             case ConsoleKey.UpArrow:
-                directionX = -1; directionY = 0;
+                directionX = -1;
                 break;
             case ConsoleKey.DownArrow:
-                directionX = 1; directionY = 0;
+                directionX = 1;
                 break;
             case ConsoleKey.LeftArrow:
-                directionX = 0; directionY = -1;
+                directionY = -1;
                 break;
             case ConsoleKey.RightArrow:
-                directionX = 0; directionY = 1;
+                directionY = 1;
                 break;
         }
     }
@@ -112,16 +115,13 @@ class Program
         }
     }
 
-    static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots)
+    static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots, char player,char dots, char space)
     {
         pacmanX = 0;
         pacmanY = 0;
 
         string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
         char[,] map = new char[newFile.Length, newFile[0].Length];
-        char player = '@';
-        char dots = '.';
-        char space = ' ';
 
         for (int i = 0; i < map.GetLength(0); i++)
         {
