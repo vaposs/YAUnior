@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{F146FD50-D879-3497-A440-448A7CDFC85F}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/HealBar.cs">
+    <Files>
+      <File FileName="Assets/HealBar.cs" Line="65" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="14a4cd97-3fbd-4e05-9116-1df89ac3a8dd" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
