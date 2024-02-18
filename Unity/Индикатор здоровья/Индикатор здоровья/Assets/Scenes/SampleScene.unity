@@ -206,7 +206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1424237728}
+      - m_Target: {fileID: 551956974}
         m_TargetAssemblyTypeName: HealBar, Assembly-CSharp
         m_MethodName: Healing
         m_Mode: 1
@@ -522,6 +522,10 @@ GameObject:
   - component: {fileID: 551956971}
   - component: {fileID: 551956970}
   - component: {fileID: 551956969}
+  - component: {fileID: 551956973}
+  - component: {fileID: 551956974}
+  - component: {fileID: 551956975}
+  - component: {fileID: 551956976}
   m_Layer: 5
   m_Name: MainWindows
   m_TagString: Untagged
@@ -615,6 +619,69 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &551956973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551956968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8c1c24da7d841ef94a05d4361ed59c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealsText: {fileID: 1240959135}
+  _healsText: {fileID: 1019382609}
+  _separatorText: {fileID: 851027164}
+  _separatorHpBar: 47
+  _healBar: {fileID: 551956974}
+--- !u!114 &551956974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551956968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f463c4c3292d4c4194182a1ee7ff8c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHeals: 100
+  _damage: 10
+  _healing: 10
+  _heals: 0
+--- !u!114 &551956975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551956968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f637369bf0cc14fbb93d6046818d27cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 2035484578}
+  _healBar: {fileID: 551956974}
+  _colorImage: {fileID: 692068995}
+--- !u!114 &551956976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551956968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cc24f444ce04ef89f5ef1036817b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 270752477}
+  _healBar: {fileID: 551956974}
+  _colorImage: {fileID: 1736826575}
 --- !u!1 &599740656
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9150943, g: 0.09064613, b: 0.09064613, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1334,7 +1401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1424237728}
+      - m_Target: {fileID: 551956974}
         m_TargetAssemblyTypeName: HealBar, Assembly-CSharp
         m_MethodName: TakeDamage
         m_Mode: 1
@@ -1429,7 +1496,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1424237727}
-  - component: {fileID: 1424237728}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1458,27 +1524,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1424237728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424237726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f463c4c3292d4c4194182a1ee7ff8c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHeals: 100
-  _damage: 10
-  _healing: 10
-  _maxHealsText: {fileID: 1240959135}
-  _healsText: {fileID: 1019382609}
-  _separatorText: {fileID: 851027164}
-  _separatorHpBar: 47
-  _slider_1: {fileID: 2035484578}
-  _slider_2: {fileID: 270752477}
 --- !u!1 &1494850980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,10 +2001,10 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
