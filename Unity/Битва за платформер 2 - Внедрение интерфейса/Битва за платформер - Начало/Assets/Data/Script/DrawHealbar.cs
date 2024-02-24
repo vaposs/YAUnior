@@ -18,20 +18,10 @@ public class DrawHealbar : MonoBehaviour
 
     private void Start()
     {
-        float maxHeals = _healsBar.TakeHealCount();
-        _slider.minValue = 1;
-        _slider.maxValue = maxHeals;
-        _slider.value = maxHeals;
-        _colorImage.color = _colorHide;
-
-        /* замечание 4 -----------------
-         
         _slider.minValue = 1;
         _slider.maxValue = _healsBar.TakeHealCount();
         _slider.value = _healsBar.TakeHealCount();
         _colorImage.color = _colorHide;
-           
-         */
     }
 
     private void OnEnable()
