@@ -6,6 +6,7 @@ public class Heals : MonoBehaviour
 {
     private int _healSize = 20;
     private int _speedRotation = 3;
+    private PlayerMover _playerMover;
 
     private void Update()
     {
@@ -16,7 +17,7 @@ public class Heals : MonoBehaviour
     {
         if (collision)
         {
-            if (collision.GetComponent<PlayerMover>())
+            if (collision.TryGetComponent<PlayerMover>(out _playerMover))
             {
                 Destroy(gameObject);
             }
