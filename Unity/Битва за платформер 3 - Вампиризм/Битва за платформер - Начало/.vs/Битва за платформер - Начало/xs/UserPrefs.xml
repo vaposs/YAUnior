@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{20D16FB2-B047-BDA5-3C57-592DC90B75B4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Data/Script/HealsBar.cs">
+    <Files>
+      <File FileName="Assets/Data/Script/HealsBar.cs" Line="1" Column="14" />
+      <File FileName="Assets/Data/Script/Damage.cs" Line="25" Column="1" />
+      <File FileName="Assets/Data/Script/InteractWorld.cs" Line="1" Column="1" />
+      <File FileName="Assets/Data/Script/PlayerMover.cs" Line="14" Column="1" />
+      <File FileName="Assets/Data/Script/PlayerStalking.cs" Line="1" Column="1" />
+      <File FileName="Assets/Data/Script/Heals.cs" Line="1" Column="1" />
+      <File FileName="Assets/Data/Script/SkillVampire.cs" Line="1" Column="1" />
+      <File FileName="Assets/Data/Script/SeachPlayer.cs" Line="9" Column="51" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="94b32433-4470-4022-ab9e-9008785f4524" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
