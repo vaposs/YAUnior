@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{7910EE7D-6651-3A02-8532-A30414553AF2}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EnemySpawner.cs">
+    <Files>
+      <File FileName="Assets/Script/Background.cs" Line="14" Column="26" />
+      <File FileName="Assets/Script/MusicVolume.cs" />
+      <File FileName="Assets/Script/SoundAirplane.cs" Line="10" Column="56" />
+      <File FileName="Assets/Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets/Shooting.cs" Line="19" Column="2" />
+      <File FileName="Assets/Script/PlayerMover.cs" Line="14" Column="5" />
+      <File FileName="Assets/EnemySpawner.cs" Line="22" Column="10" />
+      <File FileName="Assets/Enemy.cs" Line="27" Column="10" />
+      <File FileName="Assets/Script/MainMenu.cs" Line="9" Column="56" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="78b39b51-4d46-4d46-bf40-63f8b76a01ca" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
