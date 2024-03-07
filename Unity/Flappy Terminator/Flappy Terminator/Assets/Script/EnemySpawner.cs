@@ -18,10 +18,12 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemy(float delay)
     {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+
         while (true)
         {
             Instantiate(_enemy, new Vector3(transform.position.x, Random.RandomRange(_minPosition.transform.position.y, _maxPosition.transform.position.y), transform.position.z), Quaternion.identity);
-            yield return new WaitForSeconds(delay);
+            yield return waitForSeconds;
         }
     } 
 }
