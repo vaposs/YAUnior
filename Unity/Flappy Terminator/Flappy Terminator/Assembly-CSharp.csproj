@@ -58,15 +58,15 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Enemy.cs" />
+    <Compile Include="Assets/Script/Enemy.cs" />
     <Compile Include="Assets/Script/PlayerMover.cs" />
     <Compile Include="Assets/Script/SoundAirplane.cs" />
     <Compile Include="Assets/Script/MusicVolume.cs" />
-    <Compile Include="Assets/EnemySpawner.cs" />
     <Compile Include="Assets/Script/MainMenu.cs" />
     <Compile Include="Assets/Script/GameOverMenu.cs" />
     <Compile Include="Assets/Script/Bullet.cs" />
     <Compile Include="Assets/Script/Shooting.cs" />
+    <Compile Include="Assets/Script/EnemySpawner.cs" />
     <Compile Include="Assets/Script/Background.cs" />
     <Compile Include="Assets/Script/GameOver.cs" />
   </ItemGroup>
@@ -719,11 +719,11 @@
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Recorder.Base">
       <HintPath>Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -812,11 +812,11 @@
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Aseprite.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.2D.Aseprite.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Recorder">
       <HintPath>Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Aseprite.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.2D.Aseprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>

@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{7910EE7D-6651-3A02-8532-A30414553AF2}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.recorder@4.0.2/Editor/Sources/Recorder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/EnemySpawner.cs">
     <Files>
       <File FileName="Assets/Script/Background.cs" Line="14" Column="26" />
       <File FileName="Assets/Script/MusicVolume.cs" />
       <File FileName="Assets/Script/SoundAirplane.cs" />
       <File FileName="Assets/Script/PlayerMover.cs" />
-      <File FileName="Assets/EnemySpawner.cs" Line="22" Column="10" />
-      <File FileName="Assets/Enemy.cs" />
+      <File FileName="Assets/EnemySpawner.cs" Line="16" Column="49" />
+      <File FileName="Assets/Enemy.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/MainMenu.cs" />
-      <File FileName="Library/PackageCache/com.unity.recorder@4.0.2/Editor/Sources/Recorder.cs" Line="93" Column="1" />
+      <File FileName="Assets/Script/EnemySpawner.cs" Line="22" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="78b39b51-4d46-4d46-bf40-63f8b76a01ca" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="95b7f205-02a0-4170-ad67-135b8103bbab" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
