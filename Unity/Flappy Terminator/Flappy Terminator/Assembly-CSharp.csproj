@@ -58,17 +58,23 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Script/Enemy.cs" />
-    <Compile Include="Assets/Script/PlayerMover.cs" />
-    <Compile Include="Assets/Script/SoundAirplane.cs" />
-    <Compile Include="Assets/Script/MusicVolume.cs" />
-    <Compile Include="Assets/Script/MainMenu.cs" />
-    <Compile Include="Assets/Script/GameOverMenu.cs" />
-    <Compile Include="Assets/Script/Bullet.cs" />
-    <Compile Include="Assets/Script/Shooting.cs" />
-    <Compile Include="Assets/Script/EnemySpawner.cs" />
-    <Compile Include="Assets/Script/Background.cs" />
-    <Compile Include="Assets/Script/GameOver.cs" />
+    <Compile Include="Assets/Data/Player/Script/PlayerShoot.cs" />
+    <Compile Include="Assets/Data/Enemy/Script/EnemyShoot.cs" />
+    <Compile Include="Assets/Data/Enemy/Script/RemoveEnemy.cs" />
+    <Compile Include="Assets/Data/Background/Script/Game.cs" />
+    <Compile Include="Assets/Data/Enemy/Script/ObjectPool.cs" />
+    <Compile Include="Assets/Data/Bullet/Script/EnemyBulletPool.cs" />
+    <Compile Include="Assets/Data/Bullet/Script/EnemyBullet.cs" />
+    <Compile Include="Assets/Data/Bullet/Script/Bullet.cs" />
+    <Compile Include="Assets/Data/Background/Script/StartScreen.cs" />
+    <Compile Include="Assets/Data/Player/PlayerTracker.cs" />
+    <Compile Include="Assets/Data/Enemy/Script/Spawner.cs" />
+    <Compile Include="Assets/Data/Player/Script/GameOverZone.cs" />
+    <Compile Include="Assets/Data/Background/Script/Background.cs" />
+    <Compile Include="Assets/Data/Bullet/Script/BulletPool.cs" />
+    <Compile Include="Assets/Data/Bullet/Script/BulletRemover.cs" />
+    <Compile Include="Assets/Data/Enemy/Script/Enemy.cs" />
+    <Compile Include="Assets/Data/Player/Script/PlayerMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
