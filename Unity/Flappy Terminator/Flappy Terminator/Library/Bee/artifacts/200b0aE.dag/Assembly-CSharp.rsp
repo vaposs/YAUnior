@@ -387,10 +387,12 @@
 "Assets/Data/Enemy/Script/ObjectPool.cs"
 "Assets/Data/Enemy/Script/RemoveEnemy.cs"
 "Assets/Data/Enemy/Script/Spawner.cs"
-"Assets/Data/Player/PlayerTracker.cs"
 "Assets/Data/Player/Script/GameOverZone.cs"
+"Assets/Data/Player/Script/PlayerDestroer.cs"
 "Assets/Data/Player/Script/PlayerMove.cs"
 "Assets/Data/Player/Script/PlayerShoot.cs"
+"Assets/Data/Player/Script/PlayerTracker.cs"
+"Assets/замечания.cs"
 -langversion:9.0
 
 /deterministic

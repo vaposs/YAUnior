@@ -3,11 +3,11 @@ using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : PlayerDestroer
 {
     [SerializeField] private float _speed;
 
-    public event Action<Enemy> onDestroyed;
+    public event Action<Enemy> Destroyed;
 
     private void Update()
     {
@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Bullet bullet))
         {
-            onDestroyed?.Invoke(this);
+            Destroyed?.Invoke(this);
         }
     }
 

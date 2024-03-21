@@ -31,7 +31,7 @@ public class ObjectPool : MonoBehaviour
             Enemy enemy = Instantiate(_enemy, spawnPosition, Quaternion.identity);
             enemy.Initialize(_enemyBulletPool);
             enemy.transform.parent = _container;
-            enemy.onDestroyed += PutObject;
+            enemy.Destroyed += PutObject;
             return enemy;
         }
         else

@@ -13,12 +13,12 @@ public class BulletPool : MonoBehaviour
 
     private void OnEnable()
     {
-        _bullet.onHit += PutObject;
+        _bullet.Hitted += PutObject;
     }
 
     private void OnDisable()
     {
-        _bullet.onHit -= PutObject;
+        _bullet.Hitted -= PutObject;
     }
 
     private void Awake()

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : PlayerDestroer
 {
     [SerializeField] private float _speed;
 

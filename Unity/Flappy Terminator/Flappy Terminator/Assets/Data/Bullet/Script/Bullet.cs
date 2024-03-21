@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    public event Action<Bullet> onHit;
+    public event Action<Bullet> Hitted;
 
     private void Update()
     {
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent(out Enemy enemy))
         {
-            onHit?.Invoke(this);
+            Hitted?.Invoke(this);
         }
     }
 }

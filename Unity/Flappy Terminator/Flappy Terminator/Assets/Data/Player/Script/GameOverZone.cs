@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameOverZone : MonoBehaviour
+public class GameOverZone : PlayerDestroer
 {
 
 }

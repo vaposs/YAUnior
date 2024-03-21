@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private Quaternion _maxRotation;
     private Quaternion _minRotation;
+    private KeyCode _tapKey = KeyCode.Space;
 
     public event Action RestartGame;
 
@@ -28,7 +29,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(_tapKey))
         {
             _rigidbody2D.velocity = new Vector2(_speed, _upForce);
             transform.rotation = _maxRotation;
@@ -39,9 +40,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out EnemyBullet enemyBullet) ||
-            collision.gameObject.TryGetComponent(out GameOverZone gameOverZone) ||
-            collision.gameObject.TryGetComponent(out Enemy enemy))
+        if(collision.gameObject.TryGetComponent(out PlayerDestroer playerDestroer))
         {
             RestartGame?.Invoke();
         }

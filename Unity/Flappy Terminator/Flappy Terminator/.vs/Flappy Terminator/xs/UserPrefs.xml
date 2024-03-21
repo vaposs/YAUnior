@@ -1,14 +1,10 @@
 ﻿<Properties StartupConfiguration="{7910EE7D-6651-3A02-8532-A30414553AF2}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Data/Bullet/Script/EnemyBulletPool.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/замечания.cs">
     <Files>
-      <File FileName="Assets/Data/Enemy/Script/ObjectPool.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Enemy/Script/RemoveEnemy.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Enemy/Script/Spawner.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Bullet/Script/Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Bullet/Script/BulletPool.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Bullet/Script/BulletRemover.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Bullet/Script/EnemyBullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Data/Bullet/Script/EnemyBulletPool.cs" Line="1" Column="1" />
+      <File FileName="Assets/замечания.cs" Line="11" Column="23" />
+      <File FileName="Assets/Data/Enemy/Script/ObjectPool.cs" Line="35" Column="26" />
+      <File FileName="Assets/Data/Bullet/Script/BulletPool.cs" Line="33" Column="19" />
+      <File FileName="Assets/Data/Bullet/Script/EnemyBulletPool.cs" Line="8" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
