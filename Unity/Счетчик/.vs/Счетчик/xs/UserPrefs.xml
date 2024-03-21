@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{ED971C7F-1DD0-B920-7914-57518E58FD0E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scorer.cs">
+    <Files>
+      <File FileName="Assets/Scorer.cs" Line="2" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6f552945-aae6-47df-ab04-d1cb0557601b" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
