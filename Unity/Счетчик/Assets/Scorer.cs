@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,34 +8,28 @@ public class Scorer : MonoBehaviour
 {
     [SerializeField] private float _delay;
     [SerializeField] private Text _text;
-    [SerializeField] private KeyCode _keyCommandStart = KeyCode.Mouse0;
-    [SerializeField] private KeyCode _keyCommandStop = KeyCode.Mouse1;
+    [SerializeField] private KeyCode _keyCommand = KeyCode.Mouse0;
 
     private int _numberText = 0;
-    private bool _isWorcCoroutine = false;
+    private Coroutine _coroutine = null;
 
     private void Update()
     {
-        if(Input.GetKeyDown(_keyCommandStart))
+        if(Input.GetKeyDown(_keyCommand))
         {
-            if(_isWorcCoroutine == false)
+            if(_coroutine == null)
             {
-                _isWorcCoroutine = true;
-                StartCoroutine(Scored(_delay));
+                _coroutine = StartCoroutine(Scored(_delay));
             }
-        }
-
-        if (Input.GetKeyDown(_keyCommandStop))
-        {
-            if (_isWorcCoroutine == true)
+            else
             {
-                _isWorcCoroutine = false;
-                StopAllCoroutines();
+                StopCoroutine(_coroutine);
+                _coroutine = null;
             }
         }
     }
 
-    IEnumerator Scored(float delay)
+    private IEnumerator Scored(float delay)
     {
         WaitForSeconds wait = new WaitForSeconds(delay);
 
