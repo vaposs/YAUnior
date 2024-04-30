@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{AA15CF62-289C-6621-2D4B-3859E3FB782E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Hit.cs">
+    <Files>
+      <File FileName="Assets/PlayerMover.cs" Line="45" Column="25" />
+      <File FileName="Assets/Hit.cs" Line="45" Column="56" />
+      <File FileName="Assets/Enemy.cs" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b7d80606-e039-44b3-8a61-12123b168bfa" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
