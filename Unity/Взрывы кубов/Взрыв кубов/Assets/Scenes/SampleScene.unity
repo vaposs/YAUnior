@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 604876913}
   - component: {fileID: 604876912}
   - component: {fileID: 604876911}
-  - component: {fileID: 604876910}
+  - component: {fileID: 604876915}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -550,20 +550,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &604876910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604876909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43776e13f58c947079e87bdfceb74cd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnPosition: {fileID: 123431282}
-  _prefab: {fileID: 7182381705952746657, guid: 09670251427ba4ec582828c9f75ce307, type: 3}
 --- !u!114 &604876911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,6 +633,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &604876915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604876909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43776e13f58c947079e87bdfceb74cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPosition: {fileID: 123431282}
+  _prefab: {fileID: 2290998852303775842, guid: 09670251427ba4ec582828c9f75ce307, type: 3}
 --- !u!1 &799143871
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 604876910}
+      - m_Target: {fileID: 604876915}
         m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
         m_MethodName: Spawn
         m_Mode: 1
