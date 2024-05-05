@@ -1,22 +1,24 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(MeshRenderer))]
+
 public class Cube : MonoBehaviour , IPointerClickHandler
 {
-    private MeshRenderer _meshRenderer;
-    private Cube _cube;
-    private ParticleSystem _particleSystem;
-    private Transform _efectPosition;
-    private int _maxPercent = 101;
-    private int _divisionСhance = 100;
-    private int _indexDivision = 2;
-    private int _countDevide;
-    private int _minDevide = 1;
-    private int _maxDevide = 7;
-    private float _tempScale;
-    private float _indexDivition = 0.5f;
-    private float _forse = 50; 
-    private float _explosionRadiys = 2;
+    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private Cube _cube;
+    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private Transform _efectPosition;
+    [SerializeField] private int _maxPercent = 101;
+    [SerializeField] private int _divisionСhance = 100;
+    [SerializeField] private int _indexDivision = 2;
+    [SerializeField] private int _countDevide;
+    [SerializeField] private int _minDevide = 1;
+    [SerializeField] private int _maxDevide = 7;
+    [SerializeField] private float _tempScale;
+    [SerializeField] private float _indexDivition = 0.5f;
+    [SerializeField] private float _forse = 50;
+    [SerializeField] private float _explosionRadiys = 2;
 
     private void Start()
     {
