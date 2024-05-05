@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class CubeTwoPointZero : MonoBehaviour, IPointerClickHandler
 {
+    private ParticleSystem _particleSystem;
     private SpriteRenderer _spriteRenderer;
     private CubeTwoPointZero _cube;
     private int _maxPercent = 101;
@@ -46,10 +47,12 @@ public class CubeTwoPointZero : MonoBehaviour, IPointerClickHandler
         {
             _explosionRadiys = _explosionRadiys - this.transform.localScale.x;
             _forse =  _explosionRadiys;
+            Instantiate(_particleSystem).Play; ;
             Explosion();
         }
 
         Destroy(this.gameObject);
+
     }
 
     private void Explosion()

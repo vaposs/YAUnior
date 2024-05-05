@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{D1E97F7B-1ACD-B78A-CDBD-45C9599918DB}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Cube.cs">
+    <Files>
+      <File FileName="Assets/Cube.cs" Line="18" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bc7448cd-d63d-417c-bb48-ca57704b70e0" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
