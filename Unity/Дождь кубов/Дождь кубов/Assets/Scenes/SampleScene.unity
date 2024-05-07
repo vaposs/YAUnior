@@ -123,6 +123,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &365165716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 365165718}
+  - component: {fileID: 365165717}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &365165717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365165716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17b0ad6f7a1245a181d56ab23e439cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawner: {fileID: 2018961327}
+  _minSpawnPosition: -5
+  _maxSpawnPosition: 5
+  _spawnPositionY: 10
+  _cube: {fileID: 6299419181047008476, guid: cf57442f307f345ddb9a4846a85d621a, type: 3}
+--- !u!4 &365165718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365165716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0915632, y: 4.966501, z: 1.384718}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +371,7 @@ GameObject:
   - component: {fileID: 1593617681}
   - component: {fileID: 1593617680}
   - component: {fileID: 1593617684}
+  - component: {fileID: 1593617685}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -439,6 +489,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1593617685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593617679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ba62f0f61e440b8b97c0f0e070eb16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 365165717}
+  _minTimeDestroy: 2
+  _maxTimeDestroy: 5
 --- !u!1 &2018961325
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,11 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994cead8411f94bb2885879415bf234e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpawnPosition: -5
-  _maxSpawnPosition: 5
-  _spawnPositionY: 10
-  _cube: {fileID: 6299419181047008476, guid: cf57442f307f345ddb9a4846a85d621a, type: 3}
-  _delay: 0.5
+  _delay: 1
+  _objectPool: {fileID: 365165717}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -495,3 +557,4 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1593617683}
+  - {fileID: 365165718}
