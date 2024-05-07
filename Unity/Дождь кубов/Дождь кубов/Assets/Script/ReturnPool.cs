@@ -5,7 +5,7 @@ public class ReturnPool : MonoBehaviour
 {
     [SerializeField] private ObjectPool _pool;
     [SerializeField] private float _minTimeDestroy = 2;
-    [SerializeField] private float _maxTimeDestroy = 5;
+    [SerializeField] private float _maxTimeDestroy = 6;
 
     private WaitForSeconds _wait;
 
