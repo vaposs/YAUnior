@@ -152,10 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e17b0ad6f7a1245a181d56ab23e439cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawner: {fileID: 2018961327}
-  _minSpawnPosition: -5
-  _maxSpawnPosition: 5
-  _spawnPositionY: 10
   _cube: {fileID: 6299419181047008476, guid: cf57442f307f345ddb9a4846a85d621a, type: 3}
 --- !u!4 &365165718
 Transform:
@@ -550,6 +546,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delay: 1
   _objectPool: {fileID: 365165717}
+  _minSpawnPosition: -5
+  _maxSpawnPosition: 5
+  _spawnPositionY: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

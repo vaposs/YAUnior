@@ -14,11 +14,11 @@ public class ReturnPool : MonoBehaviour
         if (other.TryGetComponent(out Cube cube))
         {
             _wait = new WaitForSeconds(Random.Range(_minTimeDestroy, _maxTimeDestroy));
-            StartCoroutine(Delay(cube));
+            StartCoroutine(DeletionDelay(cube));
         }
     }
 
-    private IEnumerator Delay(Cube cube)
+    private IEnumerator DeletionDelay(Cube cube)
     {
         yield return _wait;
         _pool.PutObject(cube);
