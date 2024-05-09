@@ -15,8 +15,7 @@ public class ChangeColor : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
 
         sequence.Append(_meshRenderer.material.DOColor(_firstColor, _duration));
-        sequence.Insert(2f, _meshRenderer.material.DOColor(_secondColor, _duration));
+        sequence.Insert(_duration, _meshRenderer.material.DOColor(_secondColor, _duration));
         sequence.SetLoops(_repeats, LoopType.Restart);
-        //sequence.SetEase(Ease.Linear);
     }
 }
