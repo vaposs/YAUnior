@@ -12,16 +12,25 @@ public class ObjectPool : MonoBehaviour
         _storage = new Queue<Cube>();
     }
 
-    public Cube GetCube(Vector3 spawnPosition)
+    private void OnEnable()
+    {
+        Cube.onToched += PutObject;
+    }
+
+    private void Disable()
+    {
+        Cube.onToched -= PutObject;
+    }
+
+    public Cube GetCube()
     {
         if (_storage.Count == 0)
         {
-            return Instantiate(_cube, spawnPosition, Quaternion.identity);
+            return Instantiate(_cube, transform.position, Quaternion.identity);
         }
         else
-        {   Cube tempCube;
-            tempCube = _storage.Dequeue();
-            tempCube.transform.position = spawnPosition;
+        {
+            Cube tempCube = _storage.Dequeue();
             tempCube.gameObject.SetActive(true);
 
             return tempCube;

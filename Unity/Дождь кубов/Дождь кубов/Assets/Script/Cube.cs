@@ -1,12 +1,21 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 public class Cube : MonoBehaviour
 {
-    private bool _isChangeColor = true;
+    [SerializeField] private float _minTimeDestroy = 2;
+    [SerializeField] private float _maxTimeDestroy = 6;
+
+    private WaitForSeconds _wait;
+
+    private bool _iseColorChanged = true;
     private MeshRenderer _meshRenderer;
 
-    private void Start()
+    public static Action<Cube> onToched;
+
+    private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
     }
@@ -14,18 +23,26 @@ public class Cube : MonoBehaviour
     private void OnEnable()
     {
         _meshRenderer.material.color = Color.white;
-        _isChangeColor = true;
+        _iseColorChanged = true;
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.TryGetComponent<ReturnPool>(out ReturnPool returnPool))
+        if (_iseColorChanged)
         {
-            if (_isChangeColor)
+            if (collider.TryGetComponent<ReturnPool>(out ReturnPool returnPool))
             {
-                _isChangeColor = false;
-                _meshRenderer.material.color = Random.ColorHSV();
+                _iseColorChanged = false;
+                _meshRenderer.material.color = UnityEngine.Random.ColorHSV();
+                _wait = new WaitForSeconds(UnityEngine.Random.Range(_minTimeDestroy, _maxTimeDestroy));
+                StartCoroutine(DeletionDelay());
             }
         }
+    }
+
+    private IEnumerator DeletionDelay()
+    {
+        yield return _wait;
+        onToched?.Invoke(this);
     }
 }

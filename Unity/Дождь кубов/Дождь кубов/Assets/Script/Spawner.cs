@@ -29,7 +29,8 @@ public class Spawner : MonoBehaviour
             _spawnPositionZ = Random.Range(_minSpawnPosition, _maxSpawnPosition);
             _spawnPosition = new Vector3(_spawnPositionX, _spawnPositionY, _spawnPositionZ);
 
-            _objectPool.GetCube(_spawnPosition);
+            Cube cube = _objectPool.GetCube();
+            cube.transform.position = _spawnPosition;
             yield return _wait;
         }
     }
