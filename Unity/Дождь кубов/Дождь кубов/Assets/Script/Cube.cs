@@ -10,10 +10,10 @@ public class Cube : MonoBehaviour
 
     private WaitForSeconds _wait;
 
-    private bool _iseColorChanged = true;
+    private bool _isColorChanged = true;
     private MeshRenderer _meshRenderer;
 
-    public static Action<Cube> onToched;
+    public static Action<Cube> ReturnPool;
 
     private void Awake()
     {
@@ -23,16 +23,16 @@ public class Cube : MonoBehaviour
     private void OnEnable()
     {
         _meshRenderer.material.color = Color.white;
-        _iseColorChanged = true;
+        _isColorChanged = true;
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (_iseColorChanged)
+        if (_isColorChanged)
         {
-            if (collider.TryGetComponent<ReturnPool>(out ReturnPool returnPool))
+            if (collider.TryGetComponent(out ReturnPool returnPool))
             {
-                _iseColorChanged = false;
+                _isColorChanged = false;
                 _meshRenderer.material.color = UnityEngine.Random.ColorHSV();
                 _wait = new WaitForSeconds(UnityEngine.Random.Range(_minTimeDestroy, _maxTimeDestroy));
                 StartCoroutine(DeletionDelay());
@@ -43,6 +43,6 @@ public class Cube : MonoBehaviour
     private IEnumerator DeletionDelay()
     {
         yield return _wait;
-        onToched?.Invoke(this);
+        ReturnPool?.Invoke(this);
     }
 }

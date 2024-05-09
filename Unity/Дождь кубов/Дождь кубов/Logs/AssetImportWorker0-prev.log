@@ -22,7 +22,7 @@ AssetImportWorker0
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-65415
+61556
 Successfully changed project path to: /Users/walter/GitHub/YAUnior/Unity/Дождь кубов/Дождь кубов
 /Users/walter/GitHub/YAUnior/Unity/Дождь кубов/Дождь кубов
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -56,12 +56,12 @@ Successfully changed project path to: /Users/walter/GitHub/YAUnior/Unity/Дож�
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [4580476416] Host "[IP] 192.168.1.69 [Port] 0 [Flags] 2 [Guid] 3154237359 [EditorId] 3154237359 [Version] 1048832 [Id] OSXEditor(0,MacBook-Air-WalterSkot.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [4477969920] Host "[IP] 192.168.1.69 [Port] 0 [Flags] 2 [Guid] 1427921111 [EditorId] 1427921111 [Version] 1048832 [Id] OSXEditor(0,MacBook-Air-WalterSkot.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [4580476416] Host "[IP] 192.168.1.69 [Port] 0 [Flags] 2 [Guid] 3154237359 [EditorId] 3154237359 [Version] 1048832 [Id] OSXEditor(0,MacBook-Air-WalterSkot.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [4477969920] Host "[IP] 192.168.1.69 [Port] 0 [Flags] 2 [Guid] 1427921111 [EditorId] 1427921111 [Version] 1048832 [Id] OSXEditor(0,MacBook-Air-WalterSkot.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with 3 workers.
-Refreshing native plugins compatible for Editor in 55.32 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 49.21 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.8f1 (b5eafc012955)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Resources/UnitySubsystems
@@ -76,46 +76,46 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56227
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56148
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.8f1/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
-Registered in 0.030538 seconds.
-- Loaded All Assemblies, in  1.809 seconds
+Registered in 0.018003 seconds.
+- Loaded All Assemblies, in  3.389 seconds
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.911 seconds
-Domain Reload Profiling: 2720ms
-	BeginReloadAssembly (607ms)
+- Finished resetting the current domain, in  0.666 seconds
+Domain Reload Profiling: 4055ms
+	BeginReloadAssembly (798ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (2ms)
-	RebuildCommonClasses (196ms)
-	RebuildNativeTypeToScriptingClass (83ms)
-	initialDomainReloadingComplete (297ms)
-	LoadAllAssembliesAndSetupDomain (624ms)
-		LoadAssemblies (619ms)
+	RebuildCommonClasses (152ms)
+	RebuildNativeTypeToScriptingClass (40ms)
+	initialDomainReloadingComplete (1348ms)
+	LoadAllAssembliesAndSetupDomain (1050ms)
+		LoadAssemblies (806ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (606ms)
-			TypeCache.Refresh (601ms)
-				TypeCache.ScanAssembly (556ms)
+		AnalyzeDomain (1037ms)
+			TypeCache.Refresh (1031ms)
+				TypeCache.ScanAssembly (987ms)
 			ScanForSourceGeneratedMonoScriptInfo (1ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (912ms)
+	FinalizeReload (667ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (702ms)
+		SetupLoadedEditorAssemblies (481ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (31ms)
-			SetLoadedEditorAssemblies (23ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (12ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (9ms)
-			ProcessInitializeOnLoadAttributes (497ms)
-			ProcessInitializeOnLoadMethodAttributes (141ms)
+			BeforeProcessingInitializeOnLoad (6ms)
+			ProcessInitializeOnLoadAttributes (325ms)
+			ProcessInitializeOnLoadMethodAttributes (122ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -123,8 +123,8 @@ Domain Reload Profiling: 2720ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  5.549 seconds
-Refreshing native plugins compatible for Editor in 30.97 ms, found 4 plugins.
+- Loaded All Assemblies, in  3.707 seconds
+Refreshing native plugins compatible for Editor in 18.51 ms, found 4 plugins.
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 Package Manager log level set to [2]
@@ -132,57 +132,55 @@ Package Manager log level set to [2]
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  4.041 seconds
-Domain Reload Profiling: 9595ms
-	BeginReloadAssembly (302ms)
+- Finished resetting the current domain, in  1.706 seconds
+Domain Reload Profiling: 5415ms
+	BeginReloadAssembly (496ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (11ms)
+		DisableScriptedObjects (9ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (65ms)
-	RebuildCommonClasses (189ms)
-	RebuildNativeTypeToScriptingClass (54ms)
-	initialDomainReloadingComplete (186ms)
-	LoadAllAssembliesAndSetupDomain (4821ms)
-		LoadAssemblies (1073ms)
+		CreateAndSetChildDomain (67ms)
+	RebuildCommonClasses (90ms)
+	RebuildNativeTypeToScriptingClass (33ms)
+	initialDomainReloadingComplete (129ms)
+	LoadAllAssembliesAndSetupDomain (2960ms)
+		LoadAssemblies (1187ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (3893ms)
-			TypeCache.Refresh (3716ms)
-				TypeCache.ScanAssembly (3644ms)
-			ScanForSourceGeneratedMonoScriptInfo (143ms)
-			ResolveRequiredComponents (24ms)
-	FinalizeReload (4042ms)
+		AnalyzeDomain (2112ms)
+			TypeCache.Refresh (1718ms)
+				TypeCache.ScanAssembly (1443ms)
+			ScanForSourceGeneratedMonoScriptInfo (366ms)
+			ResolveRequiredComponents (18ms)
+	FinalizeReload (1707ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2953ms)
+		SetupLoadedEditorAssemblies (1214ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (47ms)
-			SetLoadedEditorAssemblies (16ms)
+			InitializePlatformSupportModulesInManaged (12ms)
+			SetLoadedEditorAssemblies (12ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (477ms)
-			ProcessInitializeOnLoadAttributes (2334ms)
-			ProcessInitializeOnLoadMethodAttributes (75ms)
-			AfterProcessingInitializeOnLoad (3ms)
-			EditorAssembliesLoaded (1ms)
+			BeforeProcessingInitializeOnLoad (93ms)
+			ProcessInitializeOnLoadAttributes (1057ms)
+			ProcessInitializeOnLoadMethodAttributes (37ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (13ms)
+		AwakeInstancesAfterBackupRestoration (10ms)
 Launching external process: /Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.11 seconds
-Refreshing native plugins compatible for Editor in 2.97 ms, found 4 plugins.
+Launched and connected shader compiler UnityShaderCompiler after 0.17 seconds
+Refreshing native plugins compatible for Editor in 6.01 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3249 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 37 unused Assets / (56.9 KB). Loaded Objects now: 3705.
-Memory consumption went from 231.2 MB to 231.1 MB.
-Total: 6.140838 ms (FindLiveObjects: 0.496859 ms CreateObjectMapping: 0.491623 ms MarkObjects: 4.949060 ms  DeleteObjects: 0.200471 ms)
+Memory consumption went from 230.9 MB to 230.8 MB.
+Total: 6.724727 ms (FindLiveObjects: 0.491881 ms CreateObjectMapping: 0.442862 ms MarkObjects: 5.638105 ms  DeleteObjects: 0.148269 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
   custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
   custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
   custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
   custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
@@ -190,71 +188,341 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 210089.013011 seconds.
-  path: Assets/Script/Cube.cs
-  artifactKey: Guid(c04a806bd16ce4440b6d9755a9156f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Script/Cube.cs using Guid(c04a806bd16ce4440b6d9755a9156f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f78620f13f5f3b8d27ce8c66452f56a') in 0.026875 seconds
+  Time since last request: 223068.096804 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.005929 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 0
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000101 seconds.
-  path: Assets/Prefab/Cube.prefab
-  artifactKey: Guid(cf57442f307f345ddb9a4846a85d621a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Cube.prefab using Guid(cf57442f307f345ddb9a4846a85d621a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09d168d9becc46c03ba5ce73a032881f') in 0.365012 seconds
+  Time since last request: 0.005671 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000824 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
 Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 10
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.516846 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001718 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.101959 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000640 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.083415 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001100 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.126704 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000625 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.066540 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000652 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.093831 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001147 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.123682 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001164 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.096145 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000794 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.376177 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000855 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.569174 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000565 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.043962 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000553 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.290815 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000781 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.101397 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000720 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.327872 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000616 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.206236 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000593 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.013263 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000548 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.149631 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000653 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.005073 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000607 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.075807 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000594 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.005516 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000679 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.083830 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001034 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.090012 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000625 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.094804 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.000655 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.130741 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00000000000000000000000000000000') in 0.001030 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+  ERROR: Build asset version error: assets/script/returnpool.cs in SourceAssetDB has modification time of '2024-05-09T08:08:50Z' while content on disk has modification time of '2024-05-09T08:16:54Z'
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.438 seconds
-Refreshing native plugins compatible for Editor in 21.92 ms, found 4 plugins.
+- Loaded All Assemblies, in  1.195 seconds
+Refreshing native plugins compatible for Editor in 3.72 ms, found 4 plugins.
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  4.393 seconds
-Domain Reload Profiling: 5832ms
-	BeginReloadAssembly (515ms)
+- Finished resetting the current domain, in  2.698 seconds
+Domain Reload Profiling: 3893ms
+	BeginReloadAssembly (414ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (15ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (149ms)
-	RebuildCommonClasses (115ms)
-	RebuildNativeTypeToScriptingClass (37ms)
+		CreateAndSetChildDomain (166ms)
+	RebuildCommonClasses (112ms)
+	RebuildNativeTypeToScriptingClass (40ms)
 	initialDomainReloadingComplete (64ms)
-	LoadAllAssembliesAndSetupDomain (707ms)
-		LoadAssemblies (955ms)
+	LoadAllAssembliesAndSetupDomain (565ms)
+		LoadAssemblies (672ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (41ms)
-			TypeCache.Refresh (14ms)
+		AnalyzeDomain (61ms)
+			TypeCache.Refresh (17ms)
 				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (14ms)
-			ResolveRequiredComponents (9ms)
-	FinalizeReload (4394ms)
+			ScanForSourceGeneratedMonoScriptInfo (23ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (2699ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (864ms)
+		SetupLoadedEditorAssemblies (1072ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (8ms)
+			InitializePlatformSupportModulesInManaged (10ms)
 			SetLoadedEditorAssemblies (6ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (80ms)
-			ProcessInitializeOnLoadAttributes (739ms)
-			ProcessInitializeOnLoadMethodAttributes (29ms)
+			BeforeProcessingInitializeOnLoad (92ms)
+			ProcessInitializeOnLoadAttributes (927ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
 			AfterProcessingInitializeOnLoad (1ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Refreshing native plugins compatible for Editor in 13.99 ms, found 4 plugins.
+		AwakeInstancesAfterBackupRestoration (9ms)
+Refreshing native plugins compatible for Editor in 2.52 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3233 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3717.
-Memory consumption went from 234.9 MB to 234.9 MB.
-Total: 4.975850 ms (FindLiveObjects: 0.308504 ms CreateObjectMapping: 0.162608 ms MarkObjects: 4.425380 ms  DeleteObjects: 0.077842 ms)
+Unloading 28 unused Assets / (33.7 KB). Loaded Objects now: 3708.
+Memory consumption went from 229.8 MB to 229.8 MB.
+Total: 7.204869 ms (FindLiveObjects: 0.309988 ms CreateObjectMapping: 0.180541 ms MarkObjects: 6.628511 ms  DeleteObjects: 0.084502 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -273,318 +541,54 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.429 seconds
-Refreshing native plugins compatible for Editor in 19.90 ms, found 4 plugins.
+- Loaded All Assemblies, in  0.822 seconds
+Refreshing native plugins compatible for Editor in 2.38 ms, found 4 plugins.
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  3.926 seconds
-Domain Reload Profiling: 5355ms
-	BeginReloadAssembly (525ms)
+- Finished resetting the current domain, in  2.380 seconds
+Domain Reload Profiling: 3205ms
+	BeginReloadAssembly (281ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (15ms)
+		DisableScriptedObjects (11ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (144ms)
-	RebuildCommonClasses (109ms)
-	RebuildNativeTypeToScriptingClass (32ms)
-	initialDomainReloadingComplete (69ms)
-	LoadAllAssembliesAndSetupDomain (694ms)
-		LoadAssemblies (967ms)
+		CreateAndSetChildDomain (110ms)
+	RebuildCommonClasses (81ms)
+	RebuildNativeTypeToScriptingClass (28ms)
+	initialDomainReloadingComplete (48ms)
+	LoadAllAssembliesAndSetupDomain (387ms)
+		LoadAssemblies (465ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (36ms)
-			TypeCache.Refresh (11ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (13ms)
-			ResolveRequiredComponents (9ms)
-	FinalizeReload (3927ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (906ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (8ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (83ms)
-			ProcessInitializeOnLoadAttributes (770ms)
-			ProcessInitializeOnLoadMethodAttributes (37ms)
-			AfterProcessingInitializeOnLoad (1ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-Refreshing native plugins compatible for Editor in 20.73 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3720.
-Memory consumption went from 236.0 MB to 235.9 MB.
-Total: 4.633198 ms (FindLiveObjects: 0.340402 ms CreateObjectMapping: 0.164458 ms MarkObjects: 4.035024 ms  DeleteObjects: 0.091978 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.530 seconds
-Refreshing native plugins compatible for Editor in 18.59 ms, found 4 plugins.
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  4.990 seconds
-Domain Reload Profiling: 6521ms
-	BeginReloadAssembly (618ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (16ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (204ms)
-	RebuildCommonClasses (133ms)
-	RebuildNativeTypeToScriptingClass (41ms)
-	initialDomainReloadingComplete (68ms)
-	LoadAllAssembliesAndSetupDomain (669ms)
-		LoadAssemblies (939ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (53ms)
-			TypeCache.Refresh (20ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (19ms)
-			ResolveRequiredComponents (10ms)
-	FinalizeReload (4992ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1151ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (11ms)
-			SetLoadedEditorAssemblies (8ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (134ms)
-			ProcessInitializeOnLoadAttributes (965ms)
-			ProcessInitializeOnLoadMethodAttributes (32ms)
-			AfterProcessingInitializeOnLoad (1ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Refreshing native plugins compatible for Editor in 11.45 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3723.
-Memory consumption went from 236.2 MB to 236.1 MB.
-Total: 7.068534 ms (FindLiveObjects: 0.340148 ms CreateObjectMapping: 0.257164 ms MarkObjects: 6.362940 ms  DeleteObjects: 0.106661 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.924 seconds
-Refreshing native plugins compatible for Editor in 7.52 ms, found 4 plugins.
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  4.415 seconds
-Domain Reload Profiling: 6340ms
-	BeginReloadAssembly (1108ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (105ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (433ms)
-	RebuildCommonClasses (136ms)
-	RebuildNativeTypeToScriptingClass (36ms)
-	initialDomainReloadingComplete (61ms)
-	LoadAllAssembliesAndSetupDomain (584ms)
-		LoadAssemblies (827ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (71ms)
-			TypeCache.Refresh (16ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (26ms)
-			ResolveRequiredComponents (20ms)
-	FinalizeReload (4416ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (874ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (8ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (79ms)
-			ProcessInitializeOnLoadAttributes (748ms)
-			ProcessInitializeOnLoadMethodAttributes (31ms)
-			AfterProcessingInitializeOnLoad (1ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Refreshing native plugins compatible for Editor in 3.59 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3726.
-Memory consumption went from 236.3 MB to 236.3 MB.
-Total: 9.750670 ms (FindLiveObjects: 0.369087 ms CreateObjectMapping: 0.226232 ms MarkObjects: 8.914156 ms  DeleteObjects: 0.239217 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.915 seconds
-Refreshing native plugins compatible for Editor in 3.05 ms, found 4 plugins.
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  3.803 seconds
-Domain Reload Profiling: 4721ms
-	BeginReloadAssembly (328ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (17ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (143ms)
-	RebuildCommonClasses (78ms)
-	RebuildNativeTypeToScriptingClass (23ms)
-	initialDomainReloadingComplete (43ms)
-	LoadAllAssembliesAndSetupDomain (443ms)
-		LoadAssemblies (515ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (35ms)
+		AnalyzeDomain (33ms)
 			TypeCache.Refresh (12ms)
 				TypeCache.ScanAssembly (0ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (17ms)
-	FinalizeReload (3806ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1745ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (16ms)
-			SetLoadedEditorAssemblies (15ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (128ms)
-			ProcessInitializeOnLoadAttributes (1520ms)
-			ProcessInitializeOnLoadMethodAttributes (62ms)
-			AfterProcessingInitializeOnLoad (3ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (15ms)
-Refreshing native plugins compatible for Editor in 4.22 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3729.
-Memory consumption went from 236.6 MB to 236.5 MB.
-Total: 14.171767 ms (FindLiveObjects: 0.415961 ms CreateObjectMapping: 0.356834 ms MarkObjects: 13.279205 ms  DeleteObjects: 0.117720 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.911 seconds
-Refreshing native plugins compatible for Editor in 2.67 ms, found 4 plugins.
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.896 seconds
-Domain Reload Profiling: 3807ms
-	BeginReloadAssembly (270ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (10ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (99ms)
-	RebuildCommonClasses (78ms)
-	RebuildNativeTypeToScriptingClass (24ms)
-	initialDomainReloadingComplete (43ms)
-	LoadAllAssembliesAndSetupDomain (496ms)
-		LoadAssemblies (558ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (54ms)
-			TypeCache.Refresh (19ms)
-				TypeCache.ScanAssembly (1ms)
-			ScanForSourceGeneratedMonoScriptInfo (16ms)
 			ResolveRequiredComponents (13ms)
-	FinalizeReload (2897ms)
+	FinalizeReload (2381ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (941ms)
+		SetupLoadedEditorAssemblies (1643ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (13ms)
+			InitializePlatformSupportModulesInManaged (10ms)
 			SetLoadedEditorAssemblies (8ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (98ms)
-			ProcessInitializeOnLoadAttributes (788ms)
-			ProcessInitializeOnLoadMethodAttributes (32ms)
-			AfterProcessingInitializeOnLoad (1ms)
-			EditorAssembliesLoaded (0ms)
+			BeforeProcessingInitializeOnLoad (97ms)
+			ProcessInitializeOnLoadAttributes (1455ms)
+			ProcessInitializeOnLoadMethodAttributes (69ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (1ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-Refreshing native plugins compatible for Editor in 5.05 ms, found 4 plugins.
+		AwakeInstancesAfterBackupRestoration (11ms)
+Refreshing native plugins compatible for Editor in 5.93 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.6 KB). Loaded Objects now: 3732.
-Memory consumption went from 236.8 MB to 236.7 MB.
-Total: 24.363645 ms (FindLiveObjects: 0.402704 ms CreateObjectMapping: 0.245144 ms MarkObjects: 23.622949 ms  DeleteObjects: 0.091080 ms)
+Unloading 28 unused Assets / (33.7 KB). Loaded Objects now: 3711.
+Memory consumption went from 230.5 MB to 230.5 MB.
+Total: 10.148842 ms (FindLiveObjects: 0.535104 ms CreateObjectMapping: 0.886761 ms MarkObjects: 8.592286 ms  DeleteObjects: 0.132635 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -601,68 +605,10 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.814 seconds
-Refreshing native plugins compatible for Editor in 2.61 ms, found 4 plugins.
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  3.869 seconds
-Domain Reload Profiling: 4686ms
-	BeginReloadAssembly (275ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (10ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (101ms)
-	RebuildCommonClasses (78ms)
-	RebuildNativeTypeToScriptingClass (25ms)
-	initialDomainReloadingComplete (42ms)
-	LoadAllAssembliesAndSetupDomain (396ms)
-		LoadAssemblies (474ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (27ms)
-			TypeCache.Refresh (10ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (11ms)
-	FinalizeReload (3871ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2091ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (19ms)
-			SetLoadedEditorAssemblies (17ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (169ms)
-			ProcessInitializeOnLoadAttributes (1825ms)
-			ProcessInitializeOnLoadMethodAttributes (58ms)
-			AfterProcessingInitializeOnLoad (3ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (15ms)
-Refreshing native plugins compatible for Editor in 2.98 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3234 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 28 unused Assets / (33.7 KB). Loaded Objects now: 3735.
-Memory consumption went from 237.0 MB to 236.9 MB.
-Total: 10.691407 ms (FindLiveObjects: 1.053203 ms CreateObjectMapping: 0.449408 ms MarkObjects: 9.095928 ms  DeleteObjects: 0.089020 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Received Import Request.
+  Time since last request: 17.443164 seconds.
+  path: Assets/Script/ReturnPool.cs
+  artifactKey: Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/ReturnPool.cs using Guid(99ba62f0f61e440b8b97c0f0e070eb16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f95430f3e8c0c90880fa4a74d736807e') in 0.006777 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0

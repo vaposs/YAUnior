@@ -14,12 +14,12 @@ public class ObjectPool : MonoBehaviour
 
     private void OnEnable()
     {
-        Cube.onToched += PutObject;
+        Cube.ReturnPool += PutObject;
     }
 
     private void Disable()
     {
-        Cube.onToched -= PutObject;
+        Cube.ReturnPool -= PutObject;
     }
 
     public Cube GetCube()

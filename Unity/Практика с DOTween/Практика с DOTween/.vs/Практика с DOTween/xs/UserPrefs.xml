@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{167469FE-E7EE-D5AE-4F67-A7DE5078B7F1}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ChangeColor.cs">
+    <Files>
+      <File FileName="Assets/MoveTo.cs" Line="2" Column="1" />
+      <File FileName="Assets/Rotation.cs" Line="7" Column="1" />
+      <File FileName="Assets/ChangeScale.cs" Line="13" Column="1" />
+      <File FileName="Assets/Cube_2.cs" Line="25" Column="1" />
+      <File FileName="Assets/ChangeColor.cs" Line="18" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c01bf024-1d83-4efa-a35c-74d87e4165d8" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

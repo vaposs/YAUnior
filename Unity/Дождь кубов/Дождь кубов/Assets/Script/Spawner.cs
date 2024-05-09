@@ -4,7 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] float _delay;
-    [SerializeField] ObjectPool _objectPool;
+    [SerializeField] private ObjectPool _objectPool;
     [SerializeField] private int _minSpawnPosition = -5;
     [SerializeField] private int _maxSpawnPosition = 5;
     [SerializeField] private int _spawnPositionY = 10;
