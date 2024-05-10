@@ -58,12 +58,11 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Plane.cs" />
-    <Compile Include="Assets/CubeOne.cs" />
-    <Compile Include="Assets/TextUI.cs" />
-    <Compile Include="Assets/CubeTwo.cs" />
-    <Compile Include="Assets/Sphere.cs" />
-    <Compile Include="Assets/Capsule.cs" />
+    <Compile Include="Assets/TextEffector.cs" />
+    <Compile Include="Assets/Painter.cs" />
+    <Compile Include="Assets/Rotater.cs" />
+    <Compile Include="Assets/Mover.cs" />
+    <Compile Include="Assets/Scaler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

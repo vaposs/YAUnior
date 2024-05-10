@@ -360,12 +360,11 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
-"Assets/Capsule.cs"
-"Assets/CubeOne.cs"
-"Assets/CubeTwo.cs"
-"Assets/Plane.cs"
-"Assets/Sphere.cs"
-"Assets/TextUI.cs"
+"Assets/Mover.cs"
+"Assets/Painter.cs"
+"Assets/Rotater.cs"
+"Assets/Scaler.cs"
+"Assets/TextEffector.cs"
 -langversion:9.0
 
 /deterministic

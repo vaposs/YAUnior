@@ -1,17 +1,16 @@
 ﻿<Properties StartupConfiguration="{167469FE-E7EE-D5AE-4F67-A7DE5078B7F1}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plane.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TextEffector.cs">
     <Files>
-      <File FileName="Assets/MoveTo.cs" Line="4" Column="20" />
-      <File FileName="Assets/Rotation.cs" Line="18" Column="1" />
-      <File FileName="Assets/ChangeScale.cs" Line="4" Column="21" />
-      <File FileName="Assets/ChangeColor.cs" Line="4" Column="19" />
-      <File FileName="Assets/ChangeText.cs" Line="5" Column="20" />
-      <File FileName="Assets/ChangeAll.cs" Line="4" Column="21" />
+      <File FileName="Assets/Mover.cs" Line="13" Column="80" />
+      <File FileName="Assets/Painter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Rotater.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scaler.cs" Line="1" Column="1" />
+      <File FileName="Assets/TextEffector.cs" Line="21" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c45455f5-b131-4f62-a925-7715fea91654" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c1cb3612-6eab-46c7-8765-dd3477b9a098" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
