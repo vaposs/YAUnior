@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{58656610-4EA5-C7A9-DCB6-FB24077CF7B2}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GlitterExplosion.cs">
+    <Files>
+      <File FileName="Assets/GlitterExplosion.cs" Line="21" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7c2a7c41-6504-4780-89be-87077755a2d1" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
