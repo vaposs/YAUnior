@@ -63,7 +63,7 @@
     <Compile Include="Assets/Dron/DronMover.cs" />
     <Compile Include="Assets/Resource/SpawnerResourse.cs" />
     <Compile Include="Assets/World/RotateAroundPlane.cs" />
-    <Compile Include="Assets/UploadingPlace.cs" />
+    <Compile Include="Assets/Base/UploadingPlace.cs" />
     <Compile Include="Assets/Dron/Cargo.cs" />
     <Compile Include="Assets/World/SpawnFirstDrone.cs" />
     <Compile Include="Assets/World/ResourceCounter.cs" />

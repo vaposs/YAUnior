@@ -1883,7 +1883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourceCount: {fileID: 2128221979}
-  _costDrone: 10
+  _costDrone: 3
   _uploadingPlace: {fileID: 605957998}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
