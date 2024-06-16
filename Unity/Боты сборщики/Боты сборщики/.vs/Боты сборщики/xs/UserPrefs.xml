@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{FC4AFB0B-47FE-6E19-45B6-DF421DC9B098}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resource/Resource.cs">
+    <Files>
+      <File FileName="Assets/Dron/DronMover.cs" Line="19" Column="21" />
+      <File FileName="Assets/UploadingPlace.cs" Line="16" Column="1" />
+      <File FileName="Assets/Base/DronSpawner.cs" />
+      <File FileName="Assets/Base/CommandCenter.cs" />
+      <File FileName="Assets/Resource/ResourcePool.cs" Line="30" Column="29" />
+      <File FileName="Assets/Resource/Resource.cs" Line="12" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5be7b755-dfe4-4d81-b571-d0305c4b7cca" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

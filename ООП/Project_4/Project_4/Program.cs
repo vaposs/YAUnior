@@ -102,7 +102,7 @@ namespace Project_4
             {
                 Console.WriteLine(card.Name);
             }
-        }
+        }//--
 
         public int ShowScore()
         {
@@ -114,12 +114,12 @@ namespace Project_4
             }
 
             return score;
-        }
+        }//---
 
         public void TakeCard(Card newCard)
         {
             _cardsInHand.Add(newCard);
-        }
+        }// ---
     }
 
     class Card
@@ -132,7 +132,7 @@ namespace Project_4
 
         public string Name { get; private set; }
         public int Value { get; private set; }
-    }
+    } // --
 
     class Deck
     {
@@ -157,7 +157,7 @@ namespace Project_4
             Shuffle();
             
             return _cards;
-        }
+        } // --
 
         public Card GiveCard()
         {
@@ -184,6 +184,6 @@ namespace Project_4
                 _cards[i] = temporaryCard2;
                 _cards[randNumber] = temporaryCard;
             }
-        }
+        } // ----
     }
 }
