@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnFirstDrone : MonoBehaviour
+public class StartGame : MonoBehaviour
 {
-    [SerializeField] private DronSpawner _dronSpawner;
     [SerializeField] private Button _button;
 
-    public void Start()
+    private void Start()
     {
         Time.timeScale = 0;
     }
 
-    public void Spawn()
+    public void Game()
     {
-        _dronSpawner.Spawn();
         _button.gameObject.SetActive(false);
         this.gameObject.SetActive(false);
         Time.timeScale = 1;

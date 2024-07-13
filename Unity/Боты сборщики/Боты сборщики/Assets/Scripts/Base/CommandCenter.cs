@@ -1,23 +1,28 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class CommandCenter : MonoBehaviour
 {
     [SerializeField] private ResourcePool _resourcePool;
-
-    private Queue<DronMover> _drons;
+    [SerializeField] private Queue<DronMover> _drons;
 
     private void Awake()
     {
         _drons = new Queue<DronMover>();
+        DronMover[] drons = FindObjectsOfType<DronMover>();
+
+        foreach (DronMover dron in drons)
+        {
+            _drons.Enqueue(dron);
+        }
     }
 
     private void Update()
     {
         if(_drons.Count > 0)
         {
-            if(_resourcePool.CheckCounPool() > 0)
+            if(_resourcePool.CheckFullness() == true)
             {
                 SendDrone(_drons.Dequeue(), _resourcePool.GetPosition());
             }

@@ -9,7 +9,7 @@ public class UploadingPlace : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<DronMover>(out DronMover dronMover))
+        if (collision.gameObject.TryGetComponent(out DronMover dronMover))
         {
             if(dronMover.IsHaveResourse())
             {

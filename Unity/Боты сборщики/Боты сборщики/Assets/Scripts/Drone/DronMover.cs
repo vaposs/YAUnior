@@ -1,13 +1,16 @@
+using System;
 using UnityEngine;
 
 public class DronMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    [SerializeField] private Cargo _cargo;
+    [SerializeField] private Transform _cargoTransform;
+    [SerializeField] private Transform _commandCentre;
+    [SerializeField] private Transform[] _wayPoints;
 
+    private Resource _resource;
     private Transform _target;
-    private Transform _commandCentre;
-    private Transform[] _wayPoints;
+
     private int _currentWaypoints = 0;
     private bool _isHaveResource = false;
     private bool _isHaveCommand;
@@ -54,27 +57,25 @@ public class DronMover : MonoBehaviour
         transform.LookAt(_wayPoints[_currentWaypoints]);
     }
 
-    public void TakeWaypoints(Transform[] wayPoints)
-    {
-        _wayPoints = wayPoints;
-    }
-
     public void UnloadCargo()
     {
+        foreach (Transform child in transform)
+        {
+            if(child.gameObject.TryGetComponent(out Resource resource))
+            {
+                _resource = resource;
+            }
+        }
+
         _isHaveResource = false;
-        _cargo.gameObject.SetActive(false);
+        _resource.transform.SetParent(_cargoTransform);
     }
 
-    public void LoadCargo()
+    public Transform LoadCargo()
     {
         _isHaveCommand = false;
         _isHaveResource = true;
-        _cargo.gameObject.SetActive(true);
-    }
-
-    public void TakeCommandCentrePosition(Transform commandCentre)
-    {
-        _commandCentre = commandCentre;
+        return _cargoTransform;
     }
 
     public bool IsHaveResourse()
@@ -86,5 +87,10 @@ public class DronMover : MonoBehaviour
     {
         _target = target;
         _isHaveCommand = true;
+    }
+
+    public Transform TakeTargetPosition()
+    {
+        return _target;
     }
 }

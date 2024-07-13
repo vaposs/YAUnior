@@ -12,8 +12,8 @@ public class RotateAroundPlane : MonoBehaviour
 
     private void Start()
     {
-        //_wait = new WaitForSeconds(_delay);
-        //StartCoroutine(Rotate());
+        _wait = new WaitForSeconds(_delay);
+        StartCoroutine(Rotate());
     }
 
     private IEnumerator Rotate()

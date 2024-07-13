@@ -12,7 +12,7 @@ public class ResourcePool : MonoBehaviour
     private Queue<Resource> _poolDeactiveResource;
     private Resource _tempResource;
     private Vector3 _spawnPosition;
-    private float _spawnPositionY = 1f;
+    private float _spawnPositionY = 0.5f;
 
     private void Awake()
     {
@@ -30,6 +30,11 @@ public class ResourcePool : MonoBehaviour
         Resource.Destroyed -= PutResource;
     }
 
+    private void PutResource(Resource resource)
+    {
+        resource.gameObject.SetActive(false);
+        _poolDeactiveResource.Enqueue(resource);
+    }
 
     public void GetResource()
     {
@@ -58,15 +63,15 @@ public class ResourcePool : MonoBehaviour
         return _poolActiveResource.Dequeue();
     }
 
-    public int CheckCounPool()
+    public bool CheckFullness()
     {
-        return _poolActiveResource.Count;
-    }
-
-    public void PutResource(Resource resource)
-    {
-        resource.gameObject.SetActive(false);
-        _poolDeactiveResource.Enqueue(resource);
-
+        if (_poolActiveResource.Count > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false; 
+        }
     }
 }
