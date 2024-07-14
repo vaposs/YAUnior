@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpawnerResourse : MonoBehaviour
 {
-    [SerializeField] float _delay;
+    [SerializeField] private float _delay;
     [SerializeField] private ResourcePool _resourcePool;
 
     private WaitForSeconds _wait;

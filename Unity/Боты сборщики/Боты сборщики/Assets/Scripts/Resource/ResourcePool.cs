@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class ResourcePool : MonoBehaviour
@@ -58,20 +59,8 @@ public class ResourcePool : MonoBehaviour
         }
     }
 
-    public Resource GetPosition()
+    public Transform GetPosition()
     {
-        return _poolActiveResource.Dequeue();
-    }
-
-    public bool CheckFullness()
-    {
-        if (_poolActiveResource.Count > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false; 
-        }
+        return _poolActiveResource.Count > 0 ? _poolActiveResource.Dequeue().transform : null;
     }
 }

@@ -7,6 +7,8 @@ public class CommandCenter : MonoBehaviour
     [SerializeField] private ResourcePool _resourcePool;
     [SerializeField] private Queue<DronMover> _drons;
 
+    private Transform _targetTransform;
+
     private void Awake()
     {
         _drons = new Queue<DronMover>();
@@ -22,14 +24,16 @@ public class CommandCenter : MonoBehaviour
     {
         if(_drons.Count > 0)
         {
-            if(_resourcePool.CheckFullness() == true)
+            _targetTransform = _resourcePool.GetPosition();
+
+            if(_targetTransform != null)
             {
-                SendDrone(_drons.Dequeue(), _resourcePool.GetPosition());
+                SendDrone(_drons.Dequeue(), _targetTransform);
             }
         }
     }
 
-    private void SendDrone(DronMover dron, Resource resource)
+    private void SendDrone(DronMover dron, Transform resource)
     {
         dron.TakeCommand(resource.transform);
     }

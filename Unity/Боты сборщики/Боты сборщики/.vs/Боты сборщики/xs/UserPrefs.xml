@@ -2,19 +2,19 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Resource/ResourcePool.cs">
     <Files>
       <File FileName="Assets/Scripts/World/StartGame.cs" Line="14" Column="1" />
-      <File FileName="Assets/Scripts/Resource/ResourcePool.cs" Line="42" Column="1" />
+      <File FileName="Assets/Scripts/Resource/ResourcePool.cs" Line="65" Column="6" />
       <File FileName="Assets/Scripts/Resource/Resource.cs" Line="12" Column="77" />
       <File FileName="Assets/Scripts/Resource/SpawnerResourse.cs" />
       <File FileName="Assets/Scripts/Base/UploadingPlace.cs" />
-      <File FileName="Assets/Scripts/Drone/DronMover.cs" Line="94" Column="23" />
-      <File FileName="Assets/Scripts/Base/CommandCenter.cs" />
+      <File FileName="Assets/Scripts/Drone/DronMover.cs" />
       <File FileName="Assets/Scripts/World/RotateAroundPlane.cs" />
-      <File FileName="Assets/Scripts/World/ResourceCounter.cs" />
+      <File FileName="Assets/Scripts/World/ResourceCounter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Base/CommandCenter.cs" Line="32" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ee287a4b-0263-4869-936d-dc453abc316e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0fb8e5a2-3232-4b83-b4bd-a711d4949e4f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

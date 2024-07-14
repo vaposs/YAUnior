@@ -324,14 +324,14 @@ MonoBehaviour:
     y: 0
     width: 337
     height: 797
-  m_MinSize: {x: 276, y: 121}
+  m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 25}
   m_Panes:
   - {fileID: 25}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -372,7 +372,7 @@ MonoBehaviour:
     m_CachedPref: 151
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 8002
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 1
@@ -416,9 +416,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: bcb2ffff30fbffffd45a0000de5a0000e85a0000fc5a0000225b00002a5b0000385b0000425b0000
+      m_SelectedIDs: 585b0000
+      m_LastClickedID: 23384
+      m_ExpandedIDs: 30fbffffde5a0000fc5a0000225b0000265b00002a5b0000425b0000785b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1239,7 +1239,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/World
+    - Assets/Scripts/Resource
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 60
   m_LastFolders:
-  - Assets/Scripts/World
+  - Assets/Scripts/Resource
   m_LastFoldersGridSize: 60
   m_LastProjectPath: "/Users/walter/GitHub/YAUnior/Unity/\u0411\u043E\u0442\u044B
     \u0441\u0431\u043E\u0440\u0449\u0438\u043A\u0438/\u0411\u043E\u0442\u044B \u0441\u0431\u043E\u0440\u0449\u0438\u043A\u0438"
@@ -1255,8 +1255,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 325c0000
-    m_LastClickedID: 23602
+    m_SelectedIDs: 065c0000
+    m_LastClickedID: 23558
     m_ExpandedIDs: 00000000e65b0000e85b0000ea5b0000ec5b0000ee5b0000f05b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1310,8 +1310,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 421f0000
+    m_LastClickedInstanceID: 8002
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000b0610000b66500005e620000dc7d0000ec750000667c0000347c0000027d0000f07c00008e7c00003a7c00008a7d00002a7d00001e7c0000fc7c0000326e0000cc8a0000e06200002e260000aa60000000000000
     m_RenameOverlay:
