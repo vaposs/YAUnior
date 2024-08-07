@@ -58,17 +58,15 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.8f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Base/CommandCenter.cs" />
-    <Compile Include="Assets/Scripts/Base/UploadingPlace.cs" />
-    <Compile Include="Assets/Scripts/World/ResourceCounter.cs" />
-    <Compile Include="Assets/Scripts/World/StartGame.cs" />
-    <Compile Include="Assets/Scripts/Resource/Resource.cs" />
-    <Compile Include="Assets/Scripts/World/CameraMover.cs" />
-    <Compile Include="Assets/Scripts/Resource/CargoPlace.cs" />
-    <Compile Include="Assets/Scripts/Resource/SpawnerResourse.cs" />
-    <Compile Include="Assets/Scripts/Drone/DronMover.cs" />
-    <Compile Include="Assets/Scripts/World/RotateAroundPlane.cs" />
-    <Compile Include="Assets/Scripts/Resource/ResourcePool.cs" />
+    <Compile Include="Assets/Scripts/ResourcePool.cs" />
+    <Compile Include="Assets/Scripts/UploadingPlace.cs" />
+    <Compile Include="Assets/Scripts/Ground.cs" />
+    <Compile Include="Assets/Scripts/CommandCenter.cs" />
+    <Compile Include="Assets/Scripts/Resource.cs" />
+    <Compile Include="Assets/Scripts/CameraMover.cs" />
+    <Compile Include="Assets/Scripts/SpawnerResource.cs" />
+    <Compile Include="Assets/Scripts/DronMover.cs" />
+    <Compile Include="Assets/Scripts/ResourceCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

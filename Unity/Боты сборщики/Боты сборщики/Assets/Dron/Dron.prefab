@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6671330851245277671}
   - component: {fileID: 1424021134240365805}
   - component: {fileID: -1609468444465295587}
-  - component: {fileID: 3839412452348309887}
+  - component: {fileID: 1239987876031923450}
   m_Layer: 0
   m_Name: Dron
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 47.8}
-  m_LocalScale: {x: 3, y: 1, z: 5}
+  m_LocalScale: {x: 0.4, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5075874275994592470}
@@ -135,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3839412452348309887
+--- !u!114 &1239987876031923450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,11 +144,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8420415344177874179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 658d242573bb245f38ca36dfcaf20cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 2490be4d1f50541a5bc9ee17c08b8796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 50
+  _speed: 3
   _cargoTransform: {fileID: 5075874275994592470}
+  _commandCentre: {fileID: 0}
+  _wayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &8639240982965881054
 GameObject:
   m_ObjectHideFlags: 0

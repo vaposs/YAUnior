@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4049813074135145304}
   - component: {fileID: 4534297579535229958}
   - component: {fileID: 5770596419468329887}
-  - component: {fileID: 5389250086169679725}
+  - component: {fileID: 2044099442368722921}
   m_Layer: 0
   m_Name: resourse
   m_TagString: Untagged
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2715515446491611366}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 49.9, y: 0.5, z: 46.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.01, y: 10, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5389250086169679725
+--- !u!114 &2044099442368722921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,6 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2715515446491611366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a4096b79095a4c8a86a9526482b10e8, type: 3}
+  m_Script: {fileID: 11500000, guid: ef2d9acb31ae940ed9a67d2364947b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
