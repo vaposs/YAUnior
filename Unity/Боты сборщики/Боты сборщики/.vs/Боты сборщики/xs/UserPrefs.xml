@@ -1,15 +1,16 @@
 ﻿<Properties StartupConfiguration="{FC4AFB0B-47FE-6E19-45B6-DF421DC9B098}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DronMover.cs">
     <Files>
-      <File FileName="Assets/Scripts/UploadingPlace.cs" Line="22" Column="2" />
-      <File FileName="Assets/Scripts/CommandCenter.cs" />
-      <File FileName="Assets/Scripts/DronMover.cs" Line="63" Column="1" />
-      <File FileName="Assets/Scripts/Resource.cs" />
+      <File FileName="Assets/Scripts/DronMover.cs" Line="15" Column="1" />
+      <File FileName="Assets/DronLoadUnloadCargo.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/UploadingPlace.cs" Line="26" Column="2" />
+      <File FileName="Assets/Scripts/CommandCenter.cs" Line="27" Column="10" />
+      <File FileName="Assets/Scripts/Scaner.cs" Line="23" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1fba722c-49d4-4a67-b849-94b068ff957b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f3af8b57-d166-4ff3-a69e-3252e0d5ba47" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

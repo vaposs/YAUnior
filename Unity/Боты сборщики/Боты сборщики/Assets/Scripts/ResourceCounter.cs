@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class ResourceCounter : MonoBehaviour
 {
-    [SerializeField] private Text _resourceCount;
     [SerializeField] private UploadingPlace _uploadingPlace;
+    [SerializeField] private ShowCountResource _showCountResource;
 
     private int _countResorce = 0;
 
@@ -22,6 +22,6 @@ public class ResourceCounter : MonoBehaviour
     private void AddCountResource()
     {
         _countResorce++;
-        _resourceCount.text = Convert.ToString(_countResorce);
+        _showCountResource.Print(_countResorce);
     }
 }

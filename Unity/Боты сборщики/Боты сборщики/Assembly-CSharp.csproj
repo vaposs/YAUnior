@@ -61,10 +61,14 @@
     <Compile Include="Assets/Scripts/ResourcePool.cs" />
     <Compile Include="Assets/Scripts/UploadingPlace.cs" />
     <Compile Include="Assets/Scripts/Ground.cs" />
+    <Compile Include="Assets/Scripts/DronLoadUnloadCargo.cs" />
     <Compile Include="Assets/Scripts/CommandCenter.cs" />
+    <Compile Include="Assets/Scripts/Point.cs" />
+    <Compile Include="Assets/Scripts/Scaner.cs" />
     <Compile Include="Assets/Scripts/Resource.cs" />
     <Compile Include="Assets/Scripts/CameraMover.cs" />
     <Compile Include="Assets/Scripts/SpawnerResource.cs" />
+    <Compile Include="Assets/Scripts/ShowCountResource.cs" />
     <Compile Include="Assets/Scripts/DronMover.cs" />
     <Compile Include="Assets/Scripts/ResourceCounter.cs" />
   </ItemGroup>

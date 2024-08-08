@@ -5,7 +5,7 @@ public class Resource : MonoBehaviour
 {
     public event Action<Resource> Destroyed;
 
-    public void ReturnInPool()
+    public void DestroyResourse()
     {
         Destroyed?.Invoke(this);
     }

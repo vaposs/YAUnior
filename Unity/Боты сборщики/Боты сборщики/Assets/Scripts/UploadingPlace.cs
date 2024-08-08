@@ -9,13 +9,17 @@ public class UploadingPlace : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out DronMover dronMover))
+        if (collision.gameObject.TryGetComponent(out DronLoadUnloadCargo dronLoadUnloadCargo))
         {
-            if(dronMover.IsHaveResource)
+            if(dronLoadUnloadCargo.IsHaveResource)
             {
                 PrintCountResource?.Invoke();
-                dronMover.UnloadCargo();
-                _commandCenter.AddDron(dronMover);
+                dronLoadUnloadCargo.UnloadCargo();
+
+                if (dronLoadUnloadCargo.TryGetComponent(out DronMover dronMover))
+                {
+                    _commandCenter.AddDron(dronMover);
+                }
             }
         }
     }
