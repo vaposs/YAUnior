@@ -19,6 +19,10 @@ public class CameraMover : MonoBehaviour
 
     public void Update()
     {
+       //_horizontat = Input.GetAxis("Horizontal");
+       //_vertical = Input.GetAxis("Vertical");
+       // transform.Translate(new Vector3(_horizontat* _speed * Time.deltaTime,0, _vertical * _speed * Time.deltaTime).Space.World);
+
         if (Input.GetKey(_left))
         {
             _heightPosition = -1;
