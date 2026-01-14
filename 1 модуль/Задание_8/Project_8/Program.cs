@@ -6,16 +6,17 @@ namespace pr1
     {
         public static void Main(string[] args)
         {
-            int minutesToReceive = 10;
-            int minutesInAnHour = 60;
+            int minutesPerPatient = 10;
+            int minutesPerHour = 60;
 
-            Console.Write($"Вы заходите в поликлинику, сколько человек перед вами в очереди? -  ");
-            int peopleCount = Convert.ToInt32(Console.ReadLine());
-            int totalMinutesInQueue = peopleCount * minutesToReceive;
-            int minuts = totalMinutesInQueue % minutesInAnHour;
-            int hour = totalMinutesInQueue / minutesInAnHour;
-            
-            Console.WriteLine($"Вам ждать в очереди {hour} часов и {minuts} минут");
+            Console.Write("Сколько человек перед вами в очереди? ");
+            int patientsAhead = Convert.ToInt32(Console.ReadLine());
+    
+            int totalWaitMinutes = patientsAhead * minutesPerPatient;
+            int waitHours = totalWaitMinutes / minutesPerHour;
+            int remainingMinutes = totalWaitMinutes % minutesPerHour;
+    
+            Console.WriteLine($"Примерное время ожидания в очереди: {waitHours} часов и {remainingMinutes} минут");
         }
     }
 }
