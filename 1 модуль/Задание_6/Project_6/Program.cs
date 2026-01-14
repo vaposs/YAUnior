@@ -11,7 +11,7 @@ namespace Project_6
             int extraPictures;
             int pictureInLine = 3;
 
-            linesPictute = picture / fullPictureLine;
+            fullPictureLine = picture / pictureInLine;
             extraPictures = picture % fullPictureLine;
 
             Console.WriteLine("заполненые рядов - " + fullPictureLine);
