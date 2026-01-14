@@ -1,21 +1,19 @@
-using System;
-
-namespace asdasf
+namespace Project_4
 {
-    class MainClass
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            byte userAge = 32;
-            int userMoney = 100;
-            long totalStarsInGalaxy = 1234567891234567890;
-            uint currentYear = 2022;
-            float divisionResult = 2.5f;
-            double piValue = 3.1415;
-            bool isBlocked = true;
-            bool isCharacterWalk = false;
-            char firstAlphabetLetter = 'a';
-            string motivationText = "I to be coder!";
+            Console.WriteLine("Как вас зовут?");
+            string name = Console.ReadLine();
+            Console.WriteLine("Какой ваш знак зодиака?");
+            string zodiacSing = Console.ReadLine();
+            Console.WriteLine("Сколько вам лет?");
+            int age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Где вы работаете?");
+            string plaseOfWork = Console.ReadLine();
+
+            Console.WriteLine($"Вас зовут "+ name + ", вам - "+ age + "год и вы " + zodiacSing + ". Вы работаете на " + plaseOfWork + ".");
         }
     }
 }
