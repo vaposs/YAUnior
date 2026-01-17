@@ -15,15 +15,15 @@ namespace Project_13
             const string MenuBarResetColor = "resetColor";
             const string MenuBarWriteAll = "writeAll";
             const string MenuBarExit = "Exit";
-            
+
             string name = "";
             string surname = "";
             int age = 0;
             string password = "";
             string command;
-            bool toOut = true;
+            bool isWork = true;
 
-            while (toOut)
+            while (isWork)
             {
                 Console.WriteLine("\nСписок доступных команд:");
                 Console.WriteLine($"1. {MenuBarSetName}           - ввести/поменять имя.");
@@ -38,7 +38,7 @@ namespace Project_13
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
 
-                switch (command) 
+                switch (command)
                 {
                     case MenuBarSetName:
                         Console.Clear();
@@ -117,7 +117,7 @@ namespace Project_13
                         break;
 
                     case MenuBarExit:
-                        toOut = false;
+                        isWork = false;
                         break;
 
                     default:
