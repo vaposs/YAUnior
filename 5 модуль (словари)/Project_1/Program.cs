@@ -7,10 +7,10 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string AddNewWord = "addnewword";
-            const string PrintAllDictionary = "printalldictionary";
-            const string PrintMeaningWord = "printmeaningword";
-            const string Exit = "exit";
+            const string AddNewWord = "AddNewWord";
+            const string PrintAllDictionary = "PrintAllDictionary";
+            const string PrintMeaningWord = "PrintMeaningWord";
+            const string Exit = "Exit";
 
             string command;
             bool isExitProgram = false;
