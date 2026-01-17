@@ -7,10 +7,10 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            const string AddNewWord = "AddNewWord";
-            const string PrintAllDictionary = "PrintAllDictionary";
-            const string PrintMeaningWord = "PrintMeaningWord";
-            const string Exit = "Exit";
+            const string AddNewWordCommand = "AddNewWord";
+            const string PrintAllDictionaryCommand = "PrintAllDictionary";
+            const string PrintMeaningWordCommand = "PrintMeaningWord";
+            const string ExitCommand = "Exit";
 
             string command;
             bool isExitProgram = false;
@@ -19,28 +19,28 @@ namespace Project_1
             while (isExitProgram == false)
             {
                 Console.WriteLine("\nвыбирите действие:");
-                Console.WriteLine($"1.{AddNewWord}");
-                Console.WriteLine($"2.{PrintMeaningWord}");
-                Console.WriteLine($"3.{PrintAllDictionary}");
-                Console.WriteLine($"4.{Exit}");
+                Console.WriteLine($"1.{AddNewWordCommand}");
+                Console.WriteLine($"2.{PrintMeaningWordCommand}");
+                Console.WriteLine($"3.{PrintAllDictionaryCommand}");
+                Console.WriteLine($"4.{ExitCommand}");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
-                
+
                 switch (command.ToLower())
                 {
-                    case AddNewWord:
+                    case AddNewWordCommand:
                         AddNew(glossary);
                         break;
 
-                    case PrintMeaningWord:
+                    case PrintMeaningWordCommand:
                         DerivingMeaningWord(glossary);
                         break;
 
-                    case PrintAllDictionary:
+                    case PrintAllDictionaryCommand:
                         SearchAndOutputWord(glossary);
                         break;
 
-                    case Exit:
+                    case ExitCommand:
                         isExitProgram = true;
                         break;
 
@@ -64,9 +64,9 @@ namespace Project_1
         static void AddNew(Dictionary<string, string> glossary)
         {
             string word = TakeWord();
-            bool wordIsRepeat = glossary.ContainsKey(word);
+            bool isHaneWord = glossary.ContainsKey(word);
 
-            if (wordIsRepeat)
+            if (isHaneWord)
             {
                 Console.Write("\nПовтор, такое слово уже есть.");
             }
@@ -77,7 +77,7 @@ namespace Project_1
             }
         }
 
-        static void SearchAndOutputWord(Dictionary<string,string> glossary)
+        static void SearchAndOutputWord(Dictionary<string, string> glossary)
         {
             foreach (var word in glossary)
             {
@@ -90,7 +90,7 @@ namespace Project_1
         {
             string word;
 
-            if(glossary.Count == 0)
+            if (glossary.Count == 0)
             {
                 Console.WriteLine("Словарь пустой");
             }
