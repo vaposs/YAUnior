@@ -9,13 +9,16 @@ namespace qwertyu
             const int CountNumber = 13;
             const string CommandSetName = "setName";
             const string CommandSetSurname = "setSurname";
-            const string CommandBarSetAge = "setAge";
+            const string CommandSetAge = "setAge";
             const string CommandSetPassword = "setPassword";
             const string CommandChangeColor = "changeColor";
             const string CommandResetColor = "resetColor";
             const string CommandWriteAll = "writeAll";
             const string CommandRandomNumber = "randomNumber";
             const string CommandExit = "Exit";
+            const string CommandBlueColor = "blue";
+            const string CommandCyanColor = "cyan";
+            const string CommandGreenColor = "green";
 
             Random random = new Random();
             string name = "";
@@ -29,70 +32,64 @@ namespace qwertyu
             {
                 Console.WriteLine("\nСписок доступных команд:");
                 Console.WriteLine($"1. {CommandSetName}           - ввести/поменять имя.");
-                Console.WriteLine($"2. {CommandSetSurname}        - ввети/поменять фамилию.");
-                Console.WriteLine($"3. {CommandBarSetAge}            - ввести/поменять возраст.");
+                Console.WriteLine($"2. {CommandSetSurname}        - ввести/поменять фамилию.");
+                Console.WriteLine($"3. {CommandSetAge}            - ввести/поменять возраст.");
                 Console.WriteLine($"4. {CommandSetPassword}       - ввести/поменять пароль.");
                 Console.WriteLine($"5. {CommandChangeColor}       - установить цвет фона консоли.");
                 Console.WriteLine($"6. {CommandResetColor}        - сбросить цвета на стандартные.");
                 Console.WriteLine($"7. {CommandWriteAll}          - вывести всю информацию.");
-                Console.WriteLine($"7. {CommandRandomNumber}      - сгенерировать и вывести рандомное число.");
-                Console.WriteLine($"8. {CommandExit}              - выход.");
-                Console.WriteLine(" ");
+                Console.WriteLine($"8. {CommandRandomNumber}      - сгенерировать и вывести рандомное число.");
+                Console.WriteLine($"9. {CommandExit}              - выход.");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
-                Console.Clear();
 
                 switch (command)
                 {
                     case CommandSetName:
-                        Console.Write("введите имя - ");
+                        Console.Write("Введите имя - ");
                         name = Console.ReadLine();
                         break;
 
                     case CommandSetSurname:
-                        Console.Write("введите фамилию - ");
+                        Console.Write("Введите фамилию - ");
                         surname = Console.ReadLine();
                         break;
 
-                    case CommandBarSetAge:
-                        Console.Write("введите возраст - ");
-                        age = Convert.ToInt32(Console.ReadLine());
+                    case CommandSetAge:
+                        Console.Write("Введите возраст - ");
+                        age = int.Parse(Console.ReadLine());
                         break;
 
                     case CommandSetPassword:
-                        Console.Write("введите пароль - ");
+                        Console.Write("Введите пароль - ");
                         password = Console.ReadLine();
                         break;
 
                     case CommandChangeColor:
-                        bool isThisColor = true;
+                        bool isColorSet = false;
 
-                        while (isThisColor)
+                        while (!isColorSet)
                         {
-                            string blue = "blue";
-                            string cyan = "cyan";
-                            string green = "green";
-                            Console.WriteLine("выберите цвет(blue/cyan/green) - ");
-                            string color = Console.ReadLine();
+                            Console.WriteLine($"Выберите цвет ({CommandBlueColor}/{CommandCyanColor}/{CommandGreenColor}): ");
+                            string color = Console.ReadLine().ToLower();
 
-                            if (color == blue)
+                            switch (color)
                             {
-                                Console.BackgroundColor = ConsoleColor.Blue;
-                                isThisColor = false;
-                            }
-                            else if (color == cyan)
-                            {
-                                Console.BackgroundColor = ConsoleColor.Cyan;
-                                isThisColor = false;
-                            }
-                            else if (color == green)
-                            {
-                                Console.BackgroundColor = ConsoleColor.Green;
-                                isThisColor = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("неверный ввод, попробуйте снова.");
+                                case CommandBlueColor:
+                                    Console.BackgroundColor = ConsoleColor.Blue;
+                                    isColorSet = true;
+                                    break;
+                                case CommandCyanColor:
+                                    Console.BackgroundColor = ConsoleColor.Cyan;
+                                    isColorSet = true;
+                                    break;
+                                case CommandGreenColor:
+                                    Console.BackgroundColor = ConsoleColor.Green;
+                                    isColorSet = true;
+                                    break;
+                                default:
+                                    Console.WriteLine($"Неверный ввод. Доступные цвета: {CommandBlueColor}/{CommandCyanColor}/{CommandGreenColor}. Попробуйте снова.");
+                                    break;
                             }
                         }
                         break;
@@ -102,33 +99,19 @@ namespace qwertyu
                         break;
 
                     case CommandWriteAll:
-                        string stringAge = Convert.ToString(age);
-                        int coutChar = CountNumber + stringAge.Length + name.Length + surname.Length + password.Length;
-
-                        for (int i = 0; i < coutChar; i++)
-                        {
-                            Console.Write("-");
-                        }
-
-                        Console.WriteLine($"\n| {name} | {surname} | {age} | {password} |");
-
-                        for (int i = 0; i < coutChar; i++)
-                        {
-                            Console.Write("-");
-                        }
-
+                        Console.WriteLine($"| {name} | {surname} | {age} | {password} |");
                         break;
 
                     case CommandRandomNumber:
-                        Console.WriteLine($"{random.Next()}");
+                        Console.WriteLine($"Случайное число: {random.Next()}");
                         break;
 
                     case CommandExit:
                         isWork = false;
-                        break;
+                        break; ;
 
                     default:
-                        Console.WriteLine("Не верный ввод, попробуйсте снова.");
+                        Console.WriteLine("Неверный ввод, попробуйте снова.");
                         break;
                 }
             }
