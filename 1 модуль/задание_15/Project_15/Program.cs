@@ -7,15 +7,15 @@ namespace qwertyu
         public static void Main(string[] args)
         {
             const int CountNumber = 13;
-            const string MenuBarSetName = "setName";
-            const string MenuBarSetSurname = "setSurname";
-            const string MenuBarSetAge = "setAge";
-            const string MenuBarSetPassword = "setPassword";
-            const string MenuBarChangeColor = "changeColor";
-            const string MenuBarResetColor = "resetColor";
-            const string MenuBarWriteAll = "writeAll";
-            const string MenuBarRandomNumber = "randomNumber";
-            const string MenuBarExit = "Exit";
+            const string CommandSetName = "setName";
+            const string CommandSetSurname = "setSurname";
+            const string CommandBarSetAge = "setAge";
+            const string CommandSetPassword = "setPassword";
+            const string CommandChangeColor = "changeColor";
+            const string CommandResetColor = "resetColor";
+            const string CommandWriteAll = "writeAll";
+            const string CommandRandomNumber = "randomNumber";
+            const string CommandExit = "Exit";
 
             Random random = new Random();
             string name = "";
@@ -28,47 +28,43 @@ namespace qwertyu
             while (isWork)
             {
                 Console.WriteLine("\nСписок доступных команд:");
-                Console.WriteLine($"1. {MenuBarSetName}           - ввести/поменять имя.");
-                Console.WriteLine($"2. {MenuBarSetSurname}        - ввети/поменять фамилию.");
-                Console.WriteLine($"3. {MenuBarSetAge}            - ввести/поменять возраст.");
-                Console.WriteLine($"4. {MenuBarSetPassword}       - ввести/поменять пароль.");
-                Console.WriteLine($"5. {MenuBarChangeColor}       - установить цвет фона консоли.");
-                Console.WriteLine($"6. {MenuBarResetColor}        - сбросить цвета на стандартные.");
-                Console.WriteLine($"7. {MenuBarWriteAll}          - вывести всю информацию.");
-                Console.WriteLine($"7. {MenuBarRandomNumber}      - сгенерировать и вывести рандомное число.");
-                Console.WriteLine($"8. {MenuBarExit}              - выход.");
+                Console.WriteLine($"1. {CommandSetName}           - ввести/поменять имя.");
+                Console.WriteLine($"2. {CommandSetSurname}        - ввети/поменять фамилию.");
+                Console.WriteLine($"3. {CommandBarSetAge}            - ввести/поменять возраст.");
+                Console.WriteLine($"4. {CommandSetPassword}       - ввести/поменять пароль.");
+                Console.WriteLine($"5. {CommandChangeColor}       - установить цвет фона консоли.");
+                Console.WriteLine($"6. {CommandResetColor}        - сбросить цвета на стандартные.");
+                Console.WriteLine($"7. {CommandWriteAll}          - вывести всю информацию.");
+                Console.WriteLine($"7. {CommandRandomNumber}      - сгенерировать и вывести рандомное число.");
+                Console.WriteLine($"8. {CommandExit}              - выход.");
                 Console.WriteLine(" ");
                 Console.Write("Введите команду - ");
                 command = Console.ReadLine();
+                Console.Clear();
 
                 switch (command)
                 {
-                    case MenuBarSetName:
-                        Console.Clear();
+                    case CommandSetName:
                         Console.Write("введите имя - ");
                         name = Console.ReadLine();
                         break;
 
-                    case MenuBarSetSurname:
-                        Console.Clear();
+                    case CommandSetSurname:
                         Console.Write("введите фамилию - ");
                         surname = Console.ReadLine();
                         break;
 
-                    case MenuBarSetAge:
-                        Console.Clear();
+                    case CommandBarSetAge:
                         Console.Write("введите возраст - ");
                         age = Convert.ToInt32(Console.ReadLine());
                         break;
 
-                    case MenuBarSetPassword:
-                        Console.Clear();
+                    case CommandSetPassword:
                         Console.Write("введите пароль - ");
                         password = Console.ReadLine();
                         break;
 
-                    case MenuBarChangeColor:
-                        Console.Clear();
+                    case CommandChangeColor:
                         bool isThisColor = true;
 
                         while (isThisColor)
@@ -101,11 +97,11 @@ namespace qwertyu
                         }
                         break;
 
-                    case MenuBarResetColor:
+                    case CommandResetColor:
                         Console.ResetColor();
                         break;
 
-                    case MenuBarWriteAll:
+                    case CommandWriteAll:
                         string stringAge = Convert.ToString(age);
                         int coutChar = CountNumber + stringAge.Length + name.Length + surname.Length + password.Length;
 
@@ -123,16 +119,15 @@ namespace qwertyu
 
                         break;
 
-                    case MenuBarRandomNumber:
+                    case CommandRandomNumber:
                         Console.WriteLine($"{random.Next()}");
                         break;
 
-                    case MenuBarExit:
+                    case CommandExit:
                         isWork = false;
                         break;
 
                     default:
-                        Console.Clear();
                         Console.WriteLine("Не верный ввод, попробуйсте снова.");
                         break;
                 }
