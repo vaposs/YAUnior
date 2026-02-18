@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Project_13
+namespace qwertyu
 {
     class MainClass
     {
@@ -14,8 +14,10 @@ namespace Project_13
             const string MenuBarChangeColor = "changeColor";
             const string MenuBarResetColor = "resetColor";
             const string MenuBarWriteAll = "writeAll";
+            const string MenuBarRandomNumber = "randomNumber";
             const string MenuBarExit = "Exit";
 
+            Random random = new Random();
             string name = "";
             string surname = "";
             int age = 0;
@@ -33,6 +35,7 @@ namespace Project_13
                 Console.WriteLine($"5. {MenuBarChangeColor}       - установить цвет фона консоли.");
                 Console.WriteLine($"6. {MenuBarResetColor}        - сбросить цвета на стандартные.");
                 Console.WriteLine($"7. {MenuBarWriteAll}          - вывести всю информацию.");
+                Console.WriteLine($"7. {MenuBarRandomNumber}      - сгенерировать и вывести рандомное число.");
                 Console.WriteLine($"8. {MenuBarExit}              - выход.");
                 Console.WriteLine(" ");
                 Console.Write("Введите команду - ");
@@ -45,26 +48,30 @@ namespace Project_13
                         Console.Write("введите имя - ");
                         name = Console.ReadLine();
                         break;
+
                     case MenuBarSetSurname:
                         Console.Clear();
                         Console.Write("введите фамилию - ");
                         surname = Console.ReadLine();
                         break;
+
                     case MenuBarSetAge:
                         Console.Clear();
                         Console.Write("введите возраст - ");
                         age = Convert.ToInt32(Console.ReadLine());
                         break;
+
                     case MenuBarSetPassword:
                         Console.Clear();
                         Console.Write("введите пароль - ");
                         password = Console.ReadLine();
                         break;
+
                     case MenuBarChangeColor:
                         Console.Clear();
-                        bool thisColor = true;
+                        bool isThisColor = true;
 
-                        while (thisColor)
+                        while (isThisColor)
                         {
                             string blue = "blue";
                             string cyan = "cyan";
@@ -75,17 +82,17 @@ namespace Project_13
                             if (color == blue)
                             {
                                 Console.BackgroundColor = ConsoleColor.Blue;
-                                thisColor = false;
+                                isThisColor = false;
                             }
                             else if (color == cyan)
                             {
                                 Console.BackgroundColor = ConsoleColor.Cyan;
-                                thisColor = false;
+                                isThisColor = false;
                             }
                             else if (color == green)
                             {
                                 Console.BackgroundColor = ConsoleColor.Green;
-                                thisColor = false;
+                                isThisColor = false;
                             }
                             else
                             {
@@ -114,6 +121,10 @@ namespace Project_13
                             Console.Write("-");
                         }
 
+                        break;
+
+                    case MenuBarRandomNumber:
+                        Console.WriteLine($"{random.Next()}");
                         break;
 
                     case MenuBarExit:
