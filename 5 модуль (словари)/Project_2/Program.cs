@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -8,7 +8,7 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            int endSumm = 0;
+            int summ = 0;
             Queue<int> checks = new Queue<int>();
 
             Console.Write("Введите количество чеков в очереди - ");
@@ -17,29 +17,39 @@ namespace Project_2
 
             while (checks.Count > 0)
             {
-                Console.WriteLine($"Размер чека - {checks.Peek()}");
-                endSumm += ServeNumberQueue( endSumm ,checks);
-                Console.WriteLine($"Сумма денег в кассе - {endSumm}");
+                int currentCheck = checks.Dequeue();
+                Console.WriteLine($"Размер чека - {currentCheck}");
+                summ += currentCheck;
+                Console.WriteLine($"Сумма денег в кассе - {summ}");
                 Console.ReadKey();
                 Console.Clear();
             }
 
-            Console.WriteLine($"Посетители закончились, сума денег в кассе - {endSumm}");
+            Console.WriteLine($"Посетители закончились, сумма денег в кассе - {summ}");
         }
 
         static void FillQueue(Queue<int> checks, int maxChecks)
         {
-            int randomNumber;
             Random random = new Random();
+            int minSum = 0;
+            int maxSum = -1;
 
-            Console.Write("Введите минимальную сумму чека - ");
-            int minimumNumb = GetPositiveNumber();
-            Console.Write("Введите максимальную сумму чека - ");
-            int maximumNumb = GetPositiveNumber();
+            while (minSum > maxSum)
+            {
+                Console.Write("Введите минимальную сумму чека - ");
+                minSum = GetPositiveNumber();
+                Console.Write("Введите максимальную сумму чека - ");
+                maxSum = GetPositiveNumber();
+
+                if (minSum > maxSum)
+                {
+                    Console.WriteLine("Минимальная сумма не может быть больше максимальной.");
+                }
+            }
 
             for (int i = 0; i < maxChecks; i++)
             {
-                randomNumber = random.Next(minimumNumb, maximumNumb);
+                int randomNumber = random.Next(minSum, maxSum + 1);
                 checks.Enqueue(randomNumber);
             }
         }
@@ -47,33 +57,19 @@ namespace Project_2
         static int GetPositiveNumber()
         {
             string line;
-            bool isConversionSucceeded = true;
-            bool isSuccess;
-            int number = 0;
+            int number;
 
-            while (isConversionSucceeded)
+            while (true)
             {
                 line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
 
-                if (isSuccess && number >= 0)
+                if (int.TryParse(line, out number) && number >= 0)
                 {
-                    isConversionSucceeded = false;
+                    return number;
                 }
-                else
-                {
-                    Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
-                }
+
+                Console.WriteLine($"Строка '{line}' не является числом или меньше нуля. Повторите ввод: ");
             }
-
-            return number;
-        }
-
-        static int ServeNumberQueue(int check, Queue<int> checks)
-        {
-            check = checks.Dequeue();
-
-            return check;
         }
     }
 }
