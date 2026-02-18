@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_3
@@ -7,58 +7,47 @@ namespace Project_3
     {
         public static void Main(string[] args)
         {
-            const string AddNumberCommand = "addnumber";
-            const string SummCommand = "printsumm";
+            const string SummCommand = "summ";
             const string ExitProgramCommand = "exit";
 
             List<int> numbers = new List<int>();
             bool isWork = true;
+            string command;
 
             while (isWork)
             {
-                Console.WriteLine($"\nВведите команду \n");
-                Console.WriteLine($"1.{AddNumberCommand}");
-                Console.WriteLine($"2.{SummCommand}");
-                Console.WriteLine($"4.{ExitProgramCommand}");
-
-                Console.Write("\nВведите команду - ");
-
-                string command;
-
                 command = Console.ReadLine();
 
-                switch (command.ToLower())
+                if(command == SummCommand)
                 {
-                    case AddNumberCommand:
-                        AddNumber(numbers);
-                        break;
-
-                    case SummCommand:
-                        Summ(numbers);
-                        break;
-
-                    case ExitProgramCommand:
-                        isWork = false;
-                        break;
-
-                    default:
-                        Console.WriteLine($"{command} - такой команды нет.");
-                        break;
+                    Summ(numbers);
+                }
+                else if(command == ExitProgramCommand)
+                {
+                    isWork = false;
+                }
+                else
+                {
+                    AddNumber(numbers, command);
                 }
             }
         }
 
-        static void AddNumber(List<int> numbers)
+        static void AddNumber(List<int> numbers, string line)
         {
-            int number;
-
-            number = GetNumber();
-            numbers.Add(number);
+            if (int.TryParse(line, out int number))
+            {
+                numbers.Add(number);
+            }
+            else
+            {
+                Console.WriteLine($"строка {line} не является числом.");
+            }
         }
 
         static void Summ(List<int> numbers)
         {
-            int endSumm = 0;
+            int summ = 0;
 
             if (numbers.Count == 0)
             {
@@ -68,37 +57,11 @@ namespace Project_3
             {
                 for (int i = 0; i < numbers.Count; i++)
                 {
-                    endSumm += numbers[i];
+                    summ += numbers[i];
                 }
             }
 
-            Console.WriteLine($"Сумма чисел равна - {endSumm}");
-        }
-
-        static int GetNumber()
-        {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isSuccess;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                Console.Write("введите целое число - ");
-                line = Console.ReadLine();
-
-                if (int.TryParse(line, out number))
-                {
-                    number = Convert.ToInt32(line);
-                    isConversionSucceeded = false;
-                }
-                else
-                {
-                    Console.WriteLine($"строка {line} не является числом.");
-                }
-            }
-
-            return number;
+            Console.WriteLine($"Сумма чисел равна - {summ}");
         }
     }
 }
