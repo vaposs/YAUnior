@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_19
 {
@@ -9,23 +9,14 @@ namespace Project_19
             Random randon = new Random();
             int minNumber = 1;
             int maxNumber = 999999999;
-            int randomNumber = randon.Next(minNumber,maxNumber);
+            int randomNumber = randon.Next(minNumber, maxNumber);
             int degreeNumber = 1;
             int degreeCount = 1;
             int squareNumber = 2;
-            bool isBig = true;
 
-            while(isBig)
-            {   
-                if (degreeCount > randomNumber)
-                {
-                    isBig = false;
-                }
-                else
-                {
-                    degreeCount = degreeCount * squareNumber;
-                }
-
+            while (degreeCount <= randomNumber)
+            {
+                degreeCount = degreeCount * squareNumber;   
                 degreeNumber++;
             }
 
