@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_17
 {
@@ -6,40 +6,34 @@ namespace Project_17
     {
         public static void Main(string[] args)
         {
-            int attempts = 3;
+            const string SecretPassword = "триодиншестьчетыре";
+            
+            int maxAttempts = 3;
+            int minAttempts = 0;
             bool isLose = true;
-            const string secretPassword = "триодиншестьчетыре";
-            Console.WriteLine("пароль для дуступа к сетретному сообщению - триодиншестьчетыре");
-            Console.WriteLine("продолжитьлжить ... ");
-            Console.ReadKey();
-            Console.Clear();
-            Console.Write("введите пароль для доступа к секретному сообщению - ");
 
-            while(attempts > 0)
+            for (int i = maxAttempts; i > minAttempts; i--)
             {
+                Console.Write("введите пароль для доступа к секретному сообщению - ");
                 string password = Console.ReadLine();
 
-                if (password == secretPassword)
+                if (password == SecretPassword)
                 {
                     Console.WriteLine("пароль верный");
                     isLose = false;
+                    break;
                 }
 
-                --attempts;
-
-                if(attempts > 0)
+                if (i > 1)
                 {
-                    Console.Write("пароль не верный, попробуйсте снова - ");
+                    Console.WriteLine($"пароль не верный, осталось попыток: {i - 1}");
                 }
             }
 
-            if(isLose == true)
+            if (isLose)
             {
                 Console.WriteLine("вы проиграли");
             }
-
-            Console.WriteLine("нажмите любую кнопку для выхода");
-            Console.ReadLine();
         }
     }
 }
