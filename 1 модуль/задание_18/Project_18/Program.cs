@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_18
 {
@@ -6,26 +6,31 @@ namespace Project_18
     {
         public static void Main(string[] args)
         {
-            int minNumber = 1;
-            int maxNumber = 28;
-            Random number = new Random();
-            int countNumber = 0;
-            int minDigit = 0;
-            int lowerBound = 99;
-            int maxDiget = 999;
+            Random random = new Random();
+            int lowerBound = 50;
+            int upperBound = 150;
+            int count = 0;
+            int tempNumber;
 
-            int randomNumber = number.Next(minNumber, maxNumber);
 
-            for (int i = minDigit; i <= maxDiget; i = i + randomNumber)
+            int randomNumber = random.Next(10, 26);
+
+            for (int i = lowerBound; i <= upperBound; i++)
             {
-                if(i > lowerBound)
+                tempNumber = i;
+
+                while (tempNumber >= randomNumber)
                 {
-                    countNumber++;
+                    tempNumber -= randomNumber;
+                }
+
+                if (tempNumber == 0)
+                {
+                    count++;
                 }
             }
 
-            Console.WriteLine($"{countNumber} - столько трехзначных натуральных чисел кратно числу - {randNumber}");
-            Console.ReadLine();
+            Console.WriteLine($"Количество чисел от {lowerBound} до {upperBound}, кратных {randomNumber}: {count}");
         }
     }
 }
