@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Security.Cryptography;
+using System;
 
 namespace задание_FightMage
 {
@@ -9,20 +6,21 @@ namespace задание_FightMage
     {
         public static void Main(string[] args)
         {
-            const string FireBall = "fire ball";
+            const string FireBall = "1";
             int fireBallDamage = 25;
             int fireBallMp = 10;
-            const string MegaFireBall = "mega fire ball";
+            const string MegaFireBall = "2";
             int megaFireBallDamage = 50;
             int megaFireBallMp = 25;
-            const string MegicArmor = "magic armor";
-            const string enemyOnFire = "enemy on fire";
+            bool isMegaFireBallAvailable = true;
+            const string MagicArmor = "3";
+            const string EnemyOnFire = "4";
             int enemyOnFireDamage = 20;
-            const string ManaRestoration = "mana restoration";
-            const string RsestorationLife = "restoration of life";
-            int heroHpMax = 100;
-            int heroMpMax = 100;
-            int bossHpMax = 250;
+            const string ManaRestoration = "5";
+            const string HealthRestoration = "6";
+            int heroHealthMax = 100;
+            int heroManaMax = 100;
+            int bossHealthMax = 250;
             int potion = 50;
             int heroArmor = 0;
             int fireAtRound = 0;
@@ -30,7 +28,7 @@ namespace задание_FightMage
             int magicArmorMp = 20;
             int enemyOnFireMp = 30;
             int heroArmorRound = 2;
-            Random randonMove = new Random();
+            Random randomMove = new Random();
             int bossMove = 0;
             int randomMax = 4;
             int bossHit = 10;
@@ -38,36 +36,44 @@ namespace задание_FightMage
             int bossHitCrit = 2;
             string spell = "";
             bool isCorrectSpell = true;
-            bool isNextRound = true;
-            int heroHP = 100;
-            int heroMP = 100;
-            int bossHP = 250;
+            int heroHealth = 100;
+            int heroMana = 100;
+            int bossHealth = 250;
             int bossRegen = 0;
             int bossDamage = 1;
             int bossCritDamage = 2;
 
             Console.WriteLine("Вы входите в большой тронный зал и сразу за вами в створке ворот опускается железная решетка");
-            Console.WriteLine("Со стороны трона вы слышите негромкий звут, который очень похож на скрип костей. Вы натолкнулись на Короля\n");
+            Console.WriteLine("Со стороны трона вы слышите негромкий звук, который очень похож на скрип костей. Вы натолкнулись на Короля\n");
             Console.WriteLine("Начать бой(нажмите любую кнопку ... )");
             Console.ReadKey();
             Console.Clear();
 
-            while (isNextRound)
+            while (heroHealth > 0 && bossHealth > 0)
             {
                 isCorrectSpell = true;
-                bossMove = randonMove.Next(randomMax);
+                bossMove = randomMove.Next(randomMax);
 
                 while (isCorrectSpell)
                 {
-                    Console.WriteLine($"HP - {heroHP} \t\t\t Босс - {bossHP}");
-                    Console.WriteLine($"MP - {heroMP}");
-                    Console.WriteLine($"\nкастовать {fireBall}");
-                    Console.WriteLine($"кастовать {megaFireBall}");
-                    Console.WriteLine($"каcтовать {magicArmor}");
-                    Console.WriteLine($"кастовать {enemyOnFire}");
-                    Console.WriteLine($"кастовать {manaRestoration}");
-                    Console.WriteLine($"кастовать {restorationLife}\n");
-                    Console.Write("Выберите действие - ");
+                    Console.WriteLine($"Здоровье - {heroHealth} \t\t\t Босс - {bossHealth}");
+                    Console.WriteLine($"Мана - {heroMana}");
+                    Console.WriteLine($"\n1 - {GetSpellName(FireBall)} (урон {fireBallDamage}, мана {fireBallMp})");
+
+                    if (isMegaFireBallAvailable)
+                    {
+                        Console.WriteLine($"2 - {GetSpellName(MegaFireBall)} (урон {megaFireBallDamage}, мана {megaFireBallMp})");
+                    }
+                    else
+                    {
+                        Console.WriteLine("2 - недоступно (требуется использование огненного шара)");
+                    }
+
+                    Console.WriteLine($"3 - {GetSpellName(MagicArmor)} (мана {magicArmorMp})");
+                    Console.WriteLine($"4 - {GetSpellName(EnemyOnFire)} (урон {enemyOnFireDamage} в течение {fireAtRoundMax} ходов, мана {enemyOnFireMp})");
+                    Console.WriteLine($"5 - {GetSpellName(ManaRestoration)} (восполнение маны)");
+                    Console.WriteLine($"6 - {GetSpellName(HealthRestoration)} (восполнение здоровья)\n");
+                    Console.Write("Выберите действие (1-6) - ");
 
                     if (heroArmor > 0)
                     {
@@ -78,154 +84,173 @@ namespace задание_FightMage
 
                     switch (spell)
                     {
-                        case fireBall:
-                            heroMP -= fireBallMp;
-
-                            if (heroMP < 0)
+                        case FireBall:
+                            if (heroMana >= fireBallMp)
                             {
-                                heroMP = 0;
-                                Console.WriteLine("вы старались но манны не хватило");
+                                heroMana -= fireBallMp;
+                                bossHealth -= fireBallDamage;
+                                isMegaFireBallAvailable = true;
+                                Console.WriteLine($"Вы нанесли {fireBallDamage} урона огненным шаром!");
                             }
                             else
                             {
-                                bossHP -= fireBallDamage;
+                                Console.WriteLine("Недостаточно маны!");
+                                continue;
                             }
-
                             isCorrectSpell = false;
                             break;
-                        case megaFireBall:
-                            heroMP -= megaFireBallMp;
 
-                            if (heroMP < 0)
+                        case MegaFireBall:
+                            if (!isMegaFireBallAvailable)
                             {
-                                heroMP = 0;
-                                Console.WriteLine("вы старались но манны не хватило");
+                                Console.WriteLine("Мега огненный шар недоступен! Сначала используйте обычный огненный шар.");
+                                continue;
+                            }
+                            if (heroMana >= megaFireBallMp)
+                            {
+                                heroMana -= megaFireBallMp;
+                                bossHealth -= megaFireBallDamage;
+                                isMegaFireBallAvailable = false;
+                                Console.WriteLine($"Вы нанесли {megaFireBallDamage} урона мега огненным шаром!");
                             }
                             else
                             {
-                                bossHP -= megaFireBallDamage;
+                                Console.WriteLine("Недостаточно маны!");
+                                continue;
                             }
-
                             isCorrectSpell = false;
                             break;
-                        case magicArmor:
-                            heroMP -= magicArmorMp;
 
-                            if (heroMP < 0)
+                        case MagicArmor:
+                            if (heroMana >= magicArmorMp)
                             {
-                                heroMP = 0;
-                                Console.WriteLine("вы старались но манны не хватило");
-                            }
-                            else
-                            {
+                                heroMana -= magicArmorMp;
                                 heroArmor = heroArmorRound;
-                            }
-
-                            isCorrectSpell = false;
-                            break;
-                        case enemyOnFire:
-                            heroMP -= enemyOnFireMp;
-
-                            if (heroMP < 0)
-                            {
-                                heroMP = 0;
-                                Console.WriteLine("вы старались но манны не хватило");
+                                Console.WriteLine("Вы активировали магическую броню!");
                             }
                             else
                             {
+                                Console.WriteLine("Недостаточно маны!");
+                                continue;
+                            }
+                            isCorrectSpell = false;
+                            break;
+
+                        case EnemyOnFire:
+                            if (heroMana >= enemyOnFireMp)
+                            {
+                                heroMana -= enemyOnFireMp;
                                 fireAtRound = fireAtRoundMax;
+                                Console.WriteLine($"Босс горит! Будет получать {enemyOnFireDamage} урона {fireAtRoundMax} хода");
                             }
-
-                            isCorrectSpell = false;
-                            break;
-                        case manaRestoration:
-                            heroMP += potion;
-
-                            if (heroMP > heroMpMax)
+                            else
                             {
-                                heroMP = heroMpMax;
+                                Console.WriteLine("Недостаточно маны!");
+                                continue;
                             }
                             isCorrectSpell = false;
                             break;
-                        case restorationLife:
-                            heroHP += potion;
 
-                            if (heroHP > heroHpMax)
+                        case ManaRestoration:
+                            heroMana += potion;
+                            if (heroMana > heroManaMax)
                             {
-                                heroHP = heroHpMax;
+                                heroMana = heroManaMax;
                             }
+                            Console.WriteLine("Вы восстановили ману!");
                             isCorrectSpell = false;
                             break;
+
+                        case HealthRestoration:
+                            heroHealth += potion;
+                            if (heroHealth > heroHealthMax)
+                            {
+                                heroHealth = heroHealthMax;
+                            }
+                            Console.WriteLine("Вы восстановили здоровье!");
+                            isCorrectSpell = false;
+                            break;
+
                         default:
-
-                            if (bossHP < 0 || heroHP < 0)
-                            {
-                                isCorrectSpell = false;
-                                isNextRound = false;
-                            }
-
-                            Console.WriteLine("\nневерный ввод заклинания\n");
+                            Console.WriteLine("\nНеверный ввод! Введите число от 1 до 6\n");
                             break;
                     }
                 }
-                    if (bossMove == bossRegen)
-                    {
-                        bossHP = bossHP + potion;
 
-                        if (bossHP > bossHpMax)
-                        {
-                            bossHP = bossHpMax;
-                        }
-                    }
-                    else if (bossMove == bossDamage)
-                    {
-                        hitPerRound = bossHit;
-                    }
-                    else if (bossMove == bossCritDamage)
-                    {
-                        hitPerRound = bossHit * bossHitCrit;
-                    }
+                hitPerRound = 0;
 
-                    if(fireAtRound > 0)
-                    {
-                        bossHP -= enemyOnFireDamage;
-                        fireAtRound--;
-                    }
-
-                    if(heroArmor > 0)
-                    {
-                        hitPerRound = 0;
-                        heroArmor--;
-                    }
-
-                    if (bossMove == bossRegen)
-                    {
-                        Console.WriteLine($"\nигрок использует заклинание {spell}, босс поглощает темную сущность и востанавливает жизненую силу");
-                    }
-                    else
-                    {
-                        heroHP = heroHP - hitPerRound;
-                        Console.WriteLine($"игрок использует заклинание {spell}, босс наносит {hitPerRound} урона\n");
-                    }
-             
-
-                if (heroHP < 0 || bossHP < 0)
+                if (bossMove == bossRegen)
                 {
-                    isNextRound = false;
+                    bossHealth += potion;
+                    if (bossHealth > bossHealthMax)
+                    {
+                        bossHealth = bossHealthMax;
+                    }
+                    Console.WriteLine($"\nБосс восстанавливает {potion} здоровья!");
                 }
+                else if (bossMove == bossDamage)
+                {
+                    hitPerRound = bossHit;
+                }
+                else if (bossMove == bossCritDamage)
+                {
+                    hitPerRound = bossHit * bossHitCrit;
+                }
+
+                if (fireAtRound > 0)
+                {
+                    bossHealth -= enemyOnFireDamage;
+                    Console.WriteLine($"Босс получает {enemyOnFireDamage} урона от горения");
+                    fireAtRound--;
+                }
+
+                if (heroArmor > 0 && hitPerRound > 0)
+                {
+                    Console.WriteLine($"Броня поглотила {hitPerRound} урона!");
+                    hitPerRound = 0;
+                }
+
+                if (hitPerRound > 0)
+                {
+                    heroHealth -= hitPerRound;
+                    Console.WriteLine($"Босс наносит {hitPerRound} урона\n");
+                }
+                else if (bossMove != bossRegen)
+                {
+                    Console.WriteLine("Босс промахнулся!\n");
+                }
+
+                Console.WriteLine("Нажмите любую клавишу для продолжения...");
+                Console.ReadKey();
+                Console.Clear();
             }
 
-            if(bossHP < 0 && heroHP < 0)
+            Console.Clear();
+            if (bossHealth <= 0 && heroHealth <= 0)
             {
-                Console.WriteLine("древний хвам не выдержал вашей бытвы и обрушился погребеня и вас и врага под грудой камней");
+                Console.WriteLine("Древний храм не выдержал вашей битвы и обрушился, погребя и вас, и врага под грудой камней");
             }
-            else if(heroHP < 0)
+            else if (heroHealth <= 0)
             {
-                Console.WriteLine("вы проиграли");
+                Console.WriteLine("Вы проиграли... Король мертвых оказался сильнее");
             }
             else
             {
-                Console.WriteLine("вы победили");
+                Console.WriteLine("ПОБЕДА! Король мертвых повержен!");
+            }
+        }
+
+        static string GetSpellName(string spellCode)
+        {
+            switch (spellCode)
+            {
+                case "1": return "Огненный шар";
+                case "2": return "Мега огненный шар";
+                case "3": return "Магическая броня";
+                case "4": return "Поджечь врага";
+                case "5": return "Восполнение маны";
+                case "6": return "Восполнение здоровья";
+                default: return "";
             }
         }
     }
