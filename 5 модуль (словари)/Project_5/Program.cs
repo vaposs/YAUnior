@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_5
@@ -7,48 +7,51 @@ namespace Project_5
     {
         public static void Main(string[] args)
         {
-            int sizeArrayFirst;
-            int sizeArraySecond;
-            List<int> solution = new List<int>();
+            int firstArraySize;
+            int secondArraySize;
+            List<int> uniqueNumbers = new List<int>();
 
-            Console.Write("Введите размер первого масива - ");
-            sizeArrayFirst = GetNumber();
-            Console.Write("Введите размер второго масива - ");
-            sizeArraySecond = GetNumber();
-            int[] arrayFirst = new int[sizeArrayFirst];
-            int[] arraySecond = new int[sizeArraySecond];
+            Console.Write("Введите размер первого массива - ");
+            firstArraySize = GetNumber();
+            Console.Write("Введите размер второго массива - ");
+            secondArraySize = GetNumber();
 
-            FillArray(arrayFirst);
-            FillArray(arraySecond);
-            TransferCollection(arrayFirst, solution);
-            TransferCollection(arraySecond, solution);
-            Console.Write("Первый масив - ");
-            PrintArray(arrayFirst);
-            Console.Write("\nВторой масив - ");
-            PrintArray(arraySecond);
+            int[] firstArray = new int[firstArraySize];
+            int[] secondArray = new int[secondArraySize];
+
+            FillArray(firstArray);
+            FillArray(secondArray);
+
+            AddUniqueElements(firstArray, uniqueNumbers);
+            AddUniqueElements(secondArray, uniqueNumbers);
+
+            Console.Write("Первый массив - ");
+            PrintArray(firstArray);
+            Console.Write("\nВторой массив - ");
+            PrintArray(secondArray);
             Console.Write("\nРезультат - ");
-            PrintList(solution);
+            PrintList(uniqueNumbers);
         }
 
         static int GetNumber()
         {
-            string line;
+            string userInput;
             bool isConversionSucceeded = true;
-            bool isSuccess;
+            bool isParsingSuccessful;
             int number = 0;
 
             while (isConversionSucceeded)
             {
-                line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
+                userInput = Console.ReadLine();
+                isParsingSuccessful = int.TryParse(userInput, out number);
 
-                if (isSuccess && number >= 0)
+                if (isParsingSuccessful && number >= 0)
                 {
                     isConversionSucceeded = false;
                 }
                 else
                 {
-                    Console.WriteLine($" строка - {line}, не число или меньше  нуля. Повторите ввод. ");
+                    Console.WriteLine($"Строка '{userInput}' не является числом или меньше нуля. Повторите ввод.");
                 }
             }
             return number;
@@ -56,21 +59,21 @@ namespace Project_5
 
         static void FillArray(int[] array)
         {
-            Random ramdom = new Random();
-            int minimalRamdomNumber = 1;
-            int maximalRamdomNumber = 10;
+            Random randomGenerator = new Random();
+            int minimumRandomValue = 1;
+            int maximumRandomValue = 10;
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = ramdom.Next(minimalRamdomNumber,maximalRamdomNumber);
+                array[i] = randomGenerator.Next(minimumRandomValue, maximumRandomValue);
             }
         }
 
-        static void PrintList(List<int> solution)
+        static void PrintList(List<int> numbers)
         {
-            foreach (var numb in solution)
+            foreach (int number in numbers)
             {
-                Console.Write($"{numb} ,");
+                Console.Write($"{number}, ");
             }
         }
 
@@ -89,13 +92,15 @@ namespace Project_5
             }
         }
 
-        static void TransferCollection(int[] array, List<int> solution)
+        static void AddUniqueElements(int[] sourceArray, List<int> targetList)
         {
-            for (int i = 0; i < (array.Length); i++)
+            for (int i = 0; i < sourceArray.Length; i++)
             {
-                if (solution.Contains(array[i]) == false)
+                int currentElement = sourceArray[i];
+
+                if (targetList.Contains(currentElement) == false)
                 {
-                        solution.Add(array[i]);
+                    targetList.Add(currentElement);
                 }
             }
         }
