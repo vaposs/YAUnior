@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_2
 {
@@ -7,24 +7,23 @@ namespace Project_2
         public static void Main(string[] args)
         {
             int sizeArray = 10;
-            int maxNumber;
-            int emptyNumber = 0;
+            int maxNumber = int.MinValue;
+            int indexFirstNumber = 0;
             int numberMax = 100;
 
-            Random number = new Random();
-            int[,] array = new int[sizeArray, sizeArray];
-            maxNumber = array[emptyNumber,emptyNumber];
+            Random randomNumber = new Random();
+            int[,] numbers = new int[sizeArray, sizeArray];
 
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < numbers.GetLength(0); i++)
             {
-                for (int j = 0; j < array.GetLength(1); j ++)
+                for (int j = 0; j < numbers.GetLength(1); j++)
                 {
-                    array[i, j] = number.Next(numberMax);
-                    Console.Write($"{array[i, j]} ");
+                    numbers[i, j] = randomNumber.Next(numberMax);
+                    Console.Write($"{numbers[i, j]} ");
 
-                    if(array[i,j] > maxNumber)
+                    if (numbers[i, j] > maxNumber)
                     {
-                        maxNumber = array[i, j];
+                        maxNumber = numbers[i, j];
                     }
                 }
 
@@ -33,15 +32,15 @@ namespace Project_2
 
             Console.WriteLine("\n");
 
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < numbers.GetLength(0); i++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
+                for (int j = 0; j < numbers.GetLength(1); j++)
                 {
-                    if (array[i, j] == maxNumber)
+                    if (numbers[i, j] == maxNumber)
                     {
-                        array[i, j] = emptyNumber;
+                        numbers[i, j] = indexFirstNumber;
                     }
-                    Console.Write($"{array[i, j]} ");
+                    Console.Write($"{numbers[i, j]} ");
                 }
 
                 Console.WriteLine();
