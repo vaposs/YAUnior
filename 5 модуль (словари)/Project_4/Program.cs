@@ -1,7 +1,5 @@
-﻿using System;
-using System.CodeDom.Compiler;
+using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace Project_4
 {
@@ -14,34 +12,34 @@ namespace Project_4
             const string DeleteDossierCommand = "delete";
             const string ExitProgramCommand = "exit";
 
-            Dictionary<string, string> dossier = new Dictionary<string, string>();
+            Dictionary<string, List<string>> positions = new Dictionary<string, List<string>>();
+            List<string> allEmployees = new List<string>();
+
             bool isWork = true;
 
             while (isWork)
             {
-                Console.WriteLine($"Введите команду \n");
-                Console.WriteLine($"1.{AddDossierCommand}");
-                Console.WriteLine($"2.{PrintDossierCommand}");
-                Console.WriteLine($"3.{DeleteDossierCommand}");
-                Console.WriteLine($"4.{ExitProgramCommand}");
-                Console.Write("\nВведите команду - ");
+                Console.WriteLine($"\nВведите команду:");
+                Console.WriteLine($"1. {AddDossierCommand} - добавить сотрудника");
+                Console.WriteLine($"2. {PrintDossierCommand} - показать всех сотрудников");
+                Console.WriteLine($"3. {DeleteDossierCommand} - удалить сотрудника");
+                Console.WriteLine($"4. {ExitProgramCommand} - выход");
+                Console.Write("\nВаша команда: ");
 
-                string command;
-
-                command = Console.ReadLine();
+                string command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
                     case AddDossierCommand:
-                        AddForDossier(dossier);
+                        AddEmployee(positions, allEmployees);
                         break;
 
                     case PrintDossierCommand:
-                        PrintDossier(dossier);
+                        PrintAllEmployees(positions);
                         break;
 
                     case DeleteDossierCommand:
-                        DeleteDossier(dossier);
+                        DeleteEmployee(positions, allEmployees);
                         break;
 
                     case ExitProgramCommand:
@@ -49,73 +47,111 @@ namespace Project_4
                         break;
 
                     default:
-                        Console.WriteLine("Неверная команда");
+                        Console.WriteLine("Неверная команда!");
                         break;
                 }
             }
         }
 
-        static void AddForDossier(Dictionary<string, string> dossier)
+        static void AddEmployee(Dictionary<string, List<string>> positions, List<string> allEmployees)
         {
-            string tempProfesion = "";
-            string tempName = "";
+            Console.Write("Введите ФИО сотрудника: ");
+            string fullName = Console.ReadLine();
 
-            Console.Write("Введите ФИО - ");
-            tempName = Console.ReadLine();
-
-            while (dossier.ContainsKey(tempName))
+            if (allEmployees.Contains(fullName))
             {
-                Console.Write("Такое ФИО уже есть, введите заново ФИО - ");
-                tempName = Console.ReadLine();
+                Console.WriteLine("Сотрудник с таким ФИО уже существует!");
+                return;
             }
 
-            Console.Write("Введите професию - ");
-            tempProfesion = Console.ReadLine();
-            dossier.Add(tempName, tempProfesion);
+            Console.Write("Введите название должности: ");
+            string position = Console.ReadLine();
+
+            if (!positions.ContainsKey(position))
+            {
+                positions[position] = new List<string>();
+            }
+
+            positions[position].Add(fullName);
+            allEmployees.Add(fullName);
+
+            Console.WriteLine("Сотрудник успешно добавлен!");
         }
 
-        static void DeleteDossier(Dictionary<string, string> dossier)
+        static void DeleteEmployee(Dictionary<string, List<string>> positions, List<string> allEmployees)
         {
-            if (dossier.Count == 0)
+            if (allEmployees.Count == 0)
             {
-                Console.WriteLine("Список досье пуст.");
+                Console.WriteLine("Список сотрудников пуст.");
+                return;
             }
-            else
-            {
-                string tempName;
-                Console.Write("Введите ФИО досье для удаления - ");
-                tempName = Console.ReadLine();
 
-                if(dossier.Remove(tempName)== false)
+            Console.Write("Введите ФИО сотрудника для удаления: ");
+            string fullName = Console.ReadLine();
+
+            if (!allEmployees.Contains(fullName))
+            {
+                Console.WriteLine($"Сотрудник с ФИО '{fullName}' не найден!");
+                return;
+            }
+
+            string positionToDelete = null;
+            foreach (var position in positions)
+            {
+                if (position.Value.Contains(fullName))
                 {
-                    Console.WriteLine($"{tempName} - такого ФИО нет");
+                    positionToDelete = position.Key;
+                    break;
                 }
-                else
+            }
+
+            if (positionToDelete != null)
+            {
+                positions[positionToDelete].Remove(fullName);
+                allEmployees.Remove(fullName);
+
+                if (positions[positionToDelete].Count == 0)
                 {
-                    Console.WriteLine("досье удалено");
+                    positions.Remove(positionToDelete);
+                    Console.WriteLine($"Должность '{positionToDelete}' удалена, так как на ней не осталось сотрудников.");
                 }
+
+                Console.WriteLine("Сотрудник успешно удален!");
             }
         }
 
-        static void PrintDossier(Dictionary<string, string> dossiers)
+        static void PrintAllEmployees(Dictionary<string, List<string>> positions)
         {
-            if(dossiers.Count == 0)
+            if (positions.Count == 0)
             {
-                Console.WriteLine("Список досье пуст.");
+                Console.WriteLine("Список сотрудников пуст.");
+                return;
             }
-            else
+
+            Console.WriteLine("\n" + new string('=', 50));
+            Console.WriteLine("ШТАТНОЕ РАСПИСАНИЕ");
+            Console.WriteLine(new string('=', 50));
+
+            foreach (var position in positions)
             {
-                PrintFirstLine();
-                foreach (var dossier in dossiers)
+                Console.WriteLine($"\nДолжность: {position.Key}");
+                Console.WriteLine("Сотрудники:");
+
+                for (int i = 0; i < position.Value.Count; i++)
                 {
-                    Console.WriteLine($"{dossier.Key} - {dossier.Value}");
+                    Console.WriteLine($"  {i + 1}. {position.Value[i]}");
                 }
             }
-        }
 
-        static void PrintFirstLine()
-        {
-            Console.WriteLine("Професия     -       ФИО     ");
+            Console.WriteLine("\n" + new string('=', 50));
+
+            int totalEmployees = 0;
+            foreach (var position in positions)
+            {
+                totalEmployees += position.Value.Count;
+            }
+            Console.WriteLine($"Всего сотрудников: {totalEmployees}");
+            Console.WriteLine($"Всего должностей: {positions.Count}");
         }
     }
 }
