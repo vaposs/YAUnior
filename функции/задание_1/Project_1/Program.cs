@@ -1,6 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Specialized;
+using System;
 
 namespace Project_1
 {
@@ -11,195 +9,239 @@ namespace Project_1
             const string AddDossierCommand = "add";
             const string PrintDossierCommand = "print";
             const string DeleteDossierCommand = "delete";
-            const string SeachDossierCommand = "seach";
+            const string SearchDossierCommand = "search";
             const string ExitProgramCommand = "exit";
 
-            string[] name = new string[0];
-            string[] profession = new string[0];
+            string[] fullNames = new string[0];
+            string[] professions = new string[0];
             bool isWork = true;
 
             while (isWork)
             {
-                Console.WriteLine($"Введите команду \n");
-                Console.WriteLine($"1.{AddDossierCommand}");
-                Console.WriteLine($"2.{PrintDossierCommand}");
-                Console.WriteLine($"3.{DeleteDossierCommand}");
-                Console.WriteLine($"4.{SeachDossierCommand}");
-                Console.WriteLine($"5.{ExitProgramCommand}");
+                Console.WriteLine($"\nДоступные команды:");
+                Console.WriteLine($"1. {AddDossierCommand} - добавить досье");
+                Console.WriteLine($"2. {PrintDossierCommand} - вывести все досье");
+                Console.WriteLine($"3. {DeleteDossierCommand} - удалить досье");
+                Console.WriteLine($"4. {SearchDossierCommand} - поиск по фамилии");
+                Console.WriteLine($"5. {ExitProgramCommand} - выход из программы");
 
-                Console.Write("\nВведите команду - ");
-
-                string command;
-
-                command = Console.ReadLine();
+                Console.Write("\nВведите команду: ");
+                string command = Console.ReadLine();
 
                 switch (command.ToLower())
                 {
                     case AddDossierCommand:
-                        AddDossier(ref name,ref profession);
+                        AddDossier(ref fullNames, ref professions);
                         break;
 
                     case PrintDossierCommand:
-                        PrintDossier(name, profession);
+                        PrintDossier(fullNames, professions);
                         break;
 
                     case DeleteDossierCommand:
-                        DeleteDossier(ref name, ref profession);
+                        DeleteDossier(ref fullNames, ref professions);
                         break;
 
-                    case SeachDossierCommand:
-                        SeachDossier(name, profession);
+                    case SearchDossierCommand:
+                        SearchDossier(fullNames, professions);
                         break;
 
                     case ExitProgramCommand:
                         isWork = false;
                         break;
+
+                    default:
+                        Console.WriteLine("Неизвестная команда. Попробуйте снова.");
+                        break;
                 }
             }
         }
 
-        static void AddDossier(ref string[] name,ref string[] profession)
+        static void AddDossier(ref string[] fullNames, ref string[] professions)
         {
             Console.Write("Введите ФИО: ");
-            AddElement(ref name);
-            Console.Write("Введите професию: ");
-            AddElement(ref profession);
+            AddElement(ref fullNames);
+
+            Console.Write("Введите профессию: ");
+            AddElement(ref professions);
+
+            Console.WriteLine("Досье успешно добавлено!");
         }
 
-        static void PrintDossier(string[] name, string[] profession)   
+        static void PrintDossier(string[] fullNames, string[] professions)
         {
-            PrintFirstLine();
-
-            for (int i = 0; i < name.Length; i ++)
+            if (fullNames.Length == 0)
             {
-                Console.Write($"{i+1}.");
-                Console.Write(name[i]);
-                Console.Write(" - ");
-                Console.Write(profession[i]);
-                Console.WriteLine();
+                Console.WriteLine("Список досье пуст.");
+                Console.ReadKey();
+                return;
             }
 
-            Console.ReadLine();
+            PrintHeader();
+
+            for (int i = 0; i < fullNames.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {fullNames[i]} - {professions[i]}");
+            }
+
+            Console.WriteLine($"\nВсего записей: {fullNames.Length}");
+            Console.ReadKey();
         }
 
-        static void DeleteDossier(ref string[] name, ref string[] profession)
+        static void DeleteDossier(ref string[] fullNames, ref string[] professions)
         {
-            string deleteDossierString;
-            int deleteDossierInt = 0;
-            int number;
-            bool isSuccess;
-            bool isConversionSucceeded = true;
-
-            if (name.Length == 0)
+            if (fullNames.Length == 0)
             {
-                Console.Write("список досье пустой");
+                Console.WriteLine("Список досье пуст. Нечего удалять.");
+                Console.ReadKey();
+                return;
             }
-            else
+
+            PrintDossier(fullNames, professions);
+
+            int dossierNumber = GetValidDossierNumber(fullNames.Length);
+
+            if (dossierNumber == -1)
             {
-                while (isConversionSucceeded)
+                Console.WriteLine("Удаление отменено.");
+                Console.ReadKey();
+                return;
+            }
+
+            int indexToDelete = dossierNumber - 1;
+
+            DeleteElement(ref fullNames, indexToDelete);
+            DeleteElement(ref professions, indexToDelete);
+
+            Console.WriteLine($"Досье №{dossierNumber} успешно удалено.");
+            Console.ReadKey();
+        }
+
+        static int GetValidDossierNumber(int maxNumber)
+        {
+            int dossierNumber;
+            string userInput;
+            bool isValidNumber;
+
+            while (true)
+            {
+                Console.Write($"\nВведите номер досье для удаления (1-{maxNumber}) или 0 для отмены: ");
+                userInput = Console.ReadLine();
+
+                isValidNumber = int.TryParse(userInput, out dossierNumber);
+
+                if (!isValidNumber)
                 {
-                    Console.WriteLine("Введите номер досье для удаления: ");
-                    deleteDossierString = Console.ReadLine();
-                    isSuccess = int.TryParse(deleteDossierString, out number);
-                    deleteDossierInt = Convert.ToInt32(deleteDossierString);
-
-                    if (isSuccess && deleteDossierInt > 0)
-                    {
-                        if (deleteDossierInt > name.Length)
-                        {
-                            Console.WriteLine("номер больше чем количество досье");
-                        }
-                        else
-                        {
-                            isConversionSucceeded = false;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Неверный ввод.");
-                    }
+                    Console.WriteLine("Ошибка: введите корректное число.");
+                    continue;
                 }
 
-                DeleteElement(ref name, deleteDossierInt);
-                DeleteElement(ref profession, deleteDossierInt);
-                Console.WriteLine("Досье удалено.");
+                if (dossierNumber == 0)
+                {
+                    return -1;
+                }
+
+                if (dossierNumber < 1 || dossierNumber > maxNumber)
+                {
+                    Console.WriteLine($"Ошибка: номер должен быть от 1 до {maxNumber}.");
+                    continue;
+                }
+
+                return dossierNumber;
             }
         }
 
-        static void SeachDossier(string[] name, string[] profession)
+        static void SearchDossier(string[] fullNames, string[] professions)
         {
-            int fioSize = 5;
-            string seachDossier;
-            string tempLine;
-            string[] seachLine = new string[fioSize];
+            if (fullNames.Length == 0)
+            {
+                Console.WriteLine("Список досье пуст.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Введите фамилию для поиска: ");
+            string searchLastName = Console.ReadLine();
+
+            bool found = false;
             char lineDivider = ' ';
-            
-            if (name.Length == 0)
-            {
-                Console.WriteLine("Список досье пустой.");
-            }
-            else
-            {
-                Console.Write("Введите фамилию с досье для поиска: ");
-                seachDossier = Console.ReadLine();
 
-                for (int i = 0; i < name.Length; i ++)
+            PrintHeader();
+
+            for (int i = 0; i < fullNames.Length; i++)
+            {
+                string[] nameParts = fullNames[i].Split(lineDivider);
+
+                if (nameParts.Length > 0 && searchLastName.Equals(nameParts[0], StringComparison.OrdinalIgnoreCase))
                 {
-                    tempLine = name[i];
-                    seachLine = tempLine.Split(lineDivider);
-
-                    if (seachDossier == seachLine[0])
-                    {
-                        PrintFirstLine();
-                        Console.Write($"{i+1}.");
-                        Console.Write(name[i]);
-                        Console.Write(" - ");
-                        Console.Write(profession[i] + "\n");
-                    }
+                    Console.WriteLine($"{i + 1}. {fullNames[i]} - {professions[i]}");
+                    found = true;
                 }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine($"Фамилия '{searchLastName}' не найдена.");
             }
 
             Console.ReadKey();
         }
 
-        static void PrintFirstLine()
+        static void PrintHeader()
         {
-            Console.Write("№");
-            Console.Write("    ФИО    ");
-            Console.Write("   професия   \n");
+            Console.WriteLine("\n┌─────┬──────────────────────┬──────────────────────┐");
+            Console.WriteLine("│  №  │         ФИО           │      Профессия        │");
+            Console.WriteLine("├─────┼──────────────────────┼──────────────────────┤");
         }
 
         static void AddElement(ref string[] array)
         {
-            string[] tempArray = new string[array.Length + 1];
-            string tempLine = Console.ReadLine();
+            string newValue = Console.ReadLine();
 
-            for (int i = 0; i < array.Length; i ++)
+            if (string.IsNullOrWhiteSpace(newValue))
             {
-                Console.WriteLine(tempArray[i]);
+                Console.WriteLine("Значение не может быть пустым. Операция отменена.");
+                return;
+            }
+
+            string[] tempArray = new string[array.Length + 1];
+
+            for (int i = 0; i < array.Length; i++)
+            {
                 tempArray[i] = array[i];
             }
 
+            tempArray[tempArray.Length - 1] = newValue;
             array = tempArray;
-            array[array.Length - 1] = tempLine;
         }
 
-        static void DeleteElement(ref string[] array, int numberDeleteElement)
+        static void DeleteElement(ref string[] array, int index)
         {
-            string[] tempArray = new string[array.Length - 1];
-            numberDeleteElement--;
-
-            for (int i = 0; i < numberDeleteElement; i++)
+            if (index < 0 || index >= array.Length)
             {
-                tempArray[i] = array[i];
+                throw new ArgumentOutOfRangeException(nameof(index), "Индекс вне диапазона массива");
             }
 
-            for(int i = numberDeleteElement; i < array.Length - 1; i++)
+            if(index >= 0 && index <= array.Length)
             {
-                tempArray[i] = array[i + 1];
-            }
+                string[] tempArray = new string[array.Length - 1];
 
-            array = tempArray;
+                for (int i = 0; i < index; i++)
+                {
+                    tempArray[i] = array[i];
+                }
+
+                for (int i = index; i < tempArray.Length; i++)
+                {
+                    tempArray[i] = array[i + 1];
+                }
+
+                array = tempArray;
+            }
+            else
+            {
+                Console.WriteLine("Неверный индекс");
+            }
         }
     }
 }
