@@ -13,7 +13,6 @@ namespace Project_4
             const string ExitProgramCommand = "exit";
 
             Dictionary<string, List<string>> positions = new Dictionary<string, List<string>>();
-            List<string> allEmployees = new List<string>();
 
             bool isWork = true;
 
@@ -31,7 +30,7 @@ namespace Project_4
                 switch (command.ToLower())
                 {
                     case AddDossierCommand:
-                        AddEmployee(positions, allEmployees);
+                        AddEmployee(positions);
                         break;
 
                     case PrintDossierCommand:
@@ -39,7 +38,7 @@ namespace Project_4
                         break;
 
                     case DeleteDossierCommand:
-                        DeleteEmployee(positions, allEmployees);
+                        DeleteEmployee(positions);
                         break;
 
                     case ExitProgramCommand:
@@ -53,70 +52,99 @@ namespace Project_4
             }
         }
 
-        static void AddEmployee(Dictionary<string, List<string>> positions, List<string> allEmployees)
+        static void AddEmployee(Dictionary<string, List<string>> positions)
         {
             Console.Write("Введите ФИО сотрудника: ");
             string fullName = Console.ReadLine();
 
-            if (allEmployees.Contains(fullName))
+            bool employeeExists = false;
+            string existingPosition = null;
+
+            foreach (var employeePosition in positions)
             {
-                Console.WriteLine("Сотрудник с таким ФИО уже существует!");
+                if (employeePosition.Value.Contains(fullName))
+                {
+                    employeeExists = true;
+                    existingPosition = employeePosition.Key;
+                    break;
+                }
+            }
+
+            if (employeeExists == true)
+            {
+                Console.WriteLine($"Сотрудник с таким ФИО уже существует на должности '{existingPosition}'!");
                 return;
             }
 
             Console.Write("Введите название должности: ");
             string position = Console.ReadLine();
 
-            if (!positions.ContainsKey(position))
+            if (positions.ContainsKey(position) == false)
             {
                 positions[position] = new List<string>();
             }
 
             positions[position].Add(fullName);
-            allEmployees.Add(fullName);
 
             Console.WriteLine("Сотрудник успешно добавлен!");
         }
 
-        static void DeleteEmployee(Dictionary<string, List<string>> positions, List<string> allEmployees)
+        static void DeleteEmployee(Dictionary<string, List<string>> positions)
         {
-            if (allEmployees.Count == 0)
+            if (positions.Count == 0)
             {
                 Console.WriteLine("Список сотрудников пуст.");
                 return;
             }
 
-            Console.Write("Введите ФИО сотрудника для удаления: ");
-            string fullName = Console.ReadLine();
+            Console.Write("Введите должность сотрудника: ");
+            string targetPosition = Console.ReadLine();
 
-            if (!allEmployees.Contains(fullName))
+            if (positions.ContainsKey(targetPosition) == false)
             {
-                Console.WriteLine($"Сотрудник с ФИО '{fullName}' не найден!");
+                Console.WriteLine($"Должность '{targetPosition}' не найдена!");
                 return;
             }
 
-            string positionToDelete = null;
-            foreach (var position in positions)
+            List<string> employeesOnPosition = positions[targetPosition];
+
+            if (employeesOnPosition.Count == 0)
             {
-                if (position.Value.Contains(fullName))
-                {
-                    positionToDelete = position.Key;
-                    break;
-                }
+                Console.WriteLine("На этой должности нет сотрудников.");
+                return;
             }
 
-            if (positionToDelete != null)
+            Console.WriteLine($"\nСотрудники на должности '{targetPosition}':");
+            for (int i = 0; i < employeesOnPosition.Count; i++)
             {
-                positions[positionToDelete].Remove(fullName);
-                allEmployees.Remove(fullName);
+                Console.WriteLine($"{i}. {employeesOnPosition[i]}");
+            }
 
-                if (positions[positionToDelete].Count == 0)
-                {
-                    positions.Remove(positionToDelete);
-                    Console.WriteLine($"Должность '{positionToDelete}' удалена, так как на ней не осталось сотрудников.");
-                }
+            Console.Write("\nВведите индекс сотрудника для удаления: ");
+            string input = Console.ReadLine();
+            int index;
 
-                Console.WriteLine("Сотрудник успешно удален!");
+            if (int.TryParse(input, out index) == false)
+            {
+                Console.WriteLine("Ошибка: введите число!");
+                return;
+            }
+
+            if (index < 0 || index >= employeesOnPosition.Count)
+            {
+                Console.WriteLine("Ошибка: индекс вне диапазона!");
+                return;
+            }
+
+            string deletedEmployee = employeesOnPosition[index];
+            employeesOnPosition.RemoveAt(index);
+
+            Console.WriteLine($"Сотрудник '{deletedEmployee}' успешно удален!");
+
+            if (employeesOnPosition.Count == 0)
+            {
+                positions.Remove(targetPosition);
+                Console.WriteLine($"Должность '{targetPosition}' удалена, так как на ней не осталось сотрудников.");
             }
         }
 
