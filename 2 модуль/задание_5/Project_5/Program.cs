@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_5
 {
@@ -13,26 +13,26 @@ namespace Project_5
             int maxReps = 1;
             int referencePoint = 1;
             Random randon = new Random();
-            int[] array = new int[arraySize];
+            int[] numbers = new int[arraySize];
 
             Console.WriteLine($"дан масив чисел из {arraySize}");
 
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
-                array[i] = randon.Next(randomMax);
-                Console.Write(array[i] + ",");
+                numbers[i] = randon.Next(randomMax);
+                Console.Write(numbers[i] + ",");
             }
 
-            for(int i = 1; i < array.Length; i ++)
+            for (int i = 1; i < numbers.Length; i++)
             {
-                if(array[i] == array[i - referencePoint])
+                if (numbers[i] == numbers[i - referencePoint])
                 {
                     repetition++;
 
                     if (repetition > maxReps)
                     {
                         maxReps = repetition;
-                        numberReps = array[i];
+                        numberReps = numbers[i];
                     }
                 }
                 else
@@ -41,7 +41,7 @@ namespace Project_5
                 }
             }
 
-            Console.WriteLine($"\nмаксимально повторов - {maxReps}, числа {numberReps}" );
+            Console.WriteLine($"\nмаксимально повторов - {maxReps}, числа {numberReps}");
         }
     }
 }
