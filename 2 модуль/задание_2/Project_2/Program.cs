@@ -6,7 +6,7 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            int sizeArray = 5;
+            int sizeArray = 10;
             int maxNumber;
             int emptyNumber = 0;
             int numberMax = 100;
