@@ -99,16 +99,16 @@ namespace Project_1
 
             PrintDossier(fullNames, professions);
 
-            int dossierNumber = GetValidDossierNumber(fullNames.Length);
+            int? dossierNumber = GetValidDossierNumber(fullNames.Length);
 
-            if (dossierNumber == -1)
+            if (dossierNumber.HasValue == false)
             {
                 Console.WriteLine("Удаление отменено.");
                 Console.ReadKey();
                 return;
             }
 
-            int indexToDelete = dossierNumber - 1;
+            int indexToDelete = dossierNumber.Value - 1;
 
             DeleteElement(ref fullNames, indexToDelete);
             DeleteElement(ref professions, indexToDelete);
@@ -117,28 +117,26 @@ namespace Project_1
             Console.ReadKey();
         }
 
-        static int GetValidDossierNumber(int maxNumber)
+        static int? GetValidDossierNumber(int maxNumber)
         {
-            int dossierNumber;
-            string userInput;
-            bool isValidNumber;
-
+            const int CancelValue = 0;
+            
             while (true)
             {
-                Console.Write($"\nВведите номер досье для удаления (1-{maxNumber}) или 0 для отмены: ");
-                userInput = Console.ReadLine();
+                Console.Write($"\nВведите номер досье для удаления (1-{maxNumber}) или {CancelValue} для отмены: ");
+                string userInput = Console.ReadLine();
 
-                isValidNumber = int.TryParse(userInput, out dossierNumber);
+                bool isParseSuccessful = int.TryParse(userInput, out int dossierNumber);
 
-                if (!isValidNumber)
+                if (isParseSuccessful == false)
                 {
                     Console.WriteLine("Ошибка: введите корректное число.");
                     continue;
                 }
 
-                if (dossierNumber == 0)
+                if (dossierNumber == CancelValue)
                 {
-                    return -1;
+                    return null;
                 }
 
                 if (dossierNumber < 1 || dossierNumber > maxNumber)
@@ -161,9 +159,9 @@ namespace Project_1
             }
 
             Console.Write("Введите фамилию для поиска: ");
-            string searchLastName = Console.ReadLine();
+            string searchQuery = Console.ReadLine();
 
-            bool found = false;
+            bool isFound = false;
             char lineDivider = ' ';
 
             PrintHeader();
@@ -172,16 +170,17 @@ namespace Project_1
             {
                 string[] nameParts = fullNames[i].Split(lineDivider);
 
-                if (nameParts.Length > 0 && searchLastName.Equals(nameParts[0], StringComparison.OrdinalIgnoreCase))
+                if (nameParts.Length > 0 && 
+                    searchQuery.Equals(nameParts[0], StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine($"{i + 1}. {fullNames[i]} - {professions[i]}");
-                    found = true;
+                    isFound = true;
                 }
             }
 
-            if (!found)
+            if (isFound == false)
             {
-                Console.WriteLine($"Фамилия '{searchLastName}' не найдена.");
+                Console.WriteLine($"Фамилия '{searchQuery}' не найдена.");
             }
 
             Console.ReadKey();
@@ -217,31 +216,27 @@ namespace Project_1
 
         static void DeleteElement(ref string[] array, int index)
         {
-            if (index < 0 || index >= array.Length)
+            bool isValidIndex = index >= 0 && index < array.Length;
+            
+            if (isValidIndex == false)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Индекс вне диапазона массива");
+                Console.WriteLine("Ошибка: неверный индекс элемента для удаления.");
+                return;
             }
 
-            if(index >= 0 && index <= array.Length)
+            string[] tempArray = new string[array.Length - 1];
+
+            for (int i = 0; i < index; i++)
             {
-                string[] tempArray = new string[array.Length - 1];
-
-                for (int i = 0; i < index; i++)
-                {
-                    tempArray[i] = array[i];
-                }
-
-                for (int i = index; i < tempArray.Length; i++)
-                {
-                    tempArray[i] = array[i + 1];
-                }
-
-                array = tempArray;
+                tempArray[i] = array[i];
             }
-            else
+
+            for (int i = index; i < tempArray.Length; i++)
             {
-                Console.WriteLine("Неверный индекс");
+                tempArray[i] = array[i + 1];
             }
+
+            array = tempArray;
         }
     }
 }
