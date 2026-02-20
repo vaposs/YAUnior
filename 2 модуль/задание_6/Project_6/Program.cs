@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_6
 {
@@ -12,27 +12,27 @@ namespace Project_6
             int arraySize = 10;
             int randomMax = 100;
             Random random = new Random();
-            int[] array = new int[arraySize];
+            int[] numbers = new int[arraySize];
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
-                array[i] = random.Next(randomMax);
+                numbers[i] = random.Next(randomMax);
             }
 
-            for (int i = 1; i < array.Length; i++)
+            for (int i = 1; i < numbers.Length; i++)
             {
-                if (array[i] < array[i - previousNumber])
+                if (numbers[i] < numbers[i - previousNumber])
                 {
-                    temporaryVariable = array[i];
-                    array[i] = array[i - previousNumber];
-                    array[i - previousNumber] = temporaryVariable;
+                    temporaryVariable = numbers[i];
+                    numbers[i] = numbers[i - previousNumber];
+                    numbers[i - previousNumber] = temporaryVariable;
                     i = startingPoint;
                 }
             }
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
-                Console.Write(array[i] + ",");
+                Console.Write(numbers[i] + ",");
             }
         }
     }
