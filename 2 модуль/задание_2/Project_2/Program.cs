@@ -6,19 +6,19 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            int sizeArray = 10;
+            int matrixSide = 10;
             int maxNumber = int.MinValue;
-            int indexFirstNumber = 0;
-            int numberMax = 100;
+            int replacementValue = 0;
+            int maxRandomValue = 100;
 
             Random randomNumber = new Random();
-            int[,] numbers = new int[sizeArray, sizeArray];
+            int[,] numbers = new int[matrixSide, matrixSide];
 
             for (int i = 0; i < numbers.GetLength(0); i++)
             {
                 for (int j = 0; j < numbers.GetLength(1); j++)
                 {
-                    numbers[i, j] = randomNumber.Next(numberMax);
+                    numbers[i, j] = randomNumber.Next(maxRandomValue);
                     Console.Write($"{numbers[i, j]} ");
 
                     if (numbers[i, j] > maxNumber)
@@ -38,7 +38,7 @@ namespace Project_2
                 {
                     if (numbers[i, j] == maxNumber)
                     {
-                        numbers[i, j] = indexFirstNumber;
+                        numbers[i, j] = replacementValue;
                     }
                     Console.Write($"{numbers[i, j]} ");
                 }
