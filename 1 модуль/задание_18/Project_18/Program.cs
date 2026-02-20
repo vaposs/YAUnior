@@ -11,16 +11,16 @@ namespace Project_18
             int upperBound = 150;
             int count = 0;
 
-            int randomNumber = random.Next(10, 26);
-            int tempNumber = randomNumber;
+            int minValue = 10;
+            int maxValue = 25;
+            int randomNumber = random.Next(minValue, maxValue + 1);
 
-            while (tempNumber <= upperBound)
+            for (int i = randomNumber; i <= upperBound; i += randomNumber)
             {
-                if (tempNumber >= lowerBound)
+                if (i >= lowerBound)
                 {
                     count++;
                 }
-                tempNumber += randomNumber;
             }
 
             Console.WriteLine($"Количество чисел от {lowerBound} до {upperBound}, кратных {randomNumber}: {count}");
