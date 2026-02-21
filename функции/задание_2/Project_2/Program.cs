@@ -64,10 +64,11 @@ namespace Project_2
             char closedBracket = ']';
             char occupiedCell = '#';
             char freeCell = '_';
+            float maxPercent = 100f;
 
             Console.Write(openBracket);
 
-            int filledCount = (int)Math.Round(barLength * percent / 100.0);
+            int filledCount = (int)Math.Round(barLength * percent / maxPercent);
 
             for (int i = 0; i < filledCount; i++)
             {
