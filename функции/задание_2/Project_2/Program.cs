@@ -82,26 +82,15 @@ namespace Project_2
 
         static string DrawBar(int filledCount, int barLength)
         {
-            const char OpenBracket = '[';
-            const char ClosedBracket = ']';
-            const char OccupiedCell = '#';
-            const char FreeCell = '_';
+            const char openBracket = '[';
+            const char closedBracket = ']';
+            const char occupiedCell = '#';
+            const char freeCell = '_';
 
-            string bar = OpenBracket.ToString();
+            string filledPart = new string(occupiedCell, filledCount);
+            string freePart = new string(freeCell, barLength - filledCount);
 
-            for (int i = 0; i < filledCount; i++)
-            {
-                bar += OccupiedCell;
-            }
-
-            for (int i = filledCount; i < barLength; i++)
-            {
-                bar += FreeCell;
-            }
-
-            bar += ClosedBracket;
-
-            return bar;
+            return $"{openBracket}{filledPart}{freePart}{closedBracket}";
         }
     }
 }
