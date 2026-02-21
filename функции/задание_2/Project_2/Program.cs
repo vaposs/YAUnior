@@ -60,54 +60,48 @@ namespace Project_2
 
         static void PrintLifeLine(int percent, int barLength)
         {
-            char openBracket = '[';
-            char closedBracket = ']';
-            char occupiedCell = '#';
-            char freeCell = '_';
-            float maxPercent = 100f;
-
-            Console.Write(openBracket);
-
+            const float maxPercent = 100f;
             int filledCount = (int)Math.Round(barLength * percent / maxPercent);
 
-            for (int i = 0; i < filledCount; i++)
-            {
-                Console.Write(occupiedCell);
-            }
+            string bar = DrawBar(filledCount, barLength);
 
-            for (int i = filledCount; i < barLength; i++)
-            {
-                Console.Write(freeCell);
-            }
-
-            Console.WriteLine(closedBracket);
+            Console.WriteLine(bar);
             Console.WriteLine($"Заполнение: {percent}% ({filledCount}/{barLength} ячеек)");
         }
 
         static void PrintLifeLine(int currentLife, int maxLife, int barLength)
         {
-            char openBracket = '[';
-            char closedBracket = ']';
-            char occupiedCell = '#';
-            char freeCell = '_';
-
-            Console.Write(openBracket);
-
             double healthPercent = (double)currentLife / maxLife;
             int filledCount = (int)Math.Round(barLength * healthPercent);
 
+            string bar = DrawBar(filledCount, barLength);
+
+            Console.WriteLine(bar);
+            Console.WriteLine($"Здоровье: {currentLife}/{maxLife} ({healthPercent:P0})");
+        }
+
+        static string DrawBar(int filledCount, int barLength)
+        {
+            const char OpenBracket = '[';
+            const char ClosedBracket = ']';
+            const char OccupiedCell = '#';
+            const char FreeCell = '_';
+
+            string bar = OpenBracket.ToString();
+
             for (int i = 0; i < filledCount; i++)
             {
-                Console.Write(occupiedCell);
+                bar += OccupiedCell;
             }
 
             for (int i = filledCount; i < barLength; i++)
             {
-                Console.Write(freeCell);
+                bar += FreeCell;
             }
 
-            Console.WriteLine(closedBracket);
-            Console.WriteLine($"Здоровье: {currentLife}/{maxLife} ({healthPercent:P0})");
+            bar += ClosedBracket;
+
+            return bar;
         }
     }
 }
