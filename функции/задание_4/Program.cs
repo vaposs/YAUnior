@@ -1,51 +1,48 @@
-namespace Exs_4;
 using System.IO;
 using System;
 
 class Program
 {
+    private const char Player = '@';
+    private const char Dots = '.';
+    private const char Space = ' ';
+    private const char Wall = '#';
+    private const string MapFileName = "GameMap";
+
     static void Main(string[] args)
     {
-        const char player = '@';
-        const char dots = '.';
-        const char space = ' ';
-        const char wall = '#';
-
-        Console.CursorVisible= false;
+        Console.CursorVisible = false;
 
         bool isPlaying = true;
-
         int pacmanX;
         int pacmanY;
-        int directionX = 0;
-        int directionY = 0;
         int allDots = 0;
         int collectDots = 0;
- 
-        char[,] map = ReadMap("GameMap", out pacmanX, out pacmanY, ref allDots, player, dots, space);
+
+        char[,] map = ReadMap(MapFileName, out pacmanX, out pacmanY, ref allDots);
 
         DrawMap(map);
-        
+
         while (isPlaying)
         {
             Console.SetCursorPosition(0, 20);
-            Console.WriteLine("Your dots: " + collectDots + "/" + allDots);
- 
+            Console.WriteLine($"Your dots: {collectDots}/{allDots}");
+
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
-                ChangeDirection(key,ref directionX, ref directionY);
-            }
+                GetDirection(key, out int directionX, out int directionY);
 
-            if (map[pacmanX + directionX, pacmanY + directionY] != wall)
-            {
-                Move(ref pacmanX, ref pacmanY, directionX, directionY, space, player);
-                CollectDots (map, pacmanX, pacmanY, ref collectDots,dots,space);
+                if (map[pacmanX + directionX, pacmanY + directionY] != Wall)
+                {
+                    Move(ref pacmanX, ref pacmanY, directionX, directionY);
+                    CollectDots(map, pacmanX, pacmanY, ref collectDots);
+                }
             }
 
             System.Threading.Thread.Sleep(200);
 
-            if (collectDots==allDots)
+            if (collectDots == allDots)
             {
                 isPlaying = false;
             }
@@ -60,27 +57,28 @@ class Program
         }
     }
 
-    static void Move (ref int positionX,ref int positionY, int directionX, int directionY, char space, char player)
+    static void Move(ref int positionX, ref int positionY, int directionX, int directionY)
     {
         Console.SetCursorPosition(positionY, positionX);
-        Console.Write(space);
+        Console.Write(Space);
+
         positionX += directionX;
         positionY += directionY;
-      
+
         Console.SetCursorPosition(positionY, positionX);
-        Console.Write(player);
+        Console.Write(Player);
     }
 
-    static void CollectDots(char [,] map, int pacmanX, int pacmanY,ref int collectDots, char dots, char space)
+    static void CollectDots(char[,] map, int pacmanX, int pacmanY, ref int collectDots)
     {
-        if (map[pacmanX, pacmanY] == dots)
+        if (map[pacmanX, pacmanY] == Dots)
         {
             collectDots++;
-            map[pacmanX, pacmanY] = space;
+            map[pacmanX, pacmanY] = Space;
         }
     }
 
-    static void ChangeDirection (ConsoleKeyInfo key, ref int directionX, ref int directionY)
+    static void GetDirection(ConsoleKeyInfo key, out int directionX, out int directionY)
     {
         directionX = 0;
         directionY = 0;
@@ -110,12 +108,11 @@ class Program
             {
                 Console.Write(map[i, j]);
             }
-
             Console.WriteLine();
         }
     }
 
-    static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots, char player,char dots, char space)
+    static char[,] ReadMap(string mapName, out int pacmanX, out int pacmanY, ref int allDots)
     {
         pacmanX = 0;
         pacmanY = 0;
@@ -129,14 +126,14 @@ class Program
             {
                 map[i, j] = newFile[i][j];
 
-                if (map[i, j] == player)
+                if (map[i, j] == Player)
                 {
                     pacmanX = i;
                     pacmanY = j;
                 }
-                else if (map[i,j]==space)
+                else if (map[i, j] == Space)
                 {
-                    map[i, j] = dots;
+                    map[i, j] = Dots;
                     allDots++;
                 }
             }
