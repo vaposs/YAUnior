@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_2
 {
@@ -18,7 +18,7 @@ namespace Project_2
             Renderer renderer = new Renderer();
             Player player = new Player(positionPlayerX, positionPlayerY);
 
-            renderer.DrawPlayer(player.PositionX, player.PositionY);
+            renderer.DrawPlayer(player);
         }
 
         static int GetNumber()
@@ -56,9 +56,9 @@ namespace Project_2
 
     class Renderer
     {
-        public void DrawPlayer(int positionX, int positionY, char playerIcon = '@')
+        public void DrawPlayer(Player player, char playerIcon = '@')
         {
-            Console.SetCursorPosition(positionX, positionY);
+            Console.SetCursorPosition(player.PositionX, player.PositionY);
             Console.Write(playerIcon);
         }
     }
@@ -74,5 +74,4 @@ namespace Project_2
         public int PositionX { get; private set; }
         public int PositionY { get; private set; }
     }
-
 }
