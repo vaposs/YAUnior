@@ -15,13 +15,13 @@ namespace Project_2
             while (isWork)
             {
                 Console.Write("\nвведите количество урона - ");
-                while (!int.TryParse(Console.ReadLine(), out damage))
+                while (int.TryParse(Console.ReadLine(), out damage) == false)
                 {
                     Console.Write("Ошибка! Введите целое число: ");
                 }
 
                 Console.Write("введите количество хила - ");
-                while (!int.TryParse(Console.ReadLine(), out heal))
+                while (int.TryParse(Console.ReadLine(), out heal) == false)
                 {
                     Console.Write("Ошибка! Введите целое число: ");
                 }
@@ -33,13 +33,21 @@ namespace Project_2
                     life = maxLife;
                 }
 
+                Console.Write("Введите процент заполнения бара: ");
+                int percent;
+                while (int.TryParse(Console.ReadLine(), out percent) == false || percent < 0 || percent > 100)
+                {
+                    Console.Write("Ошибка! Введите целое число от 0 до 100: ");
+                }
+
                 Console.Write("Введите длину бара: ");
                 int barLength;
-                while (!int.TryParse(Console.ReadLine(), out barLength) || barLength <= 0)
+                while (int.TryParse(Console.ReadLine(), out barLength) == false || barLength <= 0)
                 {
                     Console.Write("Ошибка! Введите положительное целое число: ");
                 }
 
+                PrintLifeLine(percent, barLength);
                 PrintLifeLine(life, maxLife, barLength);
 
                 if (life <= 0)
@@ -50,18 +58,16 @@ namespace Project_2
             }
         }
 
-        static void PrintLifeLine(int currentLife, int maxLife, int barLength)
+        static void PrintLifeLine(int percent, int barLength)
         {
             char openBracket = '[';
             char closedBracket = ']';
             char occupiedCell = '#';
             char freeCell = '_';
 
-
             Console.Write(openBracket);
 
-            double percent = (double)currentLife / maxLife;
-            int filledCount = (int)(barLength * percent);
+            int filledCount = (int)Math.Round(barLength * percent / 100.0);
 
             for (int i = 0; i < filledCount; i++)
             {
@@ -74,8 +80,33 @@ namespace Project_2
             }
 
             Console.WriteLine(closedBracket);
+            Console.WriteLine($"Заполнение: {percent}% ({filledCount}/{barLength} ячеек)");
+        }
 
-            Console.WriteLine($"Здоровье: {currentLife}/{maxLife} ({percent:P0})");
+        static void PrintLifeLine(int currentLife, int maxLife, int barLength)
+        {
+            char openBracket = '[';
+            char closedBracket = ']';
+            char occupiedCell = '#';
+            char freeCell = '_';
+
+            Console.Write(openBracket);
+
+            double healthPercent = (double)currentLife / maxLife;
+            int filledCount = (int)Math.Round(barLength * healthPercent);
+
+            for (int i = 0; i < filledCount; i++)
+            {
+                Console.Write(occupiedCell);
+            }
+
+            for (int i = filledCount; i < barLength; i++)
+            {
+                Console.Write(freeCell);
+            }
+
+            Console.WriteLine(closedBracket);
+            Console.WriteLine($"Здоровье: {currentLife}/{maxLife} ({healthPercent:P0})");
         }
     }
 }
