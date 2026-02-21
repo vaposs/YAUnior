@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_2
 {
@@ -11,13 +11,20 @@ namespace Project_2
             int maxLife = 10;
             int damage;
             int heal;
-         
+
             while (isWork)
             {
                 Console.Write("\nвведите количество урона - ");
-                damage = Convert.ToInt32(Console.ReadLine());
+                while (!int.TryParse(Console.ReadLine(), out damage))
+                {
+                    Console.Write("Ошибка! Введите целое число: ");
+                }
+
                 Console.Write("введите количество хила - ");
-                heal = Convert.ToInt32(Console.ReadLine());
+                while (!int.TryParse(Console.ReadLine(), out heal))
+                {
+                    Console.Write("Ошибка! Введите целое число: ");
+                }
 
                 life = life - damage + heal;
 
@@ -26,9 +33,16 @@ namespace Project_2
                     life = maxLife;
                 }
 
-                PrintLifeLine(life);
+                Console.Write("Введите длину бара: ");
+                int barLength;
+                while (!int.TryParse(Console.ReadLine(), out barLength) || barLength <= 0)
+                {
+                    Console.Write("Ошибка! Введите положительное целое число: ");
+                }
 
-                if(life <= 0)
+                PrintLifeLine(life, maxLife, barLength);
+
+                if (life <= 0)
                 {
                     isWork = false;
                     Console.WriteLine("\nGame Over");
@@ -36,24 +50,32 @@ namespace Project_2
             }
         }
 
-        static void PrintLifeLine(int life)
+        static void PrintLifeLine(int currentLife, int maxLife, int barLength)
         {
-            int arraySize = 12;
-            char[] healtBar = new char[arraySize];
-            Console.Write("[");
+            char openBracket = '[';
+            char closedBracket = ']';
+            char occupiedCell = '#';
+            char freeCell = '_';
 
-            for (int i = 1; i < healtBar.Length - 1; i++)
+
+            Console.Write(openBracket);
+
+            double percent = (double)currentLife / maxLife;
+            int filledCount = (int)(barLength * percent);
+
+            for (int i = 0; i < filledCount; i++)
             {
-                if (i <= life)
-                {
-                    Console.Write("#");
-                }
-                else
-                {
-                    Console.Write("_");
-                }
+                Console.Write(occupiedCell);
             }
-            Console.Write("]");
+
+            for (int i = filledCount; i < barLength; i++)
+            {
+                Console.Write(freeCell);
+            }
+
+            Console.WriteLine(closedBracket);
+
+            Console.WriteLine($"Здоровье: {currentLife}/{maxLife} ({percent:P0})");
         }
     }
 }
