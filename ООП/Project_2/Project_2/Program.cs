@@ -24,7 +24,10 @@ namespace Project_2
 
         static int GetNumber()
         {
-            while (true)
+            bool isNumberValid = false;
+            int result = 0;
+
+            while (isNumberValid == false)
             {
                 Console.Write("введите целое число - ");
                 string line = Console.ReadLine();
@@ -37,7 +40,8 @@ namespace Project_2
                     }
                     else
                     {
-                        return number;
+                        result = number;
+                        isNumberValid = true;
                     }
                 }
                 else
@@ -45,6 +49,8 @@ namespace Project_2
                     Console.WriteLine($"строка {line} не может быть конвертирована в число");
                 }
             }
+
+            return result;
         }
     }
 
