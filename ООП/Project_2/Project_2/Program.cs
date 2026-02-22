@@ -6,35 +6,30 @@ namespace Project_2
     {
         public static void Main(string[] args)
         {
-            int positionPlayerX;
-            int positionPlayerY;
+            char playerIcon = '@';
 
             Console.Write("Введите позицию игрока X: ");
-            positionPlayerX = GetNumber();
+            int positionPlayerX = GetNumber();
+
             Console.Write("Введите позицию игрока Y: ");
-            positionPlayerY = GetNumber();
+            int positionPlayerY = GetNumber();
+
             Console.Clear();
 
             Renderer renderer = new Renderer();
-            Player player = new Player(positionPlayerX, positionPlayerY);
+            Player player = new Player(positionPlayerX, positionPlayerY, playerIcon);
 
             renderer.DrawPlayer(player);
         }
 
         static int GetNumber()
         {
-            string line;
-            bool isSuitableNumber = true;
-            bool isSuccess;
-            int number = 0;
-
-            while (isSuitableNumber)
+            while (true)
             {
                 Console.Write("введите целое число - ");
-                line = Console.ReadLine();
-                isSuccess = int.TryParse(line, out number);
+                string line = Console.ReadLine();
 
-                if (isSuccess)
+                if (int.TryParse(line, out int number))
                 {
                     if (number < 0)
                     {
@@ -42,7 +37,7 @@ namespace Project_2
                     }
                     else
                     {
-                        isSuitableNumber = false;
+                        return number;
                     }
                 }
                 else
@@ -50,28 +45,29 @@ namespace Project_2
                     Console.WriteLine($"строка {line} не может быть конвертирована в число");
                 }
             }
-            return number;
         }
     }
 
     class Renderer
     {
-        public void DrawPlayer(Player player, char playerIcon = '@')
+        public void DrawPlayer(Player player)
         {
             Console.SetCursorPosition(player.PositionX, player.PositionY);
-            Console.Write(playerIcon);
+            Console.Write(player.Icon);
         }
     }
 
     class Player
     {
-        public Player(int positionX, int positionY)
+        public Player(int positionX, int positionY, char icon)
         {
             PositionX = positionX;
             PositionY = positionY;
+            Icon = icon;
         }
 
         public int PositionX { get; private set; }
         public int PositionY { get; private set; }
+        public char Icon { get; private set; }
     }
 }
