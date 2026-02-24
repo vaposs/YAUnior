@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project_4
 {
@@ -16,7 +17,33 @@ namespace Project_4
     {
         private Deck _deck = new Deck();
         private List<Card> _mainDeck;
-        private string namePlayer;
+        private string _namePlayer;
+        private Dictionary<string, int> _cardValues;
+
+        public Game()
+        {
+            InitializeCardValues();
+        }
+
+        private void InitializeCardValues()
+        {
+            _cardValues = new Dictionary<string, int>
+            {
+                ["Ace"] = 11,
+                ["King"] = 4,
+                ["Queen"] = 3,
+                ["Jack"] = 2,
+                ["Ten"] = 10,
+                ["Nine"] = 9,
+                ["Eight"] = 8,
+                ["Seven"] = 7,
+                ["Six"] = 6,
+                ["Five"] = 5,
+                ["Four"] = 4,
+                ["Three"] = 3,
+                ["Two"] = 2
+            };
+        }
 
         public void Play()
         {
@@ -24,19 +51,19 @@ namespace Project_4
             const string StopGame = "2";
 
             Console.Write("Введите имя игрока - ");
-            namePlayer = Console.ReadLine();
-            Player player = new Player(namePlayer);
+            _namePlayer = Console.ReadLine();
+            Player player = new Player(_namePlayer);
 
             bool isNotGameOver = true;
-            _mainDeck = _deck.Building();
-            
+            _mainDeck = _deck.BuildDeck(_cardValues);
+
             while (isNotGameOver)
             {
                 if (_mainDeck.Count == 0)
                 {
                     player.TakeCard(_deck.GiveCard());
                     player.ShowCards();
-                    Console.WriteLine(player.ShowScore());
+                    Console.WriteLine(player.ShowScore(_cardValues));
                 }
                 else
                 {
@@ -71,15 +98,15 @@ namespace Project_4
             player.TakeCard(_deck.GiveCard());
             player.ShowCards();
 
-            if (player.ShowScore() > MaxScore)
+            if (player.ShowScore(_cardValues) > MaxScore)
             {
                 Console.WriteLine($"перебор");
-                Console.WriteLine(player.ShowScore());
+                Console.WriteLine(player.ShowScore(_cardValues));
                 return false;
             }
             else
             {
-                Console.WriteLine(player.ShowScore());
+                Console.WriteLine(player.ShowScore(_cardValues));
                 return true;
             }
         }
@@ -102,88 +129,90 @@ namespace Project_4
             {
                 Console.WriteLine(card.Name);
             }
-        }//--
+        }
 
-        public int ShowScore()
+        public int ShowScore(Dictionary<string, int> cardValues)
         {
             int score = 0;
 
             foreach (Card card in _cardsInHand)
             {
-                score += card.Value;
+                string rank = card.Name.Split('-')[0];
+                if (cardValues.ContainsKey(rank))
+                {
+                    score += cardValues[rank];
+                }
             }
 
             return score;
-        }//---
+        }
 
         public void TakeCard(Card newCard)
         {
             _cardsInHand.Add(newCard);
-        }// ---
+        }
     }
 
     class Card
     {
-        public Card(string name, int value)
+        public Card(string name)
         {
             Name = name;
-            Value = value;
         }
 
         public string Name { get; private set; }
-        public int Value { get; private set; }
-    } // --
+    }
 
     class Deck
     {
         private List<Card> _cards = new List<Card>();
 
-        public List<Card> Building()
+        public List<Card> BuildDeck(Dictionary<string, int> cardValues)
         {
-            string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eght", "Seven", "Six", "Five", "Four", "Three", "Two" };
+            _cards.Clear();
+
+            string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eight", "Seven", "Six", "Five", "Four", "Three", "Two" };
             char[] suitCard = new char[] { '♦', '♥', '♣', '♠' };
-            int[] valueCard = new int[] { 11, 4, 3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             string nameCard = "";
 
             for (int i = 0; i < suitCard.Length; i++)
             {
                 for (int j = 0; j < rankCard.Length; j++)
                 {
-                    nameCard = $"{rankCard[j]}-{suitCard[i]}";
-                    _cards.Add(new Card(nameCard, valueCard[j]));
+                    if (cardValues.ContainsKey(rankCard[j]))
+                    {
+                        nameCard = $"{rankCard[j]}-{suitCard[i]}";
+                        _cards.Add(new Card(nameCard));
+                    }
                 }
             }
 
             Shuffle();
-            
-            return _cards;
-        } // --
+
+            return _cards.ToList();
+        }
 
         public Card GiveCard()
         {
-            int randomNumber;
-            Random randomCard = new Random();
-            randomNumber = randomCard.Next(_cards.Count);
-            Card tempCard = _cards[randomNumber];
-            _cards.Remove(_cards[randomNumber]);
+            if (_cards.Count == 0)
+                return null;
+
+            Card tempCard = _cards[0];
+            _cards.RemoveAt(0);
             return tempCard;
         }
 
         private void Shuffle()
         {
-            Card temporaryCard;
-            Card temporaryCard2;
-            int randNumber;
-            Random randomCard = new Random();
+            Random random = new Random();
 
-            for (int i = 0; i < _cards.Count; i++)
+            for (int i = _cards.Count - 1; i > 0; i--)
             {
-                randNumber = randomCard.Next(_cards.Count);
-                temporaryCard = _cards[i];
-                temporaryCard2 = _cards[randNumber];
-                _cards[i] = temporaryCard2;
-                _cards[randNumber] = temporaryCard;
+                int randomNumber = random.Next(i + 1);
+                Card temp = _cards[i];
+                _cards[i] = _cards[randomNumber];
+                _cards[randomNumber] = temp;
             }
-        } // ----
+        }
     }
 }
