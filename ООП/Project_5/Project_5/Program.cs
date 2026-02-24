@@ -87,8 +87,9 @@ namespace Project_5
         private int GetPositiveNumber()
         {
             int number;
+            bool isValid = false;
 
-            while (true)
+            while (isValid == false)
             {
                 string input = Console.ReadLine();
 
@@ -96,107 +97,97 @@ namespace Project_5
                 {
                     if (number >= 0)
                     {
-                        return number;
+                        isValid = true;
                     }
-
-                    Console.Write("Число не может быть отрицательным. Повторите ввод - ");
+                    else
+                    {
+                        Console.Write("Число не может быть отрицательным. Повторите ввод - ");
+                    }
                 }
                 else
                 {
                     Console.Write("Неверный формат. Введите число - ");
                 }
             }
+
+            return number;
         }
 
         private ConsoleColor SelectColor()
         {
-            const string GreenOption = "1";
-            const string BlueOption = "2";
-            const string YellowOption = "3";
-            const string RedOption = "4";
+            ConsoleColor[] colors = new ConsoleColor[]
+            {
+                ConsoleColor.Green,
+                ConsoleColor.Blue,
+                ConsoleColor.Yellow,
+                ConsoleColor.Red
+            };
 
-            Console.WriteLine($"{GreenOption}. Зеленый");
-            Console.WriteLine($"{BlueOption}. Синий");
-            Console.WriteLine($"{YellowOption}. Желтый");
-            Console.WriteLine($"{RedOption}. Красный");
+            string[] colorNames = new string[]
+            {
+                "Зеленый",
+                "Синий",
+                "Желтый",
+                "Красный"
+            };
+
+            for (int i = 0; i < colors.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {colorNames[i]}");
+            }
+
             Console.Write("Выберите цвет обложки - ");
 
-            string choice = Console.ReadLine();
+            int selectedIndex = GetPositiveNumber() - 1;
 
-            switch (choice)
+            if (selectedIndex >= 0 && selectedIndex < colors.Length)
             {
-                case GreenOption:
-                    return ConsoleColor.Green;
-
-                case BlueOption:
-                    return ConsoleColor.Blue;
-
-                case YellowOption:
-                    return ConsoleColor.Yellow;
-
-                case RedOption:
-                    return ConsoleColor.Red;
-
-                default:
-                    Console.WriteLine("Цвет не распознан, будет использован белый");
-                    return ConsoleColor.White;
+                return colors[selectedIndex];
+            }
+            else
+            {
+                Console.WriteLine("Цвет не распознан, будет использован белый");
+                return ConsoleColor.White;
             }
         }
 
         private string SelectGenre()
         {
-            const string RomanceOption = "1";
-            const string SciFiOption = "2";
-            const string HorrorOption = "3";
-            const string DocumentaryOption = "4";
-            const string ActionOption = "5";
-            const string DramaOption = "6";
-            const string ComedyOption = "7";
-            const string AdventureOption = "8";
-            const string CustomOption = "9";
+            string[] genres = new string[]
+            {
+                "роман",
+                "фантастика",
+                "ужасы",
+                "документальная",
+                "экшн",
+                "драма",
+                "комедия",
+                "приключения"
+            };
 
-            Console.WriteLine($"{RomanceOption}. Роман");
-            Console.WriteLine($"{SciFiOption}. Фантастика");
-            Console.WriteLine($"{HorrorOption}. Ужасы");
-            Console.WriteLine($"{DocumentaryOption}. Документальная");
-            Console.WriteLine($"{ActionOption}. Экшн");
-            Console.WriteLine($"{DramaOption}. Драма");
-            Console.WriteLine($"{ComedyOption}. Комедия");
-            Console.WriteLine($"{AdventureOption}. Приключения");
-            Console.WriteLine($"{CustomOption}. Свой вариант");
+            for (int i = 0; i < genres.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {genres[i]}");
+            }
+
+            Console.WriteLine($"{genres.Length + 1}. Свой вариант");
             Console.Write("Выберите жанр - ");
 
-            string choice = Console.ReadLine();
+            int selectedIndex = GetPositiveNumber() - 1;
 
-            switch (choice)
+            if (selectedIndex >= 0 && selectedIndex < genres.Length)
             {
-                case RomanceOption:
-                    return "роман";
-
-                case SciFiOption:
-                    return "фантастика";
-
-                case HorrorOption:
-                    return "ужасы";
-
-                case DocumentaryOption:
-                    return "документальная";
-
-                case ActionOption:
-                    return "экшн";
-
-                case DramaOption:
-                    return "драма";
-
-                case ComedyOption:
-                    return "комедия";
-
-                case AdventureOption:
-                    return "приключения";
-
-                default:
-                    Console.Write("Введите свой вариант жанра: ");
-                    return Console.ReadLine();
+                return genres[selectedIndex];
+            }
+            else if (selectedIndex == genres.Length)
+            {
+                Console.Write("Введите свой вариант жанра: ");
+                return Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Неверный выбор, будет использован жанр 'роман'");
+                return genres[0];
             }
         }
 
@@ -265,6 +256,7 @@ namespace Project_5
             Console.Write("Введите номер команды - ");
 
             string choice = Console.ReadLine();
+
             List<Book> filteredBooks = new List<Book>();
 
             switch (choice)
@@ -272,22 +264,19 @@ namespace Project_5
                 case FilterByTitle:
                     Console.Write("Введите название - ");
                     string title = Console.ReadLine();
-                    filteredBooks = _books.FindAll(book =>
-                        book.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+                    filteredBooks = _books.FindAll(book => book.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
                     break;
 
                 case FilterByAuthor:
                     Console.Write("Введите имя автора - ");
                     string author = Console.ReadLine();
-                    filteredBooks = _books.FindAll(book =>
-                        book.Author.Equals(author, StringComparison.OrdinalIgnoreCase));
+                    filteredBooks = _books.FindAll(book => book.Author.Equals(author, StringComparison.OrdinalIgnoreCase));
                     break;
 
                 case FilterByGenre:
                     Console.Write("Введите жанр - ");
                     string genre = Console.ReadLine();
-                    filteredBooks = _books.FindAll(book =>
-                        book.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
+                    filteredBooks = _books.FindAll(book => book.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
                     break;
 
                 case FilterByColor:
@@ -307,6 +296,7 @@ namespace Project_5
             else
             {
                 Console.WriteLine($"Найдено книг: {filteredBooks.Count}");
+                
                 foreach (Book book in filteredBooks)
                 {
                     PrintBook(book);
