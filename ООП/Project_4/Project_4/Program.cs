@@ -15,14 +15,92 @@ namespace Project_4
 
     class Game
     {
-        private Deck _deck = new Deck();
-        private List<Card> _mainDeck;
-        private string _namePlayer;
+        private const int MaxScore = 21;
+        private const string NextCard = "1";
+        private const string StopGame = "2";
+
+        private Deck _deck;
+        private Player _player;
         private Dictionary<string, int> _cardValues;
 
         public Game()
         {
+            _deck = new Deck();
             InitializeCardValues();
+        }
+
+        public void Play()
+        {
+            Console.Write("Введите имя игрока - ");
+            string playerName = Console.ReadLine();
+            _player = new Player(playerName);
+
+            bool isPlaying = true;
+
+            while (isPlaying)
+            {
+                Console.WriteLine("Взять карту?");
+                Console.WriteLine($"{NextCard}. да");
+                Console.WriteLine($"{StopGame}. нет");
+
+                string command = Console.ReadLine();
+                Console.Clear();
+
+                switch (command)
+                {
+                    case NextCard:
+                        isPlaying = PlayNextRound();
+                        break;
+
+                    case StopGame:
+                        isPlaying = false;
+                        break;
+                }
+            }
+
+            Console.WriteLine("Игра окончена");
+            ShowFinalResult();
+            Console.ReadKey();
+        }
+
+        private bool PlayNextRound()
+        {
+            Card card = _deck.DrawCard();
+
+            if (card == null)
+            {
+                Console.WriteLine("В колоде закончились карты!");
+                return false;
+            }
+
+            _player.TakeCard(card);
+            ShowCurrentState();
+
+            int currentScore = _player.GetScore(_cardValues);
+
+            if (currentScore > MaxScore)
+            {
+                Console.WriteLine($"Перебор! Ваш счет: {currentScore}");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ShowCurrentState()
+        {
+            Console.WriteLine($"Карты игрока {_player.Name}:");
+            _player.ShowCards();
+            Console.WriteLine($"Текущий счет: {_player.GetScore(_cardValues)}");
+            Console.WriteLine();
+        }
+
+        private void ShowFinalResult()
+        {
+            int finalScore = _player.GetScore(_cardValues);
+            Console.WriteLine($"Итоговый счет игрока {_player.Name}: {finalScore}");
+            Console.WriteLine("Ваши карты:");
+            _player.ShowCards();
         }
 
         private void InitializeCardValues()
@@ -44,174 +122,109 @@ namespace Project_4
                 ["Two"] = 2
             };
         }
-
-        public void Play()
-        {
-            const string NextCard = "1";
-            const string StopGame = "2";
-
-            Console.Write("Введите имя игрока - ");
-            _namePlayer = Console.ReadLine();
-            Player player = new Player(_namePlayer);
-
-            bool isNotGameOver = true;
-            _mainDeck = _deck.BuildDeck(_cardValues);
-
-            while (isNotGameOver)
-            {
-                if (_mainDeck.Count == 0)
-                {
-                    player.TakeCard(_deck.GiveCard());
-                    player.ShowCards();
-                    Console.WriteLine(player.ShowScore(_cardValues));
-                }
-                else
-                {
-                    Console.WriteLine("карту?");
-                    Console.WriteLine($"{NextCard}. да ");
-                    Console.WriteLine($"{StopGame}. нет ");
-
-                    string command = Console.ReadLine();
-                    Console.Clear();
-
-                    switch (command.ToLower())
-                    {
-                        case NextCard:
-                            isNotGameOver = PlayNextRound(player);
-                            break;
-
-                        case StopGame:
-                            isNotGameOver = false;
-                            break;
-                    }
-                }
-            }
-
-            Console.WriteLine("конец");
-            Console.ReadKey();
-        }
-
-        private bool PlayNextRound(Player player)
-        {
-            const int MaxScore = 21;
-
-            player.TakeCard(_deck.GiveCard());
-            player.ShowCards();
-
-            if (player.ShowScore(_cardValues) > MaxScore)
-            {
-                Console.WriteLine($"перебор");
-                Console.WriteLine(player.ShowScore(_cardValues));
-                return false;
-            }
-            else
-            {
-                Console.WriteLine(player.ShowScore(_cardValues));
-                return true;
-            }
-        }
     }
 
     class Player
     {
-        private List<Card> _cardsInHand = new List<Card>();
+        private List<Card> _hand = new List<Card>();
 
         public Player(string name)
         {
             Name = name;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
+
+        public void TakeCard(Card card)
+        {
+            _hand.Add(card);
+        }
 
         public void ShowCards()
         {
-            foreach (Card card in _cardsInHand)
+            foreach (Card card in _hand)
             {
-                Console.WriteLine(card.Name);
+                Console.WriteLine(card);
             }
         }
 
-        public int ShowScore(Dictionary<string, int> cardValues)
+        public int GetScore(Dictionary<string, int> cardValues)
         {
             int score = 0;
 
-            foreach (Card card in _cardsInHand)
+            foreach (Card card in _hand)
             {
-                string rank = card.Name.Split('-')[0];
-                if (cardValues.ContainsKey(rank))
+                if (cardValues.ContainsKey(card.Rank))
                 {
-                    score += cardValues[rank];
+                    score += cardValues[card.Rank];
                 }
             }
 
             return score;
         }
-
-        public void TakeCard(Card newCard)
-        {
-            _cardsInHand.Add(newCard);
-        }
     }
 
     class Card
     {
-        public Card(string name)
+        public Card(string rank, char suit)
         {
-            Name = name;
+            Rank = rank;
+            Suit = suit;
         }
 
-        public string Name { get; private set; }
+        public string Rank { get; }
+        public char Suit { get; }
+
+        public override string ToString()
+        {
+            return $"{Rank} {Suit}";
+        }
     }
 
     class Deck
     {
         private List<Card> _cards = new List<Card>();
+        private Random _random = new Random();
 
-        public List<Card> BuildDeck(Dictionary<string, int> cardValues)
+        public Deck()
         {
-            _cards.Clear();
-
-            string[] rankCard = new string[] { "Ace", "King", "Queen", "Jack", "Ten", "Nine", "Eight", "Seven", "Six", "Five", "Four", "Three", "Two" };
-            char[] suitCard = new char[] { '♦', '♥', '♣', '♠' };
-            string nameCard = "";
-
-            for (int i = 0; i < suitCard.Length; i++)
-            {
-                for (int j = 0; j < rankCard.Length; j++)
-                {
-                    if (cardValues.ContainsKey(rankCard[j]))
-                    {
-                        nameCard = $"{rankCard[j]}-{suitCard[i]}";
-                        _cards.Add(new Card(nameCard));
-                    }
-                }
-            }
-
+            CreateDeck();
             Shuffle();
-
-            return _cards.ToList();
         }
 
-        public Card GiveCard()
+        private void CreateDeck()
+        {
+            string[] ranks = { "Ace", "King", "Queen", "Jack", "Ten", "Nine",
+                              "Eight", "Seven", "Six", "Five", "Four", "Three", "Two" };
+            char[] suits = { '♦', '♥', '♣', '♠' };
+
+            foreach (char suit in suits)
+            {
+                foreach (string rank in ranks)
+                {
+                    _cards.Add(new Card(rank, suit));
+                }
+            }
+        }
+
+        public Card DrawCard()
         {
             if (_cards.Count == 0)
                 return null;
 
-            Card tempCard = _cards[0];
+            Card card = _cards[0];
             _cards.RemoveAt(0);
-            return tempCard;
+            return card;
         }
 
         private void Shuffle()
         {
-            Random random = new Random();
-
             for (int i = _cards.Count - 1; i > 0; i--)
             {
-                int randomNumber = random.Next(i + 1);
+                int randomIndex = _random.Next(i + 1);
                 Card temp = _cards[i];
-                _cards[i] = _cards[randomNumber];
-                _cards[randomNumber] = temp;
+                _cards[i] = _cards[randomIndex];
+                _cards[randomIndex] = temp;
             }
         }
     }
