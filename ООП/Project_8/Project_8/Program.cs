@@ -35,6 +35,9 @@ namespace Project_8
 
         public void Play()
         {
+            const string MenuViewFight = "1";
+            const string MenuExit = "2";
+
             bool isRunning = true;
 
             while (isRunning)
@@ -43,18 +46,18 @@ namespace Project_8
                 Console.WriteLine("======================================");
                 Console.WriteLine("      ДОБРО ПОЖАЛОВАТЬ В КОЛИЗЕЙ");
                 Console.WriteLine("======================================");
-                Console.WriteLine("1. Посмотреть бой");
-                Console.WriteLine("2. Выход");
+                Console.WriteLine($"{MenuViewFight}. Посмотреть бой");
+                Console.WriteLine($"{MenuExit}. Выход");
                 Console.Write("Выберите пункт меню: ");
 
                 string choice = Console.ReadLine();
 
                 switch (choice)
                 {
-                    case "1":
+                    case MenuViewFight:
                         Start();
                         break;
-                    case "2":
+                    case MenuExit:
                         isRunning = false;
                         Console.WriteLine("До свидания!");
                         break;
@@ -130,6 +133,7 @@ namespace Project_8
                 if (firstAttacks)
                 {
                     ExecuteAttack(_firstFighter, _secondFighter);
+
                     if (_secondFighter.Health > 0)
                     {
                         ExecuteAttack(_secondFighter, _firstFighter);
@@ -138,6 +142,7 @@ namespace Project_8
                 else
                 {
                     ExecuteAttack(_secondFighter, _firstFighter);
+
                     if (_firstFighter.Health > 0)
                     {
                         ExecuteAttack(_firstFighter, _secondFighter);
@@ -168,7 +173,6 @@ namespace Project_8
             if (attacker.Health <= 0) return;
 
             Console.Write($"{attacker.Name} атакует");
-
             attacker.Attack(defender);
         }
 
@@ -193,45 +197,49 @@ namespace Project_8
 
     abstract class Fighter : IDamageable
     {
-        protected string _name;
-        protected int _health;
-        protected int _maxHealth;
-        protected int _armor;
-        protected int _damage;
-
-        protected int _specialCounter;
-        protected int _specialValue;
+        public string Name { get; private set; }
+        public int Health { get; private set; }
+        public int MaxHealth { get; private set; }
+        public int Armor { get; private set; }
+        public int Damage { get; private set; }
 
         public Fighter(string name, int health, int armor, int damage)
         {
-            _name = name;
-            _health = health;
-            _maxHealth = health;
-            _armor = armor;
-            _damage = damage;
-            _specialCounter = 0;
+            Name = name;
+            Health = health;
+            MaxHealth = health;
+            Armor = armor;
+            Damage = damage;
         }
 
-        public string Name => _name;
-        public int Health => _health;
+        protected void ChangeHealth(int newHealth)
+        {
+            Health = newHealth;
+        }
+
+        protected void Heal(int amount)
+        {
+            Health = Math.Min(MaxHealth, Health + amount);
+        }
 
         public abstract void Attack(IDamageable target);
 
         public virtual void TakeDamage(int damage)
         {
-            int actualDamage = Math.Max(1, damage - _armor);
-            _health = Math.Max(0, _health - actualDamage);
-            Console.WriteLine($"{_name} получает {actualDamage} урона (заблокировано {_armor})");
+            int actualDamage = Math.Max(1, damage - Armor);
+            int newHealth = Math.Max(0, Health - actualDamage);
+            ChangeHealth(newHealth);
+            Console.WriteLine($"{Name} получает {actualDamage} урона (заблокировано {Armor})");
         }
 
         public virtual void ShowStats()
         {
-            Console.WriteLine($"{_name}: ♥{_health}/{_maxHealth} | ⚔{_damage} | 🛡{_armor}");
+            Console.WriteLine($"{Name}: ♥{Health}/{MaxHealth} | ⚔{Damage} | 🛡{Armor}");
         }
 
         public virtual void ShowFullStats()
         {
-            Console.WriteLine($"{_name}: Здоровье {_health}/{_maxHealth}, Урон {_damage}, Броня {_armor}");
+            Console.WriteLine($"{Name}: Здоровье {Health}/{MaxHealth}, Урон {Damage}, Броня {Armor}");
         }
 
         public abstract Fighter Clone();
@@ -239,21 +247,23 @@ namespace Project_8
 
     class Gladiator : Fighter
     {
-        private int _doubleDamageChance = 30;
+        private int _doubleDamageChance;
+        private const int DoubleDamageChance = 30;
+        private const int CriticalMultiplier = 2;
 
         public Gladiator(string name, int health, int armor, int damage)
             : base(name, health, armor, damage)
         {
+            _doubleDamageChance = DoubleDamageChance;
         }
 
         public override void Attack(IDamageable target)
         {
-            int currentDamage = _damage;
-            int chance = UserUtils.GenerateRandomNumber(0, 100);
+            int currentDamage = Damage;
 
-            if (chance < _doubleDamageChance)
+            if (UserUtils.IsChanceSuccessful(_doubleDamageChance))
             {
-                currentDamage *= 2;
+                currentDamage *= CriticalMultiplier;
                 Console.Write($" [КРИТИЧЕСКИЙ УДАР!]");
             }
 
@@ -263,24 +273,27 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Gladiator(_name, _maxHealth, _armor, _damage);
+            return new Gladiator(Name, MaxHealth, Armor, Damage);
         }
     }
 
     class Berserk : Fighter
     {
-        private int _attackCount = 0;
-        private int _doubleAttackThreshold = 3;
+        private int _attackCount;
+        private int _doubleAttackThreshold;
+        private const int DoubleAttackThreshold = 3;
 
         public Berserk(string name, int health, int armor, int damage)
             : base(name, health, armor, damage)
         {
+            _attackCount = 0;
+            _doubleAttackThreshold = DoubleAttackThreshold;
         }
 
         public override void Attack(IDamageable target)
         {
             _attackCount++;
-            int currentDamage = _damage;
+            int currentDamage = Damage;
 
             if (_attackCount % _doubleAttackThreshold == 0)
             {
@@ -298,26 +311,34 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Berserk(_name, _maxHealth, _armor, _damage);
+            return new Berserk(Name, MaxHealth, Armor, Damage);
         }
     }
 
     class Warrior : Fighter
     {
-        private int _rage = 0;
-        private int _maxRage = 100;
-        private int _ragePerHit = 15;
-        private int _healAmount = 20;
+        private int _rage;
+        private int _maxRage;
+        private int _ragePerHit;
+        private int _healAmount;
+
+        private const int MaxRage = 100;
+        private const int RagePerHit = 15;
+        private const int HealAmount = 20;
 
         public Warrior(string name, int health, int armor, int damage)
             : base(name, health, armor, damage)
         {
+            _rage = 0;
+            _maxRage = MaxRage;
+            _ragePerHit = RagePerHit;
+            _healAmount = HealAmount;
         }
 
         public override void Attack(IDamageable target)
         {
-            Console.WriteLine($" наносит {_damage} урона");
-            target.TakeDamage(_damage);
+            Console.WriteLine($" наносит {Damage} урона");
+            target.TakeDamage(Damage);
         }
 
         public override void TakeDamage(int damage)
@@ -325,39 +346,50 @@ namespace Project_8
             base.TakeDamage(damage);
 
             _rage += _ragePerHit;
-            Console.WriteLine($"{_name} накапливает ярость: {_rage}/{_maxRage}");
+            Console.WriteLine($"{Name} накапливает ярость: {_rage}/{_maxRage}");
 
             if (_rage >= _maxRage)
             {
-                _health = Math.Min(_maxHealth, _health + _healAmount);
+                Heal(_healAmount);
                 _rage = 0;
-                Console.WriteLine($"{_name} ИСПОЛЬЗУЕТ ЛЕЧЕНИЕ! +{_healAmount} здоровья");
+                Console.WriteLine($"{Name} ИСПОЛЬЗУЕТ ЛЕЧЕНИЕ! +{_healAmount} здоровья");
             }
         }
 
         public override Fighter Clone()
         {
-            return new Warrior(_name, _maxHealth, _armor, _damage);
+            return new Warrior(Name, MaxHealth, Armor, Damage);
         }
     }
 
     class Mage : Fighter
     {
         private int _mana;
-        private int _maxMana = 50;
-        private int _manaCost = 15;
+        private int _maxMana;
+        private int _manaCost;
+        private int _manaRegen;
         private int _fireballDamage;
+        private int _fireballMultiplier;
+
+        private const int MaxMana = 50;
+        private const int ManaCost = 15;
+        private const int ManaRegen = 5;
+        private const int FireballMultiplier = 2;
 
         public Mage(string name, int health, int armor, int damage)
             : base(name, health, armor, damage)
         {
+            _maxMana = MaxMana;
             _mana = _maxMana;
-            _fireballDamage = damage * 2;
+            _manaCost = ManaCost;
+            _manaRegen = ManaRegen;
+            _fireballMultiplier = FireballMultiplier;
+            _fireballDamage = damage * _fireballMultiplier;
         }
 
         public override void Attack(IDamageable target)
         {
-            _mana = Math.Min(_maxMana, _mana + 5);
+            _mana = Math.Min(_maxMana, _mana + _manaRegen);
 
             if (_mana >= _manaCost)
             {
@@ -368,39 +400,39 @@ namespace Project_8
             }
             else
             {
-                Console.WriteLine($" наносит {_damage} урона (мало маны: {_mana}/{_maxMana})");
-                target.TakeDamage(_damage);
+                Console.WriteLine($" наносит {Damage} урона (мало маны: {_mana}/{_maxMana})");
+                target.TakeDamage(Damage);
             }
         }
 
         public override Fighter Clone()
         {
-            return new Mage(_name, _maxHealth, _armor, _damage);
+            return new Mage(Name, MaxHealth, Armor, Damage);
         }
     }
 
     class Assassin : Fighter
     {
-        private int _dodgeChance = 25;
+        private int _dodgeChance;
+        private const int DodgeChance = 25;
 
         public Assassin(string name, int health, int armor, int damage)
             : base(name, health, armor, damage)
         {
+            _dodgeChance = DodgeChance;
         }
 
         public override void Attack(IDamageable target)
         {
-            Console.WriteLine($" наносит {_damage} урона");
-            target.TakeDamage(_damage);
+            Console.WriteLine($" наносит {Damage} урона");
+            target.TakeDamage(Damage);
         }
 
         public override void TakeDamage(int damage)
         {
-            int chance = UserUtils.GenerateRandomNumber(0, 100);
-
-            if (chance < _dodgeChance)
+            if (UserUtils.IsChanceSuccessful(_dodgeChance))
             {
-                Console.WriteLine($"{_name} УКЛОНЯЕТСЯ от атаки!");
+                Console.WriteLine($"{Name} УКЛОНЯЕТСЯ от атаки!");
                 return;
             }
 
@@ -409,7 +441,7 @@ namespace Project_8
 
         public override Fighter Clone()
         {
-            return new Assassin(_name, _maxHealth, _armor, _damage);
+            return new Assassin(Name, MaxHealth, Armor, Damage);
         }
     }
 
@@ -425,6 +457,11 @@ namespace Project_8
         public static int GenerateRandomNumber(int min, int max)
         {
             return _random.Next(min, max);
+        }
+
+        public static bool IsChanceSuccessful(int chancePercent)
+        {
+            return GenerateRandomNumber(0, 100) < chancePercent;
         }
 
         public static int GetPositiveNumber()
