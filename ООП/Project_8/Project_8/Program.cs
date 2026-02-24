@@ -1,14 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
-//1.Переменные именуются с маленькой буквы, только приватные поля с символа _ и маленькой буквы (исключение - константы), приватные статические поля с
-//  маленькой буквы s, символа_ (s_) и маленькой буквы, а всё остальное с большой буквы.  - не нашел где у меня переменная именнована не верно. просьа указать номер строки.
-//
-//2. Классы, конструкторы, методы, циклы, условия отделяются от остального кода пустой строкой с двух сторон. Перед } и после
-//{ пустые строки не нужны. Более 1 пустой строки подряд быть не должно. Подробнее все примеры разобраны
-//здесь: https://ijunior-knowledge-base.gitbook.io/baza-znanii-yayunior/c/pustye-stroki    - точно так же, просьа указать номер строки где ошибка.
-//
-//5. Damage = Damage + Damage; - с каждым использованием, урон увеличится в 2.  - все верно. так и задумано. Увеличивается на 1 ход, а потом методом ResetStats сбрасывается отбратно
+using System.Threading;
 
 namespace Project_8
 {
@@ -17,375 +9,447 @@ namespace Project_8
         public static void Main(string[] args)
         {
             Fight fight = new Fight();
-
             fight.Play();
-        }
-    }
-
-    class UserUtils
-    {
-        static private Random _random = new Random();
-
-        public static int GenerateRandomNumber()
-        {
-            int minNumber = 0;
-            int maxNumber = 100;
-
-            return _random.Next(minNumber, maxNumber);
-        }
-
-        public static int GetPositiveNumber()
-        {
-            string userInputString;
-            bool isConversionSucceeded = true;
-            bool isCorrectNumber;
-            int number = 0;
-
-            while (isConversionSucceeded)
-            {
-                userInputString = Console.ReadLine();
-                isCorrectNumber = int.TryParse(userInputString, out number);
-
-                if (isCorrectNumber)
-                {
-                    if (number < 1)
-                    {
-                        Console.Write("Неверный ввод. Число меньше единици. Повторите ввод - ");
-                    }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод. Повторите ввод - ");
-                }
-            }
-
-            return number;
         }
     }
 
     class Fight
     {
+        private List<Fighter> _availableFighters = new List<Fighter>();
         private Fighter _firstFighter;
         private Fighter _secondFighter;
-        private List<Fighter> _fighters = new List<Fighter>();
 
         public Fight()
         {
-            _fighters.Add(new Infantryman());
-            _fighters.Add(new Barbarian());
-            _fighters.Add(new Paladin());
-            _fighters.Add(new Tramp());
-            _fighters.Add(new Ranger());
+            InitializeFighters();
+        }
+
+        private void InitializeFighters()
+        {
+            _availableFighters.Add(new Gladiator("Гладиатор", 120, 5, 8));
+            _availableFighters.Add(new Berserk("Берсерк", 140, 3, 10));
+            _availableFighters.Add(new Warrior("Воин", 150, 8, 6));
+            _availableFighters.Add(new Mage("Маг", 90, 2, 12));
+            _availableFighters.Add(new Assassin("Ассасин", 100, 4, 9));
         }
 
         public void Play()
         {
-            Console.WriteLine("Добро пожаловать на арену.");
-            Console.WriteLine("Выберите первого бойца.");
-            _firstFighter = ChoiceFighter();
-            _firstFighter.SaveStats();
-            Console.WriteLine("Выберите второго бойца.");
-            _secondFighter = ChoiceFighter();
-            _secondFighter.SaveStats();
+            bool isRunning = true;
 
-            Duel();
+            while (isRunning)
+            {
+                Console.Clear();
+                Console.WriteLine("======================================");
+                Console.WriteLine("      ДОБРО ПОЖАЛОВАТЬ В КОЛИЗЕЙ");
+                Console.WriteLine("======================================");
+                Console.WriteLine("1. Посмотреть бой");
+                Console.WriteLine("2. Выход");
+                Console.Write("Выберите пункт меню: ");
 
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Start();
+                        break;
+                    case "2":
+                        isRunning = false;
+                        Console.WriteLine("До свидания!");
+                        break;
+                    default:
+                        Console.WriteLine("Неверный ввод. Нажмите любую клавишу...");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        private void Start()
+        {
+            Console.Clear();
+            Console.WriteLine("=== ВЫБОР БОЙЦОВ ===");
+
+            Console.WriteLine("\nВыберите первого бойца:");
+            _firstFighter = ChooseFighter();
+
+            Console.WriteLine("\nВыберите второго бойца:");
+            _secondFighter = ChooseFighter();
+
+            Console.Clear();
+            Console.WriteLine("=== БОЙ НАЧИНАЕТСЯ ===");
+            Console.WriteLine($"{_firstFighter.Name} VS {_secondFighter.Name}");
+            Console.WriteLine("Нажмите любую клавишу для начала боя...");
+            Console.ReadKey();
+
+            ConductBattle();
+
+            Console.WriteLine("\nНажмите любую клавишу для возврата в меню...");
             Console.ReadKey();
         }
 
-        private void Duel()
+        private Fighter ChooseFighter()
         {
-            while (IsGameOver())
+            ShowAllFighters();
+            Console.Write("Введите номер бойца: ");
+
+            int choice = UserUtils.GetPositiveNumber();
+
+            while (choice > _availableFighters.Count)
             {
-                _firstFighter.Atack(_secondFighter);
-                _secondFighter.Atack(_firstFighter);
-                _firstFighter.ShowStats();
-                _secondFighter.ShowStats();
-                Console.ReadKey();
+                Console.WriteLine($"Неверный номер. Введите число от 1 до {_availableFighters.Count}");
+                choice = UserUtils.GetPositiveNumber();
             }
 
-            IsWinner();
+            return _availableFighters[choice - 1].Clone();
         }
 
-        private bool IsGameOver()
+        private void ShowAllFighters()
         {
-            bool endRound = true;
-
-            if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
+            Console.WriteLine("\nДоступные бойцы:");
+            for (int i = 0; i < _availableFighters.Count; i++)
             {
-                endRound = false;
+                Console.Write($"{i + 1}. ");
+                _availableFighters[i].ShowStats();
             }
-
-            return endRound;
         }
 
-        private void IsWinner()
+        private void ConductBattle()
         {
-            if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
+            int round = 1;
+            bool battleActive = true;
+
+            while (battleActive)
             {
-                if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
+                Console.Clear();
+                Console.WriteLine($"=== РАУНД {round} ===\n");
+
+                bool firstAttacks = UserUtils.GenerateRandomNumber(0, 2) == 0;
+
+                if (firstAttacks)
                 {
-                    Console.WriteLine("Боевая ничья");
-                }
-                else if (_firstFighter.Health <= 0)
-                {
-                    Console.WriteLine($"Бой окончен, победил {_secondFighter.Name}");
+                    ExecuteAttack(_firstFighter, _secondFighter);
+                    if (_secondFighter.Health > 0)
+                    {
+                        ExecuteAttack(_secondFighter, _firstFighter);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Бой окончен, победил {_firstFighter.Name}");
+                    ExecuteAttack(_secondFighter, _firstFighter);
+                    if (_firstFighter.Health > 0)
+                    {
+                        ExecuteAttack(_firstFighter, _secondFighter);
+                    }
                 }
 
-            }
-        }
-        
-        private void ShowAllFighter()
-        {
-            int numberFighter = 1;
+                Console.WriteLine("\n--- ТЕКУЩЕЕ СОСТОЯНИЕ ---");
+                _firstFighter.ShowFullStats();
+                _secondFighter.ShowFullStats();
 
-            foreach (Fighter fighter in _fighters)
-            {
-                Console.Write($"{numberFighter++}. ");
-                fighter.ShowStatsInChose();
-            }
-        }
-
-        private Fighter ChoiceFighter()
-        {
-            bool isRightChoice = true;
-            Fighter fighter = null;
-
-            while (isRightChoice)
-            {
-                ShowAllFighter();
-                Console.Write("Боец под номеров - ");
-
-                int command = UserUtils.GetPositiveNumber();
-
-                if(--command > _fighters.Count)
+                if (_firstFighter.Health <= 0 || _secondFighter.Health <= 0)
                 {
-                    Console.WriteLine("неверный ввод числа");
+                    battleActive = false;
+                    ShowBattleResult();
                 }
                 else
                 {
-                    fighter = _fighters[command].Clone();
-                    isRightChoice = false;
+                    Console.WriteLine("\nНажмите любую клавишу для следующего раунда...");
+                    Console.ReadKey();
                 }
+
+                round++;
             }
-
-            return fighter;
-        } 
-    }
-
-    abstract class Fighter
-    {
-        private int _specialHitChance = 30;
-        private int _specialHitFighter;
-        private int _minimalDamage = 1;
-        private int _normalDamag;
-        private int _normalArmor;
-
-        public Fighter(string name, int health, int armor, int damage, int cooldawn, bool hasPassviveSkill)
-        {
-            Name = name;
-            Health = health;
-            Armor = armor;
-            Damage = damage;
-            Cooldawn = cooldawn;
-            HasPassviveSkill = hasPassviveSkill;
         }
 
-        public string Name { get; protected set; }
-        public int Health { get; protected set; }
-        public int Armor { get; protected set; }
-        public int Damage { get; protected set; }
-        public int Cooldawn { get; protected set; }
-        public bool HasPassviveSkill { get; protected set; }
-        
-        public void Atack(Fighter enemy)
+        private void ExecuteAttack(Fighter attacker, IDamageable defender)
         {
-            if (HasPassviveSkill == false)
-            {
-                _specialHitFighter = UserUtils.GenerateRandomNumber();
+            if (attacker.Health <= 0) return;
 
-                if (_specialHitFighter >= _specialHitChance)
-                {
-                    UseAbility();
-                }
+            Console.Write($"{attacker.Name} атакует");
+
+            attacker.Attack(defender);
+        }
+
+        private void ShowBattleResult()
+        {
+            Console.WriteLine("\n=== БОЙ ОКОНЧЕН ===");
+
+            if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
+            {
+                Console.WriteLine("НИЧЬЯ! Оба бойца пали в бою!");
+            }
+            else if (_firstFighter.Health <= 0)
+            {
+                Console.WriteLine($"ПОБЕДИТЕЛЬ: {_secondFighter.Name}");
             }
             else
             {
-                UseAbility();
+                Console.WriteLine($"ПОБЕДИТЕЛЬ: {_firstFighter.Name}");
             }
-
-            enemy.TakeDamage(Damage);
-            ResetStats(_normalDamag, _normalArmor);
         }
+    }
 
-        public void ResetStats(int normalAtack, int normalArmor)
+    abstract class Fighter : IDamageable
+    {
+        protected string _name;
+        protected int _health;
+        protected int _maxHealth;
+        protected int _armor;
+        protected int _damage;
+
+        protected int _specialCounter;
+        protected int _specialValue;
+
+        public Fighter(string name, int health, int armor, int damage)
         {
-            Armor = normalArmor;
-            Damage = normalAtack;
+            _name = name;
+            _health = health;
+            _maxHealth = health;
+            _armor = armor;
+            _damage = damage;
+            _specialCounter = 0;
         }
 
-        protected abstract void UseAbility();
+        public string Name => _name;
+        public int Health => _health;
+
+        public abstract void Attack(IDamageable target);
+
+        public virtual void TakeDamage(int damage)
+        {
+            int actualDamage = Math.Max(1, damage - _armor);
+            _health = Math.Max(0, _health - actualDamage);
+            Console.WriteLine($"{_name} получает {actualDamage} урона (заблокировано {_armor})");
+        }
+
+        public virtual void ShowStats()
+        {
+            Console.WriteLine($"{_name}: ♥{_health}/{_maxHealth} | ⚔{_damage} | 🛡{_armor}");
+        }
+
+        public virtual void ShowFullStats()
+        {
+            Console.WriteLine($"{_name}: Здоровье {_health}/{_maxHealth}, Урон {_damage}, Броня {_armor}");
+        }
 
         public abstract Fighter Clone();
+    }
 
-        public void ShowStatsInChose()
+    class Gladiator : Fighter
+    {
+        private int _doubleDamageChance = 30;
+
+        public Gladiator(string name, int health, int armor, int damage)
+            : base(name, health, armor, damage)
         {
-            Console.WriteLine($"{Name}\t\t HP = {Health}\t ATK = {Damage} \t ARM = {Armor}");
         }
 
-        public void ShowStats()
+        public override void Attack(IDamageable target)
         {
-            Console.WriteLine($"{Name}\t XP = {Health}\t ATK = {Damage}");
-        }
+            int currentDamage = _damage;
+            int chance = UserUtils.GenerateRandomNumber(0, 100);
 
-        public void SaveStats()
-        {
-            _normalDamag = Damage;
-            _normalArmor = Armor;
-        }
-
-        private void TakeDamage(int damage)
-        {
-            if (Armor >= damage)
+            if (chance < _doubleDamageChance)
             {
-                damage = _minimalDamage;
-                Health -= damage;
+                currentDamage *= 2;
+                Console.Write($" [КРИТИЧЕСКИЙ УДАР!]");
+            }
+
+            Console.WriteLine($" наносит {currentDamage} урона");
+            target.TakeDamage(currentDamage);
+        }
+
+        public override Fighter Clone()
+        {
+            return new Gladiator(_name, _maxHealth, _armor, _damage);
+        }
+    }
+
+    class Berserk : Fighter
+    {
+        private int _attackCount = 0;
+        private int _doubleAttackThreshold = 3;
+
+        public Berserk(string name, int health, int armor, int damage)
+            : base(name, health, armor, damage)
+        {
+        }
+
+        public override void Attack(IDamageable target)
+        {
+            _attackCount++;
+            int currentDamage = _damage;
+
+            if (_attackCount % _doubleAttackThreshold == 0)
+            {
+                Console.Write($" [ДВОЙНОЙ УДАР!]");
+                target.TakeDamage(currentDamage);
+                target.TakeDamage(currentDamage);
+                Console.WriteLine($" наносит два удара по {currentDamage} урона");
             }
             else
             {
-                Health -= damage - Armor;
+                Console.WriteLine($" наносит {currentDamage} урона");
+                target.TakeDamage(currentDamage);
             }
-
-            if (Health < 0)
-            {
-                Health = 0;
-            }
-        }
-    }
-
-    class Infantryman : Fighter
-    {
-        int _shieldStrike = 15;
-
-        public Infantryman() : base("Infantryman", 150, 8, 7, 0, false)
-        {
-
-        }
-
-        protected override void UseAbility()
-        {
-            Console.WriteLine("Удар щитом");
-            Damage = _shieldStrike;
         }
 
         public override Fighter Clone()
         {
-            return new Infantryman();
+            return new Berserk(_name, _maxHealth, _armor, _damage);
         }
     }
 
-    class Barbarian : Fighter
+    class Warrior : Fighter
     {
-        public Barbarian() : base("Barbarian", 120, 6, 10, 3, true)
-        {
+        private int _rage = 0;
+        private int _maxRage = 100;
+        private int _ragePerHit = 15;
+        private int _healAmount = 20;
 
+        public Warrior(string name, int health, int armor, int damage)
+            : base(name, health, armor, damage)
+        {
         }
 
-        protected override void UseAbility()
+        public override void Attack(IDamageable target)
         {
-            if (Cooldawn > 0)
+            Console.WriteLine($" наносит {_damage} урона");
+            target.TakeDamage(_damage);
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+
+            _rage += _ragePerHit;
+            Console.WriteLine($"{_name} накапливает ярость: {_rage}/{_maxRage}");
+
+            if (_rage >= _maxRage)
             {
-                Console.WriteLine("накопления ярости");
-                ++Damage;
-                Cooldawn = 0;
+                _health = Math.Min(_maxHealth, _health + _healAmount);
+                _rage = 0;
+                Console.WriteLine($"{_name} ИСПОЛЬЗУЕТ ЛЕЧЕНИЕ! +{_healAmount} здоровья");
+            }
+        }
+
+        public override Fighter Clone()
+        {
+            return new Warrior(_name, _maxHealth, _armor, _damage);
+        }
+    }
+
+    class Mage : Fighter
+    {
+        private int _mana;
+        private int _maxMana = 50;
+        private int _manaCost = 15;
+        private int _fireballDamage;
+
+        public Mage(string name, int health, int armor, int damage)
+            : base(name, health, armor, damage)
+        {
+            _mana = _maxMana;
+            _fireballDamage = damage * 2;
+        }
+
+        public override void Attack(IDamageable target)
+        {
+            _mana = Math.Min(_maxMana, _mana + 5);
+
+            if (_mana >= _manaCost)
+            {
+                _mana -= _manaCost;
+                Console.Write($" [ОГНЕННЫЙ ШАР! Мана: {_mana}/{_maxMana}]");
+                Console.WriteLine($" наносит {_fireballDamage} урона");
+                target.TakeDamage(_fireballDamage);
             }
             else
             {
-                Cooldawn++;
+                Console.WriteLine($" наносит {_damage} урона (мало маны: {_mana}/{_maxMana})");
+                target.TakeDamage(_damage);
             }
         }
 
         public override Fighter Clone()
         {
-            return new Barbarian();
+            return new Mage(_name, _maxHealth, _armor, _damage);
         }
     }
 
-    class Paladin : Fighter
+    class Assassin : Fighter
     {
-        private int _maxHealth;
-        private int _healingSize = 3;
+        private int _dodgeChance = 25;
 
-        public Paladin() : base("Paladin", 130, 0, 8, 0, true)
+        public Assassin(string name, int health, int armor, int damage)
+            : base(name, health, armor, damage)
         {
-            _maxHealth = Health;
         }
 
-        protected override void UseAbility()
+        public override void Attack(IDamageable target)
         {
-            Console.WriteLine("божественные прикосновение");
+            Console.WriteLine($" наносит {_damage} урона");
+            target.TakeDamage(_damage);
+        }
 
-            if(_maxHealth - _healingSize > Health)
+        public override void TakeDamage(int damage)
+        {
+            int chance = UserUtils.GenerateRandomNumber(0, 100);
+
+            if (chance < _dodgeChance)
             {
-                Health += _healingSize;
+                Console.WriteLine($"{_name} УКЛОНЯЕТСЯ от атаки!");
+                return;
             }
-            else
+
+            base.TakeDamage(damage);
+        }
+
+        public override Fighter Clone()
+        {
+            return new Assassin(_name, _maxHealth, _armor, _damage);
+        }
+    }
+
+    interface IDamageable
+    {
+        void TakeDamage(int damage);
+    }
+
+    class UserUtils
+    {
+        private static Random _random = new Random();
+
+        public static int GenerateRandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
+        }
+
+        public static int GetPositiveNumber()
+        {
+            string userInputString;
+            bool isCorrectNumber;
+            int number = 0;
+            bool isValidInput = false;
+
+            while (isValidInput == false)
             {
-                Health = _maxHealth;
+                userInputString = Console.ReadLine();
+                isCorrectNumber = int.TryParse(userInputString, out number);
+
+                if (isCorrectNumber && number > 0)
+                {
+                    isValidInput = true;
+                }
+                else
+                {
+                    Console.Write("Неверный ввод. Введите положительное число: ");
+                }
             }
-        }
 
-        public override Fighter Clone()
-        {
-            return new Paladin();   
-        }
-    }
-
-    class Tramp : Fighter
-    {
-        public Tramp() : base("Tramp", 85, 3, 8, 0, false)
-        {
-
-        }
-
-        protected override void UseAbility()
-        {
-            Console.WriteLine("Подлый удар");
-            Damage = Damage + Damage;
-        }
-
-        public override Fighter Clone()
-        {
-            return new Tramp();
-        }
-    }
-
-    class Ranger : Fighter
-    {
-        private int _armorAbility = 100;
-
-        public Ranger() : base("Ranger", 90, 5, 2, 0, false)
-        {
-
-        }
-
-        protected override void UseAbility()
-        {
-            Console.WriteLine("Cлытся с тенями");
-            Armor = _armorAbility;
-        }
-
-        public override Fighter Clone()
-        {
-            return new Ranger();
+            return number;
         }
     }
 }
