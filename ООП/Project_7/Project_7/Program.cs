@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_7
@@ -8,50 +8,61 @@ namespace Project_7
         public static void Main(string[] args)
         {
             Depot depot = new Depot();
-
             depot.StationControl();
         }
     }
 
+    class Carriage
+    {
+        public Carriage(int capacity)
+        {
+            Сapacity = capacity;
+        }
+
+        public int Сapacity { get; private set; }
+    }
+
     class Train
     {
-        public Train(int numberTrain ,int railwayСarriage)
+        private List<Carriage> _carriages;
+        private Route _route;
+        private int _passengerCount;
+
+        public Train(int number, List<Carriage> carriages, Route route, int passengerCount)
         {
-            Number = numberTrain;
-            RailwayСarriage = railwayСarriage;
+            Number = number;
+            _carriages = carriages;
+            _route = route;
+            _passengerCount = passengerCount;
         }
 
         public int Number { get; private set; }
-        public int RailwayСarriage { get; private set; }
+        public IReadOnlyList<Carriage> Carriages => _carriages;
+        public Route Route => _route;
+        public int PassengerCount => _passengerCount;
+        public int CarriageCount => _carriages.Count;
     }
 
     class Route
     {
-        public Route(string startingStation, string endStansion , int numberPeopleWantGo, Train train, int carriage)
+        public Route(string startingStation, string endStation)
         {
-            NumberPeopleWantGo = numberPeopleWantGo;
             StartingStation = startingStation;
-            EndStansion = endStansion;
-            Train = train;
-            Сarriage = carriage;
+            EndStation = endStation;
         }
 
-        public int NumberPeopleWantGo { get; private set; }
         public string StartingStation { get; private set; }
-        public string EndStansion { get; private set; }
-        public Train Train { get; private set; }
-        public int Сarriage { get; private set; }
+        public string EndStation { get; private set; }
 
         public void Print()
         {
-            Console.Write($"\t{StartingStation}\t\t-\t\t{EndStansion}\t\t-\t\t{NumberPeopleWantGo}\t\t-\t\t{Train.Number}\t\t-\t\t{Train.RailwayСarriage}\n");
+            Console.Write($"{StartingStation}\t\t-\t\t{EndStation}");
         }
     }
 
     class Depot
     {
-        List<Route> _route = new List<Route>();
-        List<Train> _train = new List<Train>();
+        private List<Train> _trains = new List<Train>();
 
         public void StationControl()
         {
@@ -60,32 +71,28 @@ namespace Project_7
 
             bool isWork = true;
 
-            while(isWork)
+            while (isWork)
             {
                 Console.Clear();
 
-                if (_route.Count == 0)
+                if (_trains.Count == 0)
                 {
-                    Console.WriteLine("Активных маршрутов нет.\n");
+                    Console.WriteLine("Активных поездов нет.\n");
                 }
                 else
                 {
-                    PrintFirstLine();
-                    foreach (Route route in _route)
-                    {
-                        route.Print();
-                    }
+                    PrintAllTrains();
                 }
 
-                Console.WriteLine($"\n{CreateRoute}. Сформировать маршрут.");
+                Console.WriteLine($"\n{CreateRoute}. Сформировать поезд.");
                 Console.WriteLine($"{Exit}. Закончить рабочий день");
                 Console.Write("Введите команду - ");
                 string command = Console.ReadLine();
 
-                switch(command.ToLower())
+                switch (command)
                 {
                     case CreateRoute:
-                        _route.Add(CreateDirection());
+                        CreateTrain();
                         break;
 
                     case Exit:
@@ -93,83 +100,95 @@ namespace Project_7
                         break;
 
                     default:
-                        Console.WriteLine("неверная команда");
+                        Console.WriteLine("Неверная команда");
                         break;
                 }
             }
         }
 
-        private Route CreateDirection()
+        private void CreateTrain()
         {
-            string[] town =
+            Route route = CreateRandomRoute();
+            int passengerCount = UserUtility.GetRandomNumber(1, 1000);
+            int carriageCapacity = 50;
+            int carriageCount = CalculateCarriageCount(passengerCount, carriageCapacity);
+
+            List<Carriage> carriages = new List<Carriage>();
+
+            for (int i = 0; i < carriageCount; i++)
             {
-                "город-q","город-w","город-e",
-                "город-a","город-s","город-d",
-                "город-z","город-x","город-c",
-                "город-v","город-f","город-r",
+                carriages.Add(new Carriage(carriageCapacity));
+            }
+
+            Train train = new Train(_trains.Count + 1, carriages, route, passengerCount);
+            _trains.Add(train);
+
+            Console.WriteLine($"Создан поезд #{train.Number} с {train.CarriageCount} вагонами");
+            Console.WriteLine($"Маршрут: {route.StartingStation} -> {route.EndStation}");
+            Console.WriteLine($"Пассажиров: {passengerCount}");
+            Console.ReadKey();
+        }
+
+        private Route CreateRandomRoute()
+        {
+            string[] towns =
+            {
+                "Москва", "Санкт-Петербург", "Казань",
+                "Екатеринбург", "Новосибирск", "Владивосток",
+                "Сочи", "Краснодар", "Ростов-на-Дону",
+                "Нижний Новгород", "Самара", "Челябинск"
             };
-            string firstStation = "";
-            string lastStation = "";
-            int numberPeopleWantGo = 0;
-            bool repick = true;
-            int maxNumberPeople = 1000;
 
-            Random random = new Random();
-            numberPeopleWantGo = random.Next(maxNumberPeople);
-            firstStation = town[random.Next(town.Length)];
-            while (repick)
+            string firstStation = towns[UserUtility.GetRandomNumber(0, towns.Length)];
+            string lastStation;
+
+            do
             {
-                lastStation = town[random.Next(town.Length)];
-
-                if(firstStation == lastStation)
-                {
-                    lastStation = town[random.Next(town.Length)];
-                }
-                else
-                {
-                    repick = false;
-                }
+                lastStation = towns[UserUtility.GetRandomNumber(0, towns.Length)];
             }
-            _train.Add(CreateTrain(numberPeopleWantGo));
-            Console.WriteLine(_train.Count);
+            while (firstStation == lastStation);
 
-            return new Route(firstStation, lastStation, numberPeopleWantGo, _train[_train.Count - 1], _train[_train.Count - 1].RailwayСarriage);
+            return new Route(firstStation, lastStation);
         }
 
-        private Train CreateTrain(int numberPeopleWantGo)
+        private int CalculateCarriageCount(int passengerCount, int carriageCapacity)
         {
-            int sizeСarriage = 200;
-            int carriage;
+            int carriageCount = passengerCount / carriageCapacity;
 
-            carriage = numberPeopleWantGo / sizeСarriage;
-
-            if(numberPeopleWantGo / sizeСarriage > 0)
+            if (passengerCount % carriageCapacity != 0)
             {
-                carriage++;
-            }
-            else if(carriage == 0)
-            {
-                carriage++;
+                carriageCount++;
             }
 
-            Train tempTrain = new Train(_train.Count, carriage);
-
-            return tempTrain;
+            return carriageCount;
         }
 
-        private void PrintFirstLine()
+        private void PrintAllTrains()
         {
-            Console.Write("Начальная станция");
-            Console.Write("\t-\t");
-            Console.Write("Конечная станция");
-            Console.Write("\t-\t");
-            Console.Write("Желающие ехать");
-            Console.Write("\t\t-\t");
-            Console.Write("Номер поезда");
-            Console.Write("\t\t-\t");
-            Console.Write("Количество вагонов\n");
+            PrintHeader();
 
+            foreach (Train train in _trains)
+            {
+                Console.Write($"#{train.Number}\t|\t");
+                train.Route.Print();
+                Console.Write($"\t|\t{train.PassengerCount}\t\t|\t{train.CarriageCount}\n");
+            }
+        }
 
+        private void PrintHeader()
+        {
+            Console.WriteLine("Номер\t|\tМаршрут\t\t\t|\tПассажиры\t|\tВагоны");
+            Console.WriteLine("--------|-----------------------|-----------------------|-----------");
+        }
+    }
+
+    static class UserUtility
+    {
+        private static Random _random = new Random();
+
+        public static int GetRandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
         }
     }
 }
