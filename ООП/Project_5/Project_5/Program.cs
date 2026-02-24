@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_5
@@ -18,353 +18,298 @@ namespace Project_5
 
         public void Work()
         {
-            const string AddBookCommand = "1";
-            const string DeleteBookCommand = "2";
-            const string PrintBookCommand = "3";
-            const string PrintSortBookCommand = "4";
-            const string ExitProgramCommand = "5";
+            const string AddCommand = "1";
+            const string DeleteCommand = "2";
+            const string PrintAllCommand = "3";
+            const string PrintFilteredCommand = "4";
+            const string ExitCommand = "5";
 
-            bool isWork = true;
+            bool isRunning = true;
 
-            while (isWork)
+            while (isRunning)
             {
-                Console.WriteLine($"{AddBookCommand}. Добавить книгу");
-                Console.WriteLine($"{DeleteBookCommand}. Удалить книгу");
-                Console.WriteLine($"{PrintBookCommand}. Вывести список книг");
-                Console.WriteLine($"{PrintSortBookCommand}. Вывести не полный список книг");
-                Console.WriteLine($"{ExitProgramCommand}. Выход");
-                Console.Write($"Введите номер команды - ");
+                Console.WriteLine($"{AddCommand}. Добавить книгу");
+                Console.WriteLine($"{DeleteCommand}. Удалить книгу");
+                Console.WriteLine($"{PrintAllCommand}. Вывести список книг");
+                Console.WriteLine($"{PrintFilteredCommand}. Вывести отфильтрованный список книг");
+                Console.WriteLine($"{ExitCommand}. Выход");
+                Console.Write("Введите номер команды - ");
 
-                string command;
+                string command = Console.ReadLine();
 
-                command = Console.ReadLine();
-
-                switch (command.ToLower())
+                switch (command)
                 {
-                    case AddBookCommand:
+                    case AddCommand:
                         AddBook();
                         break;
 
-                    case DeleteBookCommand:
+                    case DeleteCommand:
                         DeleteBook();
                         break;
 
-                    case PrintBookCommand:
-                        PrintLibrary();
+                    case PrintAllCommand:
+                        ShowAllBooks();
                         break;
 
-                    case PrintSortBookCommand:
-                        PrintSortLibrary();
+                    case PrintFilteredCommand:
+                        ShowFilteredBooks();
                         break;
 
-                    case ExitProgramCommand:
-                        isWork = false;
+                    case ExitCommand:
+                        isRunning = false;
                         break;
                 }
+
+                Console.WriteLine();
             }
         }
 
         private void AddBook()
         {
             Console.Write("Введите название книги: ");
-            string name = Console.ReadLine();
+            string title = Console.ReadLine();
+
             Console.Write("Введите имя автора: ");
             string author = Console.ReadLine();
-            Console.Write("Введите год выхода в свет: ");
-            int bookRelease = GetPositiveNumber();
-            Console.WriteLine("Выберите жанр книги:");
-            string genre = GenreSelection();
-            Console.Write("Цвет обложки книги: ");
-            string color = ColorBook();
 
-            _books.Add(new Book(name, author, bookRelease, genre, color));
+            Console.Write("Введите год выпуска: ");
+            int year = GetPositiveNumber();
+
+            Console.WriteLine("Выберите жанр книги:");
+            string genre = SelectGenre();
+
+            Console.WriteLine("Выберите цвет обложки:");
+            ConsoleColor color = SelectColor();
+
+            _books.Add(new Book(title, author, year, genre, color));
         }
 
         private int GetPositiveNumber()
         {
-            string line;
-            bool isConversionSucceeded = true;
-            bool isNumber;
-            int number = 0;
+            int number;
 
-            while (isConversionSucceeded)
+            while (true)
             {
-                line = Console.ReadLine();
-                isNumber = int.TryParse(line, out number);
+                string input = Console.ReadLine();
 
-                if (isNumber)
+                if (int.TryParse(input, out number))
                 {
-                    if (number < 0)
+                    if (number >= 0)
                     {
-                        Console.Write("Неверный ввод. Число меньше нуля. Повторите ввод - ");
+                        return number;
                     }
-                    else
-                    {
-                        isConversionSucceeded = false;
-                    }
+
+                    Console.Write("Число не может быть отрицательным. Повторите ввод - ");
                 }
                 else
                 {
-                    Console.Write("Неверный ввод. Повторите ввод - ");
+                    Console.Write("Неверный формат. Введите число - ");
                 }
             }
-
-            return number;
         }
 
-        private string ColorBook()
+        private ConsoleColor SelectColor()
         {
-            const string GreenCommand = "1";
-            const string BlueCommand = "2";
-            const string YellowCommand = "3";
-            const string RedCommand = "4";
+            const string GreenOption = "1";
+            const string BlueOption = "2";
+            const string YellowOption = "3";
+            const string RedOption = "4";
 
-            Console.WriteLine($"{GreenCommand}. Зеленый");
-            Console.WriteLine($"{BlueCommand}. Синий");
-            Console.WriteLine($"{YellowCommand}. Желтый");
-            Console.WriteLine($"{RedCommand}. Красная");
-            Console.Write($"Введите какая обложка - ");
-            string command;
-            command = Console.ReadLine();
+            Console.WriteLine($"{GreenOption}. Зеленый");
+            Console.WriteLine($"{BlueOption}. Синий");
+            Console.WriteLine($"{YellowOption}. Желтый");
+            Console.WriteLine($"{RedOption}. Красный");
+            Console.Write("Выберите цвет обложки - ");
 
-            switch (command.ToLower())
+            string choice = Console.ReadLine();
+
+            switch (choice)
             {
-                case GreenCommand:
-                    return "green";
-                    break;
+                case GreenOption:
+                    return ConsoleColor.Green;
 
-                case BlueCommand:
-                    return "blue";
-                    break;
+                case BlueOption:
+                    return ConsoleColor.Blue;
 
-                case YellowCommand:
-                    return "yellow";
-                    break;
+                case YellowOption:
+                    return ConsoleColor.Yellow;
 
-                case RedCommand:
-                    return "red";
-                    break;
+                case RedOption:
+                    return ConsoleColor.Red;
 
                 default:
-                    Console.WriteLine("не разобрать");
-                    return "white";
-                    break;
+                    Console.WriteLine("Цвет не распознан, будет использован белый");
+                    return ConsoleColor.White;
             }
         }
 
-        private void PrintLibrary()
+        private string SelectGenre()
         {
-            if(-_books.Count == 0)
+            const string RomanceOption = "1";
+            const string SciFiOption = "2";
+            const string HorrorOption = "3";
+            const string DocumentaryOption = "4";
+            const string ActionOption = "5";
+            const string DramaOption = "6";
+            const string ComedyOption = "7";
+            const string AdventureOption = "8";
+            const string CustomOption = "9";
+
+            Console.WriteLine($"{RomanceOption}. Роман");
+            Console.WriteLine($"{SciFiOption}. Фантастика");
+            Console.WriteLine($"{HorrorOption}. Ужасы");
+            Console.WriteLine($"{DocumentaryOption}. Документальная");
+            Console.WriteLine($"{ActionOption}. Экшн");
+            Console.WriteLine($"{DramaOption}. Драма");
+            Console.WriteLine($"{ComedyOption}. Комедия");
+            Console.WriteLine($"{AdventureOption}. Приключения");
+            Console.WriteLine($"{CustomOption}. Свой вариант");
+            Console.Write("Выберите жанр - ");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case RomanceOption:
+                    return "роман";
+
+                case SciFiOption:
+                    return "фантастика";
+
+                case HorrorOption:
+                    return "ужасы";
+
+                case DocumentaryOption:
+                    return "документальная";
+
+                case ActionOption:
+                    return "экшн";
+
+                case DramaOption:
+                    return "драма";
+
+                case ComedyOption:
+                    return "комедия";
+
+                case AdventureOption:
+                    return "приключения";
+
+                default:
+                    Console.Write("Введите свой вариант жанра: ");
+                    return Console.ReadLine();
+            }
+        }
+
+        private void ShowAllBooks()
+        {
+            if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста");
+                return;
             }
-            else
+
+            for (int i = 0; i < _books.Count; i++)
             {
-                int numberBook = 1;
-                foreach (Book book in _books)
-                {
-                    Console.Write(numberBook++ + ". ");
-                    book.Print();
-                }
+                Console.Write($"{i + 1}. ");
+                PrintBook(_books[i]);
             }
         }
 
-        private string GenreSelection()
+        private void PrintBook(Book book)
         {
-            const string RomanceCommand = "1";
-            const string ScienceCommand = "2";
-            const string HorrorCommand = "3";
-            const string DocumentaryCommand = "4";
-            const string ActionCommand = "5";
-            const string DramaCommand = "6";
-            const string ComedyCommand = "7";
-            const string AdventureCommand = "8";
-            const string YouChoseCommand = "9";
+            ConsoleColor originalColor = Console.ForegroundColor;
+            Console.ForegroundColor = book.CoverColor;
 
-            string genre = "";
+            Console.Write($"{book.Title}, {book.Author}, {book.Year}, {book.Genre}");
+            Console.WriteLine();
 
-            Console.WriteLine($"{RomanceCommand}. Роман");
-            Console.WriteLine($"{ScienceCommand}. Сай-фай");
-            Console.WriteLine($"{HorrorCommand}. Ужастик");
-            Console.WriteLine($"{DocumentaryCommand}. Документалка");
-            Console.WriteLine($"{ActionCommand}. Экшен");
-            Console.WriteLine($"{DramaCommand}. Драма");
-            Console.WriteLine($"{ComedyCommand}. Комедия");
-            Console.WriteLine($"{AdventureCommand}. Приключения");
-            Console.WriteLine($"{YouChoseCommand}. Ввести свой жанр -");
-
-            Console.Write($"Введите номер команды - ");
-
-            string command;
-            command = Console.ReadLine();
-
-            switch (command.ToLower())
-            {
-                case RomanceCommand:
-                    genre = "роман";
-                    break;
-
-                case ScienceCommand:
-                    genre = "сай-фай";
-                    break;
-
-                case HorrorCommand:
-                    genre = "ужастик";
-                    break;
-
-                case DocumentaryCommand:
-                    genre = "документалка";
-                    break;
-
-                case ActionCommand:
-                    genre = "экшен";
-                    break;
-
-                case DramaCommand:
-                    genre = "драма";
-                    break;
-
-                case ComedyCommand:
-                    genre = "комедия";
-                    break;
-
-                case AdventureCommand:
-                    genre = "приключения";
-                    break;
-
-                default:
-                    genre = Console.ReadLine();
-                    break;
-            }
-
-
-            return genre;
+            Console.ForegroundColor = originalColor;
         }
 
         private void DeleteBook()
         {
-            if(_books.Count == 0)
+            if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста.");
+                return;
+            }
+
+            ShowAllBooks();
+
+            Console.Write("Введите номер книги для удаления - ");
+            int index = GetPositiveNumber() - 1;
+
+            if (index >= 0 && index < _books.Count)
+            {
+                _books.RemoveAt(index);
+                Console.WriteLine("Книга удалена");
             }
             else
             {
-                Console.Write("Введите номер книги для удаления - ");
-                int bookForDelete = GetPositiveNumber();
-
-                if(bookForDelete - 1 > _books.Count)
-                {
-                    Console.WriteLine("неверный номер книги");
-                }
-                else
-                {
-                    _books.RemoveAt(bookForDelete - 1);
-                }
+                Console.WriteLine("Неверный номер книги");
             }
         }
 
-        private void PrintSortLibrary()
+        private void ShowFilteredBooks()
         {
-            const string NameCommand = "1";
-            const string AuthorCommand = "2";
-            const string GenreCommand = "3";
-            const string ColorCommand = "4";
+            const string FilterByTitle = "1";
+            const string FilterByAuthor = "2";
+            const string FilterByGenre = "3";
+            const string FilterByColor = "4";
 
-            Console.WriteLine("выберите по какому принципу сортировать: ");
-            Console.WriteLine($"{NameCommand}. По имени");
-            Console.WriteLine($"{AuthorCommand}. По автору");
-            Console.WriteLine($"{GenreCommand}. По жанру");
-            Console.WriteLine($"{ColorCommand}. По цвету обложки");
+            Console.WriteLine("Выберите критерий фильтрации:");
+            Console.WriteLine($"{FilterByTitle}. По названию");
+            Console.WriteLine($"{FilterByAuthor}. По автору");
+            Console.WriteLine($"{FilterByGenre}. По жанру");
+            Console.WriteLine($"{FilterByColor}. По цвету обложки");
+            Console.Write("Введите номер команды - ");
 
-            Console.Write($"Введите номер команды - ");
+            string choice = Console.ReadLine();
+            List<Book> filteredBooks = new List<Book>();
 
-            string command;
-            command = Console.ReadLine();
-
-            switch (command.ToLower())
+            switch (choice)
             {
-                case NameCommand:
-                    PrintSortName();
+                case FilterByTitle:
+                    Console.Write("Введите название - ");
+                    string title = Console.ReadLine();
+                    filteredBooks = _books.FindAll(book =>
+                        book.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
                     break;
 
-                case AuthorCommand:
-                    PrintSortAuthor();
+                case FilterByAuthor:
+                    Console.Write("Введите имя автора - ");
+                    string author = Console.ReadLine();
+                    filteredBooks = _books.FindAll(book =>
+                        book.Author.Equals(author, StringComparison.OrdinalIgnoreCase));
                     break;
 
-                case GenreCommand:
-                    PrintSortGenre();
+                case FilterByGenre:
+                    Console.Write("Введите жанр - ");
+                    string genre = Console.ReadLine();
+                    filteredBooks = _books.FindAll(book =>
+                        book.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
                     break;
 
-                case ColorCommand:
-                    PrintSortColor();
+                case FilterByColor:
+                    ConsoleColor color = SelectColor();
+                    filteredBooks = _books.FindAll(book => book.CoverColor == color);
                     break;
 
                 default:
-                    Console.WriteLine("неверная команда");
-                    break;
+                    Console.WriteLine("Неверная команда");
+                    return;
             }
-        }
 
-        private void PrintSortName()
-        {
-            string name;
-
-            Console.Write("Введите название - ");
-            name = Console.ReadLine();
-
-            foreach (Book book in _books)
+            if (filteredBooks.Count == 0)
             {
-                if(name.ToLower() == book.Name.ToLower())
-                {
-                    book.Print();
-                }
+                Console.WriteLine("Книги не найдены");
             }
-        }
-
-        private void PrintSortAuthor()
-        {
-            string author;
-
-            Console.Write("Введите имя автора - ");
-            author = Console.ReadLine();
-
-            foreach (Book book in _books)
+            else
             {
-                if (author.ToLower() == book.Author.ToLower())
+                Console.WriteLine($"Найдено книг: {filteredBooks.Count}");
+                foreach (Book book in filteredBooks)
                 {
-                    book.Print();
-                }
-            }
-        }
-
-        private void PrintSortGenre()
-        {
-            string genre;
-
-            Console.Write("Введите жанр - ");
-            genre = Console.ReadLine();
-
-            foreach (Book book in _books)
-            {
-                if (genre.ToLower() == book.Genre.ToLower())
-                {
-                    book.Print();
-                }
-            }
-        }
-
-        private void PrintSortColor()
-        {
-            string color;
-
-            Console.Write("Введите цвет - ");
-            color = Console.ReadLine();
-
-            foreach (Book book in _books)
-            {
-                if (color.ToLower() == book.Color.ToLower())
-                {
-                    book.Print();
+                    PrintBook(book);
                 }
             }
         }
@@ -372,53 +317,19 @@ namespace Project_5
 
     class Book
     {
-        public Book(string name, string author, int bookRelease, string genre, string color)
+        public Book(string title, string author, int year, string genre, ConsoleColor coverColor)
         {
-            Name = name;
+            Title = title;
             Author = author;
-            BookRelease = bookRelease;
+            Year = year;
             Genre = genre;
-            Color = color;
+            CoverColor = coverColor;
         }
 
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public int BookRelease { get; private set; }
-        public string Genre { get; private set; }
-        public string Color { get; private set; }
-
-        public void Print()
-        {
-            const string GreenCommand = "green";
-            const string BlueCommand = "blue";
-            const string YellowCommand = "yellow";
-            const string RedCommand = "red";
-
-            switch (Color)
-            {
-                case GreenCommand:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-
-                case BlueCommand:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    break;
-
-                case YellowCommand:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    break;
-
-                case RedCommand:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-            }
-
-            Console.Write(Name + ", ");
-            Console.Write(Author + ", ");
-            Console.Write(BookRelease + ", ");
-            Console.Write(Genre);
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+        public string Title { get; }
+        public string Author { get; }
+        public int Year { get; }
+        public string Genre { get; }
+        public ConsoleColor CoverColor { get; }
     }
 }
