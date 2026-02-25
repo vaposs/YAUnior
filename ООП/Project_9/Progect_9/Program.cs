@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project_9
 {
@@ -26,7 +27,7 @@ namespace Project_9
     {
         private Queue<Buyer> _buyers = new Queue<Buyer>();
         private List<Product> _products = new List<Product>();
-        private int _currentId = 1;
+        private int _nextBuyerId = 1;
 
         public void Work()
         {
@@ -57,21 +58,21 @@ namespace Project_9
 
         private void ProcessPayment(Buyer buyer)
         {
-            while (buyer.CanPay() == false)
+            while (buyer.CanAffordBasket() == false)
             {
-                Console.WriteLine("Денег для оплаты недостаточно. Товар возвращается в корзину...");
-                buyer.MoveRandomProductFromBagToBasket();
+                Console.WriteLine("Денег для оплаты недостаточно. Товар исключается из корзины...");
+                buyer.RemoveRandomProductFromBasket();
             }
 
-            buyer.PayForProducts();
-            Console.WriteLine($"Покупатель {buyer.Id} оплатил покупки и уходит. В сумке {buyer.GetBagProductsCount()} товаров.");
+            buyer.PayForBasket();
+            Console.WriteLine($"Покупатель {buyer.Id} оплатил покупки и уходит. В сумке {buyer.BagCount} товаров.");
         }
 
         private void FillBuyersBaskets()
         {
             foreach (Buyer buyer in _buyers)
             {
-                int basketSize = buyer.GetRandomBasketSize();
+                int basketSize = buyer.GenerateRandomBasketSize();
 
                 for (int i = 0; i < basketSize; i++)
                 {
@@ -105,7 +106,7 @@ namespace Project_9
             for (int i = 0; i < buyersInQueue; i++)
             {
                 int money = UserUtils.GenerateRandomNumber(minMoneyBuyer, maxMoneyBuyer);
-                Buyer buyer = new Buyer(_currentId++, money);
+                Buyer buyer = new Buyer(_nextBuyerId++, money);
                 _buyers.Enqueue(buyer);
             }
         }
@@ -138,6 +139,7 @@ namespace Project_9
 
         public int Id { get; private set; }
         public int Money { get; private set; }
+        public int BagCount => _bag.Count;
 
         public void ShowBasket()
         {
@@ -157,24 +159,6 @@ namespace Project_9
             }
         }
 
-        public void ShowBag()
-        {
-            Console.WriteLine($"Товары в сумке (всего {_bag.Count}):");
-
-            if (_bag.Count == 0)
-            {
-                Console.WriteLine("   Сумка пуста");
-            }
-            else
-            {
-                foreach (Product product in _bag)
-                {
-                    Console.Write("   ");
-                    product.ShowInfo();
-                }
-            }
-        }
-
         public void ShowStats()
         {
             Console.WriteLine($"ID посетителя - {Id}, в кошельке - {Money} монет");
@@ -186,7 +170,7 @@ namespace Project_9
             _basket.Add(product);
         }
 
-        public int GetRandomBasketSize()
+        public int GenerateRandomBasketSize()
         {
             int minSize = 5;
             int maxSize = 15;
@@ -206,28 +190,27 @@ namespace Project_9
             return sum;
         }
 
-        public bool CanPay()
+        public bool CanAffordBasket()
         {
             return Money >= GetBasketSum();
         }
 
-        public void MoveRandomProductFromBagToBasket()
+        public void RemoveRandomProductFromBasket()
         {
-            if (_bag.Count == 0)
+            if (_basket.Count == 0)
             {
-                Console.WriteLine("В сумке нет товаров для возврата!");
+                Console.WriteLine("В корзине нет товаров для удаления!");
                 return;
             }
 
-            int productIndex = UserUtils.GenerateRandomNumber(0, _bag.Count);
-            Product product = _bag[productIndex];
-            _bag.RemoveAt(productIndex);
-            _basket.Add(product);
+            int productIndex = UserUtils.GenerateRandomNumber(0, _basket.Count);
+            Product product = _basket[productIndex];
+            _basket.RemoveAt(productIndex);
 
-            Console.WriteLine($"Товар {product.Name} стоимостью {product.Value} возвращен из сумки в корзину");
+            Console.WriteLine($"Товар {product.Name} стоимостью {product.Value} исключен из корзины");
         }
 
-        public void PayForProducts()
+        public void PayForBasket()
         {
             int totalCost = GetBasketSum();
 
@@ -244,11 +227,6 @@ namespace Project_9
             {
                 Console.WriteLine($"Ошибка: недостаточно денег для оплаты! У покупателя {Money}, нужно {totalCost}");
             }
-        }
-
-        public int GetBagProductsCount()
-        {
-            return _bag.Count;
         }
     }
 
