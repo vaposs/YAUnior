@@ -7,155 +7,62 @@ namespace Project_12
     {
         public static void Main(string[] args)
         {
-            new Zoo().Work();
+            AnimalCreator animalCreator = new AnimalCreator();
+            Zoo zoo = new Zoo(animalCreator);
+            zoo.Work();
             Console.ReadKey();
         }
     }
 
-    class UserUtils
+    static class UserUtils
     {
         private static Random s_random = new Random();
 
-        public static int GenerateRandomNumber(int minRandomNumber, int maxRandomNumber)
+        public static int GenerateRandomNumber(int minInclusive, int maxExclusive)
         {
-            return s_random.Next(minRandomNumber, maxRandomNumber);
+            return s_random.Next(minInclusive, maxExclusive);
         }
     }
 
-    class Zoo
+    class Animal
     {
-        private List<Aviary> _aviaries = new List<Aviary>();
-        private bool _isWorking = true;
+        private const string MaleGender = "male";
+        private const string FemaleGender = "female";
 
-        public void Work()
-        {
-            CreateAviaries();
-            ShowMainMenu();
-        }
-
-        private void CreateAviaries()
-        {
-            _aviaries.Add(new Aviary("Хищники"));
-            _aviaries.Add(new Aviary("Травоядные"));
-            _aviaries.Add(new Aviary("Птицы"));
-            _aviaries.Add(new Aviary("Грызуны"));
-            _aviaries.Add(new Aviary("Приматы"));
-        }
-
-        private void ShowMainMenu()
-        {
-            if (_isWorking == false)
-                return;
-
-            Console.Clear();
-            Console.WriteLine("=== Добро пожаловать в зоопарк ===");
-            ShowAviaryMenu();
-
-            Console.WriteLine($"\n0 - выход");
-            Console.Write("Выберите номер вольера: ");
-
-            string input = Console.ReadLine();
-
-            if (int.TryParse(input, out int aviaryNumber))
-            {
-                if (aviaryNumber == 0)
-                {
-                    _isWorking = false;
-                    Console.WriteLine("До свидания!");
-                    return;
-                }
-                else if (aviaryNumber >= 1 && aviaryNumber <= _aviaries.Count)
-                {
-                    ShowAviaryInfo(aviaryNumber - 1);
-                }
-                else
-                {
-                    Console.WriteLine("Вольера с таким номером не существует!");
-                    Console.ReadKey();
-                    ShowMainMenu();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неверный ввод! Введите номер вольера.");
-                Console.ReadKey();
-                ShowMainMenu();
-            }
-        }
-
-        private void ShowAviaryMenu()
-        {
-            Console.WriteLine("\nДоступные вольеры:");
-            for (int i = 0; i < _aviaries.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {_aviaries[i].Name}");
-            }
-        }
-
-        private void ShowAviaryInfo(int aviaryIndex)
-        {
-            Console.Clear();
-            _aviaries[aviaryIndex].ShowInfo();
-            Console.WriteLine("\nНажмите любую клавишу для возврата в меню...");
-            Console.ReadKey();
-            ShowMainMenu();
-        }
-    }
-
-    class Aviary
-    {
-        private List<Animal> _animals = new List<Animal>();
-        private AnimalCreator _animalCreator = new AnimalCreator();
-
-        public string Name { get; private set; }
-
-        public Aviary(string name)
+        public Animal(string name, string voice, string gender, string aviaryType)
         {
             Name = name;
-            CreateAnimals();
+            Voice = voice;
+            Gender = gender;
+            AviaryType = aviaryType;
         }
 
-        private void CreateAnimals()
-        {
-            int animalCount = UserUtils.GenerateRandomNumber(2, 7);
-
-            for (int i = 0; i < animalCount; i++)
-            {
-                _animals.Add(_animalCreator.GetAnimal(Name));
-            }
-        }
+        public string Name { get; private set; }
+        public string Voice { get; private set; }
+        public string Gender { get; private set; }
+        public string AviaryType { get; private set; }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"=== Вольер: {Name} ===");
-            Console.WriteLine($"Количество животных: {_animals.Count}");
-            Console.WriteLine("\nСписок животных:");
-            Console.WriteLine("Имя\t\tПол\t\tЗвук");
-            Console.WriteLine(new string('-', 40));
-
-            foreach (Animal animal in _animals)
-            {
-                animal.ShowInfo();
-            }
-
-            int maleCount = 0;
-            int femaleCount = 0;
-
-            foreach (Animal animal in _animals)
-            {
-                if (animal.Gender == "male")
-                    maleCount++;
-                else
-                    femaleCount++;
-            }
-
-            Console.WriteLine(new string('-', 40));
-            Console.WriteLine($"Самцов: {maleCount}, Самок: {femaleCount}");
+            string genderDisplay = (Gender == MaleGender) ? "Самец" : "Самка";
+            Console.Write($"{Name,-15}");
+            Console.Write($"{genderDisplay,-10}");
+            Console.WriteLine($"{Voice}");
         }
     }
 
     class AnimalCreator
     {
+        private const string AviaryPredators = "Хищники";
+        private const string AviaryHerbivores = "Травоядные";
+        private const string AviaryBirds = "Птицы";
+        private const string AviaryRodents = "Грызуны";
+        private const string AviaryPrimates = "Приматы";
+        private const string UnknownAnimal = "Неизвестное животное";
+        private const string DefaultVoice = "Издает звуки";
+        private const string MaleGender = "male";
+        private const string FemaleGender = "female";
+
         private Dictionary<string, string[]> _animalsByAviary;
         private Dictionary<string, string[]> _voicesByAnimal;
 
@@ -169,11 +76,11 @@ namespace Project_12
         {
             _animalsByAviary = new Dictionary<string, string[]>
             {
-                ["Хищники"] = new string[] { "Лев", "Тигр", "Волк", "Медведь", "Рысь" },
-                ["Травоядные"] = new string[] { "Зебра", "Жираф", "Слон", "Олень", "Антилопа" },
-                ["Птицы"] = new string[] { "Орел", "Попугай", "Сова", "Пингвин", "Фламинго" },
-                ["Грызуны"] = new string[] { "Бобер", "Белка", "Хомяк", "Суслик", "Дикобраз" },
-                ["Приматы"] = new string[] { "Шимпанзе", "Горилла", "Орангутан", "Лемур", "Мартышка" }
+                [AviaryPredators] = new string[] { "Лев", "Тигр", "Волк", "Медведь", "Рысь" },
+                [AviaryHerbivores] = new string[] { "Зебра", "Жираф", "Слон", "Олень", "Антилопа" },
+                [AviaryBirds] = new string[] { "Орел", "Попугай", "Сова", "Пингвин", "Фламинго" },
+                [AviaryRodents] = new string[] { "Бобер", "Белка", "Хомяк", "Суслик", "Дикобраз" },
+                [AviaryPrimates] = new string[] { "Шимпанзе", "Горилла", "Орангутан", "Лемур", "Мартышка" }
             };
         }
 
@@ -209,64 +116,201 @@ namespace Project_12
             };
         }
 
-        public Animal GetAnimal(string aviaryName)
+        public Animal CreateAnimal(string aviaryName)
         {
-            string animalName = GetRandomAnimalName(aviaryName);
-            string voice = GetRandomVoice(animalName);
-            string gender = GetRandomGender();
+            string animalName = GenerateRandomAnimalName(aviaryName);
+            string voice = GenerateRandomVoice(animalName);
+            string gender = GenerateRandomGender();
 
             return new Animal(animalName, voice, gender, aviaryName);
         }
 
-        private string GetRandomAnimalName(string aviaryName)
+        private string GenerateRandomAnimalName(string aviaryName)
         {
-            if (_animalsByAviary.ContainsKey(aviaryName))
+            if (_animalsByAviary.TryGetValue(aviaryName, out string[] animals))
             {
-                string[] animals = _animalsByAviary[aviaryName];
-                return animals[UserUtils.GenerateRandomNumber(0, animals.Length)];
+                int randomIndex = UserUtils.GenerateRandomNumber(0, animals.Length);
+                return animals[randomIndex];
             }
-
-            return "Неизвестное животное";
+            return UnknownAnimal;
         }
 
-        private string GetRandomVoice(string animalName)
+        private string GenerateRandomVoice(string animalName)
         {
-            if (_voicesByAnimal.ContainsKey(animalName))
+            if (_voicesByAnimal.TryGetValue(animalName, out string[] voices))
             {
-                string[] voices = _voicesByAnimal[animalName];
-                return voices[UserUtils.GenerateRandomNumber(0, voices.Length)];
+                int randomIndex = UserUtils.GenerateRandomNumber(0, voices.Length);
+                return voices[randomIndex];
             }
-
-            return "Издает звуки";
+            return DefaultVoice;
         }
 
-        private string GetRandomGender()
+        private string GenerateRandomGender()
         {
-            string[] genders = new string[] { "male", "female" };
-            return genders[UserUtils.GenerateRandomNumber(0, genders.Length)];
+            string[] genders = new string[] { MaleGender, FemaleGender };
+            int randomIndex = UserUtils.GenerateRandomNumber(0, genders.Length);
+            return genders[randomIndex];
         }
     }
 
-    class Animal
+    class Aviary
     {
-        public Animal(string name, string voice, string gender, string type)
+        private const int MinAnimalsInAviary = 2;
+        private const int MaxAnimalsInAviary = 7; 
+
+        private List<Animal> _animals;
+
+        public Aviary(string name, List<Animal> animals)
         {
             Name = name;
-            Voice = voice;
-            Gender = gender;
-            Type = type;
+            _animals = animals ?? new List<Animal>();
         }
 
         public string Name { get; private set; }
-        public string Voice { get; private set; }
-        public string Gender { get; private set; }
-        public string Type { get; private set; }
+        public int AnimalCount => _animals.Count;
 
         public void ShowInfo()
         {
-            Console.Write($"{Name,-15}");
-            Console.Write($"{(Gender == "male" ? "Самец" : "Самка"),-10}");
-            Console.WriteLine($"{Voice}");
+            Console.WriteLine($"=== Вольер: {Name} ===");
+            Console.WriteLine($"Количество животных: {AnimalCount}");
+
+            if (AnimalCount == 0)
+            {
+                Console.WriteLine("В вольере пока нет животных.");
+                return;
+            }
+
+            Console.WriteLine("\nСписок животных:");
+            Console.WriteLine("Имя\t\tПол\t\tЗвук");
+            Console.WriteLine(new string('-', 40));
+
+            foreach (Animal animal in _animals)
+            {
+                animal.ShowInfo();
+            }
+
+            int maleCount = 0;
+            int femaleCount = 0;
+
+            foreach (Animal animal in _animals)
+            {
+                if (animal.Gender == "male")
+                    maleCount++;
+                else
+                    femaleCount++;
+            }
+
+            Console.WriteLine(new string('-', 40));
+            Console.WriteLine($"Самцов: {maleCount}, Самок: {femaleCount}");
+        }
+    }
+
+    class Zoo
+    {
+        private const int ExitCommandNumber = 0;
+        private const string ExitCommandString = "0";
+
+        private List<Aviary> _aviaries;
+        private AnimalCreator _animalCreator;
+        private bool _isWorking = true;
+        private int _minCountAnimal = 2;
+        private int _maxCountAnimal = 7;
+
+        public Zoo(AnimalCreator animalCreator)
+        {
+            _animalCreator = animalCreator;
+            _aviaries = new List<Aviary>();
+        }
+
+        public void Work()
+        {
+            CreateAviariesWithAnimals();
+            ShowMainMenu();
+        }
+
+        private void CreateAviariesWithAnimals()
+        {
+            string[] aviaryNames = { "Хищники", "Травоядные", "Птицы", "Грызуны", "Приматы" };
+
+            foreach (string name in aviaryNames)
+            {
+                List<Animal> animalsForAviary = GenerateAnimalsForAviary(name);
+                Aviary newAviary = new Aviary(name, animalsForAviary);
+                _aviaries.Add(newAviary);
+            }
+        }
+
+        private List<Animal> GenerateAnimalsForAviary(string aviaryName)
+        {
+            List<Animal> animals = new List<Animal>();
+            int animalCount = UserUtils.GenerateRandomNumber(_minCountAnimal, _maxCountAnimal);
+
+            for (int i = 0; i < animalCount; i++)
+            {
+                Animal newAnimal = _animalCreator.CreateAnimal(aviaryName);
+                animals.Add(newAnimal);
+            }
+            return animals;
+        }
+
+        private void ShowMainMenu()
+        {
+            if (_isWorking == false)
+                return;
+
+            Console.Clear();
+            Console.WriteLine("=== Добро пожаловать в зоопарк ===");
+            ShowAviaryMenu();
+
+            Console.WriteLine($"\n{ExitCommandNumber} - выход");
+            Console.Write("Выберите номер вольера: ");
+
+            string input = Console.ReadLine();
+
+            if (input == ExitCommandString)
+            {
+                _isWorking = false;
+                Console.WriteLine("До свидания!");
+                return;
+            }
+
+            if (int.TryParse(input, out int aviaryNumber))
+            {
+                if (aviaryNumber >= 1 && aviaryNumber <= _aviaries.Count)
+                {
+                    ShowAviaryInfo(aviaryNumber - 1);
+                }
+                else
+                {
+                    Console.WriteLine($"Вольера с номером {aviaryNumber} не существует!");
+                    Console.ReadKey();
+                    ShowMainMenu();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Неверный ввод! Введите номер вольера.");
+                Console.ReadKey();
+                ShowMainMenu();
+            }
+        }
+
+        private void ShowAviaryMenu()
+        {
+            Console.WriteLine("\nДоступные вольеры:");
+            for (int i = 0; i < _aviaries.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {_aviaries[i].Name}");
+            }
+        }
+
+        private void ShowAviaryInfo(int aviaryIndex)
+        {
+            Console.Clear();
+            _aviaries[aviaryIndex].ShowInfo();
+            Console.WriteLine("\nНажмите любую клавишу для возврата в меню...");
+            Console.ReadKey();
+            ShowMainMenu();
         }
     }
 }
