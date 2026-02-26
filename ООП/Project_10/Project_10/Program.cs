@@ -13,31 +13,29 @@ namespace Project_10
         }
     }
 
-    class War
+    static class UserUtils
+    {
+        private static Random s_random = new Random();
+
+        public static int GenerateRandomNumber(int min, int max)
+        {
+            return s_random.Next(min, max);
+        }
+    }
+
+    class SquadFactory
     {
         private const int MinFighterType = 1;
         private const int MaxFighterType = 4;
 
-        private List<Fighter> _fighterTemplates = new List<Fighter>();
-        private List<Squad> _squads = new List<Squad>();
+        private List<Fighter> _fighterTemplates;
 
-        public War()
+        public SquadFactory(List<Fighter> fighterTemplates)
         {
-            _fighterTemplates.Add(new RegularSoldier("Обычный солдат", 100, 15, 5));
-            _fighterTemplates.Add(new Sniper("Снайпер", 80, 30, 3));
-            _fighterTemplates.Add(new AreaAttacker("Гранатометчик", 90, 12, 7));
-            _fighterTemplates.Add(new RandomAreaAttacker("Пулеметчик", 110, 10, 10));
+            _fighterTemplates = fighterTemplates;
         }
 
-        public void Begin()
-        {
-            Console.WriteLine("Добро пожаловать в симулятор боя!");
-            _squads.Add(CreateSquads());
-            _squads.Add(CreateSquads());
-            Battle();
-        }
-
-        private Squad CreateSquads()
+        public Squad CreateSquad()
         {
             Console.WriteLine($"\nСоздание взвода:");
             Console.Write("Введите название взвода: ");
@@ -67,6 +65,66 @@ namespace Project_10
             }
 
             return squad;
+        }
+
+        private int GetNumber(int minValue = 0, int maxValue = int.MaxValue)
+        {
+            int number;
+            bool isInputCorrect = false;
+            string input;
+
+            do
+            {
+                input = Console.ReadLine();
+
+                if (int.TryParse(input, out number))
+                {
+                    if (number >= minValue && number <= maxValue)
+                    {
+                        isInputCorrect = true;
+                    }
+                    else
+                    {
+                        Console.Write($"Число должно быть от {minValue} до {maxValue}. Повторите ввод: ");
+                    }
+                }
+                else
+                {
+                    Console.Write("Неверный ввод. Введите число: ");
+                }
+            }
+            while (isInputCorrect == false);
+
+            return number;
+        }
+    }
+
+    class War
+    {
+        private List<Fighter> _fighterTemplates = new List<Fighter>();
+        private List<Squad> _squads = new List<Squad>();
+        private SquadFactory _squadFactory;
+
+        public War()
+        {
+            _fighterTemplates.Add(new RegularSoldier("Обычный солдат", 100, 15, 5));
+            _fighterTemplates.Add(new Sniper("Снайпер", 80, 30, 3));
+            _fighterTemplates.Add(new AreaAttacker("Гранатометчик", 90, 12, 7));
+            _fighterTemplates.Add(new RandomAreaAttacker("Пулеметчик", 110, 10, 10));
+
+            _squadFactory = new SquadFactory(_fighterTemplates);
+        }
+
+        public void Begin()
+        {
+            Console.WriteLine("Добро пожаловать в симулятор боя!");
+
+            for (int i = 0; i < 2; i++)
+            {
+                _squads.Add(_squadFactory.CreateSquad());
+            }
+
+            Battle();
         }
 
         private void Battle()
@@ -109,49 +167,18 @@ namespace Project_10
             squad1.ShowAliveFighters();
             squad2.ShowAliveFighters();
         }
-
-        private int GetNumber(int minValue = 0, int maxValue = int.MaxValue)
-        {
-            int number;
-            bool isInputCorrect = false;
-            string input;
-
-            do
-            {
-                input = Console.ReadLine();
-
-                if (int.TryParse(input, out number))
-                {
-                    if (number >= minValue && number <= maxValue)
-                    {
-                        isInputCorrect = true;
-                    }
-                    else
-                    {
-                        Console.Write($"Число должно быть от {minValue} до {maxValue}. Повторите ввод: ");
-                    }
-                }
-                else
-                {
-                    Console.Write("Неверный ввод. Введите число: ");
-                }
-            }
-            while (isInputCorrect == false);
-
-            return number;
-        }
     }
 
     class Squad
     {
         private List<Fighter> _fighters = new List<Fighter>();
 
-        public string Name { get; }
-
         public Squad(string name)
         {
             Name = name;
         }
+
+        public string Name { get; }
 
         public void AddFighter(Fighter fighter)
         {
@@ -217,55 +244,54 @@ namespace Project_10
 
     abstract class Fighter
     {
-        protected string _name;
-        protected int _health;
-        protected int _damage;
-        protected int _armor;
-        protected string _type;
-        protected Random _random = new Random();
+        protected string _Name;
+        protected string _Type;
+        protected int _Health;
+        protected int _Damage;
+        protected int _Armor;
+
+        public Fighter(string name, string type, int health, int damage, int armor)
+        {
+            _Name = name;
+            _Type = type;
+            _Health = health;
+            _Damage = damage;
+            _Armor = armor;
+        }
 
         public string Name
         {
-            get { return _name; }
+            get { return _Name; }
         }
 
         public string Type
         {
-            get { return _type; }
+            get { return _Type; }
         }
 
         public int Health
         {
-            get { return _health; }
-        }
-
-        protected Fighter(string name, string type, int health, int damage, int armor)
-        {
-            _name = name;
-            _type = type;
-            _health = health;
-            _damage = damage;
-            _armor = armor;
+            get { return _Health; }
         }
 
         public void SetName(string name)
         {
-            _name = name;
+            _Name = name;
         }
 
         public virtual void TakeDamage(int damage)
         {
-            int actualDamage = Math.Max(1, damage - _armor);
-            int healthAfterDamage = _health - actualDamage;
+            int actualDamage = Math.Max(1, damage - _Armor);
+            int healthAfterDamage = _Health - actualDamage;
 
             if (healthAfterDamage < 0)
             {
                 healthAfterDamage = 0;
             }
 
-            _health = healthAfterDamage;
+            _Health = healthAfterDamage;
 
-            Console.WriteLine($"{_name} получил {actualDamage} урона. Осталось здоровья: {_health}");
+            Console.WriteLine($"{_Name} получил {actualDamage} урона. Осталось здоровья: {_Health}");
         }
 
         public abstract void Attack(List<Fighter> enemyFighters);
@@ -280,7 +306,7 @@ namespace Project_10
         }
 
         private RegularSoldier(RegularSoldier soldier)
-            : this(soldier.Name, soldier.Health, soldier._damage, soldier._armor)
+            : this(soldier.Name, soldier.Health, soldier._Damage, soldier._Armor)
         {
         }
 
@@ -291,10 +317,11 @@ namespace Project_10
                 return;
             }
 
-            Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
+            int index = UserUtils.GenerateRandomNumber(0, enemyFighters.Count);
+            Fighter target = enemyFighters[index];
 
             Console.WriteLine($"{Name} атакует {target.Name}");
-            target.TakeDamage(_damage);
+            target.TakeDamage(_Damage);
         }
 
         public override Fighter Clone()
@@ -313,7 +340,7 @@ namespace Project_10
         }
 
         private Sniper(Sniper sniper)
-            : this(sniper.Name, sniper.Health, sniper._damage, sniper._armor)
+            : this(sniper.Name, sniper.Health, sniper._Damage, sniper._Armor)
         {
         }
 
@@ -324,9 +351,10 @@ namespace Project_10
                 return;
             }
 
-            Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
+            int index = UserUtils.GenerateRandomNumber(0, enemyFighters.Count);
+            Fighter target = enemyFighters[index];
 
-            int actualDamage = (int)(_damage * DamageMultiplier);
+            int actualDamage = (int)(_Damage * DamageMultiplier);
             Console.WriteLine($"{Name} (снайпер) прицельно стреляет в {target.Name} с уроном {actualDamage}");
             target.TakeDamage(actualDamage);
         }
@@ -347,7 +375,7 @@ namespace Project_10
         }
 
         private AreaAttacker(AreaAttacker attacker)
-            : this(attacker.Name, attacker.Health, attacker._damage, attacker._armor)
+            : this(attacker.Name, attacker.Health, attacker._Damage, attacker._Armor)
         {
         }
 
@@ -368,7 +396,7 @@ namespace Project_10
 
                 do
                 {
-                    randomIndex = _random.Next(enemyFighters.Count);
+                    randomIndex = UserUtils.GenerateRandomNumber(0, enemyFighters.Count);
                 }
                 while (usedIndexes.Contains(randomIndex));
 
@@ -382,7 +410,7 @@ namespace Project_10
             {
                 Fighter target = targets[i];
                 Console.WriteLine($"  -> {target.Name}");
-                target.TakeDamage(_damage);
+                target.TakeDamage(_Damage);
             }
         }
 
@@ -403,7 +431,7 @@ namespace Project_10
         }
 
         private RandomAreaAttacker(RandomAreaAttacker attacker)
-            : this(attacker.Name, attacker.Health, attacker._damage, attacker._armor)
+            : this(attacker.Name, attacker.Health, attacker._Damage, attacker._Armor)
         {
         }
 
@@ -414,7 +442,7 @@ namespace Project_10
                 return;
             }
 
-            int attacks = _random.Next(MinTargets, MaxTargets + 1);
+            int attacks = UserUtils.GenerateRandomNumber(MinTargets, MaxTargets + 1);
 
             Console.WriteLine($"{Name} (пулеметчик) делает {attacks} выстрелов очередью!");
 
@@ -425,9 +453,10 @@ namespace Project_10
                     break;
                 }
 
-                Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
+                int index = UserUtils.GenerateRandomNumber(0, enemyFighters.Count);
+                Fighter target = enemyFighters[index];
                 Console.WriteLine($"  Выстрел {i + 1} -> {target.Name}");
-                target.TakeDamage(_damage);
+                target.TakeDamage(_Damage);
             }
         }
 
