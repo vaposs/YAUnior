@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_12
@@ -8,7 +8,6 @@ namespace Project_12
         public static void Main(string[] args)
         {
             new Zoo().Work();
-
             Console.ReadKey();
         }
     }
@@ -25,210 +24,226 @@ namespace Project_12
 
     class Zoo
     {
-        private Aviary _aviary = new Aviary();
-        private int _numberAviary = 0;
-        private int _firstElementDictionary = 1;
-        private Dictionary<int, List<Animal>> _animalsDictionary = new Dictionary<int, List<Animal>>();
+        private List<Aviary> _aviaries = new List<Aviary>();
+        private bool _isWorking = true;
 
         public void Work()
         {
-            const ConsoleKey KeyExit = ConsoleKey.Escape;
-            const ConsoleKey MoveUpCommand = ConsoleKey.UpArrow;
-            const ConsoleKey MoveDownCommand = ConsoleKey.DownArrow;
+            CreateAviaries();
+            ShowMainMenu();
+        }
 
-            ConsoleKey move;
-            bool work = true;
+        private void CreateAviaries()
+        {
+            _aviaries.Add(new Aviary("Хищники"));
+            _aviaries.Add(new Aviary("Травоядные"));
+            _aviaries.Add(new Aviary("Птицы"));
+            _aviaries.Add(new Aviary("Грызуны"));
+            _aviaries.Add(new Aviary("Приматы"));
+        }
 
-            CreateAnimalDictionary();
+        private void ShowMainMenu()
+        {
+            if (_isWorking == false)
+                return;
 
-            while (work)
+            Console.Clear();
+            Console.WriteLine("=== Добро пожаловать в зоопарк ===");
+            ShowAviaryMenu();
+
+            Console.WriteLine($"\n0 - выход");
+            Console.Write("Выберите номер вольера: ");
+
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int aviaryNumber))
             {
-                Console.WriteLine("Для передвижения в зоопарке стрелки верх(⇧) и вниз(⇩), для выхода нажмите ESC:");
-
-                move = MovingZoo();
-                Console.Clear();
-
-                switch (move)
+                if (aviaryNumber == 0)
                 {
-                    case MoveUpCommand:
-                        PressUpArrow();
-                        break;
-                    case MoveDownCommand:
-                        PressDownArrow();
-                        break;
-                    case KeyExit:
-                        work = false;
-                        break;
-                    default:
-                        Console.WriteLine("неверная кнопка, повторите ввод");
-                        break;
+                    _isWorking = false;
+                    Console.WriteLine("До свидания!");
+                    return;
+                }
+                else if (aviaryNumber >= 1 && aviaryNumber <= _aviaries.Count)
+                {
+                    ShowAviaryInfo(aviaryNumber - 1);
+                }
+                else
+                {
+                    Console.WriteLine("Вольера с таким номером не существует!");
+                    Console.ReadKey();
+                    ShowMainMenu();
                 }
             }
-        }
-
-        private void CreateAnimalDictionary()
-        {
-            _animalsDictionary.Add(1, _aviary.CreateAnimalsList());
-            _animalsDictionary.Add(2, _aviary.CreateAnimalsList());
-            _animalsDictionary.Add(3, _aviary.CreateAnimalsList());
-            _animalsDictionary.Add(4, _aviary.CreateAnimalsList());
-            _animalsDictionary.Add(5, _aviary.CreateAnimalsList());
-        }
-
-        private ConsoleKey MovingZoo()
-        {
-            ConsoleKey consoleKey;
-
-            return consoleKey = Console.ReadKey().Key;
-        }
-
-        private void ChooseAviary(int numberAviary)
-        {
-            List<Animal> animals;
-            _animalsDictionary.TryGetValue(numberAviary, out animals);
-            ShowAnimal(animals);
-        }
-
-        private void ShowAnimal(List<Animal> animals)
-        {
-            Console.WriteLine($"вы подошли к вольеру с {GetNameAviary(animals)}, здесь {animals.Count} животных");
-
-            foreach (Animal animal in animals)
+            else
             {
-                animal.ShowInfo();
+                Console.WriteLine("Неверный ввод! Введите номер вольера.");
+                Console.ReadKey();
+                ShowMainMenu();
             }
         }
 
-        private string GetNameAviary(List<Animal> animals)
+        private void ShowAviaryMenu()
         {
-            return(animals[0].Type);
-        }
-
-        private void ChangeNumberAviary()
-        {
-            if(_numberAviary < _firstElementDictionary)
+            Console.WriteLine("\nДоступные вольеры:");
+            for (int i = 0; i < _aviaries.Count; i++)
             {
-                _numberAviary = _animalsDictionary.Count;
-            }
-            else if(_numberAviary > _animalsDictionary.Count)
-            {
-                _numberAviary = _firstElementDictionary;
+                Console.WriteLine($"{i + 1}. {_aviaries[i].Name}");
             }
         }
 
-        private void PressUpArrow()
+        private void ShowAviaryInfo(int aviaryIndex)
         {
-            _numberAviary--;
-            ChangeNumberAviary();
-            ChooseAviary(_numberAviary);
-        }
-
-        private void PressDownArrow()
-        {
-            _numberAviary++;
-            ChangeNumberAviary();
-            ChooseAviary(_numberAviary);
+            Console.Clear();
+            _aviaries[aviaryIndex].ShowInfo();
+            Console.WriteLine("\nНажмите любую клавишу для возврата в меню...");
+            Console.ReadKey();
+            ShowMainMenu();
         }
     }
 
     class Aviary
     {
-        private int _animalInAviary = 4;
+        private List<Animal> _animals = new List<Animal>();
         private AnimalCreator _animalCreator = new AnimalCreator();
 
-        public List<Animal> CreateAnimalsList()
-        {
-            List<Animal> animals = new List<Animal>();
+        public string Name { get; private set; }
 
-            for (int i = 0; i < _animalInAviary; i++)
+        public Aviary(string name)
+        {
+            Name = name;
+            CreateAnimals();
+        }
+
+        private void CreateAnimals()
+        {
+            int animalCount = UserUtils.GenerateRandomNumber(2, 7);
+
+            for (int i = 0; i < animalCount; i++)
             {
-                animals.Add(_animalCreator.GetAnimal());
+                _animals.Add(_animalCreator.GetAnimal(Name));
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"=== Вольер: {Name} ===");
+            Console.WriteLine($"Количество животных: {_animals.Count}");
+            Console.WriteLine("\nСписок животных:");
+            Console.WriteLine("Имя\t\tПол\t\tЗвук");
+            Console.WriteLine(new string('-', 40));
+
+            foreach (Animal animal in _animals)
+            {
+                animal.ShowInfo();
             }
 
-            return animals;
+            int maleCount = 0;
+            int femaleCount = 0;
+
+            foreach (Animal animal in _animals)
+            {
+                if (animal.Gender == "male")
+                    maleCount++;
+                else
+                    femaleCount++;
+            }
+
+            Console.WriteLine(new string('-', 40));
+            Console.WriteLine($"Самцов: {maleCount}, Самок: {femaleCount}");
         }
     }
 
     class AnimalCreator
     {
-        const string _FirstAviary = "Вольер_1";
-        const string _SecondAviary = "Вольер_2";
-        const string _ThirdAviary = "Вольер_3";
-        const string _FourthAviary = "Вольер_4";
-        const string _FifthAviary = "Вольер_5";
+        private Dictionary<string, string[]> _animalsByAviary;
+        private Dictionary<string, string[]> _voicesByAnimal;
 
-        private int _firstType = 4;
-        private int _secondType = 8;
-        private int _thirdType = 12;
-        private int _fourthType = 16;
-
-        private int _indexNumber = 1;
-        private int _randomNumber;
-
-        public Animal GetAnimal()
+        public AnimalCreator()
         {
-            _indexNumber++;
-            return new Animal(GetName(), GetAnimalVoice(), GetGender(), GetType());
+            InitializeAnimals();
+            InitializeVoices();
         }
 
-        private string GetName()
+        private void InitializeAnimals()
         {
-            string[] nameAnimal = new string[]
+            _animalsByAviary = new Dictionary<string, string[]>
             {
-                "петух", "курица", "утка","соловей",
-                "корова", "мыш", "собака", "кот",
-                "лев", "волк", "свинья", "коза",
-                "барашек", "сова", "уж", "осел",
-                "павлин", "ежик", "лягушка", "лошадь"
+                ["Хищники"] = new string[] { "Лев", "Тигр", "Волк", "Медведь", "Рысь" },
+                ["Травоядные"] = new string[] { "Зебра", "Жираф", "Слон", "Олень", "Антилопа" },
+                ["Птицы"] = new string[] { "Орел", "Попугай", "Сова", "Пингвин", "Фламинго" },
+                ["Грызуны"] = new string[] { "Бобер", "Белка", "Хомяк", "Суслик", "Дикобраз" },
+                ["Приматы"] = new string[] { "Шимпанзе", "Горилла", "Орангутан", "Лемур", "Мартышка" }
             };
-
-            _randomNumber = UserUtils.GenerateRandomNumber(0, nameAnimal.Length);
-
-            return nameAnimal[_randomNumber];
         }
 
-        private string GetAnimalVoice()
+        private void InitializeVoices()
         {
-            string[] voice = new string[]
+            _voicesByAnimal = new Dictionary<string, string[]>
             {
-                "кукареку", "ко-ко-ко", "кря-кря", "уиииии",
-                "мууу", "пи-пи", "гав-гав", "мяуууу",
-                "агрррр", "авууууу", "хрю-хрю", "меееее",
-                "бееее", "ухуууу", "шшшшшш", "иааа",
-                 "ааааа", "фыр-фыр", "ква-ква", "иго-го"
+                ["Лев"] = new string[] { "РРРРР", "Рычит", "Грозно рычит" },
+                ["Тигр"] = new string[] { "Р-Р-Р", "Тигриный рык", "Рычит" },
+                ["Волк"] = new string[] { "Аууууу", "Воет", "У-у-у" },
+                ["Медведь"] = new string[] { "У-у-у", "Ревёт", "Рычит" },
+                ["Рысь"] = new string[] { "Мурлыкает", "Фыркает", "Рычит" },
+                ["Зебра"] = new string[] { "И-го-го", "Ржёт", "Фыркает" },
+                ["Жираф"] = new string[] { "Мычит", "Издает низкие звуки", "Фыркает" },
+                ["Слон"] = new string[] { "Ту-у-у", "Трубит", "У-у-у" },
+                ["Олень"] = new string[] { "Мекает", "Блеет", "Ревёт" },
+                ["Антилопа"] = new string[] { "Фыркает", "Издает звуки тревоги", "Мычит" },
+                ["Орел"] = new string[] { "Клекчет", "Криии", "Клекот" },
+                ["Попугай"] = new string[] { "Привет!", "Караул!", "Повторяет" },
+                ["Сова"] = new string[] { "Уху-ху", "Ухает", "Х-х-х" },
+                ["Пингвин"] = new string[] { "Кричит", "Издает звуки", "Гогочет" },
+                ["Фламинго"] = new string[] { "Курлычет", "Издает звуки", "Кричит" },
+                ["Бобер"] = new string[] { "Стучит зубами", "Пищит", "Фыркает" },
+                ["Белка"] = new string[] { "Цок-цок", "Пищит", "Цокает" },
+                ["Хомяк"] = new string[] { "Пищит", "Шуршит", "Фыркает" },
+                ["Суслик"] = new string[] { "Свистит", "Пищит", "Цокает" },
+                ["Дикобраз"] = new string[] { "Фыркает", "Шуршит иголками", "Пыхтит" },
+                ["Шимпанзе"] = new string[] { "У-у-у-а-а-а", "Кричит", "Ухает" },
+                ["Горилла"] = new string[] { "Бьет себя в грудь", "Рычит", "У-у-у" },
+                ["Орангутан"] = new string[] { "Издает звуки", "Кричит", "Хрюкает" },
+                ["Лемур"] = new string[] { "Кричит", "Мурлыкает", "Издает звуки" },
+                ["Мартышка"] = new string[] { "И-и-и", "Визжит", "Кричит" }
             };
-            return voice[_randomNumber];
         }
 
-        private string GetGender()
+        public Animal GetAnimal(string aviaryName)
         {
-            string[] gender = new string[] { "male", "female" };
+            string animalName = GetRandomAnimalName(aviaryName);
+            string voice = GetRandomVoice(animalName);
+            string gender = GetRandomGender();
 
-            return gender[UserUtils.GenerateRandomNumber(0, gender.Length)];
+            return new Animal(animalName, voice, gender, aviaryName);
         }
 
-        private string GetType()
+        private string GetRandomAnimalName(string aviaryName)
         {
-            if (_indexNumber <= _firstType)
+            if (_animalsByAviary.ContainsKey(aviaryName))
             {
-                return _FirstAviary;
+                string[] animals = _animalsByAviary[aviaryName];
+                return animals[UserUtils.GenerateRandomNumber(0, animals.Length)];
             }
-            else if (_indexNumber > _firstType && _indexNumber <= _secondType)
+
+            return "Неизвестное животное";
+        }
+
+        private string GetRandomVoice(string animalName)
+        {
+            if (_voicesByAnimal.ContainsKey(animalName))
             {
-                return _SecondAviary;
+                string[] voices = _voicesByAnimal[animalName];
+                return voices[UserUtils.GenerateRandomNumber(0, voices.Length)];
             }
-            else if (_indexNumber > _secondType && _indexNumber <= _thirdType)
-            {
-                return _ThirdAviary;
-            }
-            else if (_indexNumber > _thirdType && _indexNumber <= _fourthType)
-            {
-                return _FourthAviary;
-            }
-            else
-            {
-                return _FifthAviary;
-            }
+
+            return "Издает звуки";
+        }
+
+        private string GetRandomGender()
+        {
+            string[] genders = new string[] { "male", "female" };
+            return genders[UserUtils.GenerateRandomNumber(0, genders.Length)];
         }
     }
 
@@ -249,38 +264,9 @@ namespace Project_12
 
         public void ShowInfo()
         {
-            Console.Write(Name + "\t");
-            Console.Write(Gender + "\t");
-            Console.Write(Voice + "\t");
-            Console.WriteLine(Type);
+            Console.Write($"{Name,-15}");
+            Console.Write($"{(Gender == "male" ? "Самец" : "Самка"),-10}");
+            Console.WriteLine($"{Voice}");
         }
     }
 }
-
-//5) Вольер может содержать список животных, которые в нем находятся.
-//Но создавать животных для вольера - это не его ответственность.
-//Это может сделать или Зоопарк или отдельный класс, генерирующий животных для вольера.
-
-
-//1.В одном вольере живут животные одного типа.
-//
-//2. GetName(), GetAnimalVoice(), GetGender(), GetType() - если вызвать методы
-//в другом прядке - все сломается, это плохо.
-//
-//3. if (_indexNumber <= _firstType) { return _FirstAviary; }
-//else if (_indexNumber > _firstType && _indexNumber <= _secondType)
-//{ return _SecondAviary; } else if (_indexNumber > _secondType && _indexNumber <= _thirdType)
-//{ -это решение абсолютно нерасширяемо.
-//Зачем вообще нужны такие имена с такими сложностями? Вы с тем же успехом может просто
-//при выводе циклом перебрать список вольеров и приписывать к ним номер итерации.
-//
-//4.Логическая связь элементов странная.Логичнее сделать так.Зоопарк хранит список вольеров
-//, а вольер хранит список животных. И не нахо извращений со словарями.
-//Когда вам приходится коллекции в коллекциях в коллекциях создавать,
-//это уже звоночек, что есть лажа с архитектурой классов.
-//А у вас вольер, почему-то на себя функции фабрики забрал
-//
-//5.На самом деле я бы еще сильнее упростил все.
-//В создателе животных, вместо пляски с бубнов вокруг индексов проще на старте
-//создать спиок шаблонов животных, и потом просто копировать их таким
-//образом https://metanit.com/sharp/patterns/2.4.php
