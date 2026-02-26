@@ -15,6 +15,9 @@ namespace Project_10
 
     class War
     {
+        private const int MinFighterType = 1;
+        private const int MaxFighterType = 4;
+
         private List<Fighter> _fighterTemplates = new List<Fighter>();
         private List<Squad> _squads = new List<Squad>();
 
@@ -29,42 +32,41 @@ namespace Project_10
         public void Begin()
         {
             Console.WriteLine("Добро пожаловать в симулятор боя!");
-            CreateTwoSquads();
+            _squads.Add(CreateSquads());
+            _squads.Add(CreateSquads());
             Battle();
         }
 
-        private void CreateTwoSquads()
+        private Squad CreateSquads()
         {
-            for (int i = 0; i < 2; i++)
+            Console.WriteLine($"\nСоздание взвода:");
+            Console.Write("Введите название взвода: ");
+            string squadName = Console.ReadLine();
+
+            Console.Write("Введите количество бойцов во взводе: ");
+            int squadSize = GetNumber();
+
+            Squad squad = new Squad(squadName);
+
+            for (int j = 0; j < squadSize; j++)
             {
-                Console.WriteLine($"\nСоздание {i + 1}-го взвода:");
-                Console.Write("Введите название взвода: ");
-                string squadName = Console.ReadLine();
+                Console.WriteLine($"\nВыберите тип бойца {j + 1}:");
+                Console.WriteLine($"{MinFighterType} - Обычный солдат");
+                Console.WriteLine($"{MinFighterType + 1} - Снайпер (атакует одного с множителем урона)");
+                Console.WriteLine($"{MinFighterType + 2} - Гранатометчик (атакует нескольких без повторений)");
+                Console.WriteLine($"{MaxFighterType} - Пулеметчик (атакует нескольких с возможными повторениями)");
 
-                Console.Write("Введите количество бойцов во взводе: ");
-                int squadSize = GetNumber();
+                int choice = GetNumber(MinFighterType, MaxFighterType);
+                Fighter fighter = _fighterTemplates[choice - 1].Clone();
 
-                Squad squad = new Squad(squadName);
+                Console.Write("Введите имя бойца: ");
+                string fighterName = Console.ReadLine();
+                fighter.SetName(fighterName);
 
-                for (int j = 0; j < squadSize; j++)
-                {
-                    Console.WriteLine($"\nВыберите тип бойца {j + 1}:");
-                    Console.WriteLine("1 - Обычный солдат");
-                    Console.WriteLine("2 - Снайпер (атакует одного с множителем урона)");
-                    Console.WriteLine("3 - Гранатометчик (атакует нескольких без повторений)");
-                    Console.WriteLine("4 - Пулеметчик (атакует нескольких с возможными повторениями)");
-
-                    int choice = GetNumber(1, 4);
-                    Fighter fighter = _fighterTemplates[choice - 1].Clone();
-
-                    Console.Write("Введите имя бойца: ");
-                    fighter.Name = Console.ReadLine();
-
-                    squad.AddFighter(fighter);
-                }
-
-                _squads.Add(squad);
+                squad.AddFighter(fighter);
             }
+
+            return squad;
         }
 
         private void Battle()
@@ -80,8 +82,8 @@ namespace Project_10
                 Console.WriteLine($"{squad1.Name}: {squad1.GetAliveCount()} бойцов");
                 Console.WriteLine($"{squad2.Name}: {squad2.GetAliveCount()} бойцов");
 
-                squad1.Attack(squad2);
-                squad2.Attack(squad1);
+                squad1.Attack(squad2.GetAliveFighters());
+                squad2.Attack(squad1.GetAliveFighters());
                 squad1.RemoveDeadFighters();
                 squad2.RemoveDeadFighters();
 
@@ -104,7 +106,6 @@ namespace Project_10
             }
 
             Console.WriteLine("\nВыжившие бойцы:");
-
             squad1.ShowAliveFighters();
             squad2.ShowAliveFighters();
         }
@@ -159,38 +160,40 @@ namespace Project_10
 
         public bool HasAliveFighters()
         {
-            return _fighters.Any(f => f.Health > 0);
+            return _fighters.Any(fighter => fighter.Health > 0);
         }
 
         public int GetAliveCount()
         {
-            return _fighters.Count(f => f.Health > 0);
+            return _fighters.Count(fighter => fighter.Health > 0);
         }
 
         public List<Fighter> GetAliveFighters()
         {
-            return _fighters.Where(f => f.Health > 0).ToList();
+            return _fighters.Where(fighter => fighter.Health > 0).ToList();
         }
 
-        public void Attack(Squad enemySquad)
+        public void Attack(List<Fighter> enemyFighters)
         {
             List<Fighter> aliveFighters = GetAliveFighters();
-            List<Fighter> enemyAliveFighters = enemySquad.GetAliveFighters();
 
-            if (enemyAliveFighters.Count == 0) return;
+            if (enemyFighters.Count == 0)
+            {
+                return;
+            }
 
             foreach (Fighter fighter in aliveFighters)
             {
-                if (enemySquad.GetAliveCount() != 0)
+                if (enemyFighters.Count != 0)
                 {
-                    fighter.UseAbility(enemySquad);
+                    fighter.Attack(enemyFighters);
                 }
             }
         }
 
         public void RemoveDeadFighters()
         {
-            _fighters = _fighters.Where(f => f.Health > 0).ToList();
+            _fighters = _fighters.Where(fighter => fighter.Health > 0).ToList();
         }
 
         public void ShowAliveFighters()
@@ -214,30 +217,58 @@ namespace Project_10
 
     abstract class Fighter
     {
-        public string Name { get; set; }
-        public string Type { get; protected set; }
-        public int Health { get; protected set; }
-        public int Damage { get; protected set; }
-        public int Armor { get; protected set; }
+        protected string _name;
+        protected int _health;
+        protected int _damage;
+        protected int _armor;
+        protected string _type;
         protected Random _random = new Random();
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public string Type
+        {
+            get { return _type; }
+        }
+
+        public int Health
+        {
+            get { return _health; }
+        }
 
         protected Fighter(string name, string type, int health, int damage, int armor)
         {
-            Name = name;
-            Type = type;
-            Health = health;
-            Damage = damage;
-            Armor = armor;
+            _name = name;
+            _type = type;
+            _health = health;
+            _damage = damage;
+            _armor = armor;
+        }
+
+        public void SetName(string name)
+        {
+            _name = name;
         }
 
         public virtual void TakeDamage(int damage)
         {
-            int actualDamage = Math.Max(1, damage - Armor);
-            Health -= actualDamage;
-            Console.WriteLine($"{Name} получил {actualDamage} урона. Осталось здоровья: {Math.Max(0, Health)}");
+            int actualDamage = Math.Max(1, damage - _armor);
+            int healthAfterDamage = _health - actualDamage;
+
+            if (healthAfterDamage < 0)
+            {
+                healthAfterDamage = 0;
+            }
+
+            _health = healthAfterDamage;
+
+            Console.WriteLine($"{_name} получил {actualDamage} урона. Осталось здоровья: {_health}");
         }
 
-        public abstract void UseAbility(Squad enemySquad);
+        public abstract void Attack(List<Fighter> enemyFighters);
         public abstract Fighter Clone();
     }
 
@@ -249,19 +280,21 @@ namespace Project_10
         }
 
         private RegularSoldier(RegularSoldier soldier)
-            : this(soldier.Name, soldier.Health, soldier.Damage, soldier.Armor)
+            : this(soldier.Name, soldier.Health, soldier._damage, soldier._armor)
         {
         }
 
-        public override void UseAbility(Squad enemySquad)
+        public override void Attack(List<Fighter> enemyFighters)
         {
-            List<Fighter> enemies = enemySquad.GetAliveFighters();
-            if (enemies.Count == 0) return;
+            if (enemyFighters.Count == 0)
+            {
+                return;
+            }
 
-            Fighter target = enemies[_random.Next(enemies.Count)];
+            Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
 
             Console.WriteLine($"{Name} атакует {target.Name}");
-            target.TakeDamage(Damage);
+            target.TakeDamage(_damage);
         }
 
         public override Fighter Clone()
@@ -280,18 +313,20 @@ namespace Project_10
         }
 
         private Sniper(Sniper sniper)
-            : this(sniper.Name, sniper.Health, sniper.Damage, sniper.Armor)
+            : this(sniper.Name, sniper.Health, sniper._damage, sniper._armor)
         {
         }
 
-        public override void UseAbility(Squad enemySquad)
+        public override void Attack(List<Fighter> enemyFighters)
         {
-            List<Fighter> enemies = enemySquad.GetAliveFighters();
-            if (enemies.Count == 0) return;
+            if (enemyFighters.Count == 0)
+            {
+                return;
+            }
 
-            Fighter target = enemies[_random.Next(enemies.Count)];
+            Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
 
-            int actualDamage = (int)(Damage * DamageMultiplier);
+            int actualDamage = (int)(_damage * DamageMultiplier);
             Console.WriteLine($"{Name} (снайпер) прицельно стреляет в {target.Name} с уроном {actualDamage}");
             target.TakeDamage(actualDamage);
         }
@@ -312,26 +347,42 @@ namespace Project_10
         }
 
         private AreaAttacker(AreaAttacker attacker)
-            : this(attacker.Name, attacker.Health, attacker.Damage, attacker.Armor)
+            : this(attacker.Name, attacker.Health, attacker._damage, attacker._armor)
         {
         }
 
-        public override void UseAbility(Squad enemySquad)
+        public override void Attack(List<Fighter> enemyFighters)
         {
-            List<Fighter> enemies = enemySquad.GetAliveFighters();
-            if (enemies.Count == 0) return;
+            if (enemyFighters.Count == 0)
+            {
+                return;
+            }
 
-            int targetsCount = Math.Min(MaxTargets, enemies.Count);
+            int targetsCount = Math.Min(MaxTargets, enemyFighters.Count);
+            List<Fighter> targets = new List<Fighter>();
+            List<int> usedIndexes = new List<int>();
 
-            List<Fighter> shuffledEnemies = enemies.OrderBy(x => _random.Next()).ToList();
+            for (int i = 0; i < targetsCount; i++)
+            {
+                int randomIndex;
+
+                do
+                {
+                    randomIndex = _random.Next(enemyFighters.Count);
+                }
+                while (usedIndexes.Contains(randomIndex));
+
+                usedIndexes.Add(randomIndex);
+                targets.Add(enemyFighters[randomIndex]);
+            }
 
             Console.WriteLine($"{Name} (гранатометчик) атакует по области {targetsCount} целей без повторений!");
 
             for (int i = 0; i < targetsCount; i++)
             {
-                Fighter target = shuffledEnemies[i];
+                Fighter target = targets[i];
                 Console.WriteLine($"  -> {target.Name}");
-                target.TakeDamage(Damage);
+                target.TakeDamage(_damage);
             }
         }
 
@@ -352,14 +403,16 @@ namespace Project_10
         }
 
         private RandomAreaAttacker(RandomAreaAttacker attacker)
-            : this(attacker.Name, attacker.Health, attacker.Damage, attacker.Armor)
+            : this(attacker.Name, attacker.Health, attacker._damage, attacker._armor)
         {
         }
 
-        public override void UseAbility(Squad enemySquad)
+        public override void Attack(List<Fighter> enemyFighters)
         {
-            List<Fighter> enemies = enemySquad.GetAliveFighters();
-            if (enemies.Count == 0) return;
+            if (enemyFighters.Count == 0)
+            {
+                return;
+            }
 
             int attacks = _random.Next(MinTargets, MaxTargets + 1);
 
@@ -367,13 +420,14 @@ namespace Project_10
 
             for (int i = 0; i < attacks; i++)
             {
-                if (enemies.Count == 0) break;
+                if (enemyFighters.Count == 0)
+                {
+                    break;
+                }
 
-                Fighter target = enemies[_random.Next(enemies.Count)];
+                Fighter target = enemyFighters[_random.Next(enemyFighters.Count)];
                 Console.WriteLine($"  Выстрел {i + 1} -> {target.Name}");
-                target.TakeDamage(Damage);
-
-                enemies = enemySquad.GetAliveFighters();
+                target.TakeDamage(_damage);
             }
         }
 
