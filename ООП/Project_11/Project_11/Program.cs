@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_11
@@ -15,11 +15,11 @@ namespace Project_11
 
     class UserUtils
     {
-        const string _GreenColor = "green";
-        const string _YellowColor = "yellow";
-        const string _RedColor = "red";
-        const string _BlueColor = "blue";
-        const string _WhiteColor = "white";
+        public const string GreenColor = "green";
+        public const string YellowColor = "yellow";
+        public const string RedColor = "red";
+        public const string BlueColor = "blue";
+        public const string WhiteColor = "white";
 
         private static Random s_random = new Random();
 
@@ -64,19 +64,19 @@ namespace Project_11
         {
             switch (color)
             {
-                case _GreenColor:
+                case GreenColor:
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
-                case _YellowColor:
+                case YellowColor:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
-                case _RedColor:
+                case RedColor:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case _BlueColor:
+                case BlueColor:
                     Console.ForegroundColor = ConsoleColor.Blue;
                     break;
-                case _WhiteColor:
+                case WhiteColor:
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
             }
@@ -108,10 +108,10 @@ namespace Project_11
         {
             string[] color = new string[]
             {
-                _GreenColor, _YellowColor, _RedColor, _BlueColor, _WhiteColor
+                GreenColor, YellowColor, RedColor, BlueColor, WhiteColor
             };
 
-            int indexColor = UserUtils.GenerateRandomNumber(0, color.Length);
+            int indexColor = GenerateRandomNumber(0, color.Length);
 
             return color[indexColor];
         }
@@ -130,10 +130,9 @@ namespace Project_11
         private const string Remove = "3";
         private const string Exit = "4";
 
-
         private int _maxCountFish = 10;
         private List<Fish> _fishs = new List<Fish>();
-        private int _countDay = 1;
+        private int _currentDay = 1;
 
         public void Work()
         {
@@ -146,9 +145,8 @@ namespace Project_11
             while (isNextDay)
             {
                 ShowFishInAquarium();
-                WaitNextDay();
-                
-                Console.WriteLine($"День {_countDay}");
+
+                Console.WriteLine($"День {_currentDay}");
                 Console.WriteLine("вы стоите перед аквариумом, что вы хотите сделать:");
                 Console.WriteLine($"{waitNexDayCommand}. ждать следущего дня");
                 Console.WriteLine($"{addFishCommand}. добавить рыбку");
@@ -162,7 +160,8 @@ namespace Project_11
                 switch (command.ToLower())
                 {
                     case Wait:
-                        _countDay++;
+                        _currentDay++;
+                        IncreaseFishAge();
                         Console.WriteLine("ждем");
                         break;
                     case Add:
@@ -170,14 +169,15 @@ namespace Project_11
                         break;
                     case Remove:
                         RemoveDeadFishs();
-                       break;
+                        break;
                     case Exit:
                         Console.WriteLine("вышли");
                         isNextDay = false;
                         break;
                     default:
                         Console.WriteLine("неверная команда, но день все равно потерян");
-                        _countDay++;
+                        _currentDay++;
+                        IncreaseFishAge();
                         break;
                 }
             }
@@ -194,26 +194,26 @@ namespace Project_11
 
             foreach (Fish fish in _fishs)
             {
+                string aliveStatus = fish.IsAlive ? "жива" : "мертва";
                 Console.Write($"{index++}.");
-                fish.ShowInfo();
+                Console.WriteLine($"{fish.Name}, текущий/максимальный возраст - {fish.Age}/{fish.MaxAge}, цвет - {fish.Color}, {aliveStatus}");
             }
         }
 
         private void RemoveDeadFishs()
         {
-            for (int i = 0; i < _fishs.Count; i++)
+            for (int i = _fishs.Count - 1; i >= 0; i--)
             {
-                if(_fishs[i].IsAlive == false)
+                if (_fishs[i].IsAlive == false)
                 {
-                    _fishs.Remove(_fishs[i]);
-                    i--;
+                    _fishs.RemoveAt(i);
                 }
             }
         }
 
         private void AddFish()
         {
-            if(_fishs.Count >= _maxCountFish)
+            if (_fishs.Count >= _maxCountFish)
             {
                 Console.WriteLine("Аквариум переполен");
             }
@@ -223,49 +223,41 @@ namespace Project_11
             }
         }
 
-        private void WaitNextDay()
+        private void IncreaseFishAge()
         {
             foreach (Fish fish in _fishs)
             {
-                fish.WaitOneDay();
+                fish.IncreaseAge();
             }
         }
     }
 
     class Fish
     {
-        private int _ageFish = 0;
         private int _minRandomAgeFish = 4;
         private int _maxRandomAgeFish = 20;
 
         public Fish()
         {
             Name = UserUtils.InputName();
-            Age = _ageFish;
+            Age = 0;
             MaxAge = UserUtils.GenerateRandomNumber(_minRandomAgeFish, _maxRandomAgeFish);
             Color = UserUtils.GenerateRandomColor();
         }
 
-        public string Name { get; protected set; }
-        public int Age { get; protected set; }
-        public int MaxAge { get; protected set; }
-        public string Color { get; protected set; }
+        public string Name { get; }
+        public int Age { get; private set; }
+        public int MaxAge { get; }
+        public string Color { get; }
 
         public bool IsAlive => Age < MaxAge;
 
-        public void WaitOneDay()
+        public void IncreaseAge()
         {
-            Age++;
-
-            if(Age >= MaxAge)
+            if (Age < MaxAge)
             {
-                Age = MaxAge;
+                Age++;
             }
-        }
-
-        public void ShowInfo()
-        {
-            Console.WriteLine($"{Name}, текущий/максимальный возраст - {Age}/{MaxAge}, цвет - {Color}, жива/мертва - {IsAlive}");
         }
     }
 }
