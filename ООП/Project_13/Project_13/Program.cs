@@ -16,6 +16,7 @@ namespace Project_13
     class UserUtils
     {
         private static Random s_random = new Random();
+        private static bool[] s_boolValues = { false, true };
 
         public static int GenerateRandomNumber(int minRandomNumber, int maxRandomNumber)
         {
@@ -24,7 +25,7 @@ namespace Project_13
 
         public static bool GenerateRandomBool()
         {
-            return s_random.Next(2) == 0;
+            return s_boolValues[GenerateRandomNumber(0, s_boolValues.Length)];
         }
     }
 
@@ -41,61 +42,14 @@ namespace Project_13
         private Queue<Car> _cars = new Queue<Car>();
         private int _money = 2000;
 
-        private List<DetailType> _availableDetailTypes;
+        private DetailsFactory _detailsFactory;
 
         public CarService()
         {
-            InitializeDetailTypes();
+            _detailsFactory = new DetailsFactory();
             InitializeRepairPrices();
-            _stock = new Stock(CreateAllDetails());
+            _stock = new Stock(_detailsFactory.CreateAllDetailTypes());
             CreateCarsQueue();
-        }
-
-        private void InitializeDetailTypes()
-        {
-            _availableDetailTypes = new List<DetailType>
-            {
-                new DetailType("Engine"),
-                new DetailType("Starter"),
-                new DetailType("Generator"),
-                new DetailType("ElectronicUnit"),
-                new DetailType("Injector"),
-                new DetailType("Wheel"),
-                new DetailType("Body"),
-                new DetailType("Glass")
-            };
-        }
-
-        private List<Detail> CreateAllDetails()
-        {
-            List<Detail> details = new List<Detail>();
-
-            foreach (DetailType detailType in _availableDetailTypes)
-            {
-                details.Add(detailType.CreateDetail(isBroken: false));
-            }
-
-            return details;
-        }
-
-        private List<Detail> CreateRandomDetailsSet()
-        {
-            List<Detail> details = new List<Detail>();
-            int minCopies = 1;
-            int maxCopies = 4;
-
-            foreach (DetailType detailType in _availableDetailTypes)
-            {
-                int copies = UserUtils.GenerateRandomNumber(minCopies, maxCopies);
-
-                for (int i = 0; i < copies; i++)
-                {
-                    bool isBroken = UserUtils.GenerateRandomBool();
-                    details.Add(detailType.CreateDetail(isBroken));
-                }
-            }
-
-            return details;
         }
 
         public void Work()
@@ -246,7 +200,7 @@ namespace Project_13
 
             for (int i = 1; i <= carsCount; i++)
             {
-                _cars.Enqueue(new Car(i, CreateRandomDetailsSet()));
+                _cars.Enqueue(new Car(i, _detailsFactory.CreateRandomDetailsSet()));
             }
         }
 
@@ -281,7 +235,7 @@ namespace Project_13
 
         public Detail TakeDetail(string detailName)
         {
-            Detail foundDetail = _details.FirstOrDefault(d => d.Name == detailName);
+            Detail foundDetail = _details.FirstOrDefault(detail => detail.Name == detailName);
 
             if (foundDetail != null)
             {
@@ -300,12 +254,12 @@ namespace Project_13
             }
 
             Console.WriteLine("Детали на складе:");
-            var groupedDetails = _details.GroupBy(d => d.Name)
-                                         .Select(g => new { Name = g.Key, Count = g.Count() });
+            var groupedDetails = _details.GroupBy(detail => detail.Name)
+                                         .Select(group => new { Name = group.Key, Count = group.Count() });
 
-            foreach (var group in groupedDetails)
+            foreach (var detailGroup in groupedDetails)
             {
-                Console.WriteLine($"  {group.Name}: {group.Count} шт.");
+                Console.WriteLine($"  {detailGroup.Name}: {detailGroup.Count} шт.");
             }
         }
 
@@ -333,43 +287,43 @@ namespace Project_13
         {
             Console.WriteLine($"Состояние машины {Id}:");
 
-            var detailsGroups = _details.GroupBy(d => d.Name)
-                                        .Select(g => new {
-                                            Name = g.Key,
-                                            Total = g.Count(),
-                                            Broken = g.Count(d => d.IsBroken)
+            var detailsGroups = _details.GroupBy(detail => detail.Name)
+                                        .Select(group => new {
+                                            Name = group.Key,
+                                            Total = group.Count(),
+                                            Broken = group.Count(detail => detail.IsBroken)
                                         });
 
-            foreach (var group in detailsGroups)
+            foreach (var detailGroup in detailsGroups)
             {
-                string status = group.Broken == 0 ? "✓" : $"✗ ({group.Broken} сломано)";
-                Console.WriteLine($"  {group.Name}: {group.Total} шт. {status}");
+                string status = detailGroup.Broken == 0 ? "✓" : $"✗ ({detailGroup.Broken} сломано)";
+                Console.WriteLine($"  {detailGroup.Name}: {detailGroup.Total} шт. {status}");
             }
         }
 
         public Detail GetFirstBrokenDetail()
         {
-            return _details.FirstOrDefault(d => d.IsBroken);
+            return _details.FirstOrDefault(detail => detail.IsBroken);
         }
 
         public int GetBrokenDetailsCount()
         {
-            return _details.Count(d => d.IsBroken);
+            return _details.Count(detail => detail.IsBroken);
         }
 
         public int GetFixedDetailsCount()
         {
-            return _details.Count(d => !d.IsBroken);
+            return _details.Count(detail => !detail.IsBroken);
         }
 
         public bool IsFullyRepaired()
         {
-            return _details.All(d => !d.IsBroken);
+            return _details.All(detail => !detail.IsBroken);
         }
 
         public void ReplaceDetail(Detail oldDetail, Detail newDetail)
         {
-            int index = _details.FindIndex(d => d == oldDetail);
+            int index = _details.FindIndex(detail => detail == oldDetail);
 
             if (index != -1)
             {
@@ -388,25 +342,57 @@ namespace Project_13
 
         public string Name { get; private set; }
         public bool IsBroken { get; private set; }
-
-        public void Fix()
-        {
-            IsBroken = false;
-        }
     }
 
-    class DetailType
+    class DetailsFactory
     {
-        public string Name { get; private set; }
+        private List<Detail> _availableDetailTypes;
 
-        public DetailType(string name)
+        public DetailsFactory()
         {
-            Name = name;
+            _availableDetailTypes = new List<Detail>
+            {
+                new Detail("Engine", false),
+                new Detail("Starter", false),
+                new Detail("Generator", false),
+                new Detail("ElectronicUnit", false),
+                new Detail("Injector", false),
+                new Detail("Wheel", false),
+                new Detail("Body", false),
+                new Detail("Glass", false)
+            };
         }
 
-        public Detail CreateDetail(bool isBroken)
+        public List<Detail> CreateAllDetailTypes()
         {
-            return new Detail(Name, isBroken);
+            List<Detail> details = new List<Detail>();
+
+            foreach (Detail detailType in _availableDetailTypes)
+            {
+                details.Add(new Detail(detailType.Name, isBroken: false));
+            }
+
+            return details;
+        }
+
+        public List<Detail> CreateRandomDetailsSet()
+        {
+            List<Detail> details = new List<Detail>();
+            int minCopies = 1;
+            int maxCopies = 4;
+
+            foreach (Detail detailType in _availableDetailTypes)
+            {
+                int copies = UserUtils.GenerateRandomNumber(minCopies, maxCopies);
+
+                for (int i = 0; i < copies; i++)
+                {
+                    bool isBroken = UserUtils.GenerateRandomBool();
+                    details.Add(new Detail(detailType.Name, isBroken));
+                }
+            }
+
+            return details;
         }
     }
 }
