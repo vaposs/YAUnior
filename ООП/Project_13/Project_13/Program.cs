@@ -60,12 +60,14 @@ namespace Project_13
                 ShowServiceStatus();
 
                 Car currentCar = _cars.Peek();
+                int initialBrokenDetailsCount = currentCar.GetBrokenDetailsCount();
+
                 Console.WriteLine($"\nМашина {currentCar.Id} на ремонте:");
                 currentCar.ShowDetails();
 
                 if (AskForRepairRefusal())
                 {
-                    HandleRefusal(currentCar);
+                    HandleRefusal(currentCar, initialBrokenDetailsCount);
                     continue;
                 }
 
@@ -82,18 +84,18 @@ namespace Project_13
             return input == YesCommand;
         }
 
-        private void HandleRefusal(Car car)
+        private void HandleRefusal(Car car, int initialBrokenDetailsCount)
         {
-            int brokenDetailsCount = car.GetBrokenDetailsCount();
+            int currentBrokenDetailsCount = car.GetBrokenDetailsCount();
 
-            if (brokenDetailsCount == car.GetTotalDetailsCount())
+            if (initialBrokenDetailsCount == currentBrokenDetailsCount)
             {
                 _money -= RefusalPenalty;
                 Console.WriteLine($"\nОтказ до ремонта. Штраф: {RefusalPenalty}");
             }
             else
             {
-                int unfixedCount = brokenDetailsCount;
+                int unfixedCount = currentBrokenDetailsCount;
                 int penalty = unfixedCount * PenaltyPerDetail;
                 _money -= penalty;
                 Console.WriteLine($"\nОтказ во время ремонта. Штраф за {unfixedCount} непочиненных деталей: {penalty}");
