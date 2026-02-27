@@ -84,14 +84,16 @@ namespace Project_13
 
         private void HandleRefusal(Car car)
         {
-            if (car.GetFixedDetailsCount() == 0)
+            int brokenDetailsCount = car.GetBrokenDetailsCount();
+
+            if (brokenDetailsCount == car.GetTotalDetailsCount())
             {
                 _money -= RefusalPenalty;
                 Console.WriteLine($"\nОтказ до ремонта. Штраф: {RefusalPenalty}");
             }
             else
             {
-                int unfixedCount = car.GetBrokenDetailsCount();
+                int unfixedCount = brokenDetailsCount;
                 int penalty = unfixedCount * PenaltyPerDetail;
                 _money -= penalty;
                 Console.WriteLine($"\nОтказ во время ремонта. Штраф за {unfixedCount} непочиненных деталей: {penalty}");
@@ -200,7 +202,7 @@ namespace Project_13
 
             for (int i = 1; i <= carsCount; i++)
             {
-                _cars.Enqueue(new Car(i, _detailsFactory.CreateRandomDetailsSet()));
+                _cars.Enqueue(new Car(i, _detailsFactory.CreateCarDetails()));
             }
         }
 
@@ -272,6 +274,7 @@ namespace Project_13
     class Car
     {
         private List<Detail> _details;
+        private int _totalDetailsCount;
 
         public int Id { get; private set; }
 
@@ -279,13 +282,14 @@ namespace Project_13
         {
             Id = id;
             _details = new List<Detail>(details);
+            _totalDetailsCount = _details.Count;
         }
 
         public IReadOnlyList<Detail> Details => _details.AsReadOnly();
 
         public void ShowDetails()
         {
-            Console.WriteLine($"Состояние машины {Id}:");
+            Console.WriteLine($"Состояние машины {Id} (всего деталей: {_totalDetailsCount}):");
 
             var detailsGroups = _details.GroupBy(detail => detail.Name)
                                         .Select(group => new {
@@ -299,6 +303,8 @@ namespace Project_13
                 string status = detailGroup.Broken == 0 ? "✓" : $"✗ ({detailGroup.Broken} сломано)";
                 Console.WriteLine($"  {detailGroup.Name}: {detailGroup.Total} шт. {status}");
             }
+
+            Console.WriteLine($"Всего сломано: {GetBrokenDetailsCount()} из {_totalDetailsCount}");
         }
 
         public Detail GetFirstBrokenDetail()
@@ -314,6 +320,11 @@ namespace Project_13
         public int GetFixedDetailsCount()
         {
             return _details.Count(detail => !detail.IsBroken);
+        }
+
+        public int GetTotalDetailsCount()
+        {
+            return _totalDetailsCount;
         }
 
         public bool IsFullyRepaired()
@@ -375,7 +386,7 @@ namespace Project_13
             return details;
         }
 
-        public List<Detail> CreateRandomDetailsSet()
+        public List<Detail> CreateCarDetails()
         {
             List<Detail> details = new List<Detail>();
             int minCopies = 1;
@@ -383,7 +394,7 @@ namespace Project_13
 
             foreach (Detail detailType in _availableDetailTypes)
             {
-                int copies = UserUtils.GenerateRandomNumber(minCopies, maxCopies);
+                int copies = UserUtils.GenerateRandomNumber(minCopies, maxCopies + 1);
 
                 for (int i = 0; i < copies; i++)
                 {
